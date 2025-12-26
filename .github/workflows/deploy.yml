@@ -1,0 +1,34 @@
+name: deploy
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container: pandoc/latex
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install mustache (to update the date)
+        run: apk add ruby && gem install mustache
+
+      - name: Create output
+        run: sh ./build.sh
+
+      - name: Push to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: "output"
+          destination-github-username: hamxxn
+          destination-repository-name: SNAPPIN-CLIENT
+          user-email: hamin031121@gmail.com
+          commit-message: "[skip ci] ${{ github.event.head_commit.message }}"
+          target-branch: main

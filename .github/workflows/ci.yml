@@ -1,0 +1,85 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 1) lint/build 결과는 각각 수집하기 위해 continue-on-error
+      - name: Run lint
+        id: lint
+        run: pnpm run lint
+        continue-on-error: true
+
+      - name: Build project (Next.js)
+        id: build
+        run: pnpm run build
+        continue-on-error: true
+
+      # 2) 결과 요약 메시지 생성 (멀티라인 GITHUB_OUTPUT 안전 처리)
+      - name: Evaluate lint and build status
+        id: status
+        run: |
+          lint_result="${{ steps.lint.outcome }}"
+          build_result="${{ steps.build.outcome }}"
+
+          overall_result="success"
+          [ "$lint_result" = "success" ] && lint_message="린트 통과 ✅" || { lint_message="린트 실패 ❌"; overall_result="failed"; }
+          [ "$build_result" = "success" ] && build_message="빌드 성공 🎊" || { build_message="빌드 실패 ❌"; overall_result="failed"; }
+
+          if [ "$overall_result" = "success" ]; then
+            message="모든 검사 통과 🎉\n- $lint_message\n- $build_message"
+          else
+            message="일부 검사 실패 ⚠️\n- $lint_message\n- $build_message"
+          fi
+
+          echo "result=$overall_result" >> "$GITHUB_OUTPUT"
+          {
+            echo "message<<EOF"
+            echo -e "$message"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      # 3) PR 댓글은 누적 (요구사항)
+      - name: Add comment to PR with status (accumulate)
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const message = `${{ steps.status.outputs.message }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `### 빌드 및 린트 결과\n${message}`
+            });
+
+      # 4) 필수 통과: 하나라도 실패면 job fail
+      - name: Fail job if any step failed
+        if: ${{ steps.status.outputs.result == 'failed' }}
+        run: exit 1
