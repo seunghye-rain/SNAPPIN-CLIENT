@@ -50,7 +50,15 @@ function uniqSort(lines: string[]) {
 }
 
 function hasAnyExportableCode(dir: string): boolean {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  if (!fs.existsSync(dir)) return false;
+
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch (error) {
+    return false;
+  }
+
   for (const ent of entries) {
     const full = path.join(dir, ent.name);
 
@@ -75,7 +83,17 @@ function collectDirs(root: string): string[] {
     const cur = stack.pop()!;
     dirs.push(cur);
 
-    const entries = fs.readdirSync(cur, { withFileTypes: true });
+    let entries;
+    try {
+      entries = fs.readdirSync(cur, { withFileTypes: true });
+    } catch (error) {
+      console.error(
+        `❌ 디렉토리 읽기 실패: ${path.relative(PROJECT_ROOT, cur)}`,
+        error
+      );
+      continue;
+    }
+
     for (const ent of entries) {
       if (!ent.isDirectory()) continue;
       if (IGNORE_DIR_NAMES.has(ent.name)) continue;
@@ -86,7 +104,19 @@ function collectDirs(root: string): string[] {
 }
 
 function generateIndexForDir(dir: string) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  if (!fs.existsSync(dir)) return;
+
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch (error) {
+    console.error(
+      `❌ 디렉토리 읽기 실패: ${path.relative(PROJECT_ROOT, dir)}`,
+      error
+    );
+    return;
+  }
+
   const exportLines: string[] = [];
 
   for (const ent of entries) {
@@ -112,9 +142,7 @@ function generateIndexForDir(dir: string) {
   const finalLines = uniqSort(exportLines);
   const indexPath = path.join(dir, INDEX_FILENAME);
 
-  // export할 항목이 없으면 index.ts를 생성하지 않음
   if (finalLines.length === 0) {
-    // 기존 index.ts가 있으면 삭제
     if (fs.existsSync(indexPath)) {
       fs.unlinkSync(indexPath);
       console.log(
