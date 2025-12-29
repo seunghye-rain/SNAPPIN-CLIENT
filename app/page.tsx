@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>Snappin</div>;
+  return <div className="text-3xl font-bold underline">Snappin</div>;
 }
