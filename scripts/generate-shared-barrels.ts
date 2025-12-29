@@ -112,6 +112,18 @@ function generateIndexForDir(dir: string) {
   const finalLines = uniqSort(exportLines);
   const indexPath = path.join(dir, INDEX_FILENAME);
 
+  // export할 항목이 없으면 index.ts를 생성하지 않음
+  if (finalLines.length === 0) {
+    // 기존 index.ts가 있으면 삭제
+    if (fs.existsSync(indexPath)) {
+      fs.unlinkSync(indexPath);
+      console.log(
+        `🗑️  index.ts 삭제: ${path.relative(PROJECT_ROOT, indexPath)}`
+      );
+    }
+    return;
+  }
+
   const content =
     `// ⚠️ 자동 생성된 파일입니다. 직접 수정하지 마세요.\n` +
     finalLines.join("\n") +
@@ -122,7 +134,9 @@ function generateIndexForDir(dir: string) {
     : "";
   if (prev !== content) {
     fs.writeFileSync(indexPath, content, "utf8");
-    `✅ index.ts 생성/갱신: ${path.relative(PROJECT_ROOT, indexPath)}`;
+    console.log(
+      `✅ index.ts 생성/갱신: ${path.relative(PROJECT_ROOT, indexPath)}`
+    );
   }
 }
 
@@ -138,8 +152,6 @@ function main() {
   for (const target of TARGET_DIRS) {
     const dirs = collectDirs(target).sort((a, b) => b.length - a.length);
     for (const dir of dirs) generateIndexForDir(dir);
-
-    generateIndexForDir(target);
   }
 
   console.log("🎉 지정한 폴더의 barrel export 생성이 완료되었습니다.");
