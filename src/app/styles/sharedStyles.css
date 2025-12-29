@@ -1,0 +1,8 @@
+@import './tokens/color.css';
+@import './tokens/typography.css';
+
+@layer base {
+  html {
+    font-size: 62.5%;
+  }
+}
