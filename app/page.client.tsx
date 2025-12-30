@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogHeader,
-} from "@/shared/components/dialog/Dialog";
+} from "@/shared/ui/dialog/Dialog";
 import { useState } from "react";
 
 export default function PageClient() {
