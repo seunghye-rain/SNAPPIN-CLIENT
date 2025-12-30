@@ -14,6 +14,8 @@ export default function Home() {
       <div className="bg-black-6 p-1">black_6</div>
       <div className="bg-black-7 p-1">black_7</div>
       <div className="bg-black-8 p-1">black_8</div>
+      <div className="bg-black-9 p-1">black_9</div>
+      <div className="bg-black-10 p-1">black_10</div>
       <div className="bg-neon-black p-1">neon_black</div>
       <div className="bg-neon-white p-1">neon_white</div>
       <div className="bg-orange p-1">orange</div>
@@ -31,13 +33,13 @@ export default function Home() {
       <p className="title-26-sb">title_26_sb</p>
       <p className="title-23-eb">title_23_eb</p>
       <p className="title-20-bd">title_20_bd</p>
-      <p className="text-18-bd">text_18_bd</p>
-      <p className="text-18-md">text_18_md</p>
-      <p className="text-16-bd">text_16_bd</p>
-      <p className="text-16-md">text_16_md</p>
+      <p className="font-18-bd">font_18_bd</p>
+      <p className="font-18-md">font_18_md</p>
+      <p className="font-16-bd">font_16_bd</p>
+      <p className="font-16-md">font_16_md</p>
       <p className="caption-14-bd">caption_14_bd</p>
       <p className="caption-14-md">caption_14_md</p>
-      <p className="caption-12-md">aption_12_md</p>
+      <p className="caption-12-md">caption_12_md</p>
       <p className="caption-10-md">caption_10_md</p>
     </div>
   );
