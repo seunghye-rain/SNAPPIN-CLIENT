@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 
 export const NavVisibleContext = createContext(false);
 
@@ -9,12 +9,12 @@ export function useNavVisibility() {
 
   const forcedTopVisibleRef = useRef(false);
 
-  const compute = useCallback((scrollTop: number) => {
+  const compute = (scrollTop: number) => {
     if (scrollTop > 0) forcedTopVisibleRef.current = false;
 
     const next = scrollTop > 0 || forcedTopVisibleRef.current;
     setIsVisible((prev) => (prev === next ? prev : next));
-  }, []);
+  };
 
   useEffect(() => {
     const el = document.getElementById('app-scroll');
@@ -27,10 +27,10 @@ export function useNavVisibility() {
     return () => el.removeEventListener('scroll', onScroll);
   }, [compute]);
 
-  const handleShowHeader = useCallback(() => {
+  const handleShowHeader = () => {
     forcedTopVisibleRef.current = true;
     setIsVisible(true);
-  }, []);
+  };
 
   return { isVisible, handleShowHeader };
 }
