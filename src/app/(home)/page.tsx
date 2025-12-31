@@ -23,11 +23,32 @@ import {
   IconReservationFill,
   IconSearch,
 } from '@/assets';
+import { CarouselCuration } from '@/ui/carousel-curation';
 
 export default function Home() {
   return (
     <div>
-      <div className='text-3xl font-bold underline'>Snappin</div>
+      <div className='flex justify-center pt-[10rem]'>
+        <CarouselCuration
+          tags={['tag1', 'tag2', 'tag3']}
+          name='name'
+          images={[
+            {
+              src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+              alt: 'image',
+            },
+            {
+              src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429',
+              alt: 'image',
+            },
+            {
+              src: 'https://images.unsplash.com/photo-1500534623283-312aade485b7',
+              alt: 'image',
+            },
+          ]}
+        />
+      </div>
+
       <PageClient />
 
       <div className='bg-black-1 p-1'>black_1</div>
