@@ -1,2 +1,3 @@
 // ⚠️ 자동 생성된 파일입니다. 직접 수정하지 마세요.
+export * from './chip/index';
 export * from './dialog/index';
