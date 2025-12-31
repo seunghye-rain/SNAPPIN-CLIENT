@@ -11,6 +11,7 @@ export { default as IconAdd2 } from './components/IconAdd2';
 export { default as IconArrowBack } from './components/IconArrowBack';
 export { default as IconArrowForward } from './components/IconArrowForward';
 export { default as IconClose } from './components/IconClose';
+export { default as IconEllipse } from './components/IconEllipse';
 export { default as IconExploreFill } from './components/IconExploreFill';
 export { default as IconExplore } from './components/IconExplore';
 export { default as IconHeartFill } from './components/IconHeartFill';
