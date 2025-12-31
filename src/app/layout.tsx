@@ -1,5 +1,5 @@
 import localFont from 'next/font/local';
-import { Providers } from '@/ui/providers';
+import { Providers } from '@/app/providers';
 import '@/styles/global.css';
 
 const suit = localFont({
