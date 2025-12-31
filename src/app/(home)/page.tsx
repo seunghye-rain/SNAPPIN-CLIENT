@@ -42,12 +42,12 @@ export default function Home() {
       <div className='bg-black-10 p-1'>black_10</div>
       <div className='bg-neon-black p-1'>neon_black</div>
       <div className='bg-neon-white p-1'>neon_white</div>
-      <div className='bg-orange p-1'>orange</div>
-      <div className='bg-orange-text p-1'>orange_text</div>
+      <div className='bg-yellow p-1'>yellow</div>
+      <div className='bg-yellow-text p-1'>yellow_text</div>
       <div className='bg-green p-1'>green</div>
       <div className='bg-green-text p-1'>green_text</div>
-      <div className='bg-purple p-1'>purple</div>
-      <div className='bg-purple-text p-1'>purple_text</div>
+      <div className='bg-red p-1'>red</div>
+      <div className='bg-red-text p-1'>red_text</div>
       <div className='bg-blue p-1'>blue</div>
       <div className='bg-blue-text p-1'>blue_text</div>
       <div className='gradient-photo p-1'>gradient_photo</div>
