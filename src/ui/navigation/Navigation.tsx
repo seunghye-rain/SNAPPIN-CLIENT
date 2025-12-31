@@ -11,7 +11,7 @@ export default function Navigation({ left, center, right, className }: Navigatio
   return (
     <nav
       className={cn(
-        'grid h-[5rem] w-full grid-cols-3 items-center px-[2rem] py-[1.7rem]',
+        'bg-black-1 sticky top-0 z-10 grid h-[5rem] w-full grid-cols-3 items-center px-[2rem] py-[1.7rem]',
         className,
       )}
     >
