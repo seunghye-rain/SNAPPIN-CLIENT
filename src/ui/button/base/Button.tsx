@@ -7,15 +7,13 @@ import {
   BUTTON_DISPLAY,
   BUTTON_SIZE,
 } from '@/ui/button/base/constants/theme';
+import { ButtonHTMLAttributes } from 'react';
 
-type ButtonProps = {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   display?: ButtonDisplay;
   size?: ButtonSize;
   color?: ButtonColor;
-  disabled?: boolean;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
   isLoading?: boolean;
 };
 
@@ -25,23 +23,27 @@ export default function Button({
   size = 'large',
   color = 'primary',
   disabled = false,
-  onClick,
   type = 'button',
   isLoading = false,
+  className,
+  ...rest
 }: ButtonProps) {
+  const isDisabled = disabled || isLoading;
+
   return (
     <button
-      onClick={onClick}
       type={type}
       className={cn(
         BUTTON_BASE,
         BUTTON_DISPLAY[display],
         BUTTON_SIZE[size],
         BUTTON_COLOR[color],
-        BUTTON_DISABLED,
+        isDisabled && BUTTON_DISABLED,
+        className,
       )}
-      disabled={disabled}
+      disabled={isDisabled}
       aria-busy={isLoading || undefined}
+      {...rest}
     >
       {children}
     </button>
