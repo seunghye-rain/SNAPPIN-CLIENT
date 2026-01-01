@@ -41,7 +41,7 @@ export default function Gnb() {
   return (
     <footer className='border-black-6 fixed right-0 bottom-0 left-0 mx-auto flex w-full max-w-[45rem] justify-between border-t-[0.5px] bg-white p-[0.8rem_2rem_1.6rem_2rem]'>
       {menuItems.map((item) => (
-        <Link href={item.label} className='flex flex-col items-center gap-[0.2rem]'>
+        <Link key={item.label} href={item.href} className='flex flex-col items-center gap-[0.2rem]'>
           <item.icon className={cn(isActive(item.href) && 'text-black-10')} />
           <span className='caption-10-md'>{item.label}</span>
         </Link>
