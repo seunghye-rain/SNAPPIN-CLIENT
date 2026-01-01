@@ -27,3 +27,4 @@ export { default as IconRemove } from './components/IconRemove';
 export { default as IconReservationFill } from './components/IconReservationFill';
 export { default as IconReservation } from './components/IconReservation';
 export { default as IconSearch } from './components/IconSearch';
+export { default as IconStar } from './components/IconStar';
