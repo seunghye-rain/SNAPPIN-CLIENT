@@ -1,10 +1,11 @@
 import { cn } from '@/utils/cn';
 import Chip from '../Chip';
-import { StateChipLabel } from './types/stateChipLabel';
+import { StateCode } from './types/stateCode';
+import { STATE_LABEL } from './constants/stateLabel';
 import { STATE_CHIP_THEME_BY_LABEL } from './constants/stateChipTheme';
 
 type StateChipProps = {
-  label: StateChipLabel;
+  label: StateCode;
   className?: string;
 };
 
@@ -16,7 +17,7 @@ export default function StateChip({
 
   return (
     <Chip
-      label={label}
+      label={STATE_LABEL[label]}
       chipClassName={cn('px-[0.5rem] py-[0.2rem]', chipClassName)}
       labelClassName={labelClassName}
       {...props}
