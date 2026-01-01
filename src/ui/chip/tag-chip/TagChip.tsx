@@ -2,7 +2,7 @@ import { cn } from '@/utils/cn';
 import Chip from '../Chip';
 import { TagChipLabel } from './types/tagChipLabel';
 import { TagChipVariant } from './types/tagChipVariant';
-import { TAG_CHIP_STYLE_BY_VARIANT } from './constants/tagChipStyle';
+import { TAG_CHIP_THEME_BY_VARIANT } from './constants/tagChipTheme';
 
 type TagChipProps = {
   variant: TagChipVariant;
@@ -15,7 +15,7 @@ export default function TagChip({
   label,
   ...props
 }: TagChipProps) {
-  const { chipClassName, labelClassName } = TAG_CHIP_STYLE_BY_VARIANT[variant];
+  const { chipClassName, labelClassName } = TAG_CHIP_THEME_BY_VARIANT[variant];
 
   return (
     <Chip
