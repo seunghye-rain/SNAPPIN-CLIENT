@@ -23,6 +23,7 @@ import {
   IconReservationFill,
   IconSearch,
 } from '@/assets';
+import InputField from '@/ui/input/field/InputField';
 
 export default function Home() {
   return (
@@ -94,6 +95,8 @@ export default function Home() {
       <IconExploreFill className='text-red-500' />
       <IconProfileFill className='text-red-500' />
       <IconReservationFill className='text-red-500' />
+
+      <InputField id='테스트 입력' label='제목' type='text' placeholder='예시' />
     </div>
   );
 }
