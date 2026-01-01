@@ -5,6 +5,6 @@ export {
   SECTION_TAB_LABEL,
   SECTION_TAB_PRESET,
   getSectionTabLabel,
-} from './types/sectionTabTheme';
+} from './constants/sectionTabTheme';
 
-export type { SectionTabsProps } from './types/sectionTab.types';
+export type { SectionTabsProps } from './types/sectionLabel';

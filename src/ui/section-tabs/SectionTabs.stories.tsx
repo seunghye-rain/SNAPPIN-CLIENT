@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 
 import SectionTabs from './SectionTabs';
-import { SECTION_TAB, SECTION_TAB_PRESET, getSectionTabLabel } from './types/sectionTabTheme';
+import { SECTION_TAB, SECTION_TAB_PRESET, getSectionTabLabel } from './constants/sectionTabTheme';
 
 const meta: Meta<typeof SectionTabs> = {
   title: 'UI/SectionTabs',

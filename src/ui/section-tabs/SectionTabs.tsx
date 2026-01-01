@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import type { SectionTabsProps } from './types/sectionTab.types';
+import type { SectionTabsProps } from './types/sectionLabel';
 
 export default function SectionTabs({
   tabs,
