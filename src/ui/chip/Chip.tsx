@@ -1,9 +1,7 @@
 import { cn } from '@/utils/cn';
-import { StateChipLabel } from '@/ui/chip/state-chip/types/stateChipLabel';
-import { TagChipLabel } from '@/ui/chip/tag-chip/types/tagChipLabel';
 
 type ChipProps = {
-  label: StateChipLabel | TagChipLabel;
+  label: string;
   chipClassName: string;
   labelClassName: string;
   className?: string;
