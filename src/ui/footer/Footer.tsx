@@ -34,7 +34,7 @@ const menuItems: {
   },
 ];
 
-export default function Navigation() {
+export default function Footer() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
 
