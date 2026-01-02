@@ -10,7 +10,7 @@ export default function SectionTabs<T extends string>({
   getLabel,
 }: SectionTabsProps<T>) {
   return (
-    <div className='border-black-4 flex h-18 w-full gap-4 border-b px-8'>
+    <div className='border-black-4 flex h-[4.5rem] w-full gap-4 border-b px-8'>
       {tabs.map((tab) => {
         const isSelected = tab === selectedTab;
 
