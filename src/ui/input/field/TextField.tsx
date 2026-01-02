@@ -6,6 +6,7 @@ type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   helpText?: string;
   hasError?: boolean;
   required?: boolean;
+  placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -17,6 +18,8 @@ export default function TextField({
   helpText,
   hasError,
   onChange,
+  placeholder,
+  value,
   ...rest
 }: InputFieldProps) {
   return (
@@ -30,11 +33,14 @@ export default function TextField({
 
       <Input
         id={id}
+        type={'text'}
+        value={value}
         aria-invalid={hasError || undefined}
         hasError={hasError}
         aria-describedby={hasError ? `${id}` : undefined}
         required={required}
         onChange={onChange}
+        placeholder={placeholder}
         {...rest}
       />
 
