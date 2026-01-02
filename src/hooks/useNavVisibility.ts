@@ -1,19 +1,12 @@
 'use client';
 
-import { createContext, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const NavVisibleContext = createContext(false);
-
-const useNavVisibility = () => {
+export function useNavVisibility() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const forcedTopVisibleRef = useRef(false);
-
   const compute = useCallback((scrollTop: number) => {
-    if (scrollTop > 0) forcedTopVisibleRef.current = false;
-
-    const next = scrollTop > 0 || forcedTopVisibleRef.current;
-    setIsVisible((prev) => (prev === next ? prev : next));
+    setIsVisible(scrollTop > 0);
   }, []);
 
   useEffect(() => {
@@ -28,11 +21,8 @@ const useNavVisibility = () => {
   }, [compute]);
 
   const handleShowHeader = () => {
-    forcedTopVisibleRef.current = true;
     setIsVisible(true);
   };
 
   return { isVisible, handleShowHeader };
-};
-
-export { NavVisibleContext, useNavVisibility };
+}
