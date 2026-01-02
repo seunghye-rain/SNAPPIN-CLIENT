@@ -1,21 +1,21 @@
 import { Meta, StoryObj } from '@storybook/react';
-import InputField from '@/ui/input/field/InputField';
+import TextField from '@/ui/input/field/TextField';
 
-const meta: Meta<typeof InputField> = {
-  title: 'InputField',
+const meta: Meta<typeof TextField> = {
+  title: 'TextField',
   tags: ['autodocs'],
-  component: InputField,
+  component: TextField,
   args: {
-    id: 'input-field',
+    id: 'text-field',
     label: '이름',
     placeholder: '이름을 입력해주세요',
     required: false,
-    errorText: '',
+    helpText: '',
   },
   parameters: {
     docs: {
       description: {
-        component: 'InputField 컴포넌트입니다.',
+        component: 'TextField 컴포넌트입니다.',
       },
     },
   },
@@ -23,6 +23,6 @@ const meta: Meta<typeof InputField> = {
 
 export default meta;
 
-type StoryInputField = StoryObj<typeof InputField>;
+type StoryInputField = StoryObj<typeof TextField>;
 
 export const DefaultInputField: StoryInputField = {};
