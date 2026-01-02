@@ -52,10 +52,6 @@ const meta: Meta<typeof ProductCard> = {
       ] satisfies TagCode[],
       description: '무드 태그',
     },
-    handleOnClick: {
-      action: 'card clicked',
-      description: '카드 클릭 이벤트',
-    },
   },
   args: {
     image: {
