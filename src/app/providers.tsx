@@ -35,7 +35,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <div
         id='app-scroll'
-        className='scrollbar-hide mx-auto h-screen max-w-[45rem] overflow-y-auto bg-white shadow-[0_0_10px_4px_rgba(0,0,0,0.04)]'
+        className='scrollbar-hide bg-black-1 mx-auto h-screen max-w-[45rem] overflow-y-auto shadow-[0_0_10px_4px_rgba(0,0,0,0.04)]'
       >
         {children}
       </div>
