@@ -9,9 +9,12 @@ import {
   DialogTrigger,
   DialogHeader,
 } from '@/ui';
+import { TimePicker } from '@/ui/time-picker';
+import { MOCK_TIME_SLOTS } from '@/ui/time-picker/constants/mockTimeSlots';
 
 export default function PageClient() {
   const [open, setOpen] = useState(false);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
@@ -27,6 +30,7 @@ export default function PageClient() {
   return (
     <div>
       <br />
+      <TimePicker sections={MOCK_TIME_SLOTS} value={selectedTime} onChange={setSelectedTime} />
       <h1 className='text-2xl font-bold'>Dialog 예시입니다.</h1>
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>
