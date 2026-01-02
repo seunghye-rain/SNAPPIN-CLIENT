@@ -53,7 +53,7 @@ export default function Footer() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <footer className='border-black-6 fixed right-0 bottom-0 left-0 mx-auto flex w-full max-w-[45rem] justify-between border-t-[0.5px] bg-white p-[0.8rem_2rem_1.6rem_2rem]'>
+    <footer className='border-black-6 fixed-center bottom-0 flex justify-between border-t-[0.5px] bg-white p-[0.8rem_2rem_1.6rem_2rem]'>
       {menuItems.map((item) => (
         <Link key={item.label} href={item.href} className='flex flex-col items-center gap-[0.2rem]'>
           {isActive(item.href) ? (

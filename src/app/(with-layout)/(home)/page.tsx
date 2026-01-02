@@ -29,9 +29,13 @@ export default function Home() {
     <div>
       <div className='text-3xl font-bold underline'>Snappin</div>
       <PageClient />
-
       <div className='bg-black-7 p-1'>black_7</div>
-
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>{' '}
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>{' '}
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>{' '}
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>{' '}
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>{' '}
+      <div className='bg-black-7 p-1'>black_7</div> <div className='bg-black-7 p-1'>black_7</div>
       <IconAdd />
       <IconAdd2 />
       <IconArrowBack />
@@ -54,7 +58,6 @@ export default function Home() {
       <IconExplore className='text-red-500' />
       <IconProfile className='text-red-500' />
       <IconReservation className='text-red-500' />
-
       <IconHomeFill className='text-red-500' />
       <IconHeartFill className='text-red-500' />
       <IconExploreFill className='text-red-500' />
