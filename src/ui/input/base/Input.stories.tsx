@@ -1,14 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Input from './Input';
-import { fn } from '@storybook/test';
+import { Input } from '@/ui';
 
 const meta: Meta<typeof Input> = {
-  title: 'Input',
+  title: 'input/Input',
   component: Input,
   tags: ['autodocs'],
   args: {
     placeholder: '입력해주세요',
-    onChange: fn(),
   },
   parameters: {
     docs: {
