@@ -3,7 +3,7 @@ import ProductCard from './ProductCard';
 import type { TagCode } from '../chip/tag-chip/types/tagCode';
 
 const meta: Meta<typeof ProductCard> = {
-  title: 'Components/Product/ProductCard',
+  title: 'ProductCard',
   component: ProductCard,
   parameters: {
     layout: 'centered',
