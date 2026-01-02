@@ -1,8 +1,1 @@
-export {
-  type CarouselApi,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from './Carousel';
+export { default as CarouselCuration } from './carousel-curation/CarouselCuration';
