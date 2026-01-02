@@ -1,8 +1,6 @@
-import type { SECTION_TAB } from '../constants/sectionTabTheme';
-
-export type SectionTabsProps = {
-  tabs: readonly SECTION_TAB[];
-  selectedTab: SECTION_TAB;
-  onChangeTab: (tab: SECTION_TAB) => void;
-  getLabel: (tab: SECTION_TAB) => string;
+export type SectionTabsProps<T extends string> = {
+  tabs: readonly T[];
+  selectedTab: T;
+  onChangeTab: (tab: T) => void;
+  getLabel: (tab: T) => string;
 };
