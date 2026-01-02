@@ -4,7 +4,11 @@ import * as React from 'react';
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 
 import { cn } from '@/utils/cn';
-import { SectionTabsContext, useSectionTabsContext } from './contexts/sectionTabsContext';
+import {
+  SectionTabsContext,
+  useSectionTabsContext,
+  type SectionTabsIndicatorStyle,
+} from './contexts/sectionTabsContext';
 
 type SectionTabsProps = HTMLAttributes<HTMLDivElement> & {
   value?: string;
@@ -30,7 +34,14 @@ function SectionTabsRoot({
   ...props
 }: SectionTabsProps) {
   const [internalValue, setInternalValue] = React.useState<string | null>(defaultValue ?? null);
+  const [indicatorStyle, setIndicatorStyle] = React.useState<SectionTabsIndicatorStyle | null>(null);
   const selectedValue = value ?? internalValue;
+
+  React.useEffect(() => {
+    if (selectedValue === null) {
+      setIndicatorStyle(null);
+    }
+  }, [selectedValue]);
 
   const handleValueChange = React.useCallback(
     (nextValue: string) => {
@@ -44,8 +55,10 @@ function SectionTabsRoot({
     () => ({
       value: selectedValue,
       onValueChange: handleValueChange,
+      indicatorStyle,
+      setIndicatorStyle,
     }),
-    [handleValueChange, selectedValue],
+    [handleValueChange, indicatorStyle, selectedValue],
   );
 
   return (
@@ -57,12 +70,28 @@ function SectionTabsRoot({
   );
 }
 
-function SectionTabsList({ className, ...props }: SectionTabsListProps) {
+function SectionTabsList({ className, children, ...props }: SectionTabsListProps) {
+  const { indicatorStyle } = useSectionTabsContext('SectionTabs.List');
+
   return (
     <div
-      className={cn('border-black-4 flex h-[4.5rem] w-full gap-4 border-b px-8', className)}
+      className={cn(
+        'border-black-4 relative flex h-[4.5rem] w-full gap-4 border-b px-8',
+        className,
+      )}
       {...props}
-    />
+    >
+      {children}
+      {indicatorStyle ? (
+        <span
+          className='bg-black-10 pointer-events-none absolute bottom-0 left-0 h-[0.2rem] transition-[transform,width] duration-200 ease-out'
+          style={{
+            width: `${indicatorStyle.widthRem}rem`,
+            transform: `translateX(${indicatorStyle.leftRem}rem)`,
+          }}
+        />
+      ) : null}
+    </div>
   );
 }
 
@@ -74,8 +103,43 @@ function SectionTabsTab({
   type = 'button',
   ...props
 }: SectionTabsTabProps) {
-  const { value: selectedValue, onValueChange } = useSectionTabsContext('SectionTabs.Tab');
+  const { value: selectedValue, onValueChange, setIndicatorStyle } =
+    useSectionTabsContext('SectionTabs.Tab');
   const isSelected = value === selectedValue;
+  const tabRef = React.useRef<HTMLButtonElement>(null);
+
+  const handleIndicatorUpdate = React.useCallback(() => {
+    const element = tabRef.current;
+    if (!element) {
+      return;
+    }
+
+    setIndicatorStyle({
+      leftRem: element.offsetLeft / 10,
+      widthRem: element.offsetWidth / 10,
+    });
+  }, [setIndicatorStyle]);
+
+  React.useLayoutEffect(() => {
+    if (isSelected) {
+      handleIndicatorUpdate();
+    }
+  }, [handleIndicatorUpdate, isSelected, children, className]);
+
+  React.useEffect(() => {
+    if (!isSelected) {
+      return;
+    }
+
+    const handleResize = () => {
+      handleIndicatorUpdate();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [handleIndicatorUpdate, isSelected]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
@@ -95,13 +159,11 @@ function SectionTabsTab({
         isSelected ? 'text-black-10' : 'text-black-5',
         className,
       )}
+      ref={tabRef}
       onClick={handleClick}
       {...props}
     >
       {content}
-      {isSelected ? (
-        <span className='bg-black-10 absolute bottom-0 left-0 h-[0.2rem] w-full' />
-      ) : null}
     </button>
   );
 }

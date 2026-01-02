@@ -1,8 +1,15 @@
 import * as React from 'react';
 
+type SectionTabsIndicatorStyle = {
+  leftRem: number;
+  widthRem: number;
+};
+
 type SectionTabsContextValue = {
   value: string | null;
   onValueChange: (value: string) => void;
+  indicatorStyle: SectionTabsIndicatorStyle | null;
+  setIndicatorStyle: (style: SectionTabsIndicatorStyle | null) => void;
 };
 
 const SectionTabsContext = React.createContext<SectionTabsContextValue | null>(null);
@@ -17,4 +24,4 @@ const useSectionTabsContext = (componentName: string) => {
 };
 
 export { SectionTabsContext, useSectionTabsContext };
-export type { SectionTabsContextValue };
+export type { SectionTabsContextValue, SectionTabsIndicatorStyle };
