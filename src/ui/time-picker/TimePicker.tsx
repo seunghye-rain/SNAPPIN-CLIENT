@@ -30,7 +30,7 @@ export function TimePicker({ sections, value, onChange }: TimePickerProps) {
         <section key={section.label} className='mb-6 last:mb-2'>
           <p className='caption-12-md text-black-8 mb-1'>{section.label}</p>
 
-          <div className='grid grid-cols-[repeat(4,7.4rem)] gap-2'>
+          <div className='grid grid-cols-[repeat(4,7.4rem)]'>
             {section.slots.map(({ time, disabled }) => (
               <TimeButton
                 key={time}
