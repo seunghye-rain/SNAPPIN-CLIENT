@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/ui';
 import { IconAddPhotoAlternate } from '@/assets';
 import { useRef } from 'react';
