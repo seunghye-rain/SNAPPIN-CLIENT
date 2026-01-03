@@ -22,7 +22,7 @@ const meta: Meta<typeof ProductCard> = {
       control: { type: 'number', min: 0 },
       description: '리뷰 수',
     },
-    photographer: {
+    author: {
       control: 'text',
       description: '작가명',
     },
@@ -61,7 +61,7 @@ const meta: Meta<typeof ProductCard> = {
     name: '찰나의 순간을 기억으로 남기는 소중한 촬영',
     rating: 4.8,
     reviewCount: 20,
-    photographer: '김작가',
+    author: '김작가',
     price: 80000,
     tags: ['WARM', 'ANALOG', 'DIRECTED'],
   },

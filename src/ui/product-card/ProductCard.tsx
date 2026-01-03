@@ -10,7 +10,7 @@ type ProductCardProps = {
   name: string;
   rating: number;
   reviewCount: number;
-  photographer: string;
+  author: string;
   price: number;
   tags: TagCode[];
   className?: string;
@@ -21,7 +21,7 @@ export default function ProductCard({
   name,
   rating,
   reviewCount,
-  photographer,
+  author,
   price,
   tags,
   className,
@@ -59,7 +59,7 @@ export default function ProductCard({
               </div>
             </div>
             <span className='w-[19rem] truncate caption-12-md text-black-7'>
-              {photographer}
+              {author}
             </span>
           </div>
         </div>
