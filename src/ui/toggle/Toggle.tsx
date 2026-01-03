@@ -2,7 +2,7 @@ import { cn } from '@/utils/cn';
 import { TabType } from './types/tabType';
 import { TOGGLE_THEME_BY_TAB } from './constants/toggleTheme';
 
-type ToggleProps = {
+export type ToggleProps = {
   tab: TabType;
   className?: string;
   handleOnClick: () => void;

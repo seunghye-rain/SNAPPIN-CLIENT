@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Toggle from './Toggle';
+import Toggle, { ToggleProps } from './Toggle';
 import { TabType } from './types/tabType';
 
 const meta: Meta<typeof Toggle> = {
@@ -7,6 +8,11 @@ const meta: Meta<typeof Toggle> = {
   component: Toggle,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: '고객/작가 토글 컴포넌트입니다.',
+      }
+    }
   },
   tags: ['autodocs'],
   argTypes: {
@@ -24,14 +30,32 @@ const meta: Meta<typeof Toggle> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ToggleWithState = (args: ToggleProps) => {
+  const [selectedTab, setSelectedTab] = useState<TabType>(args.tab);
+
+  const handleOnClick = () =>
+    setSelectedTab(prev => (prev === 'client' ? 'author' : 'client'));
+
+  return (
+    <Toggle
+      {...args}
+      tab={selectedTab}
+      handleOnClick={handleOnClick}
+    />
+  );
+};
+
+
 export const Client: Story = {
   args: {
     tab: 'client',
   },
+  render: ToggleWithState,
 };
 
 export const Author: Story = {
   args: {
     tab: 'author',
   },
+  render: ToggleWithState,
 };
