@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import { TimePicker } from './TimePicker';
+import TimePicker from './TimePicker';
 import { MOCK_TIME_SLOTS } from './constants/mockTimeSlots';
 
 const meta: Meta<typeof TimePicker> = {

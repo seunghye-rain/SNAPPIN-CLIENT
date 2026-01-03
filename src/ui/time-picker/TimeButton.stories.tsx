@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { TimeButton } from './TimeButton';
+import TimeButton from './TimeButton';
 
 const meta: Meta<typeof TimeButton> = {
   title: 'UI/TimeButton',
