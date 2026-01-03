@@ -1,6 +1,5 @@
 import { cn } from '@/utils/cn';
-
-type TimeButtonState = 'default' | 'selected' | 'disabled';
+import type { TimeButtonState } from './constants/buttonState';
 
 type TimeButtonProps = {
   time: string;
@@ -25,7 +24,7 @@ export const TimeButton = ({ time, state = 'default', onClick }: TimeButtonProps
       onClick={handleOnClick}
       className={cn(
         'caption-14-md',
-        'flex h-[3.3rem] w-[7.4rem] items-center justify-center transition-colors',
+        'flex h-[3.3rem] w-full items-center justify-center px-[1.8rem] py-[0.8rem] transition-colors',
         'rounded border',
         TIME_BUTTON_THEME[state],
       )}
