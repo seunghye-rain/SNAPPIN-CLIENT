@@ -12,6 +12,7 @@ import {
 import { useSectionTabsQuerySync } from './hooks/useSectionTabsQuerySync';
 
 const PX_PER_REM = 10;
+const NOOP = () => {};
 const getSectionTabsId = (baseId: string, value: string, suffix: string) => {
   const normalizedValue = value.replace(/\s+/g, '-');
   return `${baseId}-${suffix}-${normalizedValue}`;
@@ -54,22 +55,15 @@ const SectionTabsRoot = ({
     handleValueChange,
   });
 
-  const handleTabChange = React.useCallback(
-    (nextValue: string) => {
-      handleValueChange?.(nextValue);
-    },
-    [handleValueChange],
-  );
-
   const contextValue = React.useMemo(
     () => ({
       value: selectedValue,
-      handleValueChange: handleTabChange,
+      handleValueChange: handleValueChange ?? NOOP,
       indicatorStyle,
       setIndicatorStyle,
       baseId,
     }),
-    [handleTabChange, indicatorStyle, selectedValue, baseId],
+    [handleValueChange, indicatorStyle, selectedValue, baseId],
   );
 
   return (
