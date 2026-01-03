@@ -9,17 +9,19 @@ import {
   useSectionTabsContext,
   type SectionTabsIndicatorStyle,
 } from './contexts/sectionTabsContext';
+import { useSectionTabsQuerySync } from './hooks/useSectionTabsQuerySync';
 
 const PX_PER_REM = 10;
 
 type SectionTabsProps = HTMLAttributes<HTMLDivElement> & {
   value: string;
-  onValueChange?: (value: string) => void;
+  handleValueChange?: (value: string) => void;
+  queryKey?: string;
 };
 
 type SectionTabsTabChildren = ReactNode | ((props: { isSelected: boolean }) => ReactNode);
 
-type SectionTabsTabProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
+type SectionTabsTabProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick'> & {
   value: string;
   children: SectionTabsTabChildren;
 };
@@ -32,7 +34,8 @@ type SectionTabsPanelProps = HTMLAttributes<HTMLDivElement> & {
 
 function SectionTabsRoot({
   value,
-  onValueChange,
+  handleValueChange,
+  queryKey,
   className,
   children,
   ...props
@@ -40,27 +43,33 @@ function SectionTabsRoot({
   const [indicatorStyle, setIndicatorStyle] = React.useState<SectionTabsIndicatorStyle | null>(null);
   const selectedValue = value;
 
+  useSectionTabsQuerySync({
+    queryKey,
+    value: selectedValue,
+    handleValueChange,
+  });
+
   React.useEffect(() => {
     if (selectedValue === null) {
       setIndicatorStyle(null);
     }
   }, [selectedValue]);
 
-  const handleValueChange = React.useCallback(
+  const handleTabChange = React.useCallback(
     (nextValue: string) => {
-      onValueChange?.(nextValue);
+      handleValueChange?.(nextValue);
     },
-    [onValueChange],
+    [handleValueChange],
   );
 
   const contextValue = React.useMemo(
     () => ({
       value: selectedValue,
-      onValueChange: handleValueChange,
+      handleValueChange: handleTabChange,
       indicatorStyle,
       setIndicatorStyle,
     }),
-    [handleValueChange, indicatorStyle, selectedValue],
+    [handleTabChange, indicatorStyle, selectedValue],
   );
 
   return (
@@ -116,11 +125,10 @@ function SectionTabsTab({
   value,
   className,
   children,
-  onClick,
   type = 'button',
   ...props
 }: SectionTabsTabProps) {
-  const { value: selectedValue, onValueChange, setIndicatorStyle } =
+  const { value: selectedValue, handleValueChange, setIndicatorStyle } =
     useSectionTabsContext('SectionTabs.Tab');
   const isSelected = value === selectedValue;
   const tabRef = React.useRef<HTMLButtonElement>(null);
@@ -158,11 +166,8 @@ function SectionTabsTab({
     };
   }, [handleIndicatorUpdate, isSelected]);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onClick?.(event);
-    if (!event.defaultPrevented) {
-      onValueChange(value);
-    }
+  const handleTabClick = () => {
+    handleValueChange(value);
   };
 
   const content = typeof children === 'function' ? children({ isSelected }) : children;
@@ -177,7 +182,7 @@ function SectionTabsTab({
         className,
       )}
       ref={tabRef}
-      onClick={handleClick}
+      onClick={handleTabClick}
       {...props}
     >
       {content}
