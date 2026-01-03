@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ButtonAddMinus from './ButtonAddMinus';
 
 const meta: Meta<typeof ButtonAddMinus> = {
-  title: 'ButtonAddMinus',
+  title: 'Button/ButtonAddMinus',
   component: ButtonAddMinus,
   tags: ['autodocs'],
   parameters: {

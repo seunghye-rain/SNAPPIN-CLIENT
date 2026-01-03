@@ -1,7 +1,8 @@
 'use client';
 
-import { IconAdd, IconRemove } from '@/assets';
+import { IconButton } from '@/ui';
 import { cn } from '@/utils/cn';
+import { IconAdd, IconRemove } from '@/assets';
 
 type ButtonAddMinusProps = {
   value: string | number;
@@ -27,19 +28,18 @@ export default function ButtonAddMinus({
         className,
       )}
     >
-      <IconRemove
-        aria-disabled={isDisabledMinus}
+      <IconButton
+        disabled={isDisabledMinus}
         onClick={isDisabledMinus ? undefined : handleClickMinus}
-        className={cn('cursor-pointer', isDisabledMinus && 'cursor-not-allowed')}
-      />
+      >
+        <IconRemove />
+      </IconButton>
       <span className='bg-black-1 font-16-md flex h-[3rem] items-center justify-center px-[1.8rem] py-[0.2rem] text-center'>
         {value}
       </span>
-      <IconAdd
-        aria-disabled={isDisabledAdd}
-        onClick={isDisabledAdd ? undefined : handleClickAdd}
-        className={cn('cursor-pointer', isDisabledAdd && 'cursor-not-allowed')}
-      />
+      <IconButton disabled={isDisabledAdd} onClick={isDisabledAdd ? undefined : handleClickAdd}>
+        <IconAdd />
+      </IconButton>
     </div>
   );
 }
