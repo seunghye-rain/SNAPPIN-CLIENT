@@ -16,7 +16,7 @@ export default function PageClient() {
       </button>
       <IconSuccess />
       <IconError />
-      <div className='h-[1000px] bg-red-500' />
+      <div className='h-[1px] bg-red-500' />
     </div>
   );
 }
