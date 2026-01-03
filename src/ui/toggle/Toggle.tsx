@@ -3,24 +3,24 @@ import { TabType } from './types/tabType';
 import { TOGGLE_THEME_BY_TAB } from './constants/toggleTheme';
 
 export type ToggleProps = {
-  tab: TabType;
+  selectedTab: TabType;
   className?: string;
-  handleOnClick: () => void;
+  onClick: () => void;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 export default function Toggle({
-  tab,
+  selectedTab,
   className,
-  handleOnClick,
+  onClick,
   ...props
 }: ToggleProps) {
-  const { trackClassName, thumbClassName, labelClassName, label } = TOGGLE_THEME_BY_TAB[tab];
+  const { trackClassName, thumbClassName, labelClassName, label } = TOGGLE_THEME_BY_TAB[selectedTab];
 
   return (
     <button
       type='button'
       className={cn('flex justify-center items-center w-[7.7rem] h-[3.2rem]', className)}
-      onClick={handleOnClick}
+      onClick={onClick}
       {...props}
     >
       <div className={cn(

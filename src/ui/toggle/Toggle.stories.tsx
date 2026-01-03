@@ -16,14 +16,14 @@ const meta: Meta<typeof Toggle> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    tab: {
+    selectedTab: {
       control: { type: 'select' },
       options: ['client', 'author'] satisfies TabType[],
       description: '사용자 유형',
     },
   },
   args: {
-    tab: 'client',
+    selectedTab: 'client',
   },
 };
 
@@ -31,7 +31,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const ToggleWithState = (args: ToggleProps) => {
-  const [selectedTab, setSelectedTab] = useState<TabType>(args.tab);
+  const [selectedTab, setSelectedTab] = useState<TabType>(args.selectedTab);
 
   const handleOnClick = () =>
     setSelectedTab(prev => (prev === 'client' ? 'author' : 'client'));
@@ -39,8 +39,8 @@ const ToggleWithState = (args: ToggleProps) => {
   return (
     <Toggle
       {...args}
-      tab={selectedTab}
-      handleOnClick={handleOnClick}
+      selectedTab={selectedTab}
+      onClick={handleOnClick}
     />
   );
 };
@@ -48,14 +48,14 @@ const ToggleWithState = (args: ToggleProps) => {
 
 export const Client: Story = {
   args: {
-    tab: 'client',
+    selectedTab: 'client',
   },
   render: ToggleWithState,
 };
 
 export const Author: Story = {
   args: {
-    tab: 'author',
+    selectedTab: 'author',
   },
   render: ToggleWithState,
 };
