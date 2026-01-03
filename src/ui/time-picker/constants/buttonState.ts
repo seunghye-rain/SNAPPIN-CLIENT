@@ -1,2 +1,2 @@
-export type TimeButtonState = 'default' | 'selected' | 'disabled';
+export type TimeButtonState = 'default' | 'selected';
 export type TimeButtonClickHandler = (time: string) => void;
