@@ -3,7 +3,7 @@ import type { TimeButtonState } from './constants/buttonState';
 
 export type TimeSlot = {
   time: string;
-  disabled: boolean;
+  state: TimeButtonState;
 };
 
 export type TimeSlotSection = {
@@ -14,30 +14,30 @@ export type TimeSlotSection = {
 type TimePickerProps = {
   sections: TimeSlotSection[];
   value: string;
-  onChange?: (time: string) => void;
+  handleChange?: (time: string) => void;
 };
 
-export const TimePicker = ({ sections, value, onChange }: TimePickerProps) => {
+export const TimePicker = ({ sections, value, handleChange }: TimePickerProps) => {
   const handleSelect = (time: string) => {
-    onChange?.(time);
+    handleChange?.(time);
   };
 
-  const getState = (time: string, disabled: boolean): TimeButtonState =>
-    disabled ? 'disabled' : value === time ? 'selected' : 'default';
+  const getState = (time: string, state: TimeButtonState): TimeButtonState =>
+    state === 'disabled' ? 'disabled' : value === time ? 'selected' : state;
 
   return (
-    <div className='bg-black-1 p-5'>
+    <div className='bg-black-1 p-[1.25rem]'>
       {sections.map((section) => (
-        <section key={section.label} className='mb-6 last:mb-2'>
-          <p className='caption-12-md text-black-8 mb-1'>{section.label}</p>
+        <section key={section.label} className='mb-[1.5rem] last:mb-[0.5rem]'>
+          <p className='caption-12-md text-black-8 mb-[0.25rem]'>{section.label}</p>
 
           <div className='grid grid-cols-4 gap-[0.5rem]'>
-            {section.slots.map(({ time, disabled }) => (
+            {section.slots.map(({ time, state }) => (
               <TimeButton
                 key={time}
                 time={time}
-                state={getState(time, disabled)}
-                onClick={handleSelect}
+                state={getState(time, state)}
+                handleClick={handleSelect}
               />
             ))}
           </div>
