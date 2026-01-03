@@ -7,7 +7,7 @@ type SectionTabsIndicatorStyle = {
 
 type SectionTabsContextValue = {
   value: string | null;
-  onValueChange: (value: string) => void;
+  handleValueChange: (value: string) => void;
   indicatorStyle: SectionTabsIndicatorStyle | null;
   setIndicatorStyle: (style: SectionTabsIndicatorStyle | null) => void;
 };
