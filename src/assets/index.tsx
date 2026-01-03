@@ -25,6 +25,8 @@ export { default as IconKeyboardArrowDown } from './components/IconKeyboardArrow
 export { default as IconKeyboardArrowLeft } from './components/IconKeyboardArrowLeft';
 export { default as IconKeyboardArrowRight } from './components/IconKeyboardArrowRight';
 export { default as IconKeyboardArrowUp } from './components/IconKeyboardArrowUp';
+export { default as IconMessage } from './components/IconMessage';
+export { default as IconMessageFill } from './components/IconMessageFill';
 export { default as IconProfile } from './components/IconProfile';
 export { default as IconProfileFill } from './components/IconProfileFill';
 export { default as IconRemove } from './components/IconRemove';
