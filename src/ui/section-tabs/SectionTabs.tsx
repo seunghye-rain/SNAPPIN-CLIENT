@@ -32,14 +32,14 @@ type SectionTabsPanelProps = HTMLAttributes<HTMLDivElement> & {
   value: string;
 };
 
-function SectionTabsRoot({
+const SectionTabsRoot = ({
   value,
   handleValueChange,
   queryKey,
   className,
   children,
   ...props
-}: SectionTabsProps) {
+}: SectionTabsProps) => {
   const [indicatorStyle, setIndicatorStyle] = React.useState<SectionTabsIndicatorStyle | null>(null);
   const selectedValue = value;
 
@@ -79,15 +79,15 @@ function SectionTabsRoot({
       </div>
     </SectionTabsContext.Provider>
   );
-}
+};
 
-function SectionTabsList({ className, children, ...props }: SectionTabsListProps) {
+const SectionTabsList = ({ className, children, ...props }: SectionTabsListProps) => {
   const { indicatorStyle } = useSectionTabsContext('SectionTabs.List');
 
   return (
     <div
       className={cn(
-        'border-black-4 relative flex h-[4.5rem] w-full gap-4 border-b px-8',
+        'border-black-4 relative flex h-[4.5rem] w-full gap-[0.4rem] border-b px-[0.8rem]',
         className,
       )}
       {...props}
@@ -104,9 +104,9 @@ function SectionTabsList({ className, children, ...props }: SectionTabsListProps
       ) : null}
     </div>
   );
-}
+};
 
-function SectionTabsPanel({ value, className, children, ...props }: SectionTabsPanelProps) {
+const SectionTabsPanel = ({ value, className, children, ...props }: SectionTabsPanelProps) => {
   const { value: selectedValue } = useSectionTabsContext('SectionTabs.Panel');
   const isSelected = value === selectedValue;
 
@@ -119,15 +119,15 @@ function SectionTabsPanel({ value, className, children, ...props }: SectionTabsP
       {children}
     </div>
   );
-}
+};
 
-function SectionTabsTab({
+const SectionTabsTab = ({
   value,
   className,
   children,
   type = 'button',
   ...props
-}: SectionTabsTabProps) {
+}: SectionTabsTabProps) => {
   const { value: selectedValue, handleValueChange, setIndicatorStyle } =
     useSectionTabsContext('SectionTabs.Tab');
   const isSelected = value === selectedValue;
@@ -188,7 +188,7 @@ function SectionTabsTab({
       {content}
     </button>
   );
-}
+};
 
 type SectionTabsComponent = typeof SectionTabsRoot & {
   List: typeof SectionTabsList;
