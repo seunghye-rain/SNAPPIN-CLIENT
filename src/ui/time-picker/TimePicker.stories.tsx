@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 const TimePickerTemplate = (args: React.ComponentProps<typeof TimePicker>) => {
   const [selectedTime, setSelectedTime] = useState<string | null>(args.value ?? null);
 
-  return <TimePicker {...args} value={selectedTime} onChange={setSelectedTime} />;
+  return <TimePicker {...args} value={selectedTime} handleChange={setSelectedTime} />;
 };
 
 export const Default: Story = {
