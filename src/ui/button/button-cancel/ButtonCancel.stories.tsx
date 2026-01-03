@@ -22,10 +22,3 @@ export default meta;
 type StoryButtonCancel = StoryObj<typeof ButtonCancel>;
 
 export const Default: StoryButtonCancel = {};
-
-export const Disabled: StoryButtonCancel = {
-  args: {
-    disabled: true,
-  },
-};
-
