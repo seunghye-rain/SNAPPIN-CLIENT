@@ -1,4 +1,4 @@
-import { TimeButton } from './TimeButton';
+import TimeButton from './TimeButton';
 import type { TimeButtonState } from './constants/buttonState';
 
 export type TimeSlot = {
@@ -17,7 +17,7 @@ type TimePickerProps = {
   handleChange?: (time: string) => void;
 };
 
-export const TimePicker = ({ sections, value, handleChange }: TimePickerProps) => {
+export default function TimePicker({ sections, value, handleChange }: TimePickerProps) {
   const handleSelect = (time: string) => {
     handleChange?.(time);
   };
@@ -37,7 +37,7 @@ export const TimePicker = ({ sections, value, handleChange }: TimePickerProps) =
                 time={time}
                 state={getState(time)}
                 disabled={disabled}
-                handleClick={handleSelect}
+                onClick={() => handleSelect(time)}
               />
             ))}
           </div>
@@ -45,4 +45,4 @@ export const TimePicker = ({ sections, value, handleChange }: TimePickerProps) =
       ))}
     </div>
   );
-};
+}
