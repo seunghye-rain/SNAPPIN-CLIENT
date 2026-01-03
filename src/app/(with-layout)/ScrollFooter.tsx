@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import logoGray from '@/../public/imgs/logo-gray.png';
+import { Logo } from '@/assets';
 
 export default function ScrollFooter() {
   const [hasScroll, setHasScroll] = useState(false);
@@ -33,7 +32,7 @@ export default function ScrollFooter() {
 
   return (
     <div className='bg-black-3 mb-[6.2rem] flex h-[6.7rem] items-center justify-center px-[2rem]'>
-      <Image src={logoGray} alt='scroll-footer' width={100} />
+      <Logo className='text-black-5' width={100} />
     </div>
   );
 }
