@@ -8,10 +8,5 @@ type DividerProps = {
 };
 
 export default function Divider({ thickness = 'small', color = 'gray-light' }: DividerProps) {
-  return (
-    <div
-      style={{ height: thickness }}
-      className={cn(DIVIDER_COLOR[color], DIVIDER_THICKNESS[thickness])}
-    />
-  );
+  return <div className={cn(DIVIDER_COLOR[color], DIVIDER_THICKNESS[thickness])} />;
 }
