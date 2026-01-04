@@ -13,13 +13,28 @@ type Story = StoryObj<typeof Divider>;
 
 export const Default: Story = {
   args: {
-    thickness: 0.7,
+    thickness: 'small',
     color: 'gray-light',
   },
 };
 
-export const ThickDarkDivider: Story = {
+export const LargeDarkDivider: Story = {
   args: {
+    thickness: 'large',
     color: 'gray-dark',
+  },
+};
+
+export const SmallDarkDivider: Story = {
+  args: {
+    thickness: 'small',
+    color: 'gray-dark',
+  },
+};
+
+export const LargeLightDivider: Story = {
+  args: {
+    thickness: 'large',
+    color: 'gray-light',
   },
 };
