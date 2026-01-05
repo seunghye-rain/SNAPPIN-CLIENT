@@ -40,7 +40,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         {children}
       </div>
-      <div className='bg-black-3 flex h-[6.7rem] items-center justify-center'>
+      <div className='bg-black-3 footer-height flex items-center justify-center'>
         <Logo className='text-black-5' width={100} height={20} />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
