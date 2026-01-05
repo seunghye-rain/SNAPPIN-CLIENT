@@ -4,6 +4,8 @@ import FilterButton, { FilterButtonProps } from './FilterButton';
 import { TagCode } from '@/ui/chip/tag-chip/types/tagCode';
 import { TAG_LABEL } from '@/ui/chip/tag-chip/constants/tagLabel';
 
+const TAGS = Object.keys(TAG_LABEL) as TagCode[];
+
 const meta: Meta<typeof FilterButton> = {
   title: 'Button/FilterButton',
   component: FilterButton,
@@ -19,24 +21,7 @@ const meta: Meta<typeof FilterButton> = {
   argTypes: {
     label: {
       control: { type: 'select' },
-      options: [
-        'WARM',
-        'FRESH',
-        'CLEAR',
-        'SUNNY',
-        'DREAMY',
-        'CHIC',
-        'CALM',
-        'VIVID',
-        'DIRECTED',
-        'CINEMATIC',
-        'NATURAL',
-        'SCENERY',
-        'ROUGH',
-        'SEASONAL',
-        'ANALOG',
-        'UNIQUE',
-      ] satisfies TagCode[],
+      options: Object.keys(TAG_LABEL) as TagCode[],
       description: '무드',
     },
     isSelected: {
@@ -54,8 +39,6 @@ const meta: Meta<typeof FilterButton> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-const TAGS = Object.keys(TAG_LABEL) as TagCode[];
 
 const FilterButtonWithState = (args: FilterButtonProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(args.isSelected);

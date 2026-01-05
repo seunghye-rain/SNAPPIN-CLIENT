@@ -46,11 +46,18 @@ export default function FilterButton({
       { removable && (
         <div
           role='button'
-          aria-label={`${label} 필터 제거`}
+          aria-label={`${TAG_LABEL[label]} 필터 제거`}
           tabIndex={0}
-          onClick={onClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
           onKeyDown={(e) => {
-            if (e.code === 'Space' || e.code === 'Enter') onClick();
+            if (e.code === 'Space' || e.code === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation();
+              onClick();
+            };
           }}
         >
           <IconClose
