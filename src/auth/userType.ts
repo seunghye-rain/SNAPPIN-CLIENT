@@ -19,9 +19,4 @@ async function deleteUserType() {
   cookieStore.delete(USER_TYPE_COOKIE_NAME);
 }
 
-async function updateUserType(value: UserType) {
-  const cookieStore = await cookies();
-  cookieStore.set(USER_TYPE_COOKIE_NAME, value);
-}
-
-export { setUserType, getUserType, deleteUserType, updateUserType };
+export { setUserType, getUserType, deleteUserType };
