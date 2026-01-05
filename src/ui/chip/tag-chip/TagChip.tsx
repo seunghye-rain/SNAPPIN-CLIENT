@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import Chip from '../Chip';
+import Chip from '../base/Chip';
 import { TagCode } from './types/tagCode';
 import { TAG_LABEL } from './constants/tagLabel';
 import { TagChipVariant } from './types/tagChipVariant';
