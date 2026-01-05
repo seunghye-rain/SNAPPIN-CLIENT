@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import type { ReactNode } from 'react';
 import { useState } from 'react';
 
 import SectionTabs from './SectionTabs';
@@ -21,22 +22,23 @@ type Story = StoryObj<typeof SectionTabs>;
 
 type SectionTabItem = {
   id: string;
-  label: string;
-  count?: number;
-  content: string;
+  label: ReactNode;
+  content: ReactNode;
 };
 
-function SectionTabsTemplate({
-  tabs,
-  listClassName,
-  tabClassName = 'flex-1',
-  queryKey,
-}: {
+type SectionTabsTemplateProps = {
   tabs: SectionTabItem[];
   listClassName?: string;
   tabClassName?: string;
   queryKey?: string;
-}) {
+};
+
+const SectionTabsTemplate = ({
+  tabs,
+  listClassName,
+  tabClassName = 'flex-1',
+  queryKey,
+}: SectionTabsTemplateProps) => {
   const [selectedTab, setSelectedTab] = useState(tabs[0]?.id ?? '');
 
   return tabs.length === 0 ? null : (
@@ -44,38 +46,36 @@ function SectionTabsTemplate({
       <SectionTabs.List className={listClassName}>
         {tabs.map((tab) => (
           <SectionTabs.Tab key={tab.id} value={tab.id} className={tabClassName}>
-            {tab.count !== undefined ? (
-              ({ isSelected }) => (
-                <span className='inline-flex items-center gap-1'>
-                  {tab.label}{' '}
-                  <span className={isSelected ? 'text-black-10' : 'text-black-5'}>
-                    ({tab.count})
-                  </span>
-                </span>
-              )
-            ) : (
-              tab.label
-            )}
+            {tab.label}
           </SectionTabs.Tab>
         ))}
       </SectionTabs.List>
       {tabs.map((tab) => (
-        <SectionTabs.Panel
+        <SectionTabs.Contents
           key={`${tab.id}-panel`}
           value={tab.id}
-          className='mt-[1.6rem] rounded-[0.8rem] bg-black-1 p-[1.2rem]'
+          className='bg-black-1 mt-[1.6rem] rounded-[0.8rem] p-[1.2rem]'
         >
           {tab.content}
-        </SectionTabs.Panel>
+        </SectionTabs.Contents>
       ))}
     </SectionTabs>
   );
-}
+};
 
 const defaultTabs: SectionTabItem[] = [
   { id: 'portfolio', label: '포트폴리오', content: '포트폴리오 콘텐츠' },
   { id: 'product', label: '상품', content: '상품 콘텐츠' },
-  { id: 'review', label: '리뷰', count: 12, content: '리뷰 콘텐츠' },
+  {
+    id: 'review',
+    label: (
+      <span className='inline-flex items-center gap-1'>
+        리뷰
+        <span className='text-black-5'>(12)</span>
+      </span>
+    ),
+    content: '리뷰 콘텐츠',
+  },
 ];
 
 export const Default: Story = {
