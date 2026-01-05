@@ -11,5 +11,3 @@ export * from './navigation/index';
 export * from './product-card/index';
 export * from './time-picker/index';
 export * from './user-type-toggle/index';
-export * from './time-picker/index';
-export * from './user-type-toggle/index';
