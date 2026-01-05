@@ -9,7 +9,6 @@ export default function HeaderSearch({
   className,
   containerClassName,
   inputWrapperClassName,
-  iconWrapperClassName,
   iconClassName,
   textContainerClassName,
   headlineClassName,
@@ -26,15 +25,14 @@ export default function HeaderSearch({
         'bg-black-3 relative flex w-full items-center gap-[1.5rem] rounded-[4rem] px-[2rem] py-[1.2rem]',
         containerClassName,
       )}
-      iconWrapperClassName={cn('shrink-0', iconWrapperClassName)}
       iconClassName={cn('text-black-7 h-[2.4rem] w-[2.4rem]', iconClassName)}
-      inputWrapperClassName={cn('relative flex-1 py-[1.2rem] ', inputWrapperClassName)}
+      inputWrapperClassName={cn('grid flex-1 items-center', inputWrapperClassName)}
       className={cn(
-        'text-black-9 caption-14-md w-full bg-transparent focus:outline-none',
+        'text-black-9 caption-14-md col-start-1 row-start-1 w-full bg-transparent focus:outline-none',
         className,
       )}
       textContainerClassName={cn(
-        'pointer-events-none absolute left-0 top-1/2 flex -translate-y-1/2 flex-col gap-[0.4rem] text-left transition-opacity aria-[hidden=true]:opacity-0',
+        'pointer-events-none col-start-1 row-start-1 flex flex-col gap-[0.4rem] text-left transition-opacity aria-[hidden=true]:opacity-0 justify-self-start',
         textContainerClassName,
       )}
       headlineClassName={cn('caption-14-bd text-black-9', headlineClassName)}
