@@ -39,6 +39,7 @@ export default function FilterChip({
       {...props}
     >
       <button
+        type='button'
         aria-label={`${label} 필터`}
         aria-pressed={isSelected}
         onClick={onClick ? () => onClick(label) : undefined}
