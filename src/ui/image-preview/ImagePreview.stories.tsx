@@ -76,7 +76,7 @@ export const WithoutRemoveButton: Story = {
 
 export const NoImage: Story = {
   args: {
-    imageSrc: '',
+    imageSrc: undefined,
     showRemoveButton: false,
   },
 };
