@@ -2,10 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
 
+type RemUnit = `${number}rem`;
+
 type ImageCarouselProps = React.ComponentProps<typeof Image> & {
-  //rem 단위로 입력
-  imageHeight: string;
-  imageWidth: string;
+  imageHeight: RemUnit;
+  imageWidth: RemUnit;
 };
 
 export default function ImageCarousel({

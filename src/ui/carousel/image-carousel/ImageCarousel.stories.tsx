@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ImageCarousel from './ImageCarousel';
 
 const meta: Meta<typeof ImageCarousel> = {
-  title: 'Carousel/ImageCarousel',
+  title: 'carousel/ImageCarousel',
   component: ImageCarousel,
   tags: ['autodocs'],
   parameters: {
@@ -37,10 +37,6 @@ const meta: Meta<typeof ImageCarousel> = {
     imageWidth: {
       control: { type: 'text' },
       description: '이미지 너비',
-    },
-    sizes: {
-      control: { type: 'text' },
-      description: '이미지 크기',
     },
   },
   args: {

@@ -47,7 +47,7 @@ export default function CarouselCuration({ images, tags, name, className }: Caro
       <Carousel setApi={setApi}>
         <CarouselContent>
           {images.map((img, idx) => (
-            <CarouselItem key={idx}>
+            <CarouselItem key={`image-${img.src}-${idx}`}>
               <ImageCarousel
                 src={img.src}
                 alt={img.alt ?? `image-${img.src}`}

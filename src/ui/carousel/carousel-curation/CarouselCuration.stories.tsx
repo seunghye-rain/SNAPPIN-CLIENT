@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import CarouselCuration from './CarouselCuration';
 
 const meta: Meta<typeof CarouselCuration> = {
-  title: 'Carousel/CarouselCuration',
+  title: 'carousel/CarouselCuration',
   component: CarouselCuration,
   tags: ['autodocs'],
   parameters: {
