@@ -66,6 +66,9 @@ export const apiRequest = async <T = unknown>({
   const accessToken = await getAccessToken();
 
   try {
+    if (!accessToken) {
+      throw new Error('Access token is required');
+    }
     // 쿼리 파라미터가 있으면 URL에 추가
     let requestUrl = `${SERVER_API_BASE_URL}${endPoint}`;
     if (params && Object.keys(params).length > 0) {
