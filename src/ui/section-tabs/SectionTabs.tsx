@@ -11,9 +11,7 @@ import {
 } from './contexts/sectionTabsContext';
 import { useSectionTabsQuerySync } from './hooks/useSectionTabsQuerySync';
 
-const PX_PER_REM = 10;
-const NOOP = () => {};
-const getSectionTabsId = (baseId: string, value: string, suffix: string) => {
+const makeId = (baseId: string, value: string, suffix: string) => {
   const normalizedValue = value.replace(/\s+/g, '-');
   return `${baseId}-${suffix}-${normalizedValue}`;
 };
@@ -24,11 +22,9 @@ type SectionTabsProps = HTMLAttributes<HTMLDivElement> & {
   queryKey?: string;
 };
 
-type SectionTabsTabChildren = ReactNode | ((props: { isSelected: boolean }) => ReactNode);
-
 type SectionTabsTabProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick'> & {
   value: string;
-  children: SectionTabsTabChildren;
+  children: ReactNode;
 };
 
 type SectionTabsListProps = HTMLAttributes<HTMLDivElement>;
@@ -66,7 +62,7 @@ const SectionTabsRoot = ({
   const contextValue = React.useMemo(
     () => ({
       value: selectedValue,
-      handleValueChange: handleValueChange ?? NOOP,
+      handleValueChange: handleValueChange ?? (() => {}),
       indicatorStyle,
       setIndicatorStyle,
       baseId,
@@ -121,8 +117,8 @@ const SectionTabsList = ({
 const SectionTabContents = ({ value, className, children, ...props }: SectionTabContentsProps) => {
   const { value: selectedValue, baseId } = useSectionTabsContext('SectionTabs.Contents');
   const isSelected = value === selectedValue;
-  const tabId = getSectionTabsId(baseId, value, 'tab');
-  const panelId = getSectionTabsId(baseId, value, 'panel');
+  const tabId = makeId(baseId, value, 'tab');
+  const panelId = makeId(baseId, value, 'panel');
 
   return (
     <div
@@ -155,8 +151,8 @@ const SectionTabsTab = ({
   } = useSectionTabsContext('SectionTabs.Tab');
   const isSelected = value === selectedValue;
   const tabRef = React.useRef<HTMLButtonElement>(null);
-  const tabId = getSectionTabsId(baseId, value, 'tab');
-  const panelId = getSectionTabsId(baseId, value, 'panel');
+  const tabId = makeId(baseId, value, 'tab');
+  const panelId = makeId(baseId, value, 'panel');
 
   const handleIndicatorUpdate = React.useCallback(() => {
     const element = tabRef.current;
@@ -165,8 +161,8 @@ const SectionTabsTab = ({
     }
 
     setIndicatorStyle({
-      leftRem: element.offsetLeft / PX_PER_REM,
-      widthRem: element.offsetWidth / PX_PER_REM,
+      leftRem: element.offsetLeft / 10,
+      widthRem: element.offsetWidth / 10,
     });
   }, [setIndicatorStyle]);
 
@@ -195,8 +191,6 @@ const SectionTabsTab = ({
     handleValueChange(value);
   };
 
-  const content = typeof children === 'function' ? children({ isSelected }) : children;
-
   return (
     <button
       type={type}
@@ -215,7 +209,7 @@ const SectionTabsTab = ({
       onClick={handleTabClick}
       {...props}
     >
-      {content}
+      {children}
     </button>
   );
 };
