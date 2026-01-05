@@ -8,7 +8,8 @@ const meta: Meta<typeof SearchBar> = {
   parameters: {
     docs: {
       description: {
-        component: 'SearchField 공용 컴포넌트입니다.',
+        component:
+          'SearchBar는 placeholder 기반 기본형, HeaderSearch는 headline/supportingText를 표시하는 헤더형입니다.',
       },
     },
   },
