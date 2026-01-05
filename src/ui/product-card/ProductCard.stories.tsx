@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ProductCard from './ProductCard';
-import type { MoodCode } from '../../types/moodCode';
 
 const meta: Meta<typeof ProductCard> = {
   title: 'ProductCard',
