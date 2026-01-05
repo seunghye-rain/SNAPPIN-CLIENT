@@ -7,3 +7,4 @@ export * from './footer/index';
 export * from './input/index';
 export * from './navigation/index';
 export * from './product-card/index';
+export * from './time-picker/index';
