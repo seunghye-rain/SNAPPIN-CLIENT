@@ -25,7 +25,7 @@ export default function FilterChip({
   onRemove,
   ...props
 }: FilterChipProps) {
-  if (!isSelected && onRemove) { throw new Error('불가능한 조합입니다.'); }
+  if (!isSelected && onRemove) { throw new Error('FilterChip의 경우 onRemove는 isSelected가 true일 때만 사용할 수 있습니다.'); }
 
   const variant = getVariant(isSelected, onRemove);
   const { buttonClassName, labelClassName } = FILTER_CHIP_THEME[variant];
