@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ImagePreview from './ImagePreview';
 
 const handleRemove = () => {};
+const handleClickImage = () => {};
 
 const meta: Meta<typeof ImagePreview> = {
   title: 'ImagePreview',
@@ -27,6 +28,13 @@ const meta: Meta<typeof ImagePreview> = {
     handleRemove: {
       description: '삭제 버튼 클릭 시 실행할 함수',
     },
+    handleClickImage: {
+      description: '이미지 클릭 시 실행할 함수',
+    },
+    imageClassName: {
+      control: 'text',
+      description: '이미지에 적용할 클래스',
+    },
     showRemoveButton: {
       control: 'boolean',
       description: '삭제 버튼 노출 여부',
@@ -44,6 +52,7 @@ const meta: Meta<typeof ImagePreview> = {
     imageSrc: '/product.png',
     imageAlt: '임시 이미지',
     showRemoveButton: true,
+    imageClassName: '',
     imageWidthRem: 14,
     imageHeightRem: 14,
   },
@@ -55,6 +64,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     handleRemove,
+    handleClickImage,
   },
 };
 
@@ -66,7 +76,7 @@ export const WithoutRemoveButton: Story = {
 
 export const NoImage: Story = {
   args: {
-    imageSrc: undefined,
+    imageSrc: '',
     showRemoveButton: false,
   },
 };
