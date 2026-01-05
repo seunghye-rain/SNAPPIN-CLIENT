@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import FilterButton, { FilterButtonProps } from './FilterButton';
 import { TagCode } from '@/ui/chip/tag-chip/types/tagCode';
 import { TAG_LABEL } from '@/ui/chip/tag-chip/constants/tagLabel';
