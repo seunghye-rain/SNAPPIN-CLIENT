@@ -6,13 +6,13 @@ type SearchBarProps = Omit<
   'headline' | 'supportingText'
 >;
 
-export default function SearchBar({
+const SearchBar = ({
   className,
   containerClassName,
   inputWrapperClassName,
   iconClassName,
   ...props
-}: SearchBarProps) {
+}: SearchBarProps) => {
   return (
     <SearchFieldBase
       containerClassName={cn(
@@ -28,4 +28,6 @@ export default function SearchBar({
       {...props}
     />
   );
-}
+};
+
+export default SearchBar;

@@ -38,27 +38,17 @@ const SearchFieldBase = React.forwardRef<HTMLInputElement, SearchFieldBaseProps>
     },
     ref,
   ) => {
-    const defaultValueText = Array.isArray(defaultValue)
-      ? defaultValue.join(',')
-      : typeof defaultValue === 'string' || typeof defaultValue === 'number'
-        ? `${defaultValue}`
-        : '';
+    const defaultValueText =
+      typeof defaultValue === 'string' || typeof defaultValue === 'number' ? `${defaultValue}` : '';
     const [hasValue, setHasValue] = React.useState(defaultValueText.length > 0);
-    const valueText = Array.isArray(value)
-      ? value.join(',')
-      : typeof value === 'string' || typeof value === 'number'
-        ? `${value}`
-        : '';
+    const valueText =
+      typeof value === 'string' || typeof value === 'number' ? `${value}` : '';
     const shouldUseControlledValue = typeof value !== 'undefined';
     const resolvedHasValue = shouldUseControlledValue ? valueText.length > 0 : hasValue;
     const headlineText = headline ?? '';
     const shouldRenderHeaderText = Boolean(headlineText || supportingText);
     const [isFocused, setIsFocused] = React.useState(false);
-    const shouldHideHeaderText = shouldRenderHeaderText
-      ? resolvedHasValue || isFocused
-        ? true
-        : false
-      : false;
+    const shouldHideHeaderText = shouldRenderHeaderText && (resolvedHasValue || isFocused);
     const resolvedIcon =
       icon === null ? null : (icon ?? <IconSearch className={iconClassName} aria-hidden='true' />);
 

@@ -5,7 +5,7 @@ type HeaderSearchProps = Omit<React.ComponentProps<typeof SearchFieldBase>, 'hea
   headline: string;
 };
 
-export default function HeaderSearch({
+const HeaderSearch = ({
   className,
   containerClassName,
   inputWrapperClassName,
@@ -15,7 +15,7 @@ export default function HeaderSearch({
   supportingTextClassName,
   placeholder,
   ...props
-}: HeaderSearchProps) {
+}: HeaderSearchProps) => {
   const resolvedPlaceholder = typeof placeholder === 'undefined' ? ' ' : placeholder;
 
   return (
@@ -40,4 +40,6 @@ export default function HeaderSearch({
       {...props}
     />
   );
-}
+};
+
+export default HeaderSearch;
