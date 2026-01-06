@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import { UserType } from '@/auth/constant/userType';
+import { USER_TYPES, USER_TYPE_LABEL, UserType } from './types/userType';
 import { TOGGLE_THEME_BY_TYPE } from './constants/toggleTheme';
 
 export type UserTypeToggleProps = {
@@ -14,8 +14,7 @@ export default function UserTypeToggle({
   onClick,
   ...props
 }: UserTypeToggleProps) {
-  const { trackClassName, thumbClassName, labelClassName, label } =
-    TOGGLE_THEME_BY_TYPE[selectedType];
+  const { trackClassName, thumbClassName, labelClassName } = TOGGLE_THEME_BY_TYPE[selectedType];
 
   return (
     <button
@@ -36,14 +35,18 @@ export default function UserTypeToggle({
             thumbClassName,
           )}
         >
-          <span
-            className={cn(
-              'caption-12-md transition-[color] duration-500 ease-in-out',
-              labelClassName,
-            )}
-          >
-            {label}
-          </span>
+          {USER_TYPES.map((type) => (
+            <span
+              key={type}
+              className={cn(
+                'caption-12-md absolute transition-opacity duration-300 ease-in-out',
+                selectedType === type ? 'opacity-100' : 'opacity-0',
+                labelClassName,
+              )}
+            >
+              {USER_TYPE_LABEL[type]}
+            </span>
+          ))}
         </div>
       </div>
     </button>
