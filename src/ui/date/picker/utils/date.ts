@@ -1,4 +1,4 @@
-import { CalendarCell } from '@/ui/date/picker/type/calendar';
+import { CalendarCell } from '@/ui/date/picker/types/calendar';
 
 const DEFAULT_PAD_WIDTH = 2;
 const DEFAULT_PAD_CHAR = '0';
@@ -26,20 +26,6 @@ export const toISO = (date: Date) => {
   const m = padNumber(date.getMonth() + 1);
   const d = padNumber(date.getDate());
   return `${y}-${m}-${d}`;
-};
-
-/**
- * ISO 형식(YYYY-MM-DD)의 문자열을 날짜 객체로 변환합니다.
- * @param iso ISO 형식 문자열 (YYYY-MM-DD)
- * @returns 날짜 객체
- * @example const date = fromISO('2024-01-15'); // Date 객체 생성
- */
-export const fromISO = (iso: string) => {
-  const [y, m, d] = iso.split('-').map(Number);
-  if ([y, m, d].some((v) => isNaN(v))) {
-    throw new Error(`유효하지 않은 ISO 형식입니다. ex.올바른 형식 (YYYY-MM-DD): ${iso}`);
-  }
-  return new Date(y, m - 1, d);
 };
 
 /**
@@ -94,29 +80,5 @@ export const buildPrefixCells = (
   return Array.from({ length: startDay }, (_, i) => ({
     kind: 'empty',
     key: `e-pre-${year}-${monthIndex}-${i}`,
-  }));
-};
-
-/**
- * 달력의 접미부 빈 셀을 생성합니다.
- * @param year 연도
- * @param monthIndex 월 인덱스 (0-11)
- * @param prefixLength 접두부 빈 셀 길이
- * @param dayLength 해당 월의 일수
- * @returns 접미부 빈 셀 배열 ex. [{ kind: 'empty', key: 'e-post-2024-0-0' }, ...]
- * @example const suffixCells: CalendarCell[] = buildSuffixCells(year, monthIndex, startDay, totalDays);
- */
-export const buildSuffixCells = (
-  year: number,
-  monthIndex: number,
-  prefixLength: number,
-  dayLength: number,
-): CalendarCell[] => {
-  const remainder = (prefixLength + dayLength) % 7;
-  if (remainder === 0) return [];
-
-  return Array.from({ length: 7 - remainder }, (_, i) => ({
-    kind: 'empty',
-    key: `e-post-${year}-${monthIndex}-${i}`,
   }));
 };
