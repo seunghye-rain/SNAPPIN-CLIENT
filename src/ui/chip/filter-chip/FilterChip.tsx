@@ -6,10 +6,14 @@ import { FilterChipVariant } from './types/filterChipVariant';
 import { FILTER_CHIP_THEME } from './constants/filterChipTheme';
 
 const getVariant = (isSelected: boolean, onRemove?: (tag: MoodCode) => void): FilterChipVariant => {
-  if (onRemove) { return 'selectedRemovable'; }
-  else if (isSelected) { return 'selected'; }
-  else { return 'default'; }
-}
+  if (onRemove) {
+    return 'selectedRemovable';
+  } else if (isSelected) {
+    return 'selected';
+  } else {
+    return 'default';
+  }
+};
 
 export type FilterChipProps = {
   label: MoodCode;
@@ -25,7 +29,10 @@ export default function FilterChip({
   onRemove,
   ...props
 }: FilterChipProps) {
-  if (!isSelected && onRemove) { throw new Error('FilterChip의 경우 onRemove는 isSelected가 true일 때만 사용할 수 있습니다.'); }
+  if (!isSelected && onRemove) {
+    console.error('FilterChip의 경우 onRemove는 isSelected가 true일 때만 사용할 수 있습니다.');
+    return null;
+  }
 
   const variant = getVariant(isSelected, onRemove);
   const { buttonClassName, labelClassName } = FILTER_CHIP_THEME[variant];
@@ -33,8 +40,8 @@ export default function FilterChip({
   return (
     <div
       className={cn(
-        'inline-flex justify-center items-center py-[0.6rem] bg-black-10 rounded-[0.4rem] transition-[background-color] duration-500 ease-in-out',
-        buttonClassName
+        'bg-black-10 inline-flex items-center justify-center rounded-[0.4rem] py-[0.6rem] transition-[background-color] duration-500 ease-in-out',
+        buttonClassName,
       )}
       {...props}
     >
@@ -44,15 +51,18 @@ export default function FilterChip({
         aria-pressed={isSelected}
         onClick={onClick ? () => onClick(label) : undefined}
       >
-        <span className={cn('caption-12-md transition-[color] duration-500 ease-in-out', labelClassName)}>
+        <span
+          className={cn(
+            'caption-12-md transition-[color] duration-500 ease-in-out',
+            labelClassName,
+          )}
+        >
           {label}
         </span>
       </button>
-      { onRemove && (
+      {onRemove && (
         <IconButton onClick={() => onRemove(label)}>
-          <IconClose
-            className='w-[1.5rem] h-[1.5rem] m-[0.4rem] text-black-7'
-          />
+          <IconClose className='text-black-7 m-[0.4rem] h-[1.5rem] w-[1.5rem]' />
         </IconButton>
       )}
     </div>
