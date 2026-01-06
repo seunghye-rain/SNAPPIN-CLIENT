@@ -3,7 +3,11 @@
 import { Logo } from '@/assets';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import ToastContainer from '@/ui/toast/ToastContainer';
+import dynamic from 'next/dynamic';
+
+const ToastContainer = dynamic(() => import('@/ui/toast/ToastContainer'), {
+  ssr: false,
+});
 
 function makeQueryClient() {
   return new QueryClient({

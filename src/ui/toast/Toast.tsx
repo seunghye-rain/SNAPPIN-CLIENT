@@ -16,12 +16,10 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    setIsFadingOut(false);
-
     const startFadeOutAt = Math.max(0, duration - FADE_MS);
 
     const fadeOutTimeout = window.setTimeout(() => {
-      setIsFadingOut(true);
+      setIsFadingOut(true); // ✅ 콜백에서만 setState
     }, startFadeOutAt);
 
     const removeTimeout = window.setTimeout(() => {
@@ -32,7 +30,7 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
       window.clearTimeout(fadeOutTimeout);
       window.clearTimeout(removeTimeout);
     };
-  }, [removeToast, duration, message, type]);
+  }, [removeToast, duration]);
 
   const icon = {
     success: <Lottie animationData={successAnimation} className='h-[3rem] w-[3rem]' />,
