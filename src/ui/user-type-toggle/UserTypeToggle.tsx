@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import { USER_TYPES, USER_TYPE_LABEL, UserType } from './types/userType';
+import { USER_TYPE_LABEL, USER_TYPES, UserType } from '@/auth/constant/userType';
 import { TOGGLE_THEME_BY_TYPE } from './constants/toggleTheme';
 
 export type UserTypeToggleProps = {

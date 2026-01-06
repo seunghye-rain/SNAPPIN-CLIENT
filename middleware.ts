@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { USER_TYPE } from '@/auth/constant/userType';
+import { USER_TYPES } from '@/auth/constant/userType';
 
 const LOGIN_RESTRICTED_PATHS = ['/login'];
 // TODO: 로그인이 필요한 페이지 (인증이 필요한 페이지) update
@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
   }
 
   // 권한 체크 (USER가 /author 못 들어가게)
-  if (accessToken && userType === USER_TYPE.CLIENT && isPathMatch(pathname, '/author')) {
+  if (accessToken && userType === USER_TYPES[0] && isPathMatch(pathname, '/author')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
