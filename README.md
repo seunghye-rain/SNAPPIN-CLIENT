@@ -1,17 +1,19 @@
-# Snappin'
+# Snappin’
 
 무드 큐레이션을 통해 다양한 스냅 작가와 고객을 정교하게 매칭하여 나의 가장 소중한 순간을 가장 나답게 담아냅니다.
 
-<img width="579" height="140" alt="logo" src="https://github.com/user-attachments/assets/81b7ae51-e87b-4c83-b712-f7288aaa0e80" />
+<img width="579" height="140" alt="Swatch" src="https://github.com/user-attachments/assets/91af11f7-70e3-4c94-8903-cbb32e797f19" />
 <img width="1920" height="1080" alt="Slide 16_9 - 76" src="https://github.com/user-attachments/assets/a70b14f1-deee-4046-aa0a-11e107fcf9e1" />
+
+### <a href="https://snappin-client.vercel.app/">View Live Demo</a>
 
 ## 핵심 UX 키워드
 
-### 연결하는 : 내가 원하는 무드를 가진 작가를 찾아 매칭
-
-### 빛나는 순간 : 인생에 가장 빛나는 순간을 포착
-
-### 다채로운 : 다양한 무드의 스냅 사진을 모두 스냅핑에서
+> #### 연결하는 : 내가 원하는 무드를 가진 작가를 찾아 매칭
+>
+> #### 빛나는 순간 : 인생에 가장 빛나는 순간을 포착
+>
+> #### 다채로운 : 다양한 무드의 스냅 사진을 모두 스냅핑에서
 
 ## Team
 
@@ -24,13 +26,17 @@
         <th> <a href="https://github.com/heeyyeon">송민하</a></th>
     </tr>
     <tr>
-    	<td><img width="140" height="140" alt="동희" src="https://github.com/user-attachments/assets/5ac3c9b6-3994-4b3a-a1a7-b486e484f1ed" /></td>
-    	<td> <img width="140" height="140" alt="민수" src="https://github.com/user-attachments/assets/5ac3c9b6-3994-4b3a-a1a7-b486e484f1ed" /></td>
       <td>
-        <img width="140" height="140" alt="승혜" src="https://github.com/user-attachments/assets/5ac3c9b6-3994-4b3a-a1a7-b486e484f1ed" />
+         <img width="140" height="140" alt="동희" src="https://github.com/user-attachments/assets/b0f9f89d-293b-4c2c-ade0-bb5580d00cbb" />
+      </td> 
+      <td>
+         <img width="140" height="140" alt="민수" src="https://github.com/user-attachments/assets/b0f9f89d-293b-4c2c-ade0-bb5580d00cbb" />
       </td>
-    <td>
-         <img width="140" height="140" alt="민하" src="https://github.com/user-attachments/assets/5ac3c9b6-3994-4b3a-a1a7-b486e484f1ed" />
+      <td>
+         <img width="140" height="140" alt="승혜" src="https://github.com/user-attachments/assets/b0f9f89d-293b-4c2c-ade0-bb5580d00cbb" />
+      </td>
+      <td>
+         <img width="140" height="140" alt="민하" src="https://github.com/user-attachments/assets/b0f9f89d-293b-4c2c-ade0-bb5580d00cbb" />
       </td>
     </tr>
     <tr>
@@ -141,21 +147,21 @@ hotfix: 배포 후 500 에러 응급 조치
 # 🤝 협업 규칙
 
 ```
-1. 📲 **카카오톡 수시로 확인하기**
-2. 🧩 **어려운 일이 생기면 혼자 고민하지 말고 꼭 공유하기**
-3. 🗣️ **서로의 의견을 존중하고 배려하는 말투로 소통하기**
-4. 🎉 **힘들어도 재미있게, 즐기면서 프로젝트 진행하기**
-5. ⏰ **마감 기한을 잘 지키기** (일정이 어려울 땐 **미리 말해서 조정하기**)
+1. 📲 카카오톡 수시로 확인하기
+2. 🧩 어려운 일이 생기면 혼자 고민하지 말고 꼭 공유하기
+3. 🗣️ 서로의 의견을 존중하고 배려하는 말투로 소통하기
+4. 🎉 힘들어도 재미있게, 즐기면서 프로젝트 진행하기
+5. ⏰ 마감 기한을 잘 지키기 (일정이 어려울 땐 미리 말해서 조정하기)
 ```
 
-### 질문 가이드
+## 질문 가이드
 
-#### 직접 찾아보기
+### 직접 찾아보기
 
 > Google, ChatGPT, 공식 문서 등
 > 영어 검색 권장 → 어려우면 DeepL 등 번역기 활용
 
-#### 구체적으로 이야기하기
+### 구체적으로 이야기하기
 
 > 현재 상황(어디서, 어떤 문제가 발생했는지)
 > 내가 알고 있는 것
@@ -163,9 +169,9 @@ hotfix: 배포 후 500 에러 응급 조치
 > 이해되지 않는 부분
 > 본인이 시도한 해결 방법
 
-#### 해결한 내용은 팀에 공유하기!
+### 해결한 내용은 팀에 공유하기!
 
-### 🔀 Pull Request (PR) 규칙
+## 🔀 Pull Request (PR) 규칙
 
 > 합숙 이전: 2명 이상 **Approve** 후 Merge
 > 합숙 기간: **리드**의 Approve로 Merge 가능 (여유있는 다른 팀원들도 꼭 리뷰 달아주기! 못 달아줄 것 같으면 코드라도 한 번 봐주기)
@@ -174,7 +180,7 @@ hotfix: 배포 후 500 에러 응급 조치
 > 리뷰 반영 후에는 **re-request review** 하기
 > 열심히 논의하기
 
-### 코드 리뷰 가이드
+## 코드 리뷰 가이드
 
 > 부드러운 어조 사용하기
 > 구체적인 피드백 + 참고 링크 함께 작성하기
