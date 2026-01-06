@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
 import DatePicker from '@/ui/date/picker/DatePicker';
 import { useState } from 'react';
-import { JANUARY_AVAILABILITY_MOCK } from '@/ui/date/picker/constants/date';
 import { toISO } from '@/ui/date/picker/utils/date';
+import { JANUARY_AVAILABILITY_MOCK } from '@/ui/date/picker/mocks/date';
 
 const meta: Meta<typeof DatePicker> = {
   title: 'date/DatePicker',
@@ -55,10 +55,10 @@ export const DisablePastDates: Story = {
 export const MinMaxRange: Story = {
   render: (args) => <ControlledTemplate {...args} />,
   args: {
-    selectedDate: '2025-12-18',
+    viewDateMonth: new Date('2025-12-18'),
     disablePastDates: false,
     minDate: '2025-12-10',
-    maxDate: '2025-12-24',
+    maxDate: '2025-12-25',
   },
 };
 
@@ -67,8 +67,8 @@ export const MinOnly: Story = {
   args: {
     viewDateMonth: new Date('2025-12-01'),
     selectedDate: '2025-12-18',
-    disablePastDates: false,
     minDate: '2025-12-15',
+    disablePastDates: false,
   },
 };
 
@@ -77,18 +77,7 @@ export const MaxOnly: Story = {
   args: {
     viewDateMonth: new Date('2025-12-18'),
     selectedDate: '2025-12-19',
-    disablePastDates: false,
     maxDate: '2025-12-20',
-  },
-};
-
-export const BirthDatePicker: Story = {
-  render: (args) => <ControlledTemplate {...args} />,
-  args: {
-    variant: 'birthday',
-    viewDateMonth: new Date('1990-06-01'),
-    selectedDate: '1990-06-15',
     disablePastDates: false,
-    maxDate: new Date().toISOString().split('T')[0], // 오늘 이전 날짜까지만 선택 가능
   },
 };
