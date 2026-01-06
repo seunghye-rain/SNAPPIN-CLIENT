@@ -18,7 +18,7 @@ export default function Header({ isVisible }: HeaderProps) {
       left={<Logo width={72} />}
       right={<IconSearch onClick={handleClickSearch} />}
       className={cn(
-        'transition-all duration-300 ease-out',
+        'z-15 transition-transform duration-300 ease-out will-change-transform',
         isVisible ? 'pointer-events-auto translate-y-0' : 'pointer-events-none -translate-y-full',
       )}
     />

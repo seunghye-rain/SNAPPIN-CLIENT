@@ -1,6 +1,6 @@
 'use client';
 
-import { useNavVisibility } from '@/hooks/useNavVisibility';
+import { useNavVisibility } from './hooks/useNavVisibility';
 import Header from './components/header/Header';
 import Image from 'next/image';
 import homeBackground from '@/../public/imgs/mainImg.png';
