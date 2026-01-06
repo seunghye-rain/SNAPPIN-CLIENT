@@ -19,7 +19,7 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
     const startFadeOutAt = Math.max(0, duration - FADE_MS);
 
     const fadeOutTimeout = window.setTimeout(() => {
-      setIsFadingOut(true); // ✅ 콜백에서만 setState
+      setIsFadingOut(true);
     }, startFadeOutAt);
 
     const removeTimeout = window.setTimeout(() => {
