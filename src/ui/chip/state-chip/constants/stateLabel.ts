@@ -1,4 +1,4 @@
-import { StateCode } from '../types/stateCode';
+import { StateCode } from '@/types/stateCode';
 
 // TODO: 서버 enum 확정되면 변경
 export const STATE_LABEL: Record<StateCode, string> = {

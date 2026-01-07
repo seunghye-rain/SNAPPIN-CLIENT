@@ -1,5 +1,5 @@
 import { ChipTheme } from '@/ui/chip/types/chipTheme';
-import { StateCode } from '../types/stateCode';
+import { StateCode } from '@/types/stateCode';
 
 export const STATE_CHIP_THEME_BY_LABEL: Record<StateCode, ChipTheme> = {
   PHOTOGRAPHER_REQUESTED: { chipClassName: 'bg-yellow', labelClassName: 'text-yellow-text' },
