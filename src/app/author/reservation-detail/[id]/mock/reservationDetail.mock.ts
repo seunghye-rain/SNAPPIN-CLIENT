@@ -1,0 +1,26 @@
+export const RESERVATION_DETAIL_MOCK = {
+  status: 'PHOTOGRAPHER_REQUESTED',
+  productInfo: {
+    id: 1,
+    imageUrl: 'https://picsum.photos/576/576?random=1',
+    title: '상품명',
+    rate: 4.7,
+    reviewCount: 32,
+    photographer: '작가명',
+    price: 80000,
+    moods: ['따스한', '내추럴', '투명한'],
+  },
+  reservationInfo: {
+    date: '2026-03-15',
+    startTime: '10:00',
+    durationTime: 120,
+    place: '건국대',
+    peopleCount: 2,
+    requestNote: '기타 요청 사항',
+  },
+  paymentInfo: {
+    basePrice: 200000,
+    extraPrice: 50000,
+    totalPrice: 250000,
+  },
+};
