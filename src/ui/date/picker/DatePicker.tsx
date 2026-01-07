@@ -92,7 +92,7 @@ export default function DatePicker({
   const reservationBlockFromISO = useMemo(() => {
     const now = today ?? new Date();
     const blockFrom = new Date(now.getFullYear(), now.getMonth() + MAX_RESERVATION_MONTHS, 1);
-    return toISO(blockFrom); // YYYY-MM-01
+    return toISO(blockFrom);
   }, [today]);
 
   const cells: CalendarCell[] = useMemo(() => {
