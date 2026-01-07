@@ -33,3 +33,15 @@ export default meta;
 type StoryHeaderSearch = StoryObj<typeof HeaderSearch>;
 
 export const Default: StoryHeaderSearch = {};
+
+export const OnImage: StoryHeaderSearch = {
+  args: {
+    slotClassNames: {
+      container:
+        'bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.2)] text-white backdrop-blur-sm',
+      icon: 'text-white',
+      headline: 'text-white',
+      supportingText: 'text-[rgba(255,255,255,0.8)]',
+    },
+  },
+};
