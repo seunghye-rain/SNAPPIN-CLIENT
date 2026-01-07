@@ -6,6 +6,7 @@ import { StateCode } from '@/ui/chip/state-chip/types/stateCode';
 import StateChip from '@/ui/chip/state-chip/StateChip';
 import Button from '@/ui/button/base/Button';
 import { IconKeyboardArrowRight } from '@/assets';
+import { useRouter } from 'next/navigation';
 
 type ReservationCardProps = {
   id: number;
@@ -30,8 +31,10 @@ export default function ReservationCard({
   price,
   tags,
 }: ReservationCardProps) {
+  const router = useRouter();
+
   const handleCancel = () => {
-    console.log(`${id} 예약 상세 페이지로 이동`);
+    router.push(`/author/reservation-detail/${id}`);
   };
 
   return (

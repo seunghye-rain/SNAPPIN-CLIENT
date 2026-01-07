@@ -8,5 +8,7 @@ export default function NavigationClient() {
     //TODO: 검색 페이지로 이동
   };
 
-  return <Navigation left={<Logo />} right={<IconSearch onClick={handleSearchClick} />} />;
+  return (
+    <Navigation isFixed={true} left={<Logo />} right={<IconSearch onClick={handleSearchClick} />} />
+  );
 }
