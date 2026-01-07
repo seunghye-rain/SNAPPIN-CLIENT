@@ -3,16 +3,15 @@ import { IconButton } from '@/ui';
 import { cn } from '@/utils/cn';
 import { IconClose } from '@/assets';
 
-type ImagePreviewProps = {
-  imageSrc?: string;
-  imageAlt?: string;
+type ImagePreviewProps = React.ComponentProps<'div'> & {
+  imageSrc: string;
+  imageAlt: string;
   handleRemove?: () => void;
   handleClickImage?: () => void;
-  className?: string;
   imageClassName?: string;
   showRemoveButton?: boolean;
-  imageWidthRem?: number;
-  imageHeightRem?: number;
+  imageWidthRem?: string;
+  imageHeightRem?: string;
 };
 
 export default function ImagePreview({
@@ -21,56 +20,46 @@ export default function ImagePreview({
   handleRemove,
   handleClickImage,
   className,
+  style,
   imageClassName,
   showRemoveButton = true,
-  imageWidthRem = 14,
-  imageHeightRem = 14,
+  imageWidthRem = '14rem',
+  imageHeightRem = '14rem',
+  ...props
 }: ImagePreviewProps) {
-  const isClickable = Boolean(handleClickImage);
   const handleRemoveClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     handleRemove?.();
   };
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!handleClickImage) return;
-
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleClickImage();
-    }
-  };
-  const canRemove = Boolean(imageSrc && showRemoveButton && handleRemove);
-  const imagePreviewStyle = {
-    width: `${imageWidthRem}rem`,
-    height: `${imageHeightRem}rem`,
-  };
+  const canRemove = Boolean(showRemoveButton && handleRemove);
+  const imagePreviewStyle = { ...style, width: imageWidthRem, height: imageHeightRem };
 
   return (
     <div
-      className={cn('relative overflow-hidden', isClickable ? 'cursor-pointer' : null, className)}
+      className={cn('relative overflow-hidden', className)}
       style={imagePreviewStyle}
-      role={isClickable ? 'button' : undefined}
-      tabIndex={isClickable ? 0 : undefined}
-      aria-label={isClickable ? imageAlt ?? '이미지 미리보기' : undefined}
-      onClick={handleClickImage}
-      onKeyDown={isClickable ? handleKeyDown : undefined}
+      {...props}
     >
-      {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={imageAlt ?? '이미지 미리보기'}
-          fill
-          sizes={`${imageWidthRem}rem`}
-          className={cn('object-cover', imageClassName)}
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        sizes={imageWidthRem}
+        className={cn('object-cover', imageClassName)}
+      />
+      {handleClickImage ? (
+        <button
+          type='button'
+          onClick={handleClickImage}
+          aria-label={imageAlt}
+          className='absolute inset-0 z-10 cursor-pointer'
         />
-      ) : (
-        <div className='bg-black-3 h-full w-full' />
-      )}
+      ) : null}
       {canRemove ? (
         <IconButton
           onClick={handleRemoveClick}
           aria-label='이미지 삭제'
-          className='bg-black-1 absolute top-[0.7rem] right-[0.7rem] flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full'
+          className='bg-black-1 absolute top-[0.7rem] right-[0.7rem] z-20 flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full'
         >
           <IconClose className='text-black-10 h-[2.4rem] w-[2.4rem]' />
         </IconButton>
