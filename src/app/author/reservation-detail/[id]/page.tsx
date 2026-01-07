@@ -1,0 +1,42 @@
+import { ProductStatus, Recipt, ReservationDetail } from './@section';
+import NavigationClient from './components/navigation-client/Navigation.client';
+import { RESERVATION_DETAIL_MOCK } from './mock/reservationDetail.mock';
+import { StateCode } from '@/ui/chip/state-chip/types/stateCode';
+import { MoodCode } from '@/types/moodCode';
+import { Divider } from '@/ui';
+
+export default function page() {
+  const data = RESERVATION_DETAIL_MOCK;
+  return (
+    <div className='bg-black-3 flex h-full flex-col'>
+      <NavigationClient />
+      <div className='flex flex-col'>
+        <ProductStatus
+          imageUrl={data.productInfo.imageUrl}
+          title={data.productInfo.title}
+          rate={data.productInfo.rate}
+          reviewCount={data.productInfo.reviewCount}
+          photographer={data.productInfo.photographer}
+          price={data.productInfo.price}
+          moods={data.productInfo.moods as MoodCode[]}
+        />
+        <Divider thickness='large' color='bg-black-3' />
+        <ReservationDetail
+          status={data.status as StateCode}
+          date={data.reservationInfo.date}
+          startTime={data.reservationInfo.startTime}
+          durationTime={data.reservationInfo.durationTime}
+          place={data.reservationInfo.place}
+          peopleCount={data.reservationInfo.peopleCount}
+          requestNote={data.reservationInfo.requestNote}
+        />
+        <Divider thickness='large' color='bg-black-3' />
+        <Recipt
+          basePrice={data.paymentInfo.basePrice}
+          extraPrice={data.paymentInfo.extraPrice}
+          totalPrice={data.paymentInfo.totalPrice}
+        />
+      </div>
+    </div>
+  );
+}
