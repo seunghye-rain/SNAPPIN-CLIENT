@@ -14,13 +14,16 @@ export default function Header({ isVisible }: HeaderProps) {
   };
 
   return (
-    <Navigation
-      left={<Logo width={72} />}
-      right={<IconSearch onClick={handleClickSearch} />}
+    <div
       className={cn(
-        'transition-all duration-300 ease-out',
-        isVisible ? 'pointer-events-auto translate-y-0' : 'pointer-events-none -translate-y-full',
+        // ✅ 레이아웃에서 빠짐(공간 안 남음)
+        'fixed top-0 left-1/2 z-50 w-full max-w-[45rem] -translate-x-1/2',
+        // ✅ 보일 때/숨길 때
+        'transition-transform duration-200',
+        isVisible ? 'translate-y-0' : '-translate-y-full',
       )}
-    />
+    >
+      <Navigation left={<Logo width={72} />} right={<IconSearch onClick={handleClickSearch} />} />
+    </div>
   );
 }
