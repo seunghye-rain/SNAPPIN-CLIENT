@@ -22,23 +22,6 @@ type SectionTabsProps = HTMLAttributes<HTMLDivElement> & {
   queryKey?: string;
 };
 
-type SectionTabsTabProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick'> & {
-  value: string;
-  children: ReactNode;
-};
-
-type SectionTabsListProps = HTMLAttributes<HTMLDivElement>;
-
-type SectionTabContentsProps = HTMLAttributes<HTMLDivElement> & {
-  value: string;
-};
-
-type SectionTabsComponent = typeof SectionTabsRoot & {
-  List: typeof SectionTabsList;
-  Tab: typeof SectionTabsTab;
-  Contents: typeof SectionTabContents;
-};
-
 const SectionTabsRoot = ({
   value,
   handleValueChange,
@@ -79,6 +62,8 @@ const SectionTabsRoot = ({
   );
 };
 
+type SectionTabsListProps = HTMLAttributes<HTMLDivElement>;
+
 const SectionTabsList = ({
   className,
   children,
@@ -114,6 +99,10 @@ const SectionTabsList = ({
   );
 };
 
+type SectionTabContentsProps = HTMLAttributes<HTMLDivElement> & {
+  value: string;
+};
+
 const SectionTabContents = ({ value, className, children, ...props }: SectionTabContentsProps) => {
   const { value: selectedValue, baseId } = useSectionTabsContext('SectionTabs.Contents');
   const isSelected = value === selectedValue;
@@ -134,6 +123,11 @@ const SectionTabContents = ({ value, className, children, ...props }: SectionTab
       {children}
     </div>
   );
+};
+
+type SectionTabsTabProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick'> & {
+  value: string;
+  children: ReactNode;
 };
 
 const SectionTabsTab = ({
@@ -212,6 +206,12 @@ const SectionTabsTab = ({
       {children}
     </button>
   );
+};
+
+type SectionTabsComponent = typeof SectionTabsRoot & {
+  List: typeof SectionTabsList;
+  Tab: typeof SectionTabsTab;
+  Contents: typeof SectionTabContents;
 };
 
 const SectionTabs: SectionTabsComponent = Object.assign(SectionTabsRoot, {
