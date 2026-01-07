@@ -2,7 +2,7 @@
 
 import { ProductCard } from '@/ui/product-card';
 import { MoodCode } from '@/types/moodCode';
-import { StateCode } from '@/ui/chip/state-chip/types/stateCode';
+import { StateCode } from '@/types/stateCode';
 import StateChip from '@/ui/chip/state-chip/StateChip';
 import Button from '@/ui/button/base/Button';
 import { IconKeyboardArrowRight } from '@/assets';

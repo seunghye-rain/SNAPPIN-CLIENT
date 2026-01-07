@@ -1,4 +1,4 @@
-import { StateCode } from '@/ui/chip/state-chip/types/stateCode';
+import { StateCode } from '@/types/stateCode';
 import { DetailLayout, DetailRow } from '../components/detail-layout/DetailLayout';
 
 type ReservationDetailProps = {

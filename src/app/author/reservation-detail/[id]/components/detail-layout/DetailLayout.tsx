@@ -1,6 +1,6 @@
 import { StateChip } from '@/ui/chip';
 import { cn } from '@/utils/cn';
-import { StateCode } from '@/ui/chip/state-chip/types/stateCode';
+import { StateCode } from '@/types/stateCode';
 
 type DetailLayoutProps = {
   title: string;
