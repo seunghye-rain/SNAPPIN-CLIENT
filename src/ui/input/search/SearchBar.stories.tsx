@@ -58,16 +58,21 @@ export const WithCustomIcon: StorySearchBar = {
   },
 };
 
+type ControlledSearchBarStoryProps = React.ComponentProps<typeof SearchBar>;
+
+const ControlledSearchBarStory = (args: ControlledSearchBarStoryProps) => {
+  const initialValue = typeof args.value === 'string' ? args.value : '';
+  const [value, setValue] = useState(initialValue);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  return <SearchBar {...args} value={value} onChange={handleChange} />;
+};
+
 export const Controlled: StorySearchBar = {
-  render: (args) => {
-    const [value, setValue] = useState(typeof args.value === 'string' ? args.value : '');
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value);
-    };
-
-    return <SearchBar {...args} value={value} onChange={handleChange} />;
-  },
+  render: (args) => <ControlledSearchBarStory {...args} />,
   args: {
     value: '서울',
   },
