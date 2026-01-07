@@ -1,4 +1,4 @@
-import { ProductStatus, Recipt, ReservationDetail } from './@section';
+import { ProductStatus, Recipt, ReservationDetail, ReviewDetail } from './@section';
 import NavigationClient from './components/navigation-client/Navigation.client';
 import { RESERVATION_DETAIL_MOCK } from './mock/reservationDetail.mock';
 import { StateCode } from '@/types/stateCode';
@@ -37,6 +37,14 @@ export default function page() {
           basePrice={data.paymentInfo.basePrice}
           extraPrice={data.paymentInfo.extraPrice}
           totalPrice={data.paymentInfo.totalPrice}
+        />
+        <Divider thickness='large' color='bg-black-3' />
+        <ReviewDetail
+          reviewer={data.reviewInfo.reviewer}
+          rating={data.reviewInfo.rating}
+          createdAt={data.reviewInfo.createdAt}
+          images={data.reviewInfo.images}
+          content={data.reviewInfo.content}
         />
       </div>
     </div>
