@@ -5,7 +5,7 @@ import { ACCESS_TOKEN_COOKIE_NAME } from './constant/cookie';
 
 async function setAccessToken(value: string) {
   const cookieStore = await cookies();
-  return cookieStore.set(ACCESS_TOKEN_COOKIE_NAME, value);
+  cookieStore.set(ACCESS_TOKEN_COOKIE_NAME, value);
 }
 
 async function getAccessToken() {
@@ -22,9 +22,8 @@ async function isUserLoggedIn() {
   const isUserAccessToken = await getAccessToken();
   if (!isUserAccessToken) {
     return false;
-  } else {
-    return true;
   }
+  return true;
 }
 
 export { setAccessToken, getAccessToken, deleteAccessToken, isUserLoggedIn };
