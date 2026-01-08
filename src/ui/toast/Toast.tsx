@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ToastProps } from './types/toast';
 import { cn } from '@/utils/cn';
 import { useSetAtom } from 'jotai';
@@ -10,6 +10,10 @@ import successAnimation from '@/assets/lotties/success.json';
 import errorAnimation from '@/assets/lotties/error.json';
 
 const FADE_MS = 300;
+const ANIMATION_DATA = {
+  success: successAnimation,
+  error: errorAnimation,
+} as const;
 
 export default function Toast({ type, message, duration = 3000, className }: ToastProps) {
   const removeToast = useSetAtom(RemoveToastAtom);
@@ -32,16 +36,6 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
     };
   }, [removeToast, duration]);
 
-  const icon = useMemo(
-    () =>
-      ({
-        success: <Lottie animationData={successAnimation} className='h-[3rem] w-[3rem]' />,
-        error: <Lottie animationData={errorAnimation} className='h-[3rem] w-[3rem]' />,
-        alert: null,
-      }) as const,
-    [],
-  );
-
   return (
     <div
       className={cn(
@@ -50,8 +44,10 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
         className,
       )}
     >
-      {icon[type]}
-      <div className='caption-12-md text-white'>{message}</div>
+      {type !== 'alert' && ANIMATION_DATA[type] && (
+        <Lottie animationData={ANIMATION_DATA[type]} className='h-[3rem] w-[3rem]' />
+      )}
+      <div className='caption-12-md text-black-1'>{message}</div>
     </div>
   );
 }

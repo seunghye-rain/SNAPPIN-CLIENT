@@ -9,7 +9,7 @@ export default function ToastContainer() {
 
   return (
     <div className='fixed-center top-[1rem] z-50 w-full px-[1rem]'>
-      {toast && <Toast type={toast.type} message={toast.message} />}
+      {toast && <Toast type={toast.type} message={toast.message} duration={toast.duration} />}
     </div>
   );
 }
