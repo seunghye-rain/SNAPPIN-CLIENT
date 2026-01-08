@@ -1,10 +1,9 @@
 'use client';
 
-import { LOGIN_MOCK } from './ImageSlide.mock';
-import ImageCarousel from '@/ui/carousel/image-carousel/ImageCarousel';
 import { useState } from 'react';
-import TagChip from '@/ui/chip/tag-chip/TagChip';
+import { ImageCarousel, TagChip } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
+import { LOGIN_MOCK } from './ImageSlide.mock';
 
 export default function ImageSlide() {
   const data = LOGIN_MOCK.portfolios;
