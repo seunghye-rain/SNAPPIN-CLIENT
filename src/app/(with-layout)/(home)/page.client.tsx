@@ -3,11 +3,14 @@
 import { useNavVisibility } from './hooks/useNavVisibility';
 import Header from './components/header/Header';
 import Image from 'next/image';
-import homeBackground from '@/../public/imgs/mainImg.png';
+import homeBackground1 from '@/../public/imgs/image-main1.png';
+import homeBackground2 from '@/../public/imgs/image-main2.png';
+import homeBackground3 from '@/../public/imgs/image-main3.png';
 import { MENU } from './constants/menu';
 import { RecommendationSnapPlace, RecommendationAuthor, MoodCurationSection } from './@section';
 import Link from 'next/link';
 import banner from '@/../public/imgs/banner.png';
+import FadeCarousel from './components/fade-carousel/FadeCarousel';
 
 export default function PageClient() {
   const { isVisible } = useNavVisibility();
@@ -15,7 +18,13 @@ export default function PageClient() {
   return (
     <div className='relative mb-[6rem] flex w-full flex-col'>
       <Header isVisible={isVisible} />
-      <Image src={homeBackground} alt='home-background' />
+      <FadeCarousel
+        images={[
+          { src: homeBackground1.src, alt: 'home-background-1' },
+          { src: homeBackground2.src, alt: 'home-background-2' },
+          { src: homeBackground3.src, alt: 'home-background-3' },
+        ]}
+      />
       {/*  메뉴 영역 */}
       <div className='grid grid-cols-4 gap-x-[2.8rem] gap-y-[2rem] px-[3.5rem] py-[4rem]'>
         {MENU.map((menu) => (
