@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import { ImageCarousel, TagChip } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
-import { LOGIN_MOCK } from './ImageSlide.mock';
+import { cn } from '@/utils/cn';
+import { AI_CURATION_MOCK, LOGIN_MOCK } from './ImageSlide.mock';
 
-export default function ImageSlide() {
-  const data = LOGIN_MOCK.portfolios;
+type ImageSlideProps = {
+  type: 'login' | 'ai-curation';
+};
+
+export default function ImageSlide({ type }: ImageSlideProps) {
+  const data = type === 'login' ? LOGIN_MOCK.portfolios : AI_CURATION_MOCK.portfolios;
   const [activeIndex, setActiveIndex] = useState(0);
 
   const center = data[activeIndex];
@@ -46,10 +51,21 @@ export default function ImageSlide() {
           <div className='absolute bottom-[1.3rem] left-[1.2rem] z-40 flex flex-col gap-[0.8rem]'>
             <div className='flex gap-[0.6rem]'>
               {center.moods.map((mood) => (
-                <TagChip key={mood} variant='transparent' label={mood as MoodCode} />
+                <TagChip
+                  key={mood}
+                  variant={type === 'login' ? 'transparent' : 'neonTransparent'}
+                  label={mood as MoodCode}
+                />
               ))}
             </div>
-            <p className='caption-12-md text-black-1'>{center.photographerName}</p>
+            <p
+              className={cn(
+                'caption-12-md text-black-1',
+                type === 'login' ? 'text-black-1' : 'text-neon-black',
+              )}
+            >
+              {center.photographerName}
+            </p>
           </div>
         </div>
 

@@ -1,4 +1,5 @@
-import { ClientNavigation, ImageSlide, LoginButton } from './components';
+import { ClientNavigation, LoginButton } from './components';
+import ImageSlide from '@/app/(auth)/_components/image-slide/ImageSlide';
 import { Logo } from '@/assets';
 
 export default function page() {
@@ -11,7 +12,7 @@ export default function page() {
           <p className='title-20-bd'>가장 나다운 스냅 촬영</p>
         </div>
         {/* TODO: 로그인 폼 */}
-        <ImageSlide />
+        <ImageSlide type='login' />
 
         <div className='flex justify-center px-[2rem]'>
           <LoginButton />
