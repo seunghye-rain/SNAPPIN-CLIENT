@@ -5,7 +5,7 @@ export type ModalTitle =
   | { type: 'single'; text: string }
   | { type: 'multiple'; text: string[] };
 
-type ModalContent = {
+export type ModalContent = {
   icon?: React.ReactNode;
   title: ModalTitle;
   description?: string;
@@ -13,7 +13,7 @@ type ModalContent = {
   rightButton: string;
 }
 
-export const MODAL_CONTENT: Record<ModalType, ModalContent> = {
+export const MODAL_CONTENT: Record<Exclude<ModalType, 'default'>, ModalContent> = {
   'success': {
     icon: <GraphicSuccess />,
     title: { type: 'single', text: '예약 요청이 완료되었어요!' },
@@ -26,20 +26,5 @@ export const MODAL_CONTENT: Record<ModalType, ModalContent> = {
     title: { type: 'multiple', text: ['결제 요청에 실패했습니다.', '잠시 후 다시 시도해 주세요.'] },
     leftButton: '닫기',
     rightButton: '결제하기',
-    },
-  'cancelled': {
-    title: { type: 'multiple', text: ['예약하신 스냅 일정을', '취소할까요?'] },
-    leftButton: '아니요',
-    rightButton: '네, 취소할게요',
-  },
-  'rejected': {
-    title: { type: 'single', text: '예약을 거절할까요?' },
-    leftButton: '아니요',
-    rightButton: '네, 거절할게요',
-  },
-  'confirmed': {
-    title: { type: 'single', text: '예약을 확정할까요?' },
-    leftButton: '아니요',
-    rightButton: '네, 확정할게요',
   },
 }

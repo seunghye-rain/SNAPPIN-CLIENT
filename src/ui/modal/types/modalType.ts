@@ -1,2 +1,2 @@
-const MODAL_TYPE = ['success', 'error', 'cancelled', 'rejected', 'confirmed'] as const;
+const MODAL_TYPE = ['success', 'error', 'default'] as const;
 export type ModalType = typeof MODAL_TYPE[number];

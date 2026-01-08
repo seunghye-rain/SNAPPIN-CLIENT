@@ -12,8 +12,8 @@ import {
   DialogTitle,
 } from './Dialog';
 import { ModalType } from './types/modalType';
-import { ModalTitle, MODAL_CONTENT } from './constants/modalContent';
 import { MODAL_THEME } from './constants/modalTheme';
+import { ModalTitle, ModalContent, MODAL_CONTENT } from './constants/modalContent';
 
 const renderTitle = (title: ModalTitle) => {
   const { type, text } = title;
@@ -27,22 +27,40 @@ const renderTitle = (title: ModalTitle) => {
   return text;
 }
 
-type ModalProps = {
-  type: ModalType;
+type DefaultModalProps = {
+  type: 'default';
+  content: ModalContent;
   open: boolean;
   handleOpenChange: (open: boolean) => void;
   handleLeftClick: () => void;
   handleRightClick: () => void;
-}
+};
 
-export default function Modal({
-  type,
-  open,
-  handleOpenChange,
-  handleLeftClick,
-  handleRightClick
-}: ModalProps) {
-  const { icon, title, description, leftButton, rightButton } = MODAL_CONTENT[type];
+type PresetModalProps = {
+  type: Exclude<ModalType, 'default'>;
+  open: boolean;
+  handleOpenChange: (open: boolean) => void;
+  handleLeftClick: () => void;
+  handleRightClick: () => void;
+};
+
+export type ModalProps = DefaultModalProps | PresetModalProps;
+
+export default function Modal(props: ModalProps) {
+  const {
+    type,
+    open,
+    handleOpenChange,
+    handleLeftClick,
+    handleRightClick,
+  } = props;
+  const {
+    icon,
+    title,
+    description,
+    leftButton,
+    rightButton
+  } = type === 'default' ? props.content : MODAL_CONTENT[type];
   const { contentClassName, headerClassName, titleClassName } = MODAL_THEME[type];
 
   return (
