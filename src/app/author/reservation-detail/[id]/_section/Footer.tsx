@@ -1,3 +1,5 @@
+'use client';
+
 import { StateCode } from '@/types/stateCode';
 import Button from '@/ui/button/base/Button';
 
@@ -14,10 +16,11 @@ type ButtonConfig = {
 };
 
 export default function Footer({ date, startTime, status }: FooterProps) {
-  const now = new Date(date + ' ' + startTime);
-  const start = new Date(startTime);
+  const now = new Date();
+  const start = new Date(date + ' ' + startTime);
 
   const isAfterStart = now >= start;
+  console.log(isAfterStart, 'isAfterStart');
 
   const getButtonConfig = (): ButtonConfig => {
     switch (status) {
