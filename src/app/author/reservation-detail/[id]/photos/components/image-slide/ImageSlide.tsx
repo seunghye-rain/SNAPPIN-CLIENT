@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {
   Carousel,
   CarouselContent,
@@ -5,13 +6,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/ui/carousel';
-import Image from 'next/image';
 
-type ImageCarouselProps = {
+type ImageSlideProps = {
   images: { src: string; alt?: string }[];
 };
 
-export default function ImageCarousel({ images }: ImageCarouselProps) {
+export default function ImageSlide({ images }: ImageSlideProps) {
   return (
     <Carousel>
       <CarouselContent>
