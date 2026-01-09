@@ -70,13 +70,13 @@ export default function Footer({ date, startTime, status }: FooterProps) {
         };
       case STATE_CODES.RESERVATION_CANCELED:
         return {
-          label: '예약 취소 완료',
+          label: '고객님의 예약 취소',
           disabled: true,
           onClick: undefined,
         };
       case STATE_CODES.RESERVATION_REFUSED:
         return {
-          label: '작가 예약 거절',
+          label: '예약 거절 완료',
           disabled: true,
           onClick: undefined,
         };
