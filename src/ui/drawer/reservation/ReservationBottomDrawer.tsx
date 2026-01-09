@@ -1,3 +1,5 @@
+'use client';
+
 import BottomDrawer from '@/ui/drawer/BottomDrawer';
 import {
   BottomCTAButton,
@@ -13,22 +15,10 @@ import { MOCK_TIME_SLOTS } from '@/ui/time-picker/constants/mockTimeSlots';
 import TextareaField from '@/ui/input/textarea-field/TextareaField';
 import { formatNumberWithComma } from '@/utils/formatNumberWithComma';
 import { useEffect, useRef } from 'react';
-
-export type ReservationDraft = {
-  date: string | null;
-  time: string | null;
-  participantCount: number;
-  durationHours: number;
-  place: string;
-  request: string;
-};
-
-type ReservationConstraints = {
-  minDurationHours: number;
-  maxDurationHours?: number;
-  minParticipantCount?: number;
-  maxParticipantCount: number;
-};
+import {
+  ReservationConstraints,
+  ReservationDraft,
+} from '@/ui/drawer/reservation/types/reservation';
 
 type ReservationBottomDrawerProps = {
   isOpen: boolean;

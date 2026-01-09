@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useMemo, useState } from 'react';
 import { Button } from '@/ui';
-import ReservationBottomDrawer, { ReservationDraft } from './ReservationBottomDrawer';
+import ReservationBottomDrawer from './ReservationBottomDrawer';
+import { ReservationDraft } from '@/ui/drawer/reservation/types/reservation';
 
 const meta: Meta<typeof ReservationBottomDrawer> = {
   title: 'drawer/ReservationBottomDrawer',
