@@ -1,6 +1,7 @@
 'use client';
 
 import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { BottomCTAButton } from '@/ui';
 import Button from '@/ui/button/base/Button';
 
 type DetailPageFooterProps = {
@@ -90,8 +91,10 @@ export default function DetailPageFooter({ date, startTime, status }: DetailPage
   const { label, disabled, onClick } = getButtonConfig();
 
   return (
-    <Button disabled={disabled} onClick={onClick}>
-      {label}
-    </Button>
+    <BottomCTAButton className='bg-black-1 fixed-center bottom-[2rem] px-[2rem]'>
+      <BottomCTAButton.Single disabled={disabled} onClick={onClick}>
+        {label}
+      </BottomCTAButton.Single>
+    </BottomCTAButton>
   );
 }
