@@ -61,7 +61,9 @@ type BottomCTAButtonComponent = typeof BottomCTAButtonRoot & {
   Double: typeof DoubleBottomCTAButton;
 };
 
-export const BottomCTAButton: BottomCTAButtonComponent = Object.assign(BottomCTAButtonRoot, {
+const BottomCTAButton: BottomCTAButtonComponent = Object.assign(BottomCTAButtonRoot, {
   Single: SingleBottomCTAButton,
   Double: DoubleBottomCTAButton,
 });
+
+export default BottomCTAButton;
