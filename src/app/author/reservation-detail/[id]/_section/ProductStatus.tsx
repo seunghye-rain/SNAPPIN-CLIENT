@@ -1,9 +1,9 @@
 'use client';
 
-import { ProductCard } from '@/ui/product-card';
 import { MoodCode } from '@/types/moodCode';
-import { StateCode } from '@/types/stateCode';
-import Button from '@/ui/button/base/Button';
+import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { Button, ProductCard } from '@/ui';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ProductStatusProps = {
   id: number;
@@ -28,13 +28,14 @@ export default function ProductStatus({
   moods,
   status,
 }: ProductStatusProps) {
+  const toast = useToast();
   const handleRefuse = () => {
     //TODO: 예약 거절 기능 구현
     console.info('예약 거절', id);
   };
 
   const handleSendMessage = () => {
-    //TODO: 메시지 기능은 준비 중 이에요. 조금만 기다려주세요! -> toast 띄우기
+    toast.alert('메시지 기능은 준비 중 이에요. 조금만 기다려주세요!');
   };
 
   return (
@@ -52,16 +53,17 @@ export default function ProductStatus({
         />
       </div>
       <div className='flex w-full items-center gap-[0.6rem] pt-[1.7rem]'>
-        {status !== 'RESERVATION_CONFIRMED' && status !== 'RESERVATION_REFUSED' && (
-          <Button
-            size='small'
-            color='white'
-            className='text-black-10 w-full'
-            onClick={handleRefuse}
-          >
-            예약 거절
-          </Button>
-        )}
+        {status !== STATE_CODES.RESERVATION_CONFIRMED &&
+          status !== STATE_CODES.RESERVATION_REFUSED && (
+            <Button
+              size='small'
+              color='white'
+              className='text-black-10 w-full'
+              onClick={handleRefuse}
+            >
+              예약 거절
+            </Button>
+          )}
 
         <Button
           size='small'

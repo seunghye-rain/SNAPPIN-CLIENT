@@ -1,6 +1,6 @@
 'use client';
 
-import { StateCode } from '@/types/stateCode';
+import { STATE_CODES, StateCode } from '@/types/stateCode';
 import Button from '@/ui/button/base/Button';
 
 type FooterProps = {
@@ -24,7 +24,7 @@ export default function Footer({ date, startTime, status }: FooterProps) {
 
   const getButtonConfig = (): ButtonConfig => {
     switch (status) {
-      case 'PHOTOGRAPHER_CHECKING':
+      case STATE_CODES.PHOTOGRAPHER_CHECKING:
         return {
           label: '결제 요청하기',
           disabled: false,
@@ -32,13 +32,13 @@ export default function Footer({ date, startTime, status }: FooterProps) {
             //TODO: 결제 요청 페이지로 이동 후 결제 요청 API 호출 쿼리키 무효화
           },
         };
-      case 'PAYMENT_REQUESTED':
+      case STATE_CODES.PAYMENT_REQUESTED:
         return {
           label: '결제 요청 중',
           disabled: true,
           onClick: undefined,
         };
-      case 'PAYMENT_COMPLETED':
+      case STATE_CODES.PAYMENT_COMPLETED:
         return {
           label: '예약 확정하기',
           disabled: false,
@@ -47,7 +47,7 @@ export default function Footer({ date, startTime, status }: FooterProps) {
           },
         };
 
-      case 'RESERVATION_CONFIRMED':
+      case STATE_CODES.RESERVATION_CONFIRMED:
         if (isAfterStart) {
           return {
             label: '촬영 완료하고 리뷰 요청하기',
@@ -62,7 +62,7 @@ export default function Footer({ date, startTime, status }: FooterProps) {
           disabled: true,
           onClick: undefined,
         };
-      case 'SHOOT_COMPLETED':
+      case STATE_CODES.SHOOT_COMPLETED:
         return {
           label: '리뷰 요청 완료',
           disabled: true,

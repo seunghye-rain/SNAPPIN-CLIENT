@@ -1,5 +1,5 @@
 export const RESERVATION_DETAIL_MOCK = {
-  status: 'RESERVATION_CONFIRMED',
+  status: 'PAYMENT_REQUESTED',
   productInfo: {
     id: 1,
     imageUrl: 'https://picsum.photos/576/576?random=1',
