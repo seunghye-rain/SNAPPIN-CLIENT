@@ -45,11 +45,11 @@ export default function ConfirmModal({
           <Modal.Title className={cn('pt-[1rem] font-16-md text-black-10 whitespace-pre-line', titleClassName)}>
             {title}
           </Modal.Title>
-          {description &&
+          {description && (
             <Modal.Description className={cn('caption-12-md text-black-7', descriptionClassName)}>
               {description}
             </Modal.Description>
-          }
+          )}
         </div>
       </Modal.Header>
       <Modal.Footer className={cn('flex flex-row gap-[0.5rem]', footerClassName)}>
