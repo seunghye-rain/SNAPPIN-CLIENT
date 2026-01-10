@@ -8,7 +8,7 @@ type ConfirmModalProps = {
   title: string;
   description?: string;
   buttons: ModalButtonProps[];
-  contentClassName?: string;
+  layoutClassName?: string;
   headerClassName?: string;
   containerClassName?: string;
   titleClassName?: string;
@@ -23,7 +23,7 @@ export default function ConfirmModal({
   title,
   description,
   buttons,
-  contentClassName,
+  layoutClassName,
   headerClassName,
   containerClassName,
   titleClassName,
@@ -37,7 +37,7 @@ export default function ConfirmModal({
       showCloseButton={showCloseButton}
       className={cn(
         'flex flex-col justify-center gap-[1.5rem] w-[28.1rem] p-[1.5rem] bg-black-1 border-0 rounded-[0.6rem]',
-        contentClassName
+        layoutClassName
       )}
     >
       <Modal.Header className={cn('flex flex-col items-center gap-[1.4rem]', headerClassName)}>
