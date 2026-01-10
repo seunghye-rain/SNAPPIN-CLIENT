@@ -23,6 +23,7 @@ export default function TextareaField({
   value,
   ...props
 }: TextareaFieldProps) {
+  const messageId = `${id}-message`;
   return (
     <div className='flex w-full flex-col'>
       {label && (
@@ -37,14 +38,14 @@ export default function TextareaField({
         value={value}
         aria-invalid={hasError || undefined}
         hasError={hasError}
-        aria-describedby={hasError ? id : undefined}
+        aria-describedby={helpText ? messageId : undefined}
         required={required}
         onChange={onChange}
         placeholder={placeholder}
         {...props}
       />
 
-      <FieldMessage id={id} message={helpText} variant={hasError ? 'error' : 'help'} />
+      <FieldMessage id={messageId} message={helpText} variant={hasError ? 'error' : 'help'} />
     </div>
   );
 }
