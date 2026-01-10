@@ -9,7 +9,7 @@ import {
 } from '@/ui/button/base/constants/theme';
 import { ButtonHTMLAttributes } from 'react';
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   display?: ButtonDisplay;
   size?: ButtonSize;

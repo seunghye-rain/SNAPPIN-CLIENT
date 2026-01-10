@@ -1,5 +1,4 @@
 import { Button } from '@/ui/button';
-import { ButtonProps } from '@/ui/button/base/Button';
 import {
   Dialog,
   DialogClose,
@@ -25,7 +24,7 @@ type ModalSlotProps = {
   className?: string; 
 };
 
-export type ModalButtonProps = Omit<ButtonProps, 'children'> & {
+export type ModalButtonProps = Omit<React.ComponentProps<typeof Button>, 'children'> & {
   label: string;
 };
 
