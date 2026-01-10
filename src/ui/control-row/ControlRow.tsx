@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 
-type StepperRowProps = {
+type ControlRowProps = {
   leftLabel: React.ReactNode;
   rightControl: React.ReactNode;
   className?: string;
@@ -12,7 +12,7 @@ export default function ControlRow({
   rightControl,
   centered = false,
   className,
-}: StepperRowProps) {
+}: ControlRowProps) {
   return (
     <div className={cn('flex justify-between', centered && 'items-center', className)}>
       {leftLabel}
