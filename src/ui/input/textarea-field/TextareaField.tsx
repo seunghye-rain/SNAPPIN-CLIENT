@@ -37,7 +37,7 @@ export default function TextareaField({
         value={value}
         aria-invalid={hasError || undefined}
         hasError={hasError}
-        aria-describedby={hasError ? `${id}` : undefined}
+        aria-describedby={hasError ? id : undefined}
         required={required}
         onChange={onChange}
         placeholder={placeholder}

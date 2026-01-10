@@ -197,7 +197,7 @@ export default function ReservationBottomDrawer({
               size='medium'
               form='reservation-form'
               type='submit'
-              disabled={isButtonDisabled ?? false}
+              disabled={isButtonDisabled}
             >
               예약하기
             </BottomCTAButton.Single>
