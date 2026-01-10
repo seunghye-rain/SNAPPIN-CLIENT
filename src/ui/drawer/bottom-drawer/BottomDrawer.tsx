@@ -1,11 +1,14 @@
 import { Drawer, DrawerContent } from '@/ui/drawer/base/Drawer';
 import { cn } from '@/utils/cn';
 
-type BottomDrawerRootProps = {
-  isOpen?: boolean;
-  handleOpenChange?: (open: boolean) => void;
+type BottomDrawerCommonProps = {
   children?: React.ReactNode;
   className?: string;
+};
+
+type BottomDrawerRootProps = BottomDrawerCommonProps & {
+  isOpen?: boolean;
+  handleOpenChange?: (open: boolean) => void;
 };
 
 const BottomDrawerRoot = ({
@@ -26,11 +29,10 @@ const BottomDrawerRoot = ({
   );
 };
 
-type BottomDrawerTitleProps = React.ComponentPropsWithoutRef<'h3' | 'span'> & {
-  as?: 'h3' | 'span';
-  children?: React.ReactNode;
-  className?: string;
-};
+type BottomDrawerTitleProps = React.ComponentPropsWithoutRef<'h3' | 'span'> &
+  BottomDrawerCommonProps & {
+    as?: 'h3' | 'span';
+  };
 
 const BottomDrawerTitle = ({
   as: Component = 'h3',
@@ -40,30 +42,15 @@ const BottomDrawerTitle = ({
   return <Component className={cn('font-16-bd text-black-10', className)}>{children}</Component>;
 };
 
-type BottomDrawerRowProps = {
-  children?: React.ReactNode;
-  className?: string;
-};
-
-const BottomDrawerRow = ({ children, className }: BottomDrawerRowProps) => {
+const BottomDrawerRow = ({ children, className }: BottomDrawerCommonProps) => {
   return <div className={cn(className)}>{children}</div>;
 };
 
-type BottomDrawerSectionProps = {
-  children?: React.ReactNode;
-  className?: string;
-};
-
-const BottomDrawerSection = ({ children, className }: BottomDrawerSectionProps) => {
+const BottomDrawerSection = ({ children, className }: BottomDrawerCommonProps) => {
   return <section className={cn(className)}>{children}</section>;
 };
 
-type BottomDrawerFooterProps = {
-  children?: React.ReactNode;
-  className?: string;
-};
-
-const BottomDrawerFooter = ({ children, className }: BottomDrawerFooterProps) => {
+const BottomDrawerFooter = ({ children, className }: BottomDrawerCommonProps) => {
   return <footer className={cn(className)}>{children}</footer>;
 };
 
