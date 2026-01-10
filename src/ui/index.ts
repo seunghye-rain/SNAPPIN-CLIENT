@@ -12,5 +12,6 @@ export * from './input/index';
 export * from './navigation/index';
 export * from './product-card/index';
 export * from './section-tabs/index';
+export * from './stepper/index';
 export * from './time-picker/index';
 export * from './user-type-toggle/index';
