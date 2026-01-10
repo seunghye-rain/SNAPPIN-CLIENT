@@ -186,7 +186,7 @@ export default function ReservationBottomDrawer({
       </form>
 
       {/* 하단 버튼 영역 */}
-      <BottomDrawer.Footer className='px-[1.6rem] pt-[0.8rem] pb-[2.4rem]'>
+      <BottomDrawer.Footer className='border-black-3 border-t-[0.1rem] px-[1.6rem] pt-[0.8rem] pb-[2.4rem]'>
         <div className='flex flex-row'>
           <div className='text-black-10 flex flex-1 items-center gap-[0.4rem]'>
             <span className='font-12-md'>기본가</span>
