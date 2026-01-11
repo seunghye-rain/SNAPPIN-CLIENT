@@ -9,11 +9,11 @@ import {
   DrawerDescription,
   DrawerTitle,
   Stepper,
+  TextareaField,
   TextField,
   TimePicker,
 } from '@/ui';
 import { MOCK_TIME_SLOTS } from '@/ui/time-picker/constants/mockTimeSlots';
-import TextareaField from '@/ui/input/textarea-field/TextareaField';
 import { formatNumberWithComma } from '@/utils/formatNumberWithComma';
 import { useEffect, useRef } from 'react';
 import {
