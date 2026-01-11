@@ -8,6 +8,7 @@ import {
   Divider,
   DrawerDescription,
   DrawerTitle,
+  FieldMessage,
   Stepper,
   TextareaField,
   TextField,
@@ -33,8 +34,9 @@ type ReservationBottomDrawerProps = {
   onFormSubmitAction: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-const DURATION_HOURS_STEP = 1;
+const DURATION_HOURS_STEP = 0.5;
 const PARTICIPANT_COUNT_STEP = 1;
+const REQUEST_TEXTAREA_MAX_LENGTH = 500;
 
 export default function ReservationBottomDrawer({
   isOpen,
@@ -48,6 +50,7 @@ export default function ReservationBottomDrawer({
 }: ReservationBottomDrawerProps) {
   const timeSectionRef = useRef<HTMLDivElement>(null);
   const [viewMonth, setViewMonth] = useState<Date>(new Date());
+  const [isRequestFocused, setIsRequestFocused] = useState(false);
 
   // todo useSuspenseQueries 연결
   // 1. 휴뮤일 조회
@@ -63,6 +66,8 @@ export default function ReservationBottomDrawer({
   const isButtonDisabled = !date || !time;
   const formattedTime = `${durationHours}시간`;
   const formattedCount = `${participantCount}명`;
+  const requestLength = request.length;
+  const isRequestTextareaError = requestLength > REQUEST_TEXTAREA_MAX_LENGTH;
 
   const patch = (p: Partial<ReservationDraft>) =>
     handleDraftChangeAction((prev) => ({ ...prev, ...p }));
@@ -209,11 +214,34 @@ export default function ReservationBottomDrawer({
           <TextareaField
             id='reservation-etc'
             label='기타 요청 사항'
-            rows={2}
-            maxLength={500}
+            rows={4}
             value={request}
-            placeholder='추가 문의 사항 혹은 유료 서비스 포함 여부를 작성해주세요'
-            helpText={`${request.length}/500자까지 작성 가능합니다.`}
+            placeholder={
+              !isRequestFocused && request.length === 0
+                ? `추가 문의 사항 혹은 유료 서비스 포함 여부를 작성해주세요`
+                : '요청 사항 입력'
+            }
+            onFocus={() => setIsRequestFocused(true)}
+            onBlur={() => setIsRequestFocused(false)}
+            hasError={isRequestTextareaError}
+            helpText={
+              <div className='flex flex-row justify-between'>
+                <FieldMessage
+                  id='revervation-etc-error'
+                  message={
+                    isRequestTextareaError
+                      ? `최대 ${REQUEST_TEXTAREA_MAX_LENGTH}자까지 입력할 수 있어요`
+                      : ' '
+                  }
+                  variant={isRequestTextareaError ? 'error' : 'help'}
+                />
+                <FieldMessage
+                  id='reservation-etc-help'
+                  message={`(${request.length}/${REQUEST_TEXTAREA_MAX_LENGTH})`}
+                  variant={isRequestTextareaError ? 'error' : 'help'}
+                />
+              </div>
+            }
             onChange={(e) => patch({ request: e.target.value })}
           />
         </BottomDrawer.Section>
