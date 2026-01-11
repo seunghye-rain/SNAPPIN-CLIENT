@@ -10,6 +10,7 @@ import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import type { StateCode } from '@/types/stateCode';
 import { ReservationStatusByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
 import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ReservationDetailPageProps = {
   params: Promise<{
@@ -20,6 +21,7 @@ type ReservationDetailPageProps = {
 export default function Page({ params }: ReservationDetailPageProps) {
   const { id } = use(params);
   const { isVisible } = useNavVisibility();
+  const toast = useToast();
   const reservationProductId = Number(id);
   const resolvedReservationProductId = Number.isNaN(reservationProductId)
     ? 1
@@ -51,7 +53,7 @@ export default function Page({ params }: ReservationDetailPageProps) {
   };
 
   const handleInquiryClick = () => {
-    // TODO: 문의하기 이동
+    toast.error('작가님이 아직 채팅방을 운영하지 않아요.');
   };
 
   const hasPaymentRequestAction = reservationStatus === 'PAYMENT_REQUESTED';

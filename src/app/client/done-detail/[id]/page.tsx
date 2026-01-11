@@ -10,6 +10,7 @@ import { Divider } from '@/ui';
 import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
 import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type DoneDetailPageProps = {
   params: Promise<{
@@ -23,6 +24,7 @@ const createReviewWritePath = (reservationProductId: number) =>
 export default function Page({ params }: DoneDetailPageProps) {
   const { id } = use(params);
   const { isVisible } = useNavVisibility();
+  const toast = useToast();
   const reservationProductId = Number(id);
   const resolvedReservationProductId = Number.isNaN(reservationProductId)
     ? 1
@@ -36,7 +38,9 @@ export default function Page({ params }: DoneDetailPageProps) {
 
   const router = useRouter();
 
-  const handleInquiryClick = () => {};
+  const handleInquiryClick = () => {
+    toast.error('작가님이 아직 채팅방을 운영하지 않아요.');
+  };
 
   const handleReviewCreateClick = () => {
     router.push(createReviewWritePath(resolvedReservationProductId));

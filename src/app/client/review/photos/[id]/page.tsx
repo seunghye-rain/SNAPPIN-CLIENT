@@ -9,12 +9,7 @@ import { getReservationDetailMockById } from '@/app/client/reservation-detail/[i
 import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
 import { Carousel, CarouselContent, CarouselItem, Divider, IconButton } from '@/ui';
 import type { CarouselApi } from '@/ui';
-import {
-  IconArrowBack,
-  IconArrowForward,
-  IconKeyboardArrowLeft,
-  IconKeyboardArrowRight,
-} from '@/assets';
+import { IconArrowBack, IconArrowForward } from '@/assets';
 import ReviewStar from '@/ui/review-star/ReviewStar';
 
 type ReviewPhotosPageProps = {
