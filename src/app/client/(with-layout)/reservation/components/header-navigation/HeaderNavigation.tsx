@@ -9,10 +9,13 @@ export default function HeaderNavigation() {
   };
 
   return (
-    <Navigation
-      isFixed={true}
-      left={<Logo width={72} />}
-      right={<IconSearch onClick={handleSearchClick} />}
-    />
+    <>
+      <Navigation
+        left={<Logo width={72} />}
+        right={<IconSearch onClick={handleSearchClick} />}
+        className='fixed-center top-0 z-10'
+      />
+      <div className='bg-black-1 h-[5rem] flex-none' />
+    </>
   );
 }

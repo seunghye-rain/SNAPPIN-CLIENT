@@ -10,6 +10,7 @@ import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
 import { Divider, ProductCard, BottomCTAButton } from '@/ui';
 import { ReviewedByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
 import WriteReview from './_section/WriteReview';
+import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
 
 type ReviewWritePageProps = {
   params: Promise<{
@@ -25,6 +26,7 @@ const createTodayDateString = () => new Date().toISOString().slice(0, 10);
 export default function Page({ params }: ReviewWritePageProps) {
   const { id } = use(params);
   const router = useRouter();
+  const { isVisible } = useNavVisibility();
   const [reviewByReservationProductId, setReviewByReservationProductId] = useAtom(
     ReviewByReservationProductIdAtom,
   );
@@ -77,7 +79,7 @@ export default function Page({ params }: ReviewWritePageProps) {
 
   return (
     <div className='bg-black-3 flex min-h-full flex-col pb-[10rem]'>
-      <HeaderNavigation title='리뷰 작성' />
+      <HeaderNavigation isVisible={isVisible} />
       <Divider color='bg-black-5' />
       <section className='bg-black-1 px-[2rem] pt-[1.7rem] pb-[1.2rem]'>
         <ProductCard

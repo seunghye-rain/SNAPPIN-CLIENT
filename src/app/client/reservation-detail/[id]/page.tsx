@@ -9,6 +9,7 @@ import { BottomCTAButton, Divider } from '@/ui';
 import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import type { StateCode } from '@/types/stateCode';
 import { ReservationStatusByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
+import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
 
 type ReservationDetailPageProps = {
   params: Promise<{
@@ -18,6 +19,7 @@ type ReservationDetailPageProps = {
 
 export default function Page({ params }: ReservationDetailPageProps) {
   const { id } = use(params);
+  const { isVisible } = useNavVisibility();
   const reservationProductId = Number(id);
   const resolvedReservationProductId = Number.isNaN(reservationProductId)
     ? 1
@@ -57,9 +59,7 @@ export default function Page({ params }: ReservationDetailPageProps) {
   const hasReservationConfirmedAction = reservationStatus === 'RESERVATION_CONFIRMED';
   const hasReservationCanceledAction = reservationStatus === 'RESERVATION_CANCELED';
   const hasPaymentDetailSection =
-    hasPaymentRequestAction ||
-    hasPaymentConfirmingAction ||
-    hasReservationConfirmedAction;
+    hasPaymentRequestAction || hasPaymentConfirmingAction || hasReservationConfirmedAction;
 
   const bottomCtaButton = hasPaymentRequestAction ? (
     <BottomCTAButton background='white' hasPadding={true}>
@@ -88,7 +88,7 @@ export default function Page({ params }: ReservationDetailPageProps) {
 
   return (
     <div className='bg-black-3 flex min-h-full flex-col'>
-      <HeaderNavigation />
+      <HeaderNavigation isVisible={isVisible} />
       <Divider color='bg-black-5' />
       <ReservationRequested
         reservationProductId={resolvedReservationProductId}

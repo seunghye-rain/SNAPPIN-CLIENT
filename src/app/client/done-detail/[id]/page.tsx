@@ -5,10 +5,11 @@ import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 
 import { PaymentDetail, ReservationDetail, ReviewDetail, ShootCompleted } from './_section';
-import { HeaderNavigation } from './components';
+import HeaderNavigation from './components/header-navigation/HeaderNavigation';
 import { Divider } from '@/ui';
 import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
+import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
 
 type DoneDetailPageProps = {
   params: Promise<{
@@ -16,12 +17,16 @@ type DoneDetailPageProps = {
   }>;
 };
 
-const createReviewWritePath = (reservationProductId: number) => `/client/review/write/${reservationProductId}`;
+const createReviewWritePath = (reservationProductId: number) =>
+  `/client/review/write/${reservationProductId}`;
 
 export default function Page({ params }: DoneDetailPageProps) {
   const { id } = use(params);
+  const { isVisible } = useNavVisibility();
   const reservationProductId = Number(id);
-  const resolvedReservationProductId = Number.isNaN(reservationProductId) ? 1 : reservationProductId;
+  const resolvedReservationProductId = Number.isNaN(reservationProductId)
+    ? 1
+    : reservationProductId;
   const reservationDetailMock = getReservationDetailMockById(resolvedReservationProductId);
   const reviewByReservationProductId = useAtomValue(ReviewByReservationProductIdAtom);
   const reviewFromStore = reviewByReservationProductId[resolvedReservationProductId];
@@ -39,7 +44,7 @@ export default function Page({ params }: DoneDetailPageProps) {
 
   return (
     <div className='bg-black-3 flex min-h-full flex-col'>
-      <HeaderNavigation title='촬영 완료' />
+      <HeaderNavigation isVisible={isVisible} />
       <Divider color='bg-black-5' />
       <ShootCompleted
         reservationProductId={resolvedReservationProductId}
@@ -62,7 +67,11 @@ export default function Page({ params }: DoneDetailPageProps) {
             reviewer={resolvedReviewInfo.reviewer}
             rating={resolvedReviewInfo.rating}
             createdAt={resolvedReviewInfo.createdAt}
-            imageUrls={'imageUrls' in resolvedReviewInfo ? resolvedReviewInfo.imageUrls : resolvedReviewInfo.images}
+            imageUrls={
+              'imageUrls' in resolvedReviewInfo
+                ? resolvedReviewInfo.imageUrls
+                : resolvedReviewInfo.images
+            }
             content={resolvedReviewInfo.content}
           />
         </>

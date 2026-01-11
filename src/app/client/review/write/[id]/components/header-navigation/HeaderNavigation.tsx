@@ -29,7 +29,7 @@ export default function HeaderNavigation({ isVisible }: HeaderProps) {
           </IconButton>
         }
         center={
-          <span className='caption-14-bd text-black-10 flex flex-1 text-center'>예약 상세</span>
+          <span className='caption-14-bd text-black-10 flex flex-1 text-center'>리뷰 작성</span>
         }
         right={
           <IconButton onClick={handleHomeClick} className='h-[2.4rem] w-[2.4rem]'>
