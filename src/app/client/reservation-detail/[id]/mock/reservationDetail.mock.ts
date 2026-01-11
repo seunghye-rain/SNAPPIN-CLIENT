@@ -1,4 +1,8 @@
-import { RESERVATION_MOCK, type ReservationMockProduct } from '@/app/client/(with-layout)/reservation/mock/reservationList.mock';
+import {
+  RESERVATION_MOCK,
+  type ReservationMockProduct,
+  type ReservationMockReservation,
+} from '@/app/client/(with-layout)/reservation/mock/reservationList.mock';
 
 export type ReservationDetailMockProductInfo = Pick<
   ReservationMockProduct,
@@ -13,6 +17,8 @@ export type ReservationDetailMockProductInfo = Pick<
 >;
 
 export type ReservationDetailMockReservationInfo = {
+  client: string;
+  createdAt: string;
   date: string;
   startTime: string;
   durationTime: number;
@@ -37,24 +43,26 @@ export type ReservationDetailMockReviewInfo = {
 };
 
 export type ReservationDetailMock = {
-  status: ReservationMockProduct['status'];
+  status: ReservationMockReservation['status'];
   productInfo: ReservationDetailMockProductInfo;
   reservationInfo: ReservationDetailMockReservationInfo;
   paymentInfo: ReservationDetailMockPaymentInfo;
   reviewInfo?: ReservationDetailMockReviewInfo;
 };
 
-const createReservationInfoByReservationProductId = (
-  reservationProductId: number,
+const createReservationInfoByReservation = (
+  reservation: ReservationMockReservation,
 ): ReservationDetailMockReservationInfo => ({
-  date: `2026-03-${String(14 + reservationProductId).padStart(2, '0')}`,
-  startTime: reservationProductId % 2 === 0 ? '11:00' : '10:00',
+  client: reservation.client,
+  createdAt: reservation.createdAt,
+  date: `2026-03-${String(14 + reservation.product.id).padStart(2, '0')}`,
+  startTime: reservation.product.id % 2 === 0 ? '11:00' : '10:00',
   durationTime:
-    reservationProductId % 2 === 0
-      ? 60 * ((reservationProductId % 3) + 1)
-      : 60 * ((reservationProductId % 3) + 1) + 30,
+    reservation.product.id % 2 === 0
+      ? 60 * ((reservation.product.id % 3) + 1)
+      : 60 * ((reservation.product.id % 3) + 1) + 30,
   place: '건국대',
-  peopleCount: (reservationProductId % 4) + 1,
+  peopleCount: (reservation.product.id % 4) + 1,
   requestNote: 'A, B, C 장소 필수 포함 요청드려요! 원본 JPG 전부 받고 싶습니다.',
 });
 
@@ -69,46 +77,56 @@ const createPaymentInfoByPrice = (price: number): ReservationDetailMockPaymentIn
 };
 
 const createReviewInfoByReservationProductId = (
-  reservationProductId: number,
+  reservation: ReservationMockReservation,
 ): ReservationDetailMockReviewInfo => ({
-  id: reservationProductId,
+  id: reservation.product.id,
   reviewer: '작성자명',
   rating: 5,
   createdAt: '2026-03-20',
   images: [
-    `https://picsum.photos/576/576?random=${reservationProductId + 100}`,
-    `https://picsum.photos/576/576?random=${reservationProductId + 200}`,
+    `https://picsum.photos/576/576?random=${reservation.reservationId + 100}`,
+    `https://picsum.photos/576/576?random=${reservation.reservationId + 200}`,
   ],
   content: '리뷰 내용',
 });
 
-const createReservationDetailMockByReservationProduct = (
-  reservationProduct: ReservationMockProduct,
+const createReservationDetailMockByReservation = (
+  reservation: ReservationMockReservation,
 ): ReservationDetailMock => ({
-  status: reservationProduct.status,
+  status: reservation.status,
   productInfo: {
-    id: reservationProduct.id,
-    imageUrl: reservationProduct.imageUrl,
-    title: reservationProduct.title,
-    rate: reservationProduct.rate,
-    reviewCount: reservationProduct.reviewCount,
-    photographer: reservationProduct.photographer,
-    price: reservationProduct.price,
-    moods: reservationProduct.moods,
+    id: reservation.product.id,
+    imageUrl: reservation.product.imageUrl,
+    title: reservation.product.title,
+    rate: reservation.product.rate,
+    reviewCount: reservation.product.reviewCount,
+    photographer: reservation.product.photographer,
+    price: reservation.product.price,
+    moods: reservation.product.moods,
   },
-  reservationInfo: createReservationInfoByReservationProductId(reservationProduct.id),
-  paymentInfo: createPaymentInfoByPrice(reservationProduct.price),
-  reviewInfo: reservationProduct.isReviewed
-    ? createReviewInfoByReservationProductId(reservationProduct.id)
+  reservationInfo: createReservationInfoByReservation(reservation),
+  paymentInfo: createPaymentInfoByPrice(reservation.product.price),
+  reviewInfo: reservation.product.isReviewed
+    ? createReviewInfoByReservationProductId(reservation)
     : undefined,
 });
 
-export const RESERVATION_DETAIL_MOCKS: ReservationDetailMock[] = RESERVATION_MOCK.products.map(
-  (reservationProduct) => createReservationDetailMockByReservationProduct(reservationProduct),
+const RESERVATION_DETAIL_MOCK_BY_RESERVATION_ID: Record<number, ReservationDetailMock> =
+  RESERVATION_MOCK.reservations.reduce<Record<number, ReservationDetailMock>>(
+    (reservationDetailMockByReservationId, { reservation }) => ({
+      ...reservationDetailMockByReservationId,
+      [reservation.reservationId]: createReservationDetailMockByReservation(reservation),
+    }),
+    {},
+  );
+
+export const RESERVATION_DETAIL_MOCKS: ReservationDetailMock[] = Object.values(
+  RESERVATION_DETAIL_MOCK_BY_RESERVATION_ID,
 );
 
 export const getReservationDetailMockById = (reservationProductId: number): ReservationDetailMock =>
-  RESERVATION_DETAIL_MOCKS.find(({ productInfo }) => productInfo.id === reservationProductId) ??
-  RESERVATION_DETAIL_MOCKS[0];
+  RESERVATION_DETAIL_MOCK_BY_RESERVATION_ID[reservationProductId] ?? RESERVATION_DETAIL_MOCKS[0];
 
-export const RESERVATION_DETAIL_MOCK = getReservationDetailMockById(RESERVATION_MOCK.products[0].id);
+export const RESERVATION_DETAIL_MOCK = getReservationDetailMockById(
+  RESERVATION_MOCK.reservations[0].reservation.reservationId,
+);
