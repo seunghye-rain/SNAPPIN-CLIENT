@@ -32,6 +32,8 @@ export default function Page() {
         />
         <Divider thickness='large' color='bg-black-3' />
         <ReservationDetail
+          client={data.reservationInfo.client}
+          createdAt={data.reservationInfo.createdAt}
           status={data.status as StateCode}
           date={data.reservationInfo.date}
           startTime={data.reservationInfo.startTime}

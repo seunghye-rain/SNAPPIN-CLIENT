@@ -11,6 +11,8 @@ export const RESERVATION_DETAIL_MOCK = {
     moods: ['따스한', '내추럴', '투명한'],
   },
   reservationInfo: {
+    client: '고객명',
+    createdAt: '2026-02-18 10:05:44',
     date: '2026-03-15',
     startTime: '10:00',
     durationTime: 120,
