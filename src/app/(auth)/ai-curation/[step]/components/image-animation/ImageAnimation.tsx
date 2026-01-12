@@ -45,7 +45,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
   const sorted = useMemo(() => images.slice().sort((a, b) => a.order - b.order), [images]);
 
   const [isAnimating, setIsAnimating] = useState(false);
-  const { selectedImageIds, toggleImageId } = useAiCuration();
+  const { selectedByStep, currentStep, toggleImageId } = useAiCuration();
 
   const handleSelect = (id: number) => {
     toggleImageId(id);
@@ -65,7 +65,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
               type='button'
               className={cn(
                 'absolute h-[19.3rem] w-[14.5rem] overflow-hidden rounded-[0.6rem] focus:outline-none',
-                selectedImageIds.includes(img.id) && 'border-neon-black z-10 border-[3px]',
+                selectedByStep[currentStep] === img.id && 'border-neon-black z-10 border-[3px]',
               )}
               onClick={() => handleSelect(img.id)}
               initial={false}

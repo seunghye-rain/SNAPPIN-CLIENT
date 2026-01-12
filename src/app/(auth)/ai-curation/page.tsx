@@ -1,6 +1,7 @@
 import { Logo } from '@/assets';
 import { ClientFooter, ClientNavigation } from './components';
-import ImageSlide from '../_components/image-slide/ImageSlide';
+
+import LottieAnimation from './components/lottie-animation/LottieAnimation';
 
 export default function Page() {
   return (
@@ -14,7 +15,7 @@ export default function Page() {
             <p className='font-16-md text-black-7'>좋아하는 스냅 사진 무드 찾기</p>
           </div>
         </div>
-        <ImageSlide />
+        <LottieAnimation />
         <p className='text-black-5 caption-14-md text-center'>
           간단한 질문을 통해
           <br />

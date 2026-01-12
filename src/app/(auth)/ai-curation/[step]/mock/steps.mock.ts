@@ -36,22 +36,22 @@ export const STEP2_MOCK = {
   },
   photos: [
     {
-      id: 1,
+      id: 5,
       imageUrl: 'https://picsum.photos/576/576?random=1',
       order: 1,
     },
     {
-      id: 2,
+      id: 6,
       imageUrl: 'https://picsum.photos/576/576?random=2',
       order: 2,
     },
     {
-      id: 3,
+      id: 7,
       imageUrl: 'https://picsum.photos/576/576?random=3',
       order: 3,
     },
     {
-      id: 4,
+      id: 8,
       imageUrl: 'https://picsum.photos/576/576?random=4',
       order: 4,
     },
@@ -66,22 +66,22 @@ export const STEP3_MOCK = {
   },
   photos: [
     {
-      id: 1,
+      id: 9,
       imageUrl: 'https://picsum.photos/576/576?random=1',
       order: 1,
     },
     {
-      id: 2,
+      id: 10,
       imageUrl: 'https://picsum.photos/576/576?random=2',
       order: 2,
     },
     {
-      id: 3,
+      id: 11,
       imageUrl: 'https://picsum.photos/576/576?random=3',
       order: 3,
     },
     {
-      id: 4,
+      id: 12,
       imageUrl: 'https://picsum.photos/576/576?random=4',
       order: 4,
     },
@@ -96,22 +96,22 @@ export const STEP4_MOCK = {
   },
   photos: [
     {
-      id: 1,
+      id: 13,
       imageUrl: 'https://picsum.photos/576/576?random=1',
       order: 1,
     },
     {
-      id: 2,
+      id: 14,
       imageUrl: 'https://picsum.photos/576/576?random=2',
       order: 2,
     },
     {
-      id: 3,
+      id: 15,
       imageUrl: 'https://picsum.photos/576/576?random=3',
       order: 3,
     },
     {
-      id: 4,
+      id: 16,
       imageUrl: 'https://picsum.photos/576/576?random=4',
       order: 4,
     },
@@ -126,22 +126,22 @@ export const STEP5_MOCK = {
   },
   photos: [
     {
-      id: 1,
+      id: 17,
       imageUrl: 'https://picsum.photos/576/576?random=1',
       order: 1,
     },
     {
-      id: 2,
+      id: 18,
       imageUrl: 'https://picsum.photos/576/576?random=2',
       order: 2,
     },
     {
-      id: 3,
+      id: 19,
       imageUrl: 'https://picsum.photos/576/576?random=3',
       order: 3,
     },
     {
-      id: 4,
+      id: 20,
       imageUrl: 'https://picsum.photos/576/576?random=4',
       order: 4,
     },

@@ -1,40 +1,58 @@
 'use client';
 
 import React, { createContext, useContext, useMemo, useState } from 'react';
-
+import type { AiCurationStep } from '../[step]/constants/steps';
 type AiCurationState = {
-  selectedImageIds: number[];
+  selectedByStep: Record<AiCurationStep, number | null>; // step마다 단 1개
+  currentStep: AiCurationStep;
 };
 
 type AiCurationActions = {
+  setCurrentStep: (step: AiCurationStep) => void;
+  selectImageId: (id: number) => void;
   toggleImageId: (id: number) => void;
-  clearSelectedImageIds: () => void;
-  setSelectedImageIds: (ids: number[]) => void;
 };
 
 type AiCurationContextValue = AiCurationState & AiCurationActions;
 
 const AiCurationContext = createContext<AiCurationContextValue | null>(null);
 
-export function AiCurationProvider({ children }: { children: React.ReactNode }) {
-  const [selectedImageIds, setSelectedImageIds] = useState<number[]>([]);
+const EMPTY_SELECTED_BY_STEP: Record<AiCurationStep, number | null> = {
+  '1': null,
+  '2': null,
+  '3': null,
+  '4': null,
+  '5': null,
+};
 
-  const toggleImageId = (id: number) => {
-    setSelectedImageIds((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
-    );
+export function AiCurationProvider({ children }: { children: React.ReactNode }) {
+  const [currentStep, setCurrentStep] = useState<AiCurationStep>('1');
+  const [selectedByStep, setSelectedByStep] =
+    useState<Record<AiCurationStep, number | null>>(EMPTY_SELECTED_BY_STEP);
+
+  const selectImageId = (id: number) => {
+    setSelectedByStep((prev) => ({
+      ...prev,
+      [currentStep]: id,
+    }));
   };
 
-  const clearSelectedImageIds = () => setSelectedImageIds([]);
+  const toggleImageId = (id: number) => {
+    setSelectedByStep((prev) => ({
+      ...prev,
+      [currentStep]: prev[currentStep] === id ? null : id,
+    }));
+  };
 
   const value = useMemo(
     () => ({
-      selectedImageIds,
+      currentStep,
+      selectedByStep,
+      setCurrentStep,
+      selectImageId,
       toggleImageId,
-      clearSelectedImageIds,
-      setSelectedImageIds,
     }),
-    [selectedImageIds],
+    [currentStep, selectedByStep],
   );
 
   return <AiCurationContext.Provider value={value}>{children}</AiCurationContext.Provider>;

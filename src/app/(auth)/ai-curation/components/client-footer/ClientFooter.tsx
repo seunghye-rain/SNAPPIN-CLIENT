@@ -1,12 +1,12 @@
 'use client';
 
-import { Button, BottomCTAButton } from '@/ui';
 import { useRouter } from 'next/navigation';
+import { Button, BottomCTAButton } from '@/ui';
 
 export default function ClientFooter() {
   const router = useRouter();
+
   const handleStartCuration = () => {
-    //TODO: AI 무드 큐레이션 시작하기
     router.push('/ai-curation/1');
   };
 
