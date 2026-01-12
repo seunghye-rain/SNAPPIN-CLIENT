@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useMemo, useState } from 'react';
+import { Suspense, use, useEffect, useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { useSearchParams } from 'next/navigation';
 
@@ -31,7 +31,9 @@ const createReviewCreatedAtLabel = (createdAt: string) => {
 const getClampedIndex = (index: number, length: number) =>
   length <= 0 ? 0 : Math.max(0, Math.min(length - 1, index));
 
-export default function Page({ params }: ReviewPhotosPageProps) {
+type ReviewPhotosPageContentProps = ReviewPhotosPageProps;
+
+const ReviewPhotosPageContent = ({ params }: ReviewPhotosPageContentProps) => {
   const { id } = use(params);
   const searchParams = useSearchParams();
   const reviewByReservationProductId = useAtomValue(ReviewByReservationProductIdAtom);
@@ -137,5 +139,15 @@ export default function Page({ params }: ReviewPhotosPageProps) {
         <div className='caption-14-md text-black-1 whitespace-pre-wrap'>{content}</div>
       </div>
     </div>
+  );
+};
+
+const ReviewPhotosPageFallback = () => <div className='bg-black-10 flex min-h-full flex-col' />;
+
+export default function Page({ params }: ReviewPhotosPageProps) {
+  return (
+    <Suspense fallback={<ReviewPhotosPageFallback />}>
+      <ReviewPhotosPageContent params={params} />
+    </Suspense>
   );
 }
