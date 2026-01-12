@@ -2,10 +2,15 @@ import type { ProductCardProps } from '@/ui/product-card/ProductCard';
 import { ProductCard } from '@/ui';
 import Link from 'next/link';
 import { IconKeyboardArrowRight } from '@/assets';
-import { StateChip } from '@/ui';
+import { StateChip, Button } from '@/ui';
 import { StateCode } from '@/types/stateCode';
 
-type ReservationCardProps = { status: StateCode; date: string; href: string } & ProductCardProps;
+type ReservationCardProps = {
+  status: StateCode;
+  date: string;
+  href: string;
+  isReviewed: boolean;
+} & ProductCardProps;
 
 export default function ReservationCard({
   image,
@@ -19,6 +24,7 @@ export default function ReservationCard({
   status,
   date,
   href,
+  isReviewed = false,
 }: ReservationCardProps) {
   return (
     <Link className='border-black-5 rounded-[0.6rem] border-[0.07rem] p-[1.2rem]' href={href}>
@@ -44,6 +50,19 @@ export default function ReservationCard({
         tags={tags}
         className={className}
       />
+      {!isReviewed && (
+        <div className='flex justify-end'>
+          <Button
+            size='small'
+            color='black'
+            display='inline'
+            type='button'
+            onClick={() => <Link href='review' />}
+          >
+            리뷰 작성
+          </Button>
+        </div>
+      )}
     </Link>
   );
 }
