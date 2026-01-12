@@ -5,7 +5,7 @@ import { MoodCode } from '@/types/moodCode';
 import { AuthorSection, PortfolioSection, ProductSection } from './_section/index';
 import { Header } from './components/index';
 import { PORTFOLIO_DETAIL_MOCK } from './mock/portfolioDetail.mock';
-import { useNavVisibility } from '../../(home)/hooks/useNavVisibility';
+import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
 
 type PageProps = {
   params: {
