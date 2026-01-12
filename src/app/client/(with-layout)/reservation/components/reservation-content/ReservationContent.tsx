@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 
@@ -16,6 +16,8 @@ import { IconKeyboardArrowRight } from '@/assets';
 import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
 import { ReviewedByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
 import { cn } from '@/utils/cn';
+import { useAuth } from '@/auth/hooks/useAuth';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 const createReservationDetailPath = (reservationProductId: number) =>
   `/client/reservation-detail/${reservationProductId}`;
@@ -53,9 +55,18 @@ const getReservationTabValue = (value: string): ReservationTabValue =>
 
 type ReservationContentProps = {
   isHeaderVisible: boolean;
+  isLoggedInOverride?: boolean;
 };
 
-export default function ReservationContent({ isHeaderVisible }: ReservationContentProps) {
+export default function ReservationContent({
+  isHeaderVisible,
+  isLoggedInOverride,
+}: ReservationContentProps) {
+  const toast = useToast();
+  const { isLogIn } = useAuth();
+  const hasShownLoginToastRef = useRef(false);
+  const resolvedLoggedInStatus =
+    typeof isLoggedInOverride === 'boolean' ? isLoggedInOverride : isLogIn;
   const router = useRouter();
   const [selectedTabValue, setSelectedTabValue] = useState<ReservationTabValue>(
     RESERVATION_TABS[0].value,
@@ -86,7 +97,7 @@ export default function ReservationContent({ isHeaderVisible }: ReservationConte
     fallbackReservationStatus: StateCode,
   ) => reservationStatusByReservationProductId[reservationProductId] ?? fallbackReservationStatus;
 
-  const reservationMockList = RESERVATION_MOCK.reservations;
+  const reservationMockList = resolvedLoggedInStatus ? RESERVATION_MOCK.reservations : [];
 
   const getReservationsByTabValue = (reservationTabValue: ReservationTabValue) =>
     reservationMockList.filter(({ reservation }) => {
@@ -97,6 +108,19 @@ export default function ReservationContent({ isHeaderVisible }: ReservationConte
         ? hasShootCompletedStatus(reservationStatus)
         : !hasShootCompletedStatus(reservationStatus);
     });
+
+  useEffect(() => {
+    if (resolvedLoggedInStatus !== false || hasShownLoginToastRef.current) {
+      return;
+    }
+
+    toast.login('예약 기능은 로그인 후에 사용할 수 있어요.', 5000);
+    hasShownLoginToastRef.current = true;
+  }, [resolvedLoggedInStatus, toast]);
+
+  if (resolvedLoggedInStatus === null) {
+    return null;
+  }
 
   return (
     <>
@@ -126,7 +150,7 @@ export default function ReservationContent({ isHeaderVisible }: ReservationConte
                 <div className='flex min-h-[calc(100dvh-11rem)] flex-col items-center justify-center gap-[0.4rem] px-[2rem] text-center'>
                   <div className='font-18-bd text-black-10'>{emptyTitle}</div>
                   <div className='caption-14-md text-black-6'>
-                    '탐색'에서 다양한 포트폴리오를 확인해보세요
+                    탐색에서 다양한 포트폴리오를 확인해보세요
                   </div>
                 </div>
               ) : (

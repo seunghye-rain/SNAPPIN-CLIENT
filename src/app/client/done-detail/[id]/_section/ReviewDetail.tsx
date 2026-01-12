@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Carousel, CarouselContent, CarouselItem, Divider } from '@/ui';
+import { Carousel, CarouselContent, CarouselItem } from '@/ui';
 import ImagePreview from '@/ui/image-preview/ImagePreview';
 import ReviewStar from '@/ui/review-star/ReviewStar';
 

@@ -5,4 +5,5 @@ export type ToastProps = {
   message: string;
   duration?: number;
   className?: string;
+  positionClassName?: string;
 };
