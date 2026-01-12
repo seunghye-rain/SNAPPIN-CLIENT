@@ -9,9 +9,9 @@ function getRenderedContent(content: string | string[] | MoodCode[]) {
 
   if (isMoodCodeArray(content)) {
     return content.map((mood) => <TagChip key={mood} variant='neon' label={mood} />);
-  } else {
-    return content.join(', ');
   }
+
+  return content.join(', ');
 }
 
 function isMoodCodeArray(content: ContentType): content is MoodCode[] {
