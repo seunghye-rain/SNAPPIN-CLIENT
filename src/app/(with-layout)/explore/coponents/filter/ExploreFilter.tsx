@@ -2,7 +2,7 @@ import { FilterChip, IconButton } from '@/ui';
 import { IconFilter, IconSettingsBackupRestore } from '@/assets';
 import { Mood, MoodCode } from '@/types/moodCode';
 import { useEffect, useMemo, useState } from 'react';
-import ExploreFilterPanel from '@/app/(with-layout)/explore/coponents/explore-filter-panel/ExploreFilterPanel';
+import ExploreFilterPanel from '@/app/(with-layout)/explore/coponents/filter-panel/ExploreFilterPanel';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const CURATED_APPLIED_KEY = 'explore_curated_applied_v1';
@@ -121,7 +121,7 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
         </IconButton>
       </div>
       {open && (
-        <div className='bg-black-1 absolute top-full right-0 left-0 z-[100]'>
+        <div className='bg-black-1 absolute top-full right-0 left-0 z-100'>
           <ExploreFilterPanel
             key={moodIds.join(',')}
             moodList={moodList}
