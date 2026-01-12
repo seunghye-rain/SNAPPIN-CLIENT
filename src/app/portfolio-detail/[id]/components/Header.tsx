@@ -23,7 +23,7 @@ export default function Header({ isVisible }: HeaderProps) {
   return (
     <div
       className={cn(
-        'fixed-center top-0 z-15 transition-transform duration-300 ease-out will-change-transform',
+        'fixed-center top-0 z-15 transition-transform duration-300 ease-out will-change-transform border-b-1 border-b-black-5',
         !isVisible ? 'pointer-events-auto translate-y-0' : 'pointer-events-none -translate-y-full',
       )}
     >
