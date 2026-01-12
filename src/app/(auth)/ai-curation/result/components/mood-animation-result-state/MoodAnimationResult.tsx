@@ -1,79 +1,42 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, Variants, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import MoodChip from '../mood-chip/MoodChip';
 import { IconUnion1, IconUnion2, IconUnion3 } from '@/assets';
 import { BottomCTAButton } from '@/ui';
+import {
+  INTRO_TEXT,
+  COMPLETE_TEXT,
+  CTA,
+  CHIPS_CONTAINER,
+  CHIP_VARIANTS,
+  CHIP_POSES,
+  Phase,
+} from './phaseAnimation';
 import { resultMock } from '../../mock/result.mock';
 
-type Props = { data: typeof resultMock };
+type MoodAnimationResultProps = { data: typeof resultMock };
 
-type Phase = 'intro' | 'chips' | 'switching' | 'done';
+export default function MoodAnimationResult({ data }: MoodAnimationResultProps) {
+  const router = useRouter();
 
-const INTRO_TEXT: Variants = {
-  initial: { opacity: 0, y: 22 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-  exit: {
-    opacity: 0,
-    transition: { duration: 0.25, ease: 'easeInOut' },
-  },
-};
-
-const COMPLETE_TEXT: Variants = {
-  initial: { opacity: 0, y: -14 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: 'easeInOut' },
-  },
-};
-
-const CTA: Variants = {
-  initial: { opacity: 0, y: -10 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: 'easeOut', delay: 0.05 },
-  },
-};
-
-const CHIPS_CONTAINER = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.3,
-      delayChildren: 0.1,
-    },
-  },
-} as const;
-
-const CHIP_VARIANTS: Variants = {
-  hidden: (custom: { rotate: number }) => ({
-    opacity: 0,
-    scale: 0.9,
-    rotate: custom.rotate,
-  }),
-  show: {
-    opacity: 1,
-    scale: [0.9, 1.1, 1],
-    transition: { type: 'tween', duration: 0.12, ease: 'easeOut' },
-  },
-};
-
-const CHIP_POSES = [{ rotate: -9 }, { rotate: 6 }, { rotate: 0 }] as const;
-
-export default function MoodAnimationResult({ data }: Props) {
   const [phase, setPhase] = useState<Phase>('intro');
+
+  const handleGoToSnap = () => {
+    router.push('/ai-curation/result');
+  };
+
+  const handleGoHome = () => {
+    router.push('/');
+  };
 
   return (
     <div className='flex flex-col items-center pt-[9rem]'>
       <div className='relative min-h-[10rem] w-full'>
+        {/*  텍스트 애니메이션 */}
         <AnimatePresence
           mode='wait'
           onExitComplete={() => {
@@ -131,7 +94,7 @@ export default function MoodAnimationResult({ data }: Props) {
         </AnimatePresence>
       </div>
 
-      {/* ✅ 2. intro 끝난 후(chips phase)부터 칩 애니메이션 시작 */}
+      {/* 칩 애니메이션  */}
       {phase !== 'intro' && (
         <motion.div
           key='chips'
@@ -160,6 +123,8 @@ export default function MoodAnimationResult({ data }: Props) {
           </motion.div>
         </motion.div>
       )}
+
+      {/* CTA 애니메이션 */}
       <AnimatePresence>
         {phase === 'done' && (
           <motion.div
@@ -170,20 +135,12 @@ export default function MoodAnimationResult({ data }: Props) {
             className='fixed-center bottom-0 left-0 w-full transform-gpu will-change-transform'
           >
             <BottomCTAButton className='flex w-full flex-col gap-[0.7rem] px-[2rem] pb-[2rem]'>
-              <BottomCTAButton.Single
-                color='black'
-                size='large'
-                onClick={() => console.log('결과')}
-              >
-                <p>큐레이션 결과 보기</p>
+              <BottomCTAButton.Single color='black' size='large' onClick={handleGoToSnap}>
+                내 무드에 딱 맞는 스냅 보러가기
               </BottomCTAButton.Single>
 
-              <BottomCTAButton.Single
-                color='white'
-                size='large'
-                onClick={() => console.log('다시')}
-              >
-                <p>다시 하기</p>
+              <BottomCTAButton.Single color='white' size='large' onClick={handleGoHome}>
+                홈으로 가기
               </BottomCTAButton.Single>
             </BottomCTAButton>
           </motion.div>

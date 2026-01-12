@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import type { AiCurationStep } from '../[step]/constants/steps';
+
 type AiCurationState = {
-  selectedByStep: Record<AiCurationStep, number | null>; // step마다 단 1개
+  selectedByStep: Record<AiCurationStep, number | null>;
   currentStep: AiCurationStep;
 };
 
@@ -26,7 +27,7 @@ const EMPTY_SELECTED_BY_STEP: Record<AiCurationStep, number | null> = {
 };
 
 export function AiCurationProvider({ children }: { children: React.ReactNode }) {
-  const [currentStep, setCurrentStep] = useState<AiCurationStep>('1');
+  const [currentStep, setCurrentStep] = useState<AiCurationStep>(1);
   const [selectedByStep, setSelectedByStep] =
     useState<Record<AiCurationStep, number | null>>(EMPTY_SELECTED_BY_STEP);
 

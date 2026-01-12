@@ -1,30 +1,30 @@
-import { Step1, Step2, Step3, Step4, Step5 } from '../step-content';
+import { STEP1_MOCK, STEP2_MOCK, STEP3_MOCK, STEP4_MOCK, STEP5_MOCK } from '../mock/steps.mock';
 
-export const AI_CURATION_STEPS = {
-  '1': {
-    progress: 20,
-    StepComponent: Step1,
-  },
-  '2': {
-    progress: 40,
-    StepComponent: Step2,
-  },
-  '3': {
-    progress: 60,
-    StepComponent: Step3,
-  },
-  '4': {
-    progress: 80,
-    StepComponent: Step4,
-  },
-  '5': {
-    progress: 100,
-    StepComponent: Step5,
-  },
-} as const;
+export const AI_CURATION_STEPS = [
+  STEP1_MOCK,
+  STEP2_MOCK,
+  STEP3_MOCK,
+  STEP4_MOCK,
+  STEP5_MOCK,
+] as const;
 
-export type AiCurationStep = keyof typeof AI_CURATION_STEPS;
+export type AiCurationStep = number;
 
-export const isAiCurationStep = (step: string): step is AiCurationStep => {
-  return step in AI_CURATION_STEPS;
+export const STEP_COUNT = AI_CURATION_STEPS.length;
+
+export const isAiCurationStep = (step: number): boolean => {
+  return step >= 1 && step <= STEP_COUNT;
+};
+
+export const getStepInfo = (step: AiCurationStep) => {
+  const index = step - 1;
+  const total = STEP_COUNT;
+
+  return {
+    index,
+    total,
+    progress: Math.round(((index + 1) / total) * 100),
+    question: AI_CURATION_STEPS[index].question,
+    photos: AI_CURATION_STEPS[index].photos,
+  };
 };

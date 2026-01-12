@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import type { AiCurationStep } from '../constants/steps';
-import { useAiCuration } from '../../hooks/useAiCuration';
+import type { AiCurationStep } from './constants/steps';
+import { useAiCuration } from '../hooks/useAiCuration';
 
 export default function StepShell({
   step,

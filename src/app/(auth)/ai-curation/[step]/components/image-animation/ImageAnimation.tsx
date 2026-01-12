@@ -1,8 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { cn } from '@/utils/cn';
 import { useAiCuration } from '../../../hooks/useAiCuration';
 
@@ -19,6 +19,7 @@ type Pose = {
 };
 
 type PoseSet = { default: Pose; animation: Pose };
+
 const POSE_KEYS = ['leftTop', 'rightTop', 'leftBottom', 'rightBottom'] as const;
 type PoseKeys = (typeof POSE_KEYS)[number];
 
@@ -56,7 +57,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
     <div className='relative flex w-full justify-center'>
       <div className='relative h-[41.5rem] w-full'>
         {sorted.map((img, idx) => {
-          const poseKey = POSE_KEYS[idx % POSE_KEYS.length]; // ✅ 안전
+          const poseKey = POSE_KEYS[idx % POSE_KEYS.length];
           const pose = POSES_ANIMATION[poseKey];
 
           return (
@@ -64,7 +65,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
               key={img.id}
               type='button'
               className={cn(
-                'absolute h-[19.3rem] w-[14.5rem] overflow-hidden rounded-[0.6rem] focus:outline-none',
+                'absolute h-[19.3rem] w-[14.5rem] overflow-hidden rounded-[0.6rem]',
                 selectedByStep[currentStep] === img.id && 'border-neon-black z-10 border-[3px]',
               )}
               onClick={() => handleSelect(img.id)}
