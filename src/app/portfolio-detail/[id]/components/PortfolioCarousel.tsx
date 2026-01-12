@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { cn } from '@/utils/cn';
 import {
   Carousel,
@@ -9,7 +10,6 @@ import {
   type CarouselApi,
 } from '@/ui/carousel/base/Carousel';
 import { IconEllipse } from '@/assets';
-import ImageCarousel from './ImageCarousel';
 
 type PortfolioCarouselProps = {
   images: { src: string; alt: string }[];
@@ -38,19 +38,19 @@ export default function PortfolioCarousel({ images, className }: PortfolioCarous
   if (images.length === 0) return null;
 
   return (
-    <div className={cn('relative h-[36rem] w-[36rem] overflow-hidden', className)}>
+    <div className={cn('relative w-[36rem] h-[36rem] overflow-hidden', className)}>
       <Carousel setApi={setApi}>
         <CarouselContent>
           {images.map((img, idx) => (
             <CarouselItem key={`image-${img.src}-${idx}`}>
-              <ImageCarousel
-                src={img.src}
-                alt={img.alt ?? `image-${img.src}`}
-                imageHeight='36rem'
-                imageWidth='36rem'
-                priority={idx === 0}
-                draggable={false}
-              />
+              <div className={cn('relative w-[36rem] h-[36rem] overflow-hidden', className)}>
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className='object-cover select-none'
+                />
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
