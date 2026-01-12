@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { IconArrowForward } from '@/assets';
+import defaultProfile from '@/../public/imgs/default-profile.png';
+
 
 type AuthorSectionProps = {
   id: number;
@@ -29,8 +32,8 @@ export default function AuthorSection({
         className='flex items-center gap-[1.2rem]'
       >
         {/* 프로필 이미지 */}
-        <div className='w-[6.4rem] h-[6.4rem] bg-black-3 rounded-full'>
-          {/* TODO: 추후 기본 프로필 이미지 혹은 더미데이터 전달 받으면 이미지 추가 */}
+        <div className='relative w-[6.4rem] h-[6.4rem]'>
+          <Image src={defaultProfile} alt='기본 프로필 이미지' fill />
         </div>
         {/* 작가 정보 */}
         <div className='flex flex-col flex-1 gap-[0.8rem]'>
