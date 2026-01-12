@@ -93,7 +93,7 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
 
   return (
     <>
-      <div className='flex flex-row items-center justify-between gap-[0.3rem] px-[0.4rem] py-[0.6rem]'>
+      <div className='relative flex flex-row items-center justify-between gap-[0.3rem] px-[0.4rem] py-[0.6rem]'>
         {/* 필터 초기화 버튼 */}
         <IconButton className='h-[4.4rem] w-[4.4rem]' onClick={handleReset}>
           <IconSettingsBackupRestore className='m-auto' />
@@ -121,11 +121,14 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
         </IconButton>
       </div>
       {open && (
-        <ExploreFilterPanel
-          moodList={moodList}
-          selectedMoodIds={moodIds}
-          handlePanelClose={() => setOpen(false)}
-        />
+        <div className='bg-black-1 absolute top-full right-0 left-0 z-[100]'>
+          <ExploreFilterPanel
+            key={moodIds.join(',')}
+            moodList={moodList}
+            selectedMoodIds={moodIds}
+            handlePanelClose={() => setOpen(false)}
+          />
+        </div>
       )}
     </>
   );
