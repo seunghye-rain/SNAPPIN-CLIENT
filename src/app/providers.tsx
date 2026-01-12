@@ -1,6 +1,5 @@
 'use client';
 
-import { Logo } from '@/assets';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import dynamic from 'next/dynamic';
@@ -45,9 +44,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </div>
-      <div className='bg-black-3 footer-height flex items-center justify-center'>
-        <Logo className='text-black-5' width={100} height={20} />
-      </div>
+
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

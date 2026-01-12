@@ -4,4 +4,6 @@ export {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
 } from './base/Carousel';
