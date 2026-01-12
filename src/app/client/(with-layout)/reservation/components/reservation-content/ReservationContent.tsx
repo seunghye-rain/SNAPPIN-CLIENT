@@ -64,12 +64,14 @@ export default function ReservationContent({
   isHeaderVisible,
   isLoggedInOverride,
 }: ReservationContentProps) {
+  // 로그인 토스트
   const toast = useToast();
   const { isLogIn } = useAuth();
   const hasShownLoginToastRef = useRef(false);
   const resolvedLoggedInStatus =
     typeof isLoggedInOverride === 'boolean' ? isLoggedInOverride : isLogIn;
   const router = useRouter();
+
   const [selectedTabValue, setSelectedTabValue] = useState<ReservationTabValue>(
     RESERVATION_TABS[0].value,
   );
