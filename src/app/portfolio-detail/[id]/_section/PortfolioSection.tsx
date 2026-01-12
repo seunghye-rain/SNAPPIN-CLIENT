@@ -59,7 +59,7 @@ export default function PortfolioSection({
             { label: '촬영 종류', content: snapCategory },
             { label: '촬영 장소', content: place },
             { label: '촬영 시각', content: startsAt },
-            { label: '촬영 종류', content: moods }
+            { label: '스냅 무드', content: moods }
           ]}
           layoutClassName='self-stretch gap-[1.2rem] p-[1.6rem] bg-black-1 border-1 border-black-4 rounded-[0.6rem]'
           rowClassName='gap-[1rem]'
