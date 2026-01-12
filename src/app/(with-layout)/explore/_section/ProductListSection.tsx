@@ -1,27 +1,24 @@
 import { ProductCard } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
-
-const MOCK_FILTER_CHIP: MoodCode[] = ['청량한', '따스한', 'Y2K'];
+import Link from 'next/link';
+import { MOCK_PRODUCTS } from '@/app/(with-layout)/explore/mocks/product';
 
 export default function ProductListSection() {
   return (
-    <section className='bg-black-1 shrink-0'>
-      {Array.from({ length: 30 }, (_, i) => (
-        <button
-          key={i}
-          type='button'
-          className='border-black-3 w-full border-b-[0.1rem] px-[2rem] py-[1.6rem] text-left'
-        >
+    <section className='bg-black-1 z-0 shrink-0'>
+      {MOCK_PRODUCTS.map((product) => (
+        <Link key={product.id} href={`/product/${product.id}`}>
           <ProductCard
-            author='김작가'
-            tags={MOCK_FILTER_CHIP}
-            rating={4.8}
-            reviewCount={30}
-            price={80000}
-            name='잊지 못 할 졸업 스냅'
-            image={{ src: '/product.png', alt: '프리뷰 이미지' }}
+            author={product.photographer}
+            tags={product.moods as MoodCode[]}
+            rating={product.rate}
+            reviewCount={product.reviewCount}
+            price={product.price}
+            name={product.title}
+            image={{ src: product.imageUrl, alt: `${product.title} 이미지` }}
+            className='border-black-3 w-full border-b-[0.1rem] px-[2rem] py-[1.6rem] text-left'
           />
-        </button>
+        </Link>
       ))}
     </section>
   );
