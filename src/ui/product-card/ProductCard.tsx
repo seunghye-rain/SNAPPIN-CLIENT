@@ -29,7 +29,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <div
-      className={cn('flex gap-[1.2rem] w-[30.4rem]', className)}
+      className={cn('flex gap-[1.2rem] w-full', className)}
       {...props}
     >
       <div className='shrink-0 relative w-[10.2rem] h-[10.2rem]'>
