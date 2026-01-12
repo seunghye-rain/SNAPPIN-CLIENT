@@ -27,8 +27,8 @@ export default function ReservationRequested({
   handleInquiryClick,
 }: ReservationRequestedProps) {
   const hasCancelButton =
-    reservationStatus === STATE_CODES.RESERVATION_REQUESTED ||
-    reservationStatus === STATE_CODES.PHOTOGRAPHER_CHECKING;
+    reservationStatus !== STATE_CODES.RESERVATION_REFUSED &&
+    reservationStatus !== STATE_CODES.RESERVATION_CANCELED;
 
   return (
     <section className='bg-black-1 px-[2rem] pt-[1.7rem] pb-[1.2rem]'>
