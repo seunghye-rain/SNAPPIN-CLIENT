@@ -43,7 +43,7 @@ export default function PortfolioSection({
       {/* 한줄 설명, 좋아요 */}
       <div className='flex justify-between items-center px-[2rem] py-[1.6rem]'>
         <h1 className='font-16-bd text-black-10'>{description}</h1>
-        <div className='flex items-center gap-[0.2rem] w-[4.4rem]'>
+        <div className='flex items-center gap-[0.2rem] w-[4.4rem] h-[3rem]'>
           <LikeButton
             isLiked={isLiked}
             handleClick={handleClick}
