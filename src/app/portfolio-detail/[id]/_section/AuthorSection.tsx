@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { IconArrowForward } from '@/assets';
-import { DetailInfoList } from '../components/index';
 
 type AuthorSectionProps = {
   id: number;
@@ -9,6 +8,11 @@ type AuthorSectionProps = {
   specialties: string[];
   locations: string[];
 };
+
+type DetailRowProps = {
+  label: string;
+  content: string[];
+}
 
 export default function AuthorSection({
   id,
@@ -34,20 +38,26 @@ export default function AuthorSection({
             <h2 className='caption-14-bd text-black-10'>{name}</h2>
             <span className='caption-12-md text-black-7'>{bio}</span>
           </div>
-          <DetailInfoList
-            infoList={[
-              { label: '촬영 상품', content: specialties },
-              { label: '활동 지역', content: locations }
-            ]}
-            layoutClassName='gap-[0.4rem]'
-            rowClassName='gap-[0.8rem]'
-            labelClassName='caption-10-md'
-            contentClassName='caption-10-md'
-          />
+          <div className='flex flex-col gap-[0.4rem]'>
+            <DetailRow label='촬영 상품' content={specialties} />
+            <DetailRow label='활동 지역' content={locations} />
+          </div>
         </div>
         {/* 우측 버튼 */}
         <IconArrowForward className='w-[2.4rem] h-[2.4rem] text-black-6' />
       </Link>
     </section>
+  );
+}
+
+function DetailRow({
+  label,
+  content,
+}: DetailRowProps) {
+  return (
+    <div className='flex gap-[0.8rem]'>
+      <div className='self-center caption-10-md text-black-7'>{label}</div>
+      <span className='caption-10-md text-black-9'>{content.join(', ')}</span>
+    </div>
   );
 }

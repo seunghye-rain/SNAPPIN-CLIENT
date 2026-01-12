@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { TagChip } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
-import { DetailInfoList, PortfolioCarousel, LikeButton } from '../components/index';
+import { PortfolioCarousel, LikeButton } from '../components/index';
 
 type PortfolioSectionProps = {
   id: number;
@@ -15,6 +16,11 @@ type PortfolioSectionProps = {
   startsAt: string;
   moods: MoodCode[];
 };
+
+type DetailRowProps = {
+  label: string;
+  content: string | MoodCode[];
+}
 
 export default function PortfolioSection({
   id,
@@ -54,19 +60,30 @@ export default function PortfolioSection({
       {/* 관련 정보 */}
       <div className='flex flex-col gap-[0.8rem] p-[2rem]'>
         <h2 className='caption-12-md text-black-10'>관련 정보</h2>
-        <DetailInfoList
-          infoList={[
-            { label: '촬영 종류', content: snapCategory },
-            { label: '촬영 장소', content: place },
-            { label: '촬영 시각', content: startsAt },
-            { label: '스냅 무드', content: moods }
-          ]}
-          layoutClassName='self-stretch gap-[1.2rem] p-[1.6rem] bg-black-1 border-1 border-black-4 rounded-[0.6rem]'
-          rowClassName='gap-[1rem]'
-          labelClassName='w-[8rem] caption-12-md'
-          contentClassName='caption-12-md'
-        />
+        <div className='flex flex-col self-stretch gap-[1.2rem] p-[1.6rem] bg-black-1 border-1 border-black-4 rounded-[0.6rem]'>
+          <DetailRow label='촬영 종류' content={snapCategory} />
+          <DetailRow label='촬영 장소' content={place} />
+          <DetailRow label='촬영 시각' content={startsAt} />
+          <DetailRow label='스냅 무드' content={moods} />
+        </div>
       </div>
     </section>
+  );
+}
+
+function DetailRow({
+  label,
+  content,
+}: DetailRowProps) {
+  return (
+    <div className='flex gap-[1rem]'>
+      <div className='w-[8rem] self-center caption-12-md text-black-7'>{label}</div>
+      {Array.isArray(content)
+        ? <div className='flex items-center gap-[0.4rem] caption-12-md'>
+            {content.map((mood) => <TagChip key={mood} variant='neon' label={mood} />)}
+          </div>
+        : <span className='caption-12-md text-black-9'>{content}</span>
+      }
+    </div>
   );
 }
