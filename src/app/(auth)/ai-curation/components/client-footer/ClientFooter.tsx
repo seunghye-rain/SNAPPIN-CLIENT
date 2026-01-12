@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/ui';
+import { Button, BottomCTAButton } from '@/ui';
 import { useRouter } from 'next/navigation';
 
 export default function ClientFooter() {
