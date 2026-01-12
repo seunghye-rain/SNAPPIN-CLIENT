@@ -9,7 +9,7 @@ import { BottomCTAButton, Divider } from '@/ui';
 import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import type { StateCode } from '@/types/stateCode';
 import { ReservationStatusByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
-import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
 import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ReservationDetailPageProps = {
@@ -81,19 +81,19 @@ export default function Page({ params }: ReservationDetailPageProps) {
         결제 확인중
       </BottomCTAButton.Single>
     </BottomCTAButton>
-	  ) : hasReservationCanceledAction ? (
-	    <BottomCTAButton background='white' hasPadding={true}>
-	      <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
-	        예약 취소 완료
-	      </BottomCTAButton.Single>
-	    </BottomCTAButton>
-	  ) : hasReservationRefusedAction ? (
-	    <BottomCTAButton background='white' hasPadding={true}>
-	      <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
-	        작가님의 예약 거절
-	      </BottomCTAButton.Single>
-	    </BottomCTAButton>
-	  ) : null;
+  ) : hasReservationCanceledAction ? (
+    <BottomCTAButton background='white' hasPadding={true}>
+      <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
+        예약 취소 완료
+      </BottomCTAButton.Single>
+    </BottomCTAButton>
+  ) : hasReservationRefusedAction ? (
+    <BottomCTAButton background='white' hasPadding={true}>
+      <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
+        작가님의 예약 거절
+      </BottomCTAButton.Single>
+    </BottomCTAButton>
+  ) : null;
 
   return (
     <div className='bg-black-3 flex min-h-full flex-col'>

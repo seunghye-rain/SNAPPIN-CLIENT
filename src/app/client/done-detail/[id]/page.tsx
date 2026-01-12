@@ -9,7 +9,7 @@ import HeaderNavigation from './components/header-navigation/HeaderNavigation';
 import { Divider } from '@/ui';
 import { getReservationDetailMockById } from './mock/reservationDetail.mock';
 import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
-import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
 import { useToast } from '@/ui/toast/hooks/useToast';
 
 type DoneDetailPageProps = {

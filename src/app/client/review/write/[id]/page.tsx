@@ -10,7 +10,7 @@ import { ReviewByReservationProductIdAtom } from '@/app/client/review/store';
 import { Divider, ProductCard, BottomCTAButton } from '@/ui';
 import { ReviewedByReservationProductIdAtom } from '@/app/client/(with-layout)/reservation/store';
 import WriteReview from './_section/WriteReview';
-import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
 
 type ReviewWritePageProps = {
   params: Promise<{

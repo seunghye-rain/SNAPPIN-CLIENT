@@ -1,7 +1,7 @@
 'use client';
 
 import { HeaderNavigation, ReservationContent } from './components';
-import { useNavVisibility } from '@/app/(with-layout)/(home)/hooks/useNavVisibility';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
 
 const SCROLL_DIRECTION_THRESHOLD_PX = 8;
 

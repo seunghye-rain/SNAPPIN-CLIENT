@@ -49,7 +49,7 @@ export default function ReservationList() {
         historyStateKey={CLIENT_RESERVATION_TAB_HISTORY_STATE_KEY}
         className='bg-black-1'
       >
-        <SectionTabs.List className='bg-black-1 border-black-4 fixed z-10 border-t'>
+        <SectionTabs.List className='bg-black-1 border-black-4 border-t'>
           {RESERVATION_TABS.map((tab) => (
             <SectionTabs.Tab key={tab.value} value={tab.value}>
               {tab.label}
@@ -63,7 +63,7 @@ export default function ReservationList() {
             tab.value === 'CLIENT_DONE' ? '촬영 완료한 상품이 없어요' : '예약 문의한 상품이 없어요';
 
           return (
-            <SectionTabs.Contents key={tab.value} value={tab.value} className='mt-[4.5rem]'>
+            <SectionTabs.Contents key={tab.value} value={tab.value}>
               {reservationsByTabValue.length === 0 ? (
                 <EmptyView title={emptyTitle} description={EMPTY_VIEW_DESCRIPTION} />
               ) : (

@@ -37,29 +37,14 @@ const formatDate = (date: string, startTime: string) => {
     : `${date} ${startTime}`;
 };
 
-const createReservationInfo = ({
-  date,
-  startTime,
-  durationTime,
-  place,
-  peopleCount,
-  requestNote,
-}: ReservationDetailProps['reservationInfo']) => [
-  { label: '날짜 및 시간', value: formatDate(date, startTime) },
-  { label: '촬영 시간', value: formatDuration(durationTime) },
-  { label: '장소', value: place },
-  { label: '인원', value: `${peopleCount}인` },
-  { label: '요청 사항', value: requestNote },
-];
-
 export default function ReservationDetail({
   reservationStatus,
   reservationInfo,
 }: ReservationDetailProps) {
-  const reservationInfoFields = createReservationInfo(reservationInfo);
+  const { date, startTime, durationTime, place, peopleCount, requestNote } = reservationInfo;
 
   return (
-    <section className='bg-black-1 h-auto px-[2rem] pt-[1.7rem] pb-[2.4rem]'>
+    <section className='bg-black-1 px-[2rem] pt-[1.7rem] pb-[2.4rem]'>
       <div className='flex justify-between'>
         <span className='caption-14-bd text-black-10'>예약 상세</span>
         <StateChip label={reservationStatus} />
@@ -67,9 +52,11 @@ export default function ReservationDetail({
       <div className='border-black-5 mt-[1.2rem] rounded-[0.6rem] border-[0.07rem] px-[1.7rem] py-[1.3rem]'>
         <div className='caption-10-md text-black-7 mb-[2.4rem]'>예약 정보</div>
         <div className='flex flex-col gap-[2rem]'>
-          {reservationInfoFields.map(({ label, value }) => (
-            <DetailRow key={label} label={label} value={value} />
-          ))}
+          <DetailRow label='날짜 및 시간' value={formatDate(date, startTime)} />
+          <DetailRow label='촬영 시간' value={formatDuration(durationTime)} />
+          <DetailRow label='장소' value={place} />
+          <DetailRow label='인원' value={`${peopleCount}인`} />
+          <DetailRow label='요청 사항' value={requestNote} />
         </div>
       </div>
     </section>
