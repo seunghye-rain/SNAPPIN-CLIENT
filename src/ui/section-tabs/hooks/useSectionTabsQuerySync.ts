@@ -1,181 +1,90 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 type SectionTabsQuerySyncOptions = {
   queryKey?: string;
-  historyStateKey?: string;
   value: string;
   handleValueChange?: (value: string) => void;
 };
 
 export const useSectionTabsQuerySync = ({
   queryKey,
-  historyStateKey,
   value,
   handleValueChange,
 }: SectionTabsQuerySyncOptions) => {
-  const hasMountedRef = useRef(false);
-  const latestValueRef = useRef(value);
-  const latestHandleValueChangeRef = useRef(handleValueChange);
-  const resolvedHistoryStateKey = queryKey ? undefined : historyStateKey;
+  const skipQuerySyncRef = useRef(false);
 
-  useEffect(() => {
-    latestValueRef.current = value;
-  }, [value]);
-
-  useEffect(() => {
-    latestHandleValueChangeRef.current = handleValueChange;
-  }, [handleValueChange]);
-
-  useEffect(() => {
+  const getQueryValue = useCallback(() => {
     if (!queryKey || typeof window === 'undefined') {
-      return;
-    }
-
-    const resolvedHandleValueChange = latestHandleValueChangeRef.current;
-    if (!resolvedHandleValueChange) {
-      return;
+      return null;
     }
 
     const params = new URLSearchParams(window.location.search);
-    const queryValue = params.get(queryKey);
-
-    if (!queryValue || queryValue === latestValueRef.current) {
-      return;
-    }
-
-    resolvedHandleValueChange(queryValue);
+    return params.get(queryKey);
   }, [queryKey]);
 
+  const updateQueryValue = useCallback(
+    (nextValue: string) => {
+      if (!queryKey || typeof window === 'undefined') {
+        return;
+      }
+
+      const url = new URL(window.location.href);
+      url.searchParams.set(queryKey, nextValue);
+      window.history.pushState(null, '', url);
+    },
+    [queryKey],
+  );
+
   useEffect(() => {
-    if (!queryKey || typeof window === 'undefined') {
+    if (!queryKey || !handleValueChange) {
       return;
     }
 
-    if (!hasMountedRef.current) {
-      hasMountedRef.current = true;
+    const queryValue = getQueryValue();
+    if (!queryValue || queryValue === value) {
       return;
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const queryValue = params.get(queryKey);
+    skipQuerySyncRef.current = true;
+    handleValueChange(queryValue);
+  }, [queryKey, getQueryValue, handleValueChange, value]);
+
+  useEffect(() => {
+    if (!queryKey) {
+      return;
+    }
+
+    const queryValue = getQueryValue();
     if (queryValue === value) {
       return;
     }
 
-    const url = new URL(window.location.href);
-    url.searchParams.set(queryKey, value);
-    window.history.replaceState(null, '', url);
-  }, [queryKey, value]);
+    if (skipQuerySyncRef.current) {
+      skipQuerySyncRef.current = false;
+      return;
+    }
+
+    updateQueryValue(value);
+  }, [queryKey, value, getQueryValue, updateQueryValue]);
 
   useEffect(() => {
-    if (!queryKey || typeof window === 'undefined') {
+    if (!queryKey || !handleValueChange) {
       return;
     }
 
     const handlePopState = () => {
-      const resolvedHandleValueChange = latestHandleValueChangeRef.current;
-      if (!resolvedHandleValueChange) {
+      const queryValue = getQueryValue();
+      if (!queryValue || queryValue === value) {
         return;
       }
 
-      const params = new URLSearchParams(window.location.search);
-      const queryValue = params.get(queryKey);
-
-      if (!queryValue || queryValue === latestValueRef.current) {
-        return;
-      }
-
-      resolvedHandleValueChange(queryValue);
+      skipQuerySyncRef.current = true;
+      handleValueChange(queryValue);
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [queryKey]);
-
-  useEffect(() => {
-    if (!resolvedHistoryStateKey || typeof window === 'undefined') {
-      return;
-    }
-
-    const resolvedHandleValueChange = latestHandleValueChangeRef.current;
-    if (!resolvedHandleValueChange) {
-      return;
-    }
-
-    const historyState = window.history.state;
-    const historyStateValue =
-      typeof historyState === 'object' && historyState !== null
-        ? (historyState as Record<string, unknown>)[resolvedHistoryStateKey]
-        : undefined;
-    const nextValue = typeof historyStateValue === 'string' ? historyStateValue : null;
-
-    if (!nextValue || nextValue === latestValueRef.current) {
-      return;
-    }
-
-    resolvedHandleValueChange(nextValue);
-  }, [resolvedHistoryStateKey]);
-
-  useEffect(() => {
-    if (!resolvedHistoryStateKey || typeof window === 'undefined') {
-      return;
-    }
-
-    if (!hasMountedRef.current) {
-      hasMountedRef.current = true;
-      return;
-    }
-
-    const historyState = window.history.state;
-    const previousState =
-      typeof historyState === 'object' && historyState !== null
-        ? (historyState as Record<string, unknown>)
-        : {};
-    const previousValue = previousState[resolvedHistoryStateKey];
-
-    if (previousValue === value) {
-      return;
-    }
-
-    window.history.replaceState(
-      {
-        ...previousState,
-        [resolvedHistoryStateKey]: value,
-      },
-      '',
-    );
-  }, [resolvedHistoryStateKey, value]);
-
-  useEffect(() => {
-    if (!resolvedHistoryStateKey || typeof window === 'undefined') {
-      return;
-    }
-
-    const handlePopState = (event: PopStateEvent) => {
-      const resolvedHandleValueChange = latestHandleValueChangeRef.current;
-      if (!resolvedHandleValueChange) {
-        return;
-      }
-
-      const historyState = event.state;
-      const historyStateValue =
-        typeof historyState === 'object' && historyState !== null
-          ? (historyState as Record<string, unknown>)[resolvedHistoryStateKey]
-          : undefined;
-      const nextValue = typeof historyStateValue === 'string' ? historyStateValue : null;
-
-      if (!nextValue || nextValue === latestValueRef.current) {
-        return;
-      }
-
-      resolvedHandleValueChange(nextValue);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [resolvedHistoryStateKey]);
+  }, [queryKey, getQueryValue, handleValueChange, value]);
 };

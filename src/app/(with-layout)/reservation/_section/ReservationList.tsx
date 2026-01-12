@@ -8,7 +8,6 @@ import { EmptyView, ReservationCard } from '../components';
 import type { MoodCode } from '@/types/moodCode';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 
-const CLIENT_RESERVATION_TAB_HISTORY_STATE_KEY = 'CLIENT_RESERVATION_TAB';
 const DONE_RESERVATION_STATUS: StateCode = STATE_CODES.SHOOT_COMPLETED;
 const EMPTY_VIEW_DESCRIPTION = '탐색에서 다양한 포트폴리오를 확인해보세요';
 
@@ -46,7 +45,6 @@ export default function ReservationList() {
       <SectionTabs
         value={selectedTabValue}
         handleValueChange={handleTabValueChange}
-        historyStateKey={CLIENT_RESERVATION_TAB_HISTORY_STATE_KEY}
         className='bg-black-1'
       >
         <SectionTabs.List className='bg-black-1 border-black-4 border-t'>

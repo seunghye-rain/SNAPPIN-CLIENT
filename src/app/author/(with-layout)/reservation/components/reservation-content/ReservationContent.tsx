@@ -8,8 +8,6 @@ import { RESERVATION_TABS, ReservationTabValue } from '../../constants/tabs';
 import ReservationCard from '../reservation-card/ReservationCard';
 import { RESERVATION_MOCK } from '../../mock/reservation.mock';
 
-const AUTHOR_RESERVATION_TAB_HISTORY_STATE_KEY = 'AUTHOR_RESERVATION_TAB';
-
 export default function ReservationContent() {
   const [selectedTabValue, setSelectedTabValue] =
     useState<ReservationTabValue>('PHOTOGRAPHER_REQUESTED');
@@ -26,7 +24,6 @@ export default function ReservationContent() {
       <SectionTabs
         value={selectedTabValue}
         handleValueChange={handleTabChange}
-        historyStateKey={AUTHOR_RESERVATION_TAB_HISTORY_STATE_KEY}
       >
         <SectionTabs.List>
           {RESERVATION_TABS.map((tab) => (
