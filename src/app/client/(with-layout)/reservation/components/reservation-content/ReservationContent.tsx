@@ -57,19 +57,12 @@ const getReservationTabValue = (value: string): ReservationTabValue =>
 
 type ReservationContentProps = {
   isHeaderVisible: boolean;
-  isLoggedInOverride?: boolean;
 };
 
-export default function ReservationContent({
-  isHeaderVisible,
-  isLoggedInOverride,
-}: ReservationContentProps) {
-  // 로그인 토스트
+export default function ReservationContent({ isHeaderVisible }: ReservationContentProps) {
   const toast = useToast();
   const { isLogIn } = useAuth();
   const hasShownLoginToastRef = useRef(false);
-  const resolvedLoggedInStatus =
-    typeof isLoggedInOverride === 'boolean' ? isLoggedInOverride : isLogIn;
   const router = useRouter();
 
   const [selectedTabValue, setSelectedTabValue] = useState<ReservationTabValue>(
@@ -101,7 +94,7 @@ export default function ReservationContent({
     fallbackReservationStatus: StateCode,
   ) => reservationStatusByReservationProductId[reservationProductId] ?? fallbackReservationStatus;
 
-  const reservationMockList = resolvedLoggedInStatus ? RESERVATION_MOCK.reservations : [];
+  const reservationMockList = RESERVATION_MOCK.reservations;
 
   const getReservationsByTabValue = (reservationTabValue: ReservationTabValue) =>
     reservationMockList.filter(({ reservation }) => {
@@ -114,17 +107,13 @@ export default function ReservationContent({
     });
 
   useEffect(() => {
-    if (resolvedLoggedInStatus !== false || hasShownLoginToastRef.current) {
+    if (isLogIn !== false || hasShownLoginToastRef.current) {
       return;
     }
 
     toast.login('예약 기능은 로그인 후에 사용할 수 있어요.', 5000);
     hasShownLoginToastRef.current = true;
-  }, [resolvedLoggedInStatus, toast]);
-
-  if (resolvedLoggedInStatus === null) {
-    return null;
-  }
+  }, [isLogIn, toast]);
 
   return (
     <>

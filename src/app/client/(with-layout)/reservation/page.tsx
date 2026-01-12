@@ -1,21 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 import { HeaderNavigation, ReservationContent } from './components';
 
 const SCROLL_DIRECTION_THRESHOLD_PX = 8;
 
 export default function Page() {
-  const searchParams = useSearchParams();
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
   const previousScrollTopRef = useRef<number>(0);
   const isHeaderVisibleRef = useRef<boolean>(true);
-  const hasDevelopmentEnvironment = process.env.NODE_ENV === 'development';
-  const hasRealAuthPreview = searchParams.get('authPreview') === 'real';
-  const isLoggedInOverride =
-    hasDevelopmentEnvironment && !hasRealAuthPreview ? true : undefined;
 
   useEffect(() => {
     isHeaderVisibleRef.current = isHeaderVisible;
@@ -47,9 +41,9 @@ export default function Page() {
 
       previousScrollTopRef.current = currentScrollTop;
 
-      nextIsHeaderVisible !== isHeaderVisibleRef.current
-        ? setIsHeaderVisible(nextIsHeaderVisible)
-        : null;
+      if (nextIsHeaderVisible !== isHeaderVisibleRef.current) {
+        setIsHeaderVisible(nextIsHeaderVisible);
+      }
     };
 
     requestAnimationFrame(handleScroll);
@@ -62,7 +56,7 @@ export default function Page() {
   return (
     <div className='bg-black-3 flex min-h-full flex-col'>
       <HeaderNavigation isVisible={isHeaderVisible} />
-      <ReservationContent isHeaderVisible={isHeaderVisible} isLoggedInOverride={isLoggedInOverride} />
+      <ReservationContent isHeaderVisible={isHeaderVisible} />
     </div>
   );
 }
