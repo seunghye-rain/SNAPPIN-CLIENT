@@ -5,7 +5,6 @@ import { MoodCode } from '@/types/moodCode';
 import { AuthorSection, PortfolioSection, ProductSection } from './_section/index';
 import { Header } from './components/index';
 import { PORTFOLIO_DETAIL_MOCK } from './mock/portfolioDetail.mock';
-import { useNavVisibility } from '@/hooks/useNavVisibility';
 
 type PageClientProps = {
   params: {
@@ -15,7 +14,6 @@ type PageClientProps = {
 
 export default function PageCLient({ params }: PageClientProps) {
   const { id } = params;
-  const { isVisible } = useNavVisibility();
 
   // TODO: 포폴 상세 조회 API 연동 (request에 id 전달)
   const mock = PORTFOLIO_DETAIL_MOCK;
@@ -24,7 +22,7 @@ export default function PageCLient({ params }: PageClientProps) {
 
   return (
     <div>
-      <Header isVisible={isVisible} />
+      <Header />
       <PortfolioSection
         id={mock.id}
         description={mock.description}

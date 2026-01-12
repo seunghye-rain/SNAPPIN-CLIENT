@@ -1,15 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { cn } from '@/utils/cn';
 import { Navigation, IconButton } from '@/ui';
 import { IconArrowBack, IconHome } from '@/assets';
 
-type HeaderProps = {
-  isVisible: boolean;
-}
-
-export default function Header({ isVisible }: HeaderProps) {
+export default function Header() {
   const router = useRouter();
 
   const handleGoBack = () => {
@@ -21,12 +16,7 @@ export default function Header({ isVisible }: HeaderProps) {
   }
 
   return (
-    <div
-      className={cn(
-        'fixed-center top-0 z-15 transition-transform duration-300 ease-out will-change-transform border-b-1 border-b-black-5',
-        !isVisible ? 'pointer-events-auto translate-y-0' : 'pointer-events-none -translate-y-full',
-      )}
-    >
+    <div className='border-b-1 border-b-black-5'>
       <Navigation
         left={
           <IconButton className='w-[2.4rem] h-[2.4rem]' onClick={handleGoBack}>
@@ -44,6 +34,7 @@ export default function Header({ isVisible }: HeaderProps) {
           </IconButton>
         }
         className='flex justify-between items-center h-[5rem] px-[2rem]'
+        isFixed={true}
       />
     </div>
   );
