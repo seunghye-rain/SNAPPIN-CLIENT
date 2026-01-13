@@ -5,7 +5,7 @@ import { BottomCTAButton } from '@/ui';
 import type { AiCurationStep } from '../../constants/steps';
 import { useAiCuration } from '../../../hooks/useAiCuration';
 import { useToast } from '@/ui/toast/hooks/useToast';
-import { STEP_COUNT } from '../../constants/steps';
+import { TOTAL_STEP_COUNT } from '../../constants/steps';
 
 type ClientFooterProps = {
   step: AiCurationStep;
@@ -17,7 +17,7 @@ export default function ClientFooter({ step }: ClientFooterProps) {
   const { selectedByStep } = useAiCuration();
 
   const isSelected = selectedByStep[step] != null;
-  const isLast = step === STEP_COUNT;
+  const isLast = step === TOTAL_STEP_COUNT;
 
   const handleNextStep = () => {
     if (!isSelected) {

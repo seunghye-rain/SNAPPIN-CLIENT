@@ -16,9 +16,9 @@ import {
   CHIP_POSES,
   Phase,
 } from './phaseAnimation';
-import { resultMock } from '../../mock/result.mock';
+import { MOOD_RESULT_MOCK } from '../../mock/result.mock';
 
-type MoodAnimationResultProps = { data: typeof resultMock };
+type MoodAnimationResultProps = { data: typeof MOOD_RESULT_MOCK };
 
 export default function MoodAnimationResult({ data }: MoodAnimationResultProps) {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function MoodAnimationResult({ data }: MoodAnimationResultProps) 
   const [phase, setPhase] = useState<Phase>('intro');
 
   const handleGoToSnap = () => {
-    router.push('/ai-curation/result');
+    router.push('/ai-curation');
   };
 
   const handleGoHome = () => {

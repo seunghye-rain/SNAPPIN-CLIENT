@@ -10,22 +10,21 @@ type Props = {
 };
 
 export default async function Page({ params }: Props) {
-  const { step: AICurationStep } = await params;
-  const step = Number(AICurationStep);
+  const { step } = await params;
+  const aiCurationStep = Number(step);
 
-  if (!step || !isAiCurationStep(step)) {
+  if (!aiCurationStep || !isAiCurationStep(aiCurationStep)) {
     notFound();
   }
 
-  const { question, photos } = getStepInfo(step);
-  const progress = getStepInfo(step).progress;
+  const { question, photos, progress } = getStepInfo(aiCurationStep);
 
   return (
     <div className='bg-black-10 flex h-dvh flex-col px-[2rem] pt-[4.7rem] pb-[2.1rem]'>
       <ProgressBar progress={progress} />
-      <StepShell step={step}>
+      <StepShell step={aiCurationStep}>
         <StepLayout question={question} photos={photos} />
-        <ClientFooter step={step} />
+        <ClientFooter step={aiCurationStep} />
       </StepShell>
     </div>
   );

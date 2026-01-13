@@ -2,6 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import type { AiCurationStep } from '../[step]/constants/steps';
+import { TOTAL_STEP_COUNT } from '../[step]/constants/steps';
 
 type AiCurationState = {
   selectedByStep: Record<AiCurationStep, number | null>;
@@ -16,17 +17,17 @@ type AiCurationActions = {
 
 type AiCurationContextValue = AiCurationState & AiCurationActions;
 
-const AiCurationContext = createContext<AiCurationContextValue | null>(null);
-
-const EMPTY_SELECTED_BY_STEP: Record<AiCurationStep, number | null> = {
-  '1': null,
-  '2': null,
-  '3': null,
-  '4': null,
-  '5': null,
+type AiCurationProviderProps = {
+  children: React.ReactNode;
 };
 
-export function AiCurationProvider({ children }: { children: React.ReactNode }) {
+const AiCurationContext = createContext<AiCurationContextValue | null>(null);
+
+const EMPTY_SELECTED_BY_STEP: Record<AiCurationStep, number | null> = Object.fromEntries(
+  Array.from({ length: TOTAL_STEP_COUNT }, (_, i) => [i + 1, null]),
+) as Record<AiCurationStep, number | null>;
+
+export function AiCurationProvider({ children }: AiCurationProviderProps) {
   const [currentStep, setCurrentStep] = useState<AiCurationStep>(1);
   const [selectedByStep, setSelectedByStep] =
     useState<Record<AiCurationStep, number | null>>(EMPTY_SELECTED_BY_STEP);

@@ -72,7 +72,13 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
               initial={false}
               animate={isAnimating ? pose.animation : pose.default}
             >
-              <Image src={img.imageUrl} alt='' fill className='object-cover' draggable={false} />
+              <Image
+                src={img.imageUrl}
+                alt='큐레이션 선택 이미지'
+                fill
+                className='object-cover'
+                draggable={false}
+              />
             </motion.button>
           );
         })}
