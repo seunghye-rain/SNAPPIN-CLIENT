@@ -104,28 +104,6 @@ export interface WishPortfolioResponse {
   liked?: boolean;
 }
 
-/** 예약 리뷰 등록 요청 DTO */
-export interface CreateReservationReviewRequest {
-  /**
-   * 리뷰 별점
-   * @format int32
-   * @min 1
-   * @max 5
-   * @example 5
-   */
-  rating: number;
-  /**
-   * 리뷰 내용
-   * @example "촬영이 너무 만족스러웠어요!"
-   */
-  content: string;
-  /**
-   * 리뷰 이미지 URL 목록
-   * @example ["https://cdn.example.com/review/1.jpg","https://cdn.example.com/review/2.jpg"]
-   */
-  imageUrls?: (string | null)[];
-}
-
 /** 공통 응답 DTO */
 export interface ApiResponseBodyCreateReservationReviewResponseVoid {
   /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
@@ -576,6 +554,58 @@ export interface GetUserInfoResponse {
 }
 
 /** 공통 응답 DTO */
+export interface ApiResponseBodyReservationListResponseVoid {
+  /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
+  success?: boolean;
+  /**
+   * 해당 API의 HTTP 상태 코드입니다.
+   * @format int32
+   */
+  status?: number;
+  /** 해당 API의 결과에 대한 상태 메시지입니다. */
+  message?: string;
+  /**
+   * 해당 API 관련 커스텀 코드입니다. 도메인(3글자)-상태코드-순번 으로 이루어져 있습니다.
+   * @example "TIC_200_001"
+   */
+  code?: string;
+  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  data?: ReservationListResponse;
+  /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
+  meta?: object;
+}
+
+export interface ReservationListItemResponse {
+  /** @format int64 */
+  reservationId?: number;
+  status?: string;
+  client?: string;
+  createdAt?: string;
+  product?: ReservationListProductResponse;
+}
+
+export interface ReservationListProductResponse {
+  /** @format int64 */
+  id?: number;
+  imageUrl?: string;
+  title?: string;
+  /** @format double */
+  rate?: number;
+  /** @format int32 */
+  reviewCount?: number;
+  photographer?: string;
+  /** @format int32 */
+  price?: number;
+  moods?: string[];
+  isReviewed?: boolean;
+}
+
+/** 해당 API에서 반환하는 결과 데이터입니다. */
+export interface ReservationListResponse {
+  reservations?: ReservationListItemResponse[];
+}
+
+/** 공통 응답 DTO */
 export interface ApiResponseBodyProductReviewsResponseProductReviewsMetaResponse {
   /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
   success?: boolean;
@@ -766,6 +796,49 @@ export interface ProductPeopleRangeResponse {
    * @example 5
    */
   maxPeople?: number;
+}
+
+/** 공통 응답 DTO */
+export interface ApiResponseBodyGetPlaceListResponseVoid {
+  /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
+  success?: boolean;
+  /**
+   * 해당 API의 HTTP 상태 코드입니다.
+   * @format int32
+   */
+  status?: number;
+  /** 해당 API의 결과에 대한 상태 메시지입니다. */
+  message?: string;
+  /**
+   * 해당 API 관련 커스텀 코드입니다. 도메인(3글자)-상태코드-순번 으로 이루어져 있습니다.
+   * @example "TIC_200_001"
+   */
+  code?: string;
+  /** 촬영 장소 목록 검색 API */
+  data?: GetPlaceListResponse;
+  /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
+  meta?: object;
+}
+
+/** 촬영 장소 목록 검색 API */
+export interface GetPlaceListResponse {
+  /** 검색된 촬영 장소 목록 */
+  places?: GetPlaceResponse[];
+}
+
+/** 촬영 장소 검색 응답 DTO */
+export interface GetPlaceResponse {
+  /**
+   * 촬영 장소 ID
+   * @format int64
+   * @example 1
+   */
+  id?: number;
+  /**
+   * 촬영 장소명
+   * @example "건국대학교"
+   */
+  name?: string;
 }
 
 /** 공통 응답 DTO */
@@ -986,6 +1059,9 @@ export type GetWishedPortfoliosData =
 
 export type UpdateWishPortfolioData = ApiResponseBodyWishPortfolioResponseVoid;
 
+/** 리뷰 정보 */
+export type CreateReviewPayload = string;
+
 export type CreateReviewData =
   ApiResponseBodyCreateReservationReviewResponseVoid;
 
@@ -1009,6 +1085,8 @@ export type CreateKakaoLoginData = ApiResponseBodyCreateKakaoLoginResponseVoid;
 
 export type GetUserInfoData = ApiResponseBodyGetUserInfoResponseVoid;
 
+export type GetReservationsData = ApiResponseBodyReservationListResponseVoid;
+
 export type GetProductReviewsData =
   ApiResponseBodyProductReviewsResponseProductReviewsMetaResponse;
 
@@ -1020,6 +1098,8 @@ export type GetProductAvailableTimesData =
 
 export type GetProductPeopleRangeData =
   ApiResponseBodyProductPeopleRangeResponseVoid;
+
+export type GetPlacesData = ApiResponseBodyGetPlaceListResponseVoid;
 
 export type GetPhotographerProfileData =
   ApiResponseBodyGetPhotographerProfileResponseVoid;

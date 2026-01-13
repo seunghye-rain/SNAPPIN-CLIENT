@@ -18,16 +18,18 @@ import {
   CreatePhotoMoodConnectionData,
   CreateProductReservationData,
   CreateReissuedTokensData,
-  CreateReservationReviewRequest,
   CreateReviewData,
+  CreateReviewPayload,
   GetAllMoodFiltersData,
   GetCategoriesData,
   GetCurationQuestionData,
   GetPhotographerProfileData,
+  GetPlacesData,
   GetProductAvailableTimesData,
   GetProductClosedDatesData,
   GetProductPeopleRangeData,
   GetProductReviewsData,
+  GetReservationsData,
   GetUserInfoData,
   GetWishedPortfoliosData,
   GetWishedProductsData,
@@ -51,12 +53,14 @@ export class Api<
    * @name GetWishedProducts
    * @summary 위시 상품 목록 조회
    * @request GET:/api/v1/wishes/products
+   * @secure
    * @response `200` `GetWishedProductsData` OK
    */
   getWishedProducts = (params: RequestParams = {}) =>
     this.request<GetWishedProductsData, any>({
       path: `/api/v1/wishes/products`,
       method: "GET",
+      secure: true,
       ...params,
     });
   /**
@@ -66,6 +70,7 @@ export class Api<
    * @name UpdateWishProduct
    * @summary 상품 좋아요/취소
    * @request POST:/api/v1/wishes/products
+   * @secure
    * @response `200` `UpdateWishProductData` OK
    */
   updateWishProduct = (data: WishProductRequest, params: RequestParams = {}) =>
@@ -73,6 +78,7 @@ export class Api<
       path: `/api/v1/wishes/products`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -83,12 +89,14 @@ export class Api<
    * @name GetWishedPortfolios
    * @summary 위시 포트폴리오 목록 조회
    * @request GET:/api/v1/wishes/portfolios
+   * @secure
    * @response `200` `GetWishedPortfoliosData` OK
    */
   getWishedPortfolios = (params: RequestParams = {}) =>
     this.request<GetWishedPortfoliosData, any>({
       path: `/api/v1/wishes/portfolios`,
       method: "GET",
+      secure: true,
       ...params,
     });
   /**
@@ -98,6 +106,7 @@ export class Api<
    * @name UpdateWishPortfolio
    * @summary 포트폴리오 좋아요/취소
    * @request POST:/api/v1/wishes/portfolios
+   * @secure
    * @response `200` `UpdateWishPortfolioData` OK
    */
   updateWishPortfolio = (
@@ -108,6 +117,7 @@ export class Api<
       path: `/api/v1/wishes/portfolios`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -118,17 +128,19 @@ export class Api<
    * @name CreateReview
    * @summary 리뷰 등록
    * @request POST:/api/v1/reservations/{reservationId}/reviews
+   * @secure
    * @response `200` `CreateReviewData` OK
    */
   createReview = (
-    reservationId: number,
-    data: CreateReservationReviewRequest,
+    reservationId: string,
+    data: CreateReviewPayload,
     params: RequestParams = {},
   ) =>
     this.request<CreateReviewData, any>({
       path: `/api/v1/reservations/${reservationId}/reviews`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -139,6 +151,7 @@ export class Api<
    * @name CreateProductReservation
    * @summary 예약하기
    * @request POST:/api/v1/products/{productId}/reservations
+   * @secure
    * @response `200` `CreateProductReservationData` OK
    */
   createProductReservation = (
@@ -150,6 +163,7 @@ export class Api<
       path: `/api/v1/products/${productId}/reservations`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -160,6 +174,7 @@ export class Api<
    * @name CreatePhotoMoodConnection
    * @summary 사진 <-> 무드 태그 연결
    * @request POST:/api/v1/photos/process
+   * @secure
    * @response `200` `CreatePhotoMoodConnectionData` OK
    */
   createPhotoMoodConnection = (
@@ -170,6 +185,7 @@ export class Api<
       path: `/api/v1/photos/process`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -180,6 +196,7 @@ export class Api<
    * @name GetCurationQuestion
    * @summary 큐레이션 단계별 질문/사진 조회 API
    * @request GET:/api/v1/curation
+   * @secure
    * @response `200` `GetCurationQuestionData` OK
    */
   getCurationQuestion = (
@@ -198,6 +215,7 @@ export class Api<
       path: `/api/v1/curation`,
       method: "GET",
       query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -207,6 +225,7 @@ export class Api<
    * @name CreateMoodCuration
    * @summary 무드 큐레이션 결과 저장 및 결과 반환 API
    * @request POST:/api/v1/curation
+   * @secure
    * @response `200` `CreateMoodCurationData` OK
    */
   createMoodCuration = (
@@ -217,6 +236,7 @@ export class Api<
       path: `/api/v1/curation`,
       method: "POST",
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -227,12 +247,14 @@ export class Api<
    * @name CreateReissuedTokens
    * @summary 토큰 재발급
    * @request POST:/api/v1/auth/reissue
+   * @secure
    * @response `200` `CreateReissuedTokensData` OK
    */
   createReissuedTokens = (params: RequestParams = {}) =>
     this.request<CreateReissuedTokensData, any>({
       path: `/api/v1/auth/reissue`,
       method: "POST",
+      secure: true,
       ...params,
     });
   /**
@@ -242,12 +264,14 @@ export class Api<
    * @name Logout
    * @summary 로그아웃
    * @request POST:/api/v1/auth/logout
+   * @secure
    * @response `200` `LogoutData` OK
    */
   logout = (params: RequestParams = {}) =>
     this.request<LogoutData, any>({
       path: `/api/v1/auth/logout`,
       method: "POST",
+      secure: true,
       ...params,
     });
   /**
@@ -257,6 +281,7 @@ export class Api<
    * @name CreateKakaoLogin
    * @summary 카카오 로그인
    * @request POST:/api/v1/auth/login/kakao
+   * @secure
    * @response `200` `CreateKakaoLoginData` OK
    */
   createKakaoLogin = (
@@ -275,6 +300,7 @@ export class Api<
       method: "POST",
       query: query,
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -285,12 +311,41 @@ export class Api<
    * @name GetUserInfo
    * @summary 유저 정보 조회 API
    * @request GET:/api/v1/users/me
+   * @secure
    * @response `200` `GetUserInfoData` OK
    */
   getUserInfo = (params: RequestParams = {}) =>
     this.request<GetUserInfoData, any>({
       path: `/api/v1/users/me`,
       method: "GET",
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 예약 탭에 해당하는 예약 목록을 조회합니다.
+   *
+   * @tags 010 - Reservation
+   * @name GetReservations
+   * @summary 예약 목록 조회
+   * @request GET:/api/v1/reservations
+   * @secure
+   * @response `200` `GetReservationsData` OK
+   */
+  getReservations = (
+    query: {
+      /**
+       * 예약 조회 탭
+       * @example "CLIENT_OVERVIEW"
+       */
+      tab: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<GetReservationsData, any>({
+      path: `/api/v1/reservations`,
+      method: "GET",
+      query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -300,6 +355,7 @@ export class Api<
    * @name GetProductReviews
    * @summary 상품 리뷰 목록 조회
    * @request GET:/api/v1/products/{productId}/reviews
+   * @secure
    * @response `200` `GetProductReviewsData` OK
    */
   getProductReviews = (
@@ -317,6 +373,7 @@ export class Api<
       path: `/api/v1/products/${productId}/reviews`,
       method: "GET",
       query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -326,6 +383,7 @@ export class Api<
    * @name GetProductClosedDates
    * @summary 달별 휴무일 목록 조회
    * @request GET:/api/v1/products/{productId}/closed-dates
+   * @secure
    * @response `200` `GetProductClosedDatesData` OK
    */
   getProductClosedDates = (
@@ -343,6 +401,7 @@ export class Api<
       path: `/api/v1/products/${productId}/closed-dates`,
       method: "GET",
       query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -352,6 +411,7 @@ export class Api<
    * @name GetProductAvailableTimes
    * @summary 시간대별 예약 가능 여부 조회
    * @request GET:/api/v1/products/{productId}/available/times
+   * @secure
    * @response `200` `GetProductAvailableTimesData` OK
    */
   getProductAvailableTimes = (
@@ -369,6 +429,7 @@ export class Api<
       path: `/api/v1/products/${productId}/available/times`,
       method: "GET",
       query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -378,12 +439,37 @@ export class Api<
    * @name GetProductPeopleRange
    * @summary 촬영 가능 인원 수 조회
    * @request GET:/api/v1/products/{productId}/available/people-range
+   * @secure
    * @response `200` `GetProductPeopleRangeData` OK
    */
   getProductPeopleRange = (productId: string, params: RequestParams = {}) =>
     this.request<GetProductPeopleRangeData, any>({
       path: `/api/v1/products/${productId}/available/people-range`,
       method: "GET",
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 입력받은 키워드로 촬영 장소를 검색합니다.
+   *
+   * @tags 05 - Place
+   * @name GetPlaces
+   * @summary 촬영 장소 검색 API
+   * @request GET:/api/v1/places
+   * @secure
+   * @response `200` `GetPlacesData` OK
+   */
+  getPlaces = (
+    query: {
+      keyword: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<GetPlacesData, any>({
+      path: `/api/v1/places`,
+      method: "GET",
+      query: query,
+      secure: true,
       ...params,
     });
   /**
@@ -393,6 +479,7 @@ export class Api<
    * @name GetPhotographerProfile
    * @summary 작가 상세 조회 API
    * @request GET:/api/v1/photographers/{photographerId}
+   * @secure
    * @response `200` `GetPhotographerProfileData` OK
    */
   getPhotographerProfile = (
@@ -402,6 +489,7 @@ export class Api<
     this.request<GetPhotographerProfileData, any>({
       path: `/api/v1/photographers/${photographerId}`,
       method: "GET",
+      secure: true,
       ...params,
     });
   /**
@@ -411,12 +499,14 @@ export class Api<
    * @name GetAllMoodFilters
    * @summary 전체 무드 필터 값 조회 API
    * @request GET:/api/v1/moods
+   * @secure
    * @response `200` `GetAllMoodFiltersData` OK
    */
   getAllMoodFilters = (params: RequestParams = {}) =>
     this.request<GetAllMoodFiltersData, any>({
       path: `/api/v1/moods`,
       method: "GET",
+      secure: true,
       ...params,
     });
   /**
@@ -426,12 +516,14 @@ export class Api<
    * @name GetCategories
    * @summary 촬영 상황 조회
    * @request GET:/api/v1/categories
+   * @secure
    * @response `200` `GetCategoriesData` OK
    */
   getCategories = (params: RequestParams = {}) =>
     this.request<GetCategoriesData, any>({
       path: `/api/v1/categories`,
       method: "GET",
+      secure: true,
       ...params,
     });
 }
