@@ -14,7 +14,7 @@ export default function Footer() {
         <BottomCTAButton.Single
           color='black'
           onClick={handleContact}
-          disabled={!!isLogIn}
+          disabled={!isLogIn}
         >
           문의하기
         </BottomCTAButton.Single>
