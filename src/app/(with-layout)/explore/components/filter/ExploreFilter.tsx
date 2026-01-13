@@ -2,7 +2,7 @@
 
 import { FilterChip, IconButton } from '@/ui';
 import { IconFilter, IconSettingsBackupRestore } from '@/assets';
-import { Mood, MoodCode } from '@/types/moodCode';
+import { Mood } from '@/types/moodCode';
 import { useEffect, useMemo, useState } from 'react';
 import ExploreFilterPanel from '@/app/(with-layout)/explore/components/filter-panel/ExploreFilterPanel';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -29,10 +29,7 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const moodIds = useMemo(
-    () => parseMoodIds(new URLSearchParams(searchParams.toString())),
-    [searchParams],
-  );
+  const moodIds = useMemo(() => parseMoodIds(searchParams), [searchParams]);
 
   const moodById = useMemo(() => {
     const map = new Map<number, Mood>();
@@ -98,8 +95,12 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
     <>
       <div className='relative flex flex-row items-center justify-between gap-[0.3rem] px-[0.4rem] py-[0.6rem]'>
         {/* 필터 초기화 버튼 */}
-        <IconButton className='h-[4.4rem] w-[4.4rem]' onClick={handleReset}>
-          <IconSettingsBackupRestore className='m-auto' />
+        <IconButton
+          className='py-[1rem h-[4.4rem] w-[4.4rem] px-[1.05rem]'
+          onClick={handleReset}
+          aria-label='무드 필터 초기화'
+        >
+          <IconSettingsBackupRestore />
         </IconButton>
 
         {/* 필터 칩 목록 */}
@@ -110,7 +111,7 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
             selectedMoods.map((mood) => (
               <FilterChip
                 key={mood.id}
-                label={mood.name as MoodCode}
+                label={mood.name}
                 onRemove={() => handleRemoveMood(mood.id)}
                 isSelected
               />
@@ -120,12 +121,12 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
 
         {/* 필터 on 버튼 todo: 좌측 디바이더 고민 */}
         <IconButton
-          className='border-black-3 h-[4.4rem] w-[4.4rem]'
+          className='border-black-3 h-[4.4rem] w-[4.4rem] p-[1rem]'
           aria-expanded={open}
           aria-label='무드 필터 패널 열기'
           onClick={() => setOpen(!open)}
         >
-          <IconFilter className='m-auto' />
+          <IconFilter />
         </IconButton>
       </div>
       {open && (
