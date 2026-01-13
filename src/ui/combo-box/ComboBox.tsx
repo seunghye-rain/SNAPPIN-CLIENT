@@ -26,12 +26,17 @@ export default function ComboBox({
 }: ComboBoxProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState(value ?? '');
+  const isControlled = value !== undefined;
 
-  useEffect(() => {
-    if (value !== undefined) setQuery(value);
-  }, [value]);
+  const [open, setOpen] = useState(false);
+  const [uncontrolledQuery, setUncontrolledQuery] = useState('');
+
+  const query = isControlled ? value : uncontrolledQuery;
+
+  const setQuery = (next: string) => {
+    if (!isControlled) setUncontrolledQuery(next);
+    onChange?.(next);
+  };
 
   // 바깥 클릭 시 닫기
   useEffect(() => {
@@ -50,7 +55,6 @@ export default function ComboBox({
 
   const handleSelect = (v: string) => {
     setQuery(v);
-    onChange?.(v);
     setOpen(false);
   };
 
@@ -62,7 +66,6 @@ export default function ComboBox({
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
-            onChange?.(e.target.value);
           }}
           value={query}
           className={cn('h-[4.2rem] w-full', inputClassName)}
