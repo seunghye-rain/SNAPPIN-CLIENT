@@ -89,7 +89,7 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
 
       case STATE_CODES.PAYMENT_COMPLETED: {
         bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true}>
+          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
             <BottomCTAButton.Single size='large' type='button' disabled={true}>
               결제 확인중
             </BottomCTAButton.Single>
@@ -100,7 +100,7 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
 
       case STATE_CODES.RESERVATION_CANCELED: {
         bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true}>
+          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
             <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
               예약 취소 완료
             </BottomCTAButton.Single>
@@ -111,7 +111,7 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
 
       case STATE_CODES.RESERVATION_REFUSED: {
         bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true}>
+          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
             <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
               작가님의 예약 거절
             </BottomCTAButton.Single>
@@ -161,7 +161,8 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
           <PaymentDetail paymentInfo={data.paymentInfo} />
         </>
       ) : null}
-      <div className='mt-[5.5rem]'>{bottomCtaButton}</div>
+      {bottomCtaButton && <div className='mt-[5.5rem]'>{bottomCtaButton}</div>}
+
       <ConfirmModal
         open={isReservationCancelModalOpen}
         handleOpenChange={setIsReservationCancelModalOpen}
