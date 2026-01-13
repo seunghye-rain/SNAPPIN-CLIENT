@@ -54,5 +54,5 @@ export const formatCreatedAt = (date: string) => {
   // Extract last 2 digits of year
   const yearShort = year.slice(-2);
 
-  return `${yearShort}년 ${Number(month)}월 ${Number(day)}일 ${Number(hour)}시 ${Number(minute)}분`;
+  return `${yearShort}년 ${Number(month)}월 ${Number(day)}일 ${Number(hour)}:${Number(minute)}`;
 };
