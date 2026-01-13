@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { IconKeyboardArrowRight } from '@/assets';
 import { StateChip, Button } from '@/ui';
-import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { STATE_CODES, type StateCode } from '@/types/stateCode';
 
 type ReservationCardProps = {
   status: StateCode;
@@ -19,11 +19,11 @@ type ReservationCardProps = {
 export default function ReservationCard({
   image,
   name,
-  rating,
+  rate,
   reviewCount,
-  author,
+  photographer,
   price,
-  tags,
+  moods,
   className,
   status,
   date,
@@ -52,11 +52,11 @@ export default function ReservationCard({
         <ProductCard
           image={image}
           name={name}
-          rating={rating}
+          rate={rate}
           reviewCount={reviewCount}
-          author={author}
+          photographer={photographer}
           price={price}
-          tags={tags}
+          moods={moods}
           className={className}
         />
       </Link>

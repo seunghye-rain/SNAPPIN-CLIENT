@@ -6,14 +6,8 @@ import { ClientNavigation } from './components';
 import { PaymentDetail, ReservationDetail, ReservationRequested } from './_section';
 import { BottomCTAButton, ConfirmModal, Divider } from '@/ui';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
-import type { MoodCode } from '@/types/moodCode';
 import { RESERVATION_DETAIL_MOCK } from './mock/reservationDetail.mock';
-import { useSetAtom } from 'jotai';
-import { ToastAtom } from '@/ui/toast/toast.atom';
-
-// 토스트 포지션 계산
-const TOAST_POSITION_WITH_BUTTON = 'bottom-[calc(7.2rem+2rem)]';
-const TOAST_POSITION_WITHOUT_BUTTON = 'bottom-[2rem]';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ReservationDetailPageClientProps = {
   params: Promise<{
@@ -24,7 +18,7 @@ type ReservationDetailPageClientProps = {
 export default function PageClient({ params }: ReservationDetailPageClientProps) {
   const { id } = use(params);
   const reservationId = Number(id);
-  const addToast = useSetAtom(ToastAtom);
+  const { alert } = useToast();
 
   // TODO: 예약 상세 조회 API 연동 (request에 id 전달)
   const data = RESERVATION_DETAIL_MOCK;
@@ -38,20 +32,6 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
     reservationStatus === STATE_CODES.PHOTOGRAPHER_CHECKING;
 
   const hasPaymentDetailSection = !hasTopActionButtons;
-
-  // TODO: 문의하기 토스트 위치 적용
-  const handleInquiryClick = () => {
-    const hasBottomButton =
-      reservationStatus === STATE_CODES.PAYMENT_REQUESTED ||
-      reservationStatus === STATE_CODES.PAYMENT_COMPLETED ||
-      reservationStatus === STATE_CODES.RESERVATION_CANCELED ||
-      reservationStatus === STATE_CODES.RESERVATION_REFUSED;
-
-    addToast({
-      type: 'error',
-      message: '작가님이 아직 채팅방을 운영하지 않아요.',
-    });
-  };
 
   const handleReservationCancelClick = () => {
     setIsReservationCancelModalOpen(true);
@@ -136,16 +116,23 @@ export default function PageClient({ params }: ReservationDetailPageClientProps)
 
   const bottomCtaButton = createBottomCtaButton(reservationStatus);
 
+  const handleInquiryClick = () => {
+    alert(
+      '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
+      undefined,
+      bottomCtaButton ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
+    );
+  };
+
   return (
     <div className='bg-black-3 flex min-h-full flex-col'>
       <ClientNavigation title='예약 상세' />
-      <Divider color='bg-black-5' className='h-[0.6rem]' />
       <ReservationRequested
         reservationId={reservationId}
         reservationStatus={reservationStatus}
         productInfo={{
           ...data.productInfo,
-          moods: data.productInfo.moods as MoodCode[],
+          moods: data.productInfo.moods,
         }}
         handleReservationCancelClick={handleReservationCancelClick}
         handleInquiryClick={handleInquiryClick}

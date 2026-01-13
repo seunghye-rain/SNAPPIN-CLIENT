@@ -1,7 +1,6 @@
 'use client';
 
 import { Button, ProductCard } from '@/ui';
-import type { MoodCode } from '@/types/moodCode';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 
 type ReservationRequestedProps = {
@@ -12,7 +11,7 @@ type ReservationRequestedProps = {
     reviewCount: number;
     photographer: string;
     price: number;
-    moods: MoodCode[];
+    moods: string[];
   };
   reservationId: number;
   reservationStatus: StateCode;
@@ -40,11 +39,11 @@ export default function ReservationRequested({
             alt: `${productInfo.title}`,
           }}
           name={productInfo.title}
-          rating={productInfo.rate}
+          rate={productInfo.rate}
           reviewCount={productInfo.reviewCount}
-          author={productInfo.photographer}
+          photographer={productInfo.photographer}
           price={productInfo.price}
-          tags={productInfo.moods}
+          moods={productInfo.moods}
           className='w-full'
         />
       </div>

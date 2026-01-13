@@ -37,6 +37,7 @@ export default function ReservationList() {
       ? reservation.status === STATE_CODES.SHOOT_COMPLETED
       : reservation.status !== STATE_CODES.SHOOT_COMPLETED,
   );
+
   const emptyTitle =
     selectedTabValue === 'CLIENT_DONE' ? '촬영 완료한 상품이 없어요' : '예약 문의한 상품이 없어요';
 
@@ -46,7 +47,7 @@ export default function ReservationList() {
       handleValueChange={handleTabValueChange}
       className='bg-black-1'
     >
-      <SectionTabs.List className={'bg-black-1 border-black-4 fixed z-10 border-t'}>
+      <SectionTabs.List className='bg-black-1 border-black-4 fixed-center z-10 border-t'>
         {RESERVATION_TABS.map((tab) => (
           <SectionTabs.Tab key={tab.value} value={tab.value}>
             {tab.label}
@@ -58,7 +59,7 @@ export default function ReservationList() {
         {reservationsByTabValue.length === 0 ? (
           <EmptyView title={emptyTitle} description='탐색에서 다양한 포트폴리오를 확인해보세요' />
         ) : (
-          <div className='mt-[4.5rem] flex flex-col p-[2rem]'>
+          <div className='flex flex-col p-[2rem]'>
             {reservationsByTabValue.map(({ reservation }, reservationIndex) => (
               <Fragment key={reservation.reservationId}>
                 <ReservationCard
@@ -68,11 +69,11 @@ export default function ReservationList() {
                   }}
                   date={formatCreatedAt(reservation.createdAt)}
                   name={reservation.product.title}
-                  rating={reservation.product.rate}
+                  rate={reservation.product.rate}
                   reviewCount={reservation.product.reviewCount}
-                  author={reservation.product.photographer}
+                  photographer={reservation.product.photographer}
                   price={reservation.product.price}
-                  tags={reservation.product.moods as MoodCode[]}
+                  moods={reservation.product.moods as MoodCode[]}
                   isReviewed={reservation.product.isReviewed}
                   reviewHref={`/photo-completed/${reservation.reservationId}`}
                   status={reservation.status as StateCode}
