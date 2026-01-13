@@ -5,11 +5,16 @@ import { Divider, SectionTabs } from '@/ui';
 import { RESERVATION_MOCK } from '../mock/reservationList.mock';
 import { RESERVATION_TABS, ReservationTabValue } from '../constants/tabs';
 import { EmptyView, ReservationCard } from '../components';
+import { cn } from '@/utils/cn';
 import type { MoodCode } from '@/types/moodCode';
 import type { StateCode } from '@/types/stateCode';
 import { formatCreatedAt } from '@/utils/formatNumberWithComma';
 
-export default function ReservationList() {
+type ReservationListProps = {
+  isNavigationVisible: boolean;
+};
+
+export default function ReservationList({ isNavigationVisible }: ReservationListProps) {
   const [selectedTabValue, setSelectedTabValue] = useState<ReservationTabValue>(
     RESERVATION_TABS[0].value,
   );
@@ -27,7 +32,12 @@ export default function ReservationList() {
       handleValueChange={handleTabValueChange}
       className='bg-black-1'
     >
-      <SectionTabs.List className='bg-black-1 border-black-4 border-t'>
+      <SectionTabs.List
+        className={cn(
+          'bg-black-1 sticky top-0 z-10 transition-[top] duration-300 ease-out',
+          isNavigationVisible && 'top-[5rem]',
+        )}
+      >
         {RESERVATION_TABS.map((tab) => (
           <SectionTabs.Tab key={tab.value} value={tab.value}>
             {tab.label}
