@@ -33,7 +33,6 @@ export default function ClientNavigation({ title }: TitleProps) {
         </IconButton>
       }
       isFixed={true}
-      className='border-black-5 border-b'
     />
   );
 }
