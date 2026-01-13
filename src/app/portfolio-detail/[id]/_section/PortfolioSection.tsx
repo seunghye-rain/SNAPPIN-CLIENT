@@ -44,7 +44,7 @@ export default function PortfolioSection({
   };
 
   return (
-    <section className='mt-[5rem] bg-black-1'>
+    <section className='bg-black-1'>
       {/* 포트폴리오 캐러셀 */}
       <PortfolioCarousel images={images} />
       {/* 한줄 설명, 좋아요 */}
