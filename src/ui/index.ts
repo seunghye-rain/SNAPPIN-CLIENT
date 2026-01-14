@@ -2,6 +2,7 @@
 export * from './button/index';
 export * from './carousel/index';
 export * from './chip/index';
+export * from './combo-box/index';
 export * from './control-row/index';
 export * from './date/index';
 export * from './divider/index';
@@ -12,6 +13,7 @@ export * from './input/index';
 export * from './loading/index';
 export * from './modal/index';
 export * from './navigation/index';
+export * from './photographer/index';
 export * from './product-card/index';
 export * from './section-tabs/index';
 export * from './stepper/index';
