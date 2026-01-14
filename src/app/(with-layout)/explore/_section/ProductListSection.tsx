@@ -6,14 +6,14 @@ export default function ProductListSection() {
 
   if (isProductListEmpty)
     return (
-      <section className='flex min-h-[calc(100vh-29.9rem)] items-center justify-center gap-[0.4rem]'>
+      <section className='flex min-h-[calc(100vh-29.9rem)] flex-col items-center justify-center gap-[0.4rem]'>
         <h3 className='font-18-bd text-black-9'>검색 결과가 없어요</h3>
         <span className='caption-14-md text-black-6 mt-[0.8rem]'>다른 키워드로 검색해 보세요</span>
       </section>
     );
 
   return (
-    <section className='bg-black-1 z-0 shrink-0'>
+    <section>
       <ProductList productList={MOCK_PRODUCTS} />
     </section>
   );
