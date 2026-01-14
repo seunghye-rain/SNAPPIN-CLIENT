@@ -19,6 +19,7 @@ export default function ClientHeader() {
     <Navigation
       isFixed={true}
       left={<IconArrowBack onClick={handleBackClick} />}
+      center={<p className='caption-14-bd'>결제 요청</p>}
       right={<IconHome onClick={handleHomeClick} />}
       className='border-b-black-5 border-b-1'
     />
