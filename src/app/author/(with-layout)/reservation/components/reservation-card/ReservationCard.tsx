@@ -17,11 +17,11 @@ export default function ReservationCard({
   status,
   image,
   name,
-  rating,
+  rate,
   reviewCount,
-  author,
+  photographer,
   price,
-  tags,
+  moods,
   date,
 }: ReservationCardProps) {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function ReservationCard({
   };
 
   return (
-    <div className='flex px-[2rem] py-[1.2rem]'>
+    <div className='flex cursor-pointer px-[2rem] py-[1.2rem]' onClick={handleDetailClick}>
       <div className='border-black-5 flex w-full flex-col gap-[0.6rem] rounded-[0.6rem] border border-[0.7px] p-[1.2rem]'>
         <span className='caption-10-md text-black-7'>{date}</span>
         <div className='flex flex-col gap-[1.2rem]'>
@@ -39,14 +39,11 @@ export default function ReservationCard({
             <div className='flex items-center gap-[0.8rem]'>
               <StateChip label={status} />
               <div className='flex items-center gap-[0.2rem]'>
-                <span className='font-16-bd'>{author}</span>
+                <span className='font-16-bd'>{photographer}</span>
                 <span className='font-16-md'>님</span>
               </div>
             </div>
-            <IconButton
-              className='text-black-8 flex items-center bg-white'
-              onClick={handleDetailClick}
-            >
+            <IconButton className='text-black-8 flex items-center bg-white'>
               예약상세
               <IconKeyboardArrowRight />
             </IconButton>
@@ -54,11 +51,11 @@ export default function ReservationCard({
           <ProductCard
             image={image}
             name={name}
-            rating={rating}
+            rate={rate}
             reviewCount={reviewCount}
-            author={author}
+            photographer={photographer}
             price={price}
-            tags={tags}
+            moods={moods}
           />
         </div>
       </div>
