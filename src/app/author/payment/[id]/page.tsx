@@ -1,27 +1,16 @@
 import ClientHeader from './components/client-header/ClientHeader';
-import ClientFooter from './components/client-footer/ClientFooter';
 import { PAYMENT_MOCK } from './mock/payment.mock';
-import PaymentDetail from './components/payment-detail/PaymentDetail';
+import PaymentDetailContainer from './components/payment-detail-container/PaymentDetailContainer';
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default function Page({ params }: PageProps) {
-  const id = params.id;
-  console.log(id);
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  //TODO: basePrice 조회 API 연동
   const data = PAYMENT_MOCK;
 
   return (
     <div className='bg-black-3 flex min-h-dvh flex-col'>
       <ClientHeader />
-      <div className='bg-black-1 flex flex-col gap-[1.2rem] px-[2rem] pt-[1.7rem] pb-[2.4rem]'>
-        <h2 className='caption-14-bd'>결제 요청</h2>
-        <PaymentDetail basePrice={data.basePrice} />
-      </div>
-      <ClientFooter />
+      <PaymentDetailContainer id={Number(id)} basePrice={data.basePrice} />
     </div>
   );
 }
