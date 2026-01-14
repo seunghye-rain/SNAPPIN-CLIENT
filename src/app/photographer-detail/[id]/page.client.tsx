@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { SectionTabs } from '@/ui';
-import { PhotographerSection, PortfolioListSection, ProductListSection } from './_section/index';
+import { SectionTabs, PortfolioList, ProductList } from '@/ui';
+import { PhotographerSection } from './_section/index';
 import { Header, Footer } from './components/index';
 import { PHOTOGRAPHER_DETAIL_MOCK, PORTFOLIO_LIST_MOCK, PRODUCT_LIST_MOCK } from './mock/index';
 import { PHOTOGRAPHER_TAB, PHOTOGRAPHER_TAB_MAP } from './constants/tab';
@@ -62,14 +62,14 @@ export default function PageClient({ params }: PageClientProps) {
           value={PHOTOGRAPHER_TAB.PORTFOLIO}
           className='p-[1rem] mb-[8rem] bg-black-1'
         >
-          <PortfolioListSection portfolios={portfolioListMock.portfolios} />
+          <PortfolioList portfolioList={portfolioListMock.portfolios} />
         </SectionTabs.Contents>
         {/* 상품 목록 */}
         <SectionTabs.Contents
           value={PHOTOGRAPHER_TAB.PRODUCT}
           className='mb-[8rem]'
         >
-          <ProductListSection products={productListMock.products} />
+          <ProductList productList={productListMock.products} />
         </SectionTabs.Contents>
       </SectionTabs>
       <Footer />
