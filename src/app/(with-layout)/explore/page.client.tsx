@@ -33,25 +33,24 @@ export default function PageClient() {
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
+  const handleDrawerOpen = () => {
+    overlay.open(({ isOpen, close }) => <ExploreSearchDrawer isOpen={isOpen} onClose={close} />);
+  };
+
   return (
     <SectionTabs
       value={currentTab}
       handleValueChange={handleTabChange}
-      className='flex h-dvh flex-col overflow-hidden'
+      className='bg-black-1 flex min-h-0 flex-col'
     >
       {/* 탐색 페이지 상단 고정 영역 헤더 */}
-      <header className='border-black-3 sticky top-0 z-100 shrink-0 border-b-[0.1rem]'>
+      <header className='border-black-3 bg-black-1 sticky top-0 z-100 shrink-0 border-b-[0.1rem]'>
         {/* 검색 버튼 */}
         <div className='px-[2rem] py-[1.6rem]'>
           <ButtonSearchBar
             headline='어떤 스냅 작가를 찾고 있나요?'
             supportingText='날짜, 스냅 종류, 지역 기반으로 정교한 검색'
-            onClick={() =>
-              /* todo: 해당 PR 머지 후 드로어 GUI 구현 */
-              overlay.open(({ isOpen, close }) => (
-                <ExploreSearchDrawer isOpen={isOpen} onClose={close} />
-              ))
-            }
+            onClick={handleDrawerOpen}
           />
         </div>
 
@@ -70,16 +69,13 @@ export default function PageClient() {
       </header>
 
       {/* 탐색 페이지 탭 메인 콘텐츠 영역 */}
-      <main className='scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto'>
-        <SectionTabs.Contents value={EXPLORE_TAB.PORTFOLIO}>
+      <main className='scrollbar-hide min-h-0 overflow-y-hidden'>
+        <SectionTabs.Contents value={EXPLORE_TAB.PORTFOLIO} className='min-h-full'>
           {/* 포트폴리오 목록 */}
           <PortfolioListSection />
         </SectionTabs.Contents>
 
-        <SectionTabs.Contents
-          value={EXPLORE_TAB.PRODUCT}
-          className='bg-black-3 flex flex-1 flex-col'
-        >
+        <SectionTabs.Contents value={EXPLORE_TAB.PRODUCT} className='min-h-full'>
           {/* 상품 목록 */}
           <ProductListSection />
         </SectionTabs.Contents>
