@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { CreateKakaoLoginData } from '@/swagger-api/data-contracts';
-import { USER_TYPES } from '@/auth/constant/userType';
+import { USER_TYPE } from '@/auth/constant/userType';
 import { setUserType } from '@/auth/userType';
 import { setAccessToken } from '@/auth/token';
 import { useToast } from '@/ui/toast/hooks/useToast';
@@ -37,7 +37,7 @@ export const useKakaoLoginMutation = () => {
 
     onSuccess: (data) => {
       setAccessToken(data.data?.accessToken ?? '');
-      setUserType(USER_TYPES[0]);
+      setUserType(USER_TYPE.CLIENT);
       router.replace('/');
     },
 
