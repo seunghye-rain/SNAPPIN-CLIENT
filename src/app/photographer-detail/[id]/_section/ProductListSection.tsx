@@ -15,11 +15,9 @@ type ProductListSectionProps = {
 }
 
 export default function ProductListSection({ products }: ProductListSectionProps) {
-  const isProductEmpty = products.length === 0;
-
   return (
     <section>
-      {isProductEmpty
+      {products.length !== 0
         ?
           <div className='flex justify-center items-center min-h-[calc(100vh-29.9rem)]'>
             <span className='caption-14-rg text-black-6 text-center'>
