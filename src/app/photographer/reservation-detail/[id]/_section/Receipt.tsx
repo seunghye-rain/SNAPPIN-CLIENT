@@ -15,11 +15,13 @@ export default function Receipt({ basePrice, extraPrice, totalPrice }: ReceiptPr
         label='기본 촬용 비용'
         value={`${formatPrice(basePrice)}`}
         className='justify-between'
+        valueClassName='caption-14-bd'
       />
       <DetailRow
         label='추가 비용'
         value={`${formatPrice(extraPrice)}`}
         className='justify-between'
+        valueClassName='caption-14-bd'
       />
       <Divider thickness='small' color='bg-black-3' />
       <div className='flex items-center justify-between'>

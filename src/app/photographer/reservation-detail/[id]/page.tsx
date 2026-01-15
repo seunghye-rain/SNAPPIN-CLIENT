@@ -63,6 +63,7 @@ export default function Page() {
               images={data.reviewInfo.images}
               content={data.reviewInfo.content}
             />
+            <div className='h-[6.3rem]' />
           </>
         ) : (
           <>

@@ -71,7 +71,7 @@ export default function ProductStatus({
         <Button
           size='small'
           color='black'
-          className='text-black-1 w-full'
+          className='text-black-1 border-black-10 w-full border-1'
           onClick={handleSendMessage}
         >
           메시지 보내기

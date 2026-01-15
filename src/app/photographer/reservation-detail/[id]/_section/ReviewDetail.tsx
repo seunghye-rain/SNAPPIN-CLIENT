@@ -31,20 +31,21 @@ export default function ReviewDetail({
           </div>
           <span className='caption-12-md text-black-7'>{reviewer}</span>
         </div>
-      </div>
-      <div className='scrollbar-hide flex gap-[0.4rem] overflow-scroll'>
-        {images.map((image) => (
-          <Link
-            key={image}
-            href={`/photographer/reservation-detail/${id}/photos`}
-            className='shrink-0'
-          >
-            <Image src={image} alt={reviewer} width={140} height={140} className='object-cover' />
-          </Link>
-        ))}
-      </div>
 
-      <p className='caption-14-md'>{content}</p>
+        <div className='scrollbar-hide flex gap-[0.4rem] overflow-scroll'>
+          {images.map((image) => (
+            <Link
+              key={image}
+              href={`/photographer/reservation-detail/${id}/photos`}
+              className='shrink-0'
+            >
+              <Image src={image} alt={reviewer} width={140} height={140} className='object-cover' />
+            </Link>
+          ))}
+        </div>
+
+        <p className='caption-14-md'>{content}</p>
+      </div>
     </div>
   );
 }

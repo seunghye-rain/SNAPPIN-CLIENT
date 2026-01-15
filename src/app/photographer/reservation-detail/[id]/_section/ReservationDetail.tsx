@@ -39,7 +39,11 @@ export default function ReservationDetail({
         </div>
         <Divider thickness='small' color='bg-black-5' />
       </div>
-      <DetailRow label='날짜 및 시간' value={formatReservationDateTime(date, startTime)} />
+      <DetailRow
+        label='날짜 및 시간'
+        value={formatReservationDateTime(date, startTime)}
+        className='mt-[-0.5rem]'
+      />
       <DetailRow label='촬영 시간' value={formatReservationTime(durationTime)} />
       <DetailRow label='촬영 장소' value={place} />
       <DetailRow label='촬영 인원' value={`${peopleCount}인`} />
