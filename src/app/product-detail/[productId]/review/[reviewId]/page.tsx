@@ -1,13 +1,12 @@
 import { Header, ImageSlide } from './components/index';
 import ReviewStar from '@/ui/review-star/ReviewStar';
-import { formatDate } from '@/utils/formatNumberWithComma';
-import { padNumber } from '@/utils/padNumber';
+import { formatShortDate } from '@/utils/formatNumberWithComma';
 import REVIEW from './mock/review.mock';
 
 export default function Page() {
   const reviewMock = REVIEW;
   const reviewImages = reviewMock.images.map((image, idx) => ({ src: image, alt: `리뷰 이미지 ${idx}` }));
-  const formattedDate = formatDate(reviewMock.createdAt).slice(2).split('.').map((number) => padNumber(Number(number))).join('.');
+  const formattedDate = formatShortDate(reviewMock.createdAt);
 
   return (
     <div className='flex flex-col h-dvh bg-black-10'>
