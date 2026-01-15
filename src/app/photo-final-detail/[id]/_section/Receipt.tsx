@@ -13,7 +13,7 @@ export default function Receipt({ basePrice, extraPrice, totalPrice }: ReceiptPr
     <DetailLayout title='결제 상세' className='gap-[1.5rem] py-[1.7rem]'>
       {/* 디자인 물어보기 */}
       <DetailRow
-        label='기본 촬용 비용'
+        label='기본 촬영 비용'
         value={`${formatPrice(basePrice)} 원`}
         className='justify-between'
         valueClassName='caption-14-bd'
