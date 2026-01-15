@@ -43,72 +43,62 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     setReservationStatus(STATE_CODES.PAYMENT_COMPLETED);
   };
 
-  // 하단 버튼 발생 케이스
+  const BOTTOM_CTA_CONFIG: Partial<
+    Record<
+      StateCode,
+      {
+        label: string;
+        color?: 'primary' | 'black';
+        disabled?: boolean;
+        onClick?: () => void;
+      } | null
+    >
+  > = {
+    [STATE_CODES.PAYMENT_REQUESTED]: {
+      label: '결제하고 예약 확정받기',
+      color: 'primary',
+      onClick: handlePaymentConfirmClick,
+    },
+
+    [STATE_CODES.PAYMENT_COMPLETED]: {
+      label: '결제 확인중',
+      disabled: true,
+    },
+
+    [STATE_CODES.RESERVATION_CANCELED]: {
+      label: '예약 취소 완료',
+      color: 'black',
+      disabled: true,
+    },
+
+    [STATE_CODES.RESERVATION_REFUSED]: {
+      label: '작가님의 예약 거절',
+      color: 'black',
+      disabled: true,
+    },
+
+    [STATE_CODES.RESERVATION_CONFIRMED]: null,
+  };
+
   const createBottomCtaButton = (status: StateCode) => {
-    let bottomCtaButton = null;
+    const config = BOTTOM_CTA_CONFIG[status];
+    if (!config) return null;
 
-    switch (status) {
-      case STATE_CODES.PAYMENT_REQUESTED: {
-        bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
-            <BottomCTAButton.Single
-              size='large'
-              color='primary'
-              type='button'
-              onClick={handlePaymentConfirmClick}
-            >
-              결제하고 예약 확정받기
-            </BottomCTAButton.Single>
-          </BottomCTAButton>
-        );
-        break;
-      }
+    const { label, color, disabled, onClick } = config;
 
-      case STATE_CODES.PAYMENT_COMPLETED: {
-        bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
-            <BottomCTAButton.Single size='large' type='button' disabled={true}>
-              결제 확인중
-            </BottomCTAButton.Single>
-          </BottomCTAButton>
-        );
-        break;
-      }
-
-      case STATE_CODES.RESERVATION_CANCELED: {
-        bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
-            <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
-              예약 취소 완료
-            </BottomCTAButton.Single>
-          </BottomCTAButton>
-        );
-        break;
-      }
-
-      case STATE_CODES.RESERVATION_REFUSED: {
-        bottomCtaButton = (
-          <BottomCTAButton background='white' hasPadding={true} fixed={true}>
-            <BottomCTAButton.Single size='large' color='black' type='button' disabled={true}>
-              작가님의 예약 거절
-            </BottomCTAButton.Single>
-          </BottomCTAButton>
-        );
-        break;
-      }
-
-      case STATE_CODES.RESERVATION_CONFIRMED: {
-        bottomCtaButton = null;
-        break;
-      }
-
-      default: {
-        bottomCtaButton = null;
-        break;
-      }
-    }
-
-    return bottomCtaButton;
+    return (
+      <BottomCTAButton background='white' hasPadding fixed>
+        <BottomCTAButton.Single
+          size='large'
+          type='button'
+          color={color}
+          disabled={disabled}
+          onClick={onClick}
+        >
+          {label}
+        </BottomCTAButton.Single>
+      </BottomCTAButton>
+    );
   };
 
   const bottomCtaButton = createBottomCtaButton(reservationStatus);
@@ -122,7 +112,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   return (
-    <div className='bg-black-3 flex min-h-full flex-col'>
+    <div className='bg-black-1 flex flex-col'>
       <ClientNavigation title='예약 상세' />
       <ReservationRequested
         reservationId={reservationNumericId}
@@ -139,12 +129,12 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
         reservationStatus={reservationStatus}
         reservationInfo={data.reservationInfo}
       />
-      {hasPaymentDetailSection ? (
+      {hasPaymentDetailSection && (
         <>
           <Divider thickness='large' className='h-[0.6rem]' />
           <PaymentDetail paymentInfo={data.paymentInfo} />
         </>
-      ) : null}
+      )}
       {bottomCtaButton && <div className='mt-[5.5rem]'>{bottomCtaButton}</div>}
 
       <ConfirmModal

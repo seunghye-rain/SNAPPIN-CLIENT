@@ -6,6 +6,7 @@ import { EmptyView, ReservationCard } from '../components';
 import { RESERVATION_MOCK } from '../mock/reservationList.mock';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { StateCode } from '@/types/stateCode';
+import { formatCreatedAt } from '@/utils/formatNumberWithComma';
 
 export default function ReservationListSection() {
   const data = RESERVATION_MOCK.reservations;
@@ -13,7 +14,7 @@ export default function ReservationListSection() {
 
   const isReservationListEmpty = data.length === 0;
 
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   useEffect(() => {
     if (isLoggedIn) return;
@@ -42,8 +43,8 @@ export default function ReservationListSection() {
             price={reservation.product.price}
             moods={reservation.product.moods}
             status={reservation.status as StateCode}
-            date={reservation.createdAt}
-            href={`/reservation-detail/${reservation.reservationId}`}
+            date={formatCreatedAt(reservation.createdAt)}
+            reservationId={reservation.reservationId}
             isReviewed={reservation.product.isReviewed}
           />
           {reservationIndex !== data.length - 1 && (

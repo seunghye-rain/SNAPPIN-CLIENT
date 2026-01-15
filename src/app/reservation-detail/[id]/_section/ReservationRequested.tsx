@@ -52,7 +52,6 @@ export default function ReservationRequested({
             size='small'
             color='white'
             display='inline'
-            type='button'
             className='w-full'
             onClick={handleReservationCancelClick}
           >
@@ -64,7 +63,6 @@ export default function ReservationRequested({
           size='small'
           color='black'
           display='inline'
-          type='button'
           className='w-full'
           onClick={handleInquiryClick}
         >

@@ -20,10 +20,10 @@ export default function ShootCompletedListSection() {
     toast.login('예약 기능은 로그인 후에 사용할 수 있어요.', undefined, 'bottom-[8.6rem]');
   }, [isLoggedIn, toast]);
 
-  if (isShootCompletedListEmpty || isLoggedIn) {
+  if (isShootCompletedListEmpty || !isLoggedIn) {
     return (
       <EmptyView
-        title='예약 문의한 상품이 없어요'
+        title='촬영 완료된 상품이 없어요'
         description='&#39;탐색&#39;에서 다양한 상품을 확인해 보세요'
       />
     );
@@ -50,9 +50,8 @@ export default function ShootCompletedListSection() {
               moods={reservation.product.moods}
               status={reservation.status as StateCode}
               date={reservation.createdAt}
-              href={`/reservation-detail/${reservation.reservationId}`}
+              reservationId={reservation.reservationId}
               isReviewed={reservation.product.isReviewed}
-              reviewHref={reviewWriteHref}
             />
             {reservationIndex !== data.length - 1 && (
               <Divider thickness='large' color='bg-black-3' className='-mx-[2rem] mt-[1.2rem]' />

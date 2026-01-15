@@ -4,11 +4,11 @@ import { useRouter } from 'next/navigation';
 import { IconArrowBack, IconHome } from '@/assets';
 import { IconButton, Navigation } from '@/ui';
 
-type TitleProps = {
+type ClientNavigationProps = {
   title: string;
 };
 
-export default function ClientNavigation({ title }: TitleProps) {
+export default function ClientNavigation({ title }: ClientNavigationProps) {
   const router = useRouter();
 
   const handleHomeClick = () => {
