@@ -53,9 +53,8 @@ export const formatCreatedAt = (date: string) => {
 
   // Extract last 2 digits of year
   const yearShort = year.slice(-2);
-  const minuteStr = minute.padStart(2, '0');
 
-  return `${yearShort}년 ${Number(month)}월 ${Number(day)}일 ${Number(hour)}:${minuteStr}`;
+  return `${yearShort}년 ${month.padStart(2, '0')}월 ${day.padStart(2, '0')}일 ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
 };
 
 /**
