@@ -4,7 +4,7 @@ import { IconArrowForward } from '@/assets';
 import { ProfileCard } from '@/ui/photographer';
 import { useRouter } from 'next/navigation';
 
-type AuthorSectionProps = {
+type PhotographerSectionProps = {
   id: number;
   name: string;
   bio: string;
@@ -12,17 +12,17 @@ type AuthorSectionProps = {
   locations: string[];
 };
 
-export default function AuthorSection({
+export default function PhotographerSection({
   id,
   name,
   bio,
   specialties,
   locations,
-}: AuthorSectionProps) {
+}: PhotographerSectionProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/author-detail/${id}`);
+    router.push(`/photographer-detail/${id}`);
   };
 
   return (
