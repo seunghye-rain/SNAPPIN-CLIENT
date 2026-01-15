@@ -15,6 +15,6 @@ export default function PortfolioListSection({ portfolios }: PortfolioListSectio
           </div>
         : <PortfolioList portfolioList={portfolios} />
       }
-      </section>
+    </section>
   );
 }

@@ -4,7 +4,7 @@ import { IconArrowForward } from '@/assets';
 import { ProfileCard } from '@/ui/photographer';
 import { useRouter } from 'next/navigation';
 
-type PhtographerSectionProps = {
+type PhotographerSectionProps = {
   id: number;
   name: string;
   bio: string;
@@ -12,13 +12,13 @@ type PhtographerSectionProps = {
   locations: string[];
 };
 
-export default function PhtographerSection({
+export default function PhotographerSection({
   id,
   name,
   bio,
   specialties,
   locations,
-}: PhtographerSectionProps) {
+}: PhotographerSectionProps) {
   const router = useRouter();
 
   const handleClick = () => {
