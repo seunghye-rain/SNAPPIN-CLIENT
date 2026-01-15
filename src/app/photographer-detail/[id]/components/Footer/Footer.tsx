@@ -11,7 +11,11 @@ export default function Footer() {
   const handleContact = () => alert('메시지 기능은 준비 중이에요. 조금만 기다려주세요!', 3000, 'bottom-[8.4rem] w-full px-[2rem]');
 
   return (
-    <BottomCTAButton className='fixed bottom-0 w-full max-w-[45rem] px-[2rem] pt-[0.8rem] pb-[2.4rem] bg-black-1'>
+    <BottomCTAButton
+      className='bottom-0 w-full max-w-[45rem] px-[2rem] pt-[0.8rem] pb-[2.4rem] bg-black-1'
+      fixed={true}
+      hasPadding={true}
+    >
       <BottomCTAButton.Single
         color='black'
         onClick={handleContact}
