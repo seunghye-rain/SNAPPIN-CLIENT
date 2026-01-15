@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Divider } from '@/ui';
-import ReviewStar from '@/ui/review-star/ReviewStar';
+import { Divider, ReviewStar } from '@/ui';
 import { formatDate } from '@/utils/formatNumberWithComma';
 import { padNumber } from '@/utils/padNumber';
 import { REVIEW_LIST_MOCK } from '../mock';

@@ -1,5 +1,5 @@
 import { Header, ImageSlide } from './components/index';
-import ReviewStar from '@/ui/review-star/ReviewStar';
+import { ReviewStar } from '@/ui/index';
 import { formatShortDate } from '@/utils/formatNumberWithComma';
 import REVIEW from './mock/review.mock';
 
