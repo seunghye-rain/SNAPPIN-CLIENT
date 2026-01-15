@@ -1,15 +1,14 @@
 'use client';
 
-import { IconButton, Navigation, SectionTabs } from '@/ui';
-import { LIKE_TAB, LIKE_TAB_MAP } from '@/app/(with-layout)/like/constants/tab';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
-import { EXPLORE_TAB } from '@/app/(with-layout)/explore/constants/tab';
-import { IconSearch, Logo } from '@/assets';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { SectionTabs } from '@/ui';
+import { LIKE_TAB, LIKE_TAB_MAP } from '@/app/(with-layout)/like/constants/tab';
 import PortfolioListSection from '@/app/(with-layout)/like/_section/PortfolioListSection';
 import ProductListSection from '@/app/(with-layout)/like/_section/ProductListSection';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui/toast/hooks/useToast';
+import Header from '@/app/(with-layout)/like/component/Header';
 
 const isLikeTab = (value: string | null) => {
   return value === LIKE_TAB.PORTFOLIO || value === LIKE_TAB.PRODUCT;
@@ -23,7 +22,7 @@ export default function PageClient() {
 
   const currentTab = useMemo(() => {
     const raw = searchParams.get('tab');
-    return isLikeTab(raw) ? raw : EXPLORE_TAB.PORTFOLIO;
+    return isLikeTab(raw) ? raw : LIKE_TAB.PORTFOLIO;
   }, [searchParams]);
 
   const handleTabChange = (nextTab: string) => {
@@ -43,15 +42,7 @@ export default function PageClient() {
   return (
     <SectionTabs value={currentTab} handleValueChange={handleTabChange} className='h-full min-h-0'>
       <div className='bg-black-1 sticky top-0 z-10 shrink-0'>
-        <Navigation
-          className='items-center py-0'
-          left={<Logo width={82} className='cursor-pointer' />}
-          right={
-            <IconButton>
-              <IconSearch />
-            </IconButton>
-          }
-        />
+        <Header />
         <SectionTabs.List>
           <SectionTabs.Tab value={LIKE_TAB.PORTFOLIO}>
             {LIKE_TAB_MAP[LIKE_TAB.PORTFOLIO]}
