@@ -3,7 +3,8 @@ import { ReviewStar } from '@/ui/index';
 import { formatShortDate } from '@/utils/formatNumberWithComma';
 import REVIEW from './mock/review.mock';
 
-export default function Page() {
+export default function Page({ params }: { params: Promise<{ reviewId: string }> }) {
+  // TODO: 포토 리뷰 API 연동 (request에 reviewId 전달)
   const reviewMock = REVIEW;
   const reviewImages = reviewMock.images.map((image, idx) => ({ src: image, alt: `리뷰 이미지 ${idx}` }));
   const formattedDate = formatShortDate(reviewMock.createdAt);

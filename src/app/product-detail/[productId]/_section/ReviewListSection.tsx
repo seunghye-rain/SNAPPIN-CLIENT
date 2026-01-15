@@ -12,6 +12,7 @@ type ReviewListSectionProps = {
 }
 
 type ReviewProps = {
+  id: number;
   rate: number;
   createdAt: string;
   reviewer: string;
@@ -43,6 +44,7 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
             {reviewListMock.reviews.map((review, idx) => (
               <div key={review.id}>
                 <Review
+                  id={review.id}
                   rate={review.rating}
                   createdAt={review.createdAt}
                   reviewer={review.reviewer}
@@ -60,6 +62,7 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
 }
 
 function Review({
+  id,
   rate,
   createdAt,
   reviewer,
@@ -84,7 +87,7 @@ function Review({
       <div className='flex gap-[0.4rem] w-full overflow-x-auto'>
         {reviewImages.map((image, idx) => (
           <Link
-            href={`${pathname}/review/1`}
+            href={`${pathname}/review/${id}`}
             key={idx}
             className='relative w-[14rem] h-[14rem] shrink-0'
           >

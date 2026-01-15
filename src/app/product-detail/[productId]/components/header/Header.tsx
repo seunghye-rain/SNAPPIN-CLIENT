@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { Navigation, IconButton} from '@/ui';
 import { IconArrowBack, IconHome } from '@/assets';

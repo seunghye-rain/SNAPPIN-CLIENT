@@ -47,7 +47,7 @@ export default function ProductDetailSection({ productInfo }: ProductDetailSecti
           </div>
           <div className='flex gap-[1rem]'>
             <span className='caption-12-md text-black-7 w-[8rem]'>촬영 장소</span>
-            <span className='caption-12-md text-black-10'>{productInfo.regions.join(',')}</span>
+            <span className='caption-12-md text-black-10'>{productInfo.regions.join(', ')}</span>
           </div>
           <div className='flex items-center gap-[1rem]'>
             <span className='caption-12-md text-black-7 w-[8rem]'>스냅 무드</span>
@@ -63,7 +63,7 @@ export default function ProductDetailSection({ productInfo }: ProductDetailSecti
               detailList={[
                 { label: '최대 촬영 인원', content: `${productInfo.maxPeople}명` },
                 { label: '촬영 작가 인원', content: `${productInfo.photographerCount}명` },
-                { label: '촬영 시간', content: `${productInfo.durationTime}명` },
+                { label: '촬영 시간', content: `${productInfo.durationTime}시간` },
               ]}
             />
             <Divider thickness='small' color='bg-black-5' className='w-full' />

@@ -40,9 +40,7 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
               </div>
             </div>
             {/* 우측 버튼 */}
-            <IconButton className='w-[2.4rem] h-[2.4rem]'>
-              <IconArrowForward className='text-black-6' />
-            </IconButton>
+            <IconArrowForward className='text-black-6' />
           </div>
         </div>
       </Link>

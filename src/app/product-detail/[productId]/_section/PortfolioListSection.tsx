@@ -20,6 +20,6 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
           </div>
         : <PortfolioList portfolioList={portfolioListMock.portfolios} />
       }
-      </section>
+    </section>
   );
 }

@@ -48,7 +48,6 @@ export default function ProductCarousel({ images, className }: ProductCarouselPr
                   src={img.src}
                   alt={img.alt}
                   fill
-                  className='object-cover select-none'
                 />
               </div>
             </CarouselItem>
