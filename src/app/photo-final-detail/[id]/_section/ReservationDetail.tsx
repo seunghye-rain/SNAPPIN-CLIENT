@@ -23,6 +23,8 @@ export default function ReservationDetail({
   requestNote,
   createdAt,
 }: ReservationDetailProps) {
+  const requestNoteText = requestNote === null || requestNote.length === 0 ? '-' : requestNote;
+
   return (
     <DetailLayout title='예약 상세' subtitle={status}>
       <span className='caption-10-md text-black-7 mb-[0.4rem]'>{formatCreatedAt(createdAt)}</span>
@@ -30,7 +32,7 @@ export default function ReservationDetail({
       <DetailRow label='촬영 시간' value={`${durationTime}시간`} />
       <DetailRow label='촬영 장소' value={place} />
       <DetailRow label='촬영 인원' value={`${peopleCount}인`} />
-      <DetailRow label='기타 요청 사항' value={requestNote} />
+      <DetailRow label='기타 요청 사항' value={requestNoteText} />
     </DetailLayout>
   );
 }

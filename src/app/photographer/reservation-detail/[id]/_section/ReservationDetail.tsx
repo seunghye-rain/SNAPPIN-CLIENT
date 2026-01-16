@@ -27,6 +27,8 @@ export default function ReservationDetail({
   client,
   createdAt,
 }: ReservationDetailProps) {
+  const requestNoteText = requestNote === null || requestNote.length === 0 ? '-' : requestNote;
+
   return (
     <DetailLayout title='예약 상세' subtitle={status}>
       <div className='flex flex-col gap-[1.5rem]'>
@@ -47,7 +49,7 @@ export default function ReservationDetail({
       <DetailRow label='촬영 시간' value={formatReservationTime(durationTime)} />
       <DetailRow label='촬영 장소' value={place} />
       <DetailRow label='촬영 인원' value={`${peopleCount}인`} />
-      <DetailRow label='기타 요청 사항' value={requestNote} />
+      <DetailRow label='기타 요청 사항' value={requestNoteText} />
     </DetailLayout>
   );
 }
