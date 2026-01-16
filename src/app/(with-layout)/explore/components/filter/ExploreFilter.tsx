@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterChip, IconButton, Divider } from '@/ui';
+import { FilterChip, IconButton } from '@/ui';
 import { IconFilter, IconSettingsBackupRestore } from '@/assets';
 import { Mood } from '@/types/moodCode';
 import { useEffect, useMemo, useState } from 'react';
