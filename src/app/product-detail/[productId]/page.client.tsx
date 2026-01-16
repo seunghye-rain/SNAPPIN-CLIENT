@@ -47,7 +47,7 @@ export default function ClientPage({ productId }: { productId: string }) {
         value={selectedTab}
         handleValueChange={handleTabChange}
       >
-        <SectionTabs.List>
+        <SectionTabs.List className='px-[2rem]'>
           <SectionTabs.Tab value={PRODUCT_TAB.PRODUCT_DETAIL}>
             {PRODUCT_TAB_MAP[PRODUCT_TAB.PRODUCT_DETAIL]}
           </SectionTabs.Tab>

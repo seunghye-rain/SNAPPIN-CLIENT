@@ -42,7 +42,7 @@ export default function PageClient({ photographerId }: PageClientProps) {
         handleValueChange={handleTabChange}
       >
         {/* 탭 영역 */}
-        <SectionTabs.List className='sticky top-[17.8rem] z-10 bg-black-1'>
+        <SectionTabs.List className='sticky top-[17.8rem] z-10 px-[2rem] bg-black-1'>
           <SectionTabs.Tab value={PHOTOGRAPHER_TAB.PORTFOLIO}>
             {PHOTOGRAPHER_TAB_MAP[PHOTOGRAPHER_TAB.PORTFOLIO]}
           </SectionTabs.Tab>
