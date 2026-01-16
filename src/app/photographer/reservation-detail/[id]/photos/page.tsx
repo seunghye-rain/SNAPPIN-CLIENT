@@ -1,5 +1,5 @@
-import { formatDate } from '@/utils/formatNumberWithComma';
-import ReviewStar from '@/ui/review-star/ReviewStar';
+import { formatShortDate } from '@/utils/formatNumberWithComma';
+import { ReviewStar } from '@/ui';
 import { ImageSlide, NavigationClient } from './components';
 import { RESERVATION_DETAIL_MOCK } from '../mock/reservationDetail.mock';
 
@@ -20,7 +20,7 @@ export default function Page() {
               rating={data.reviewInfo.rating}
             />
             <span className='caption-12-md text-black-7'>
-              {formatDate(data.reviewInfo.createdAt)}
+              {formatShortDate(data.reviewInfo.createdAt)}
             </span>
           </div>
           <span className='caption-12-md text-black-7'>{data.reviewInfo.reviewer}</span>

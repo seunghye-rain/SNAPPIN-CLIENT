@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { formatDate } from '@/utils/formatNumberWithComma';
-import ReviewStar from '@/ui/review-star/ReviewStar';
+import { formatShortDate } from '@/utils/formatNumberWithComma';
+import { ReviewStar } from '@/ui/review-star';
 
 type ReviewDetailProps = {
   id: number;
@@ -27,7 +27,7 @@ export default function ReviewDetail({
         <div className='flex flex-col items-start gap-[0.6rem]'>
           <div className='flex w-full items-center justify-between'>
             <ReviewStar starSize='small' starFillColor='text-black-9' rating={rating} />
-            <span className='caption-12-md text-black-7'>{formatDate(createdAt)}</span>
+            <span className='caption-12-md text-black-7'>{formatShortDate(createdAt)}</span>
           </div>
           <span className='caption-12-md text-black-7'>{reviewer}</span>
         </div>
