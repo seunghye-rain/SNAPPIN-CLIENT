@@ -105,7 +105,7 @@ export default function Footer({ userRole }: FooterProps) {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <>
+    <div className='z-20'>
       <div className='bg-black-1 footer-height' />
       <footer className='border-black-6 footer-height fixed-center bg-black-1 bottom-0 flex justify-between border-t-[0.5px] p-[0.8rem_2rem_1.6rem_2rem]'>
         {userRole === USER_TYPE.CLIENT &&
@@ -140,6 +140,6 @@ export default function Footer({ userRole }: FooterProps) {
             </Link>
           ))}
       </footer>
-    </>
+    </div>
   );
 }
