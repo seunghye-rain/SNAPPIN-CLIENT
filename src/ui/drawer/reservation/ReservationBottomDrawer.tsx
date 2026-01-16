@@ -253,7 +253,10 @@ export default function ReservationBottomDrawer({
         <div className='flex flex-row'>
           <div className='text-black-10 flex flex-1 items-center gap-[0.4rem]'>
             <span className='font-12-md'>기본가</span>
-            <strong className='title-23-eb'>{`${formatNumberWithComma(amount)}원`}</strong>
+            <div className='flex items-center gap-[0.2rem]'>
+              <strong className='title-23-eb'>{formatNumberWithComma(amount)}</strong>
+              <strong className='caption-14-md pt-[0.3rem]'>원</strong>
+            </div>
           </div>
           <BottomCTAButton className='flex-1'>
             <BottomCTAButton.Single
