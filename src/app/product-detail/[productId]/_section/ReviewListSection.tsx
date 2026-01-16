@@ -74,9 +74,9 @@ function Review({
   const formattedDate = formatDate(createdAt).slice(2).split('.').map((number) => padNumber(Number(number))).join('.');
 
   return (
-    <div className='flex flex-col gap-[1.2rem] p-[2rem]'>
+    <div className='flex flex-col gap-[1.2rem] py-[2rem] overflow-hidden'>
       {/* 별점, 날짜, 아이디 */}
-      <div className='flex flex-col gap-[0.6rem]'>
+      <div className='flex flex-col gap-[0.6rem] px-[2rem]'>
         <div className='flex justify-between'>
           <ReviewStar rating={rate} starSize='small' />
           <span className='caption-12-md text-black-7'>{formattedDate}</span>
@@ -84,7 +84,7 @@ function Review({
         <span className='caption-12-md text-black-7'>{reviewer}</span>
       </div>
       {/* 이미지 캐러셀 */}
-      <div className='flex gap-[0.4rem] w-full overflow-x-auto'>
+      <div className='flex gap-[0.4rem] w-full ml-[2rem] overflow-x-auto scrollbar-hide'>
         {reviewImages.map((image, idx) => (
           <Link
             href={`${pathname}/review/${id}`}
@@ -100,7 +100,7 @@ function Review({
         ))}
       </div>
       {/* 리뷰 내용 */}
-      <span className='caption-14-md text-black-10'>{content}</span>
+      <span className='caption-14-md text-black-10 px-[2rem]'>{content}</span>
     </div>
   );
 }
