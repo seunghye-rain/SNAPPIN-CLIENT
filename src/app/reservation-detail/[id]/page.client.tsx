@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ClientNavigation } from './components';
+import { ClientNavigation, ClientFooter } from './components';
 import { PaymentDetail, ReservationDetail, ReservationRequested } from './_section';
-import { BottomCTAButton, Divider } from '@/ui';
+import { Divider } from '@/ui';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 import { RESERVATION_DETAIL_MOCK } from './mock/reservationDetail.mock';
 import CancelModal from './@modal/(.)cancel-modal/CancelModal';
@@ -24,10 +24,15 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
 
   const [reservationStatus, setReservationStatus] = useState<StateCode>(data.status as StateCode);
 
-  // 취소하기 및 문의하기 버튼 노출 조건
   const hasTopActionButtons =
     reservationStatus === STATE_CODES.RESERVATION_REQUESTED ||
     reservationStatus === STATE_CODES.PHOTOGRAPHER_CHECKING;
+
+  const hasBottomCta =
+    reservationStatus === STATE_CODES.PAYMENT_REQUESTED ||
+    reservationStatus === STATE_CODES.PAYMENT_COMPLETED ||
+    reservationStatus === STATE_CODES.RESERVATION_CANCELED ||
+    reservationStatus === STATE_CODES.RESERVATION_REFUSED;
 
   const hasPaymentDetailSection = !hasTopActionButtons;
 
@@ -44,71 +49,11 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     setReservationStatus(STATE_CODES.PAYMENT_COMPLETED);
   };
 
-  const BOTTOM_CTA_CONFIG: Partial<
-    Record<
-      StateCode,
-      {
-        label: string;
-        color?: 'primary' | 'black';
-        disabled?: boolean;
-        onClick?: () => void;
-      } | null
-    >
-  > = {
-    [STATE_CODES.PAYMENT_REQUESTED]: {
-      label: '결제하고 예약 확정받기',
-      color: 'primary',
-      onClick: handlePaymentConfirmClick,
-    },
-
-    [STATE_CODES.PAYMENT_COMPLETED]: {
-      label: '결제 확인중',
-      disabled: true,
-    },
-
-    [STATE_CODES.RESERVATION_CANCELED]: {
-      label: '예약 취소 완료',
-      color: 'black',
-      disabled: true,
-    },
-
-    [STATE_CODES.RESERVATION_REFUSED]: {
-      label: '작가님의 예약 거절',
-      color: 'black',
-      disabled: true,
-    },
-
-    [STATE_CODES.RESERVATION_CONFIRMED]: null,
-  };
-
-  const createBottomCtaButton = (status: StateCode) => {
-    const config = BOTTOM_CTA_CONFIG[status];
-    if (!config) return null;
-
-    const { label, color, disabled, onClick } = config;
-
-    return (
-      <BottomCTAButton background='white' hasPadding fixed>
-        <BottomCTAButton.Single
-          size='large'
-          type='button'
-          color={color}
-          disabled={disabled}
-          onClick={onClick}
-        >
-          {label}
-        </BottomCTAButton.Single>
-      </BottomCTAButton>
-    );
-  };
-
-  const bottomCtaButton = createBottomCtaButton(reservationStatus);
-
   const handleInquiryClick = () => {
     toast.alert(
       '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
       undefined,
-      bottomCtaButton ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
+      hasBottomCta ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
     );
   };
 
@@ -137,7 +82,15 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
             <PaymentDetail paymentInfo={data.paymentInfo} />
           </>
         )}
-        {bottomCtaButton && <div className='mt-[5.5rem]'>{bottomCtaButton}</div>}
+        {hasBottomCta && (
+          <>
+            <div className='h-[8.4rem]' />
+            <ClientFooter
+              status={reservationStatus}
+              handlePaymentConfirmClick={handlePaymentConfirmClick}
+            />
+          </>
+        )}
       </div>
       <CancelModal
         open={cancelOpen}
