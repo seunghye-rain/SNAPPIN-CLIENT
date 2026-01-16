@@ -1,5 +1,5 @@
 import { ProductCard } from '@/ui';
-import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { StateCode } from '@/types/stateCode';
 
 type ProductInfoProps = {
   id: number;
@@ -23,7 +23,7 @@ export default function ProductInfo({
   moods,
 }: ProductInfoProps) {
   return (
-    <div className='py-[1.6rem] pr-[4.2rem] pl-[2rem]'>
+    <div className='bg-black-1 py-[1.6rem] pr-[4.2rem] pl-[2rem]'>
       <ProductCard
         image={{ src: imageUrl, alt: title }}
         name={title}
