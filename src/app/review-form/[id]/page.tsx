@@ -1,7 +1,9 @@
 import { Divider, ProductCard } from '@/ui';
 import { ClientHeader } from './components';
 import { REVIEW_PRODUCT } from './mock/reviewProduct.mock';
-import { ReviewFormSection } from './_section';
+import { ReviewFormSection, ReviewStarSection } from './_section';
+import ClientFooter from './components/client-footer/ClientFooter';
+import ImageUploadSection from './_section/ImageUploadSection';
 
 export default function Page() {
   const data = REVIEW_PRODUCT.reservations.reservation;
@@ -21,7 +23,10 @@ export default function Page() {
         />
       </section>
       <Divider thickness='large' color='bg-black-3' />
-      <ReviewFormSection rating={data.product.rate} />
+      <ReviewStarSection />
+      <ReviewFormSection />
+      <ImageUploadSection />
+      <ClientFooter />
     </>
   );
 }
