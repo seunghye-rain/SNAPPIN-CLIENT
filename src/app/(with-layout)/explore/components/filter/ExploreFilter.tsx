@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterChip, IconButton } from '@/ui';
+import { FilterChip, IconButton, Divider } from '@/ui';
 import { IconFilter, IconSettingsBackupRestore } from '@/assets';
 import { Mood } from '@/types/moodCode';
 import { useEffect, useMemo, useState } from 'react';
@@ -119,9 +119,13 @@ export default function ExploreFilter({ moodList }: ExploreFilterProps) {
           )}
         </div>
 
-        {/* 필터 on 버튼 todo: 좌측 디바이더 고민 */}
         <IconButton
-          className='border-black-3 h-[4.4rem] w-[4.4rem] p-[1rem]'
+          className='relative border-black-3 h-[4.4rem] w-[4.4rem] p-[1rem]
+                    before:absolute before:left-[-0.05rem]
+                    before:top-1/2 before:-translate-y-1/2
+                    before:h-[3.1rem] before:w-[0.1rem]
+                    before:bg-black-4
+                    before:content-[""]'
           aria-expanded={open}
           aria-label='무드 필터 패널 열기'
           onClick={() => setOpen(!open)}
