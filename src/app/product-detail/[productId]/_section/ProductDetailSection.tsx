@@ -37,7 +37,7 @@ function removeEmptyDetail(items: Detail[]) {
 
 export default function ProductDetailSection({ productInfo }: ProductDetailSectionProps) {
   return (
-    <section className='flex flex-col gap-[3.2rem] p-[2rem] bg-black-1 mb-[8.4rem]'>
+    <section className='flex flex-col gap-[3.2rem] p-[2rem] bg-black-1 mb-[7.4rem]'>
       <div className='flex flex-col gap-[1.2rem]'>
         {/* 첫번째 박스 - 촬영 종류, 촬영 장소, 스냅 무드 */}
         <div className='flex flex-col gap-[1.2rem] p-[1.6rem] border-1 border-black-4 rounded-[0.6rem]'>

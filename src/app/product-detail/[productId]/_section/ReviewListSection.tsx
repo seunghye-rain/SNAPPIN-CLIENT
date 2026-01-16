@@ -26,7 +26,7 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
   const isReviewEmpty = reviewListMock.reviews.length === 0;
 
   return (
-    <section className='mb-[8.4rem]'>
+    <section className='mb-[7.4rem]'>
       {reviewListMock.reviews.length === 0
         ?
           <div className='flex justify-center items-center py-[8rem]'>
