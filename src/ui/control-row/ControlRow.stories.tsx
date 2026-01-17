@@ -1,3 +1,4 @@
+import { USER_TYPE, UserType } from '@/auth/constant/userType';
 import { Stepper, UserTypeToggle } from '@/ui';
 import ControlRow from '@/ui/control-row/ControlRow';
 import { useState } from 'react';
