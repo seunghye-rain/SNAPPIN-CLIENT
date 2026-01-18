@@ -56,6 +56,17 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     updateRating(Math.max(0, Math.min(MAX_RATING, next)));
   };
 
+  const scrollImagesToEnd = () => {
+    const el = document.getElementById('review-image-list');
+    if (!el) return;
+
+    el.scrollTo({ left: el.scrollWidth, behavior: 'smooth' });
+
+    const rect = el.getBoundingClientRect();
+    const y = rect.top + window.scrollY - 50; // 헤더 높이만큼 보정
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  };
+
   const handleUploadClick = (selected: FileList) => {
     const validation = validateFiles(selected, compatibleFormData.imageUrls.length);
     if (!validation.ok) return;
@@ -71,6 +82,8 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
 
     setPreviews(mergedPreviews);
     updateImageUrls(mergedUrls);
+
+    requestAnimationFrame(scrollImagesToEnd);
   };
 
   const handleImageRemove = (targetUrl: string) => {
@@ -130,7 +143,9 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
           <TextareaField
             id='review-form'
             label='자세한 스냅 촬영 리뷰를 작성해주세요'
-            placeholder='스냅 촬영의 분위기와 결과물을 자세히 작성해 주시면 유용한 리뷰가 돼요'
+            placeholder={
+              '스냅 촬영의 분위기와 결과물에 대해\n자세히 작성해 주시면 유용한 리뷰가 돼요'
+            }
             value={compatibleFormData.content}
             hasError={hasContentError}
             className='min-h-[11rem]'
@@ -152,9 +167,12 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
           />
         </section>
 
-        <section className='flex flex-col gap-[1.2rem] px-[2rem]'>
+        <section className='mt-[1.2rem] flex flex-col gap-[1.2rem] px-[2rem]'>
           {previews.length > 0 && (
-            <div className='scrollbar-hide mt-[1.2rem] -mr-[2rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'>
+            <div
+              id='review-image-list'
+              className='scrollbar-hide -mr-[2rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'
+            >
               {previews.map(({ url }) => (
                 <ImagePreview
                   key={url}
