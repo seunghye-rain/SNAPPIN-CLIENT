@@ -1,12 +1,35 @@
+'use client';
+
 import { Divider, ProductCard } from '@/ui';
 import { ClientHeader } from './components';
 import { REVIEW_PRODUCT } from './mock/reviewProduct.mock';
-import { ReviewFormSection, ReviewStarSection } from './_section';
+import { ReviewFormSection, ReviewStarSection, ImageUploadSection } from './_section';
 import ClientFooter from './components/client-footer/ClientFooter';
-import ImageUploadSection from './_section/ImageUploadSection';
+import { useReviewWrite } from './hooks/useReviewWrite';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+  const {
+    formData,
+    isValid,
+    updateRating,
+    updateContent,
+    updateImageUrls,
+    handleSubmitForm,
+    validateFiles,
+  } = useReviewWrite();
+
   const data = REVIEW_PRODUCT.reservations.reservation;
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    handleSubmitForm((review) => {
+      // TODO: API 호출
+      router.push(`/photo-final-detail/${data.reservationId}`);
+      console.log(review);
+    });
+  };
 
   return (
     <>
@@ -23,10 +46,14 @@ export default function Page() {
         />
       </section>
       <Divider thickness='large' color='bg-black-3' />
-      <ReviewStarSection />
-      <ReviewFormSection />
-      <ImageUploadSection />
-      <ClientFooter />
+      <ReviewStarSection rating={formData.rating} handleChangeRating={updateRating} />
+      <ReviewFormSection content={formData.content} handleChangeContent={updateContent} />
+      <ImageUploadSection
+        imageUrls={formData.imageUrls}
+        handleChangeImageUrls={updateImageUrls}
+        validateFiles={validateFiles}
+      />
+      <ClientFooter disabled={!isValid} handleClick={handleSubmit} />
     </>
   );
 }
