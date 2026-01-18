@@ -20,9 +20,9 @@ export default function Header() {
         </IconButton>
       }
       center={
-        <h1 className='caption-14-bd text-black-1 text-center flex-1'>포토 리뷰</h1>
+        <h1 className='font-16-bd text-black-1 text-center flex-1'>포토 리뷰</h1>
       }
-      className='px-[2rem] py-[0.3rem] border-b-1 border-b-black-8 bg-black-10'
+      className='px-[3rem] py-[0.1rem] border-b-1 border-b-black-8 bg-black-10'
       isFixed={true}
     />
   );
