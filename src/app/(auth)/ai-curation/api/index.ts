@@ -16,9 +16,6 @@ export const useGetAiCuration = (step: number) => {
       if (!res.data) throw new Error('No data from /api/v1/curation');
       return res.data; 
     },
-    staleTime: 0,
-    gcTime: 0,
-    refetchOnMount: 'always',
   });
 };
 

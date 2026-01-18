@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { useAiCuration } from '../../../hooks/useAiCuration';
 import type { GetPhotoResponse } from '@/swagger-api/data-contracts';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ImageAnimationProps = {
   images: GetPhotoResponse[];
@@ -44,6 +45,7 @@ const POSES_ANIMATION: Record<PoseKeys, PoseSet> = {
 };
 
 export default function ImageAnimation({ images }: ImageAnimationProps) {
+  const { error } = useToast();
   const sorted = useMemo(() => images.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)), [images]);
 
   const [isAnimating, setIsAnimating] = useState(false);
@@ -56,7 +58,11 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
     setLoadingImages(new Set(imageIds));
   }, [sorted]);
 
-  const handleSelect = (id: number) => {
+  const handleSelect = (id: number,isLoading: boolean) => {
+    if (isLoading) {
+      error('이미지 로딩 중입니다. 잠시 후 다시 시도해주세요.', undefined, 'top-[2rem]');
+      return;
+    }
     toggleImageId(id);
     setIsAnimating((prev) => !prev);
   };
@@ -89,7 +95,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
                   selectedByStep[currentStep] !== img.id &&
                   'opacity-80 brightness-[0.6]',
               )}
-              onClick={() => handleSelect(img.id ?? 0)}
+              onClick={ () => handleSelect(img.id ?? 0, isLoading)}
               initial={false}
               animate={isAnimating ? pose.animation : pose.default}
             >
@@ -97,6 +103,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
                 <div className='absolute inset-0 bg-black-8 animate-pulse' />
               )}
               <Image
+                unoptimized
                 src={img.imageUrl ?? ''}
                 alt='큐레이션 선택 이미지'
                 fill

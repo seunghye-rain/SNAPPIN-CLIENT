@@ -22,7 +22,6 @@ type MoodAnimationResultProps = { data: CreateMoodCurationResponse };
 
 export default function MoodAnimationResult({ data }: MoodAnimationResultProps) {
   const router = useRouter();
-  console.log(data);
 
   const [phase, setPhase] = useState<Phase>('intro');
 
