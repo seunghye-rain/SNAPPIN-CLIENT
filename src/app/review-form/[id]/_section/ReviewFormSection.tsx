@@ -5,7 +5,7 @@ import { TextareaField, FieldMessage } from '@/ui';
 
 type ReviewFormSectionProps = {
   content: string;
-  handleChangeContent: (value: string) => { ok: boolean; reason?: 'min' | 'max' };
+  handleChangeContent: (value: string) => { ok: boolean; reason: 'max' };
 };
 
 const REVIEW_CONTENT_MAX_LENGTH = 500;
@@ -26,7 +26,6 @@ export default function ReviewFormSection({
       }
       return;
     }
-
     setErrorMessage(' ');
   };
 
