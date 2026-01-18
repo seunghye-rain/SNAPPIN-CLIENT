@@ -17,7 +17,7 @@ export default function ClientHeader() {
 
   return (
     <Navigation
-      left={<Logo width={72} onClick={handleClickLogo} />}
+      left={<Logo width={82} onClick={handleClickLogo} />}
       right={
         <IconButton onClick={handleSearchClick}>
           <IconSearch className='h-[2.4rem] w-[2.4rem]' />
