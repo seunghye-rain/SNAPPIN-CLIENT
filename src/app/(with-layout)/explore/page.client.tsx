@@ -5,36 +5,65 @@ import { useMemo } from 'react';
 import PortfolioListSection from '@/app/(with-layout)/explore/_section/PortfolioListSection';
 import ProductListSection from '@/app/(with-layout)/explore/_section/ProductListSection';
 import ExploreFilter from '@/app/(with-layout)/explore/components/filter/ExploreFilter';
-import ExploreSearchDrawer from '@/app/(with-layout)/explore/components/search-drawer/ExploreSearchDrawer';
 import { MOOD_LIST } from '@/app/(with-layout)/explore/mocks/filter';
 import { overlay } from 'overlay-kit';
 import { EXPLORE_TAB, EXPLORE_TAB_MAP } from '@/app/(with-layout)/explore/constants/tab';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import SearchSheet from '@/app/(with-layout)/explore/components/search-sheet/SearchSheet';
+import { parseInitialDraft, pickAllowedParams } from '@/app/(with-layout)/explore/utils/query';
+import { SNAP_CATEGORY } from '@/app/(with-layout)/explore/constants/snap-category';
 
-const isExploreTab = (value: string | null) => {
+const isExploreTab = (value: string | null | undefined) => {
   return value === EXPLORE_TAB.PORTFOLIO || value === EXPLORE_TAB.PRODUCT;
+};
+
+const joinOrFallback = (items: Array<string | null | undefined>, fallback: string) => {
+  const filtered = items.map((v) => v?.trim()).filter(Boolean) as string[];
+  return filtered.length > 0 ? filtered.join(', ') : fallback;
+};
+
+const formatDateDot = (raw: string | null | undefined) => {
+  if (!raw) return null;
+  return raw.replaceAll('-', '/');
+};
+
+const formatPeople = (count: number | null | undefined) => {
+  if (!count || count <= 0) return null;
+  return `${count}인`;
 };
 
 export default function PageClient() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const sp = useSearchParams();
+
+  const { snapCategory, placeId, date, peopleCount } = parseInitialDraft(sp);
+  const snapCategoryLabel = SNAP_CATEGORY[snapCategory as keyof typeof SNAP_CATEGORY] ?? null;
+  const placeLabel = placeId ?? null;
+
+  const headline = joinOrFallback([snapCategoryLabel, placeLabel], '어떤 스냅 작가를 찾고 있나요?');
+
+  const supportingText = joinOrFallback(
+    [formatDateDot(date), formatPeople(peopleCount)],
+    '날짜, 스냅 종류, 지역 기반으로 정교한 검색',
+  );
 
   const currentTab = useMemo(() => {
-    const raw = searchParams.get('tab');
+    const raw = sp.get('tab'); // string | null
     return isExploreTab(raw) ? raw : EXPLORE_TAB.PORTFOLIO;
-  }, [searchParams]);
+  }, [sp]);
 
   const handleTabChange = (nextTab: string) => {
     if (!isExploreTab(nextTab)) return;
 
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('tab', nextTab);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    const base = pickAllowedParams(new URLSearchParams(sp.toString()));
+    base.set('tab', nextTab);
+
+    router.push(`${pathname}?${base.toString()}`, { scroll: false });
   };
 
   const handleDrawerOpen = () => {
-    overlay.open(({ isOpen, close }) => <ExploreSearchDrawer isOpen={isOpen} onClose={close} />);
+    overlay.open(({ isOpen, close }) => <SearchSheet open={isOpen} onOpenChange={close} />);
   };
 
   return (
@@ -48,8 +77,9 @@ export default function PageClient() {
         {/* 검색 버튼 */}
         <div className='px-[2rem] py-[1.6rem]'>
           <ButtonSearchBar
-            headline='어떤 스냅 작가를 찾고 있나요?'
-            supportingText='날짜, 스냅 종류, 지역 기반으로 정교한 검색'
+            headline={headline}
+            supportingText={supportingText}
+            supportingTextClassName='text-black-7'
             onClick={handleDrawerOpen}
           />
         </div>
