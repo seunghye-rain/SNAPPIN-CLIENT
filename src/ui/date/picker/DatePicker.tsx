@@ -81,8 +81,24 @@ export default function DatePicker({
     handleMonthChangeAction?.(next);
   };
 
-  const handlePrevMonth = () => setMonth(addMonths(viewMonth, -1));
-  const handleNextMonth = () => setMonth(addMonths(viewMonth, 1));
+  const handlePrevMonth = () => {
+    if (
+      viewMonth.getMonth() === (today ?? new Date()).getMonth() &&
+      viewMonth.getFullYear() === (today ?? new Date()).getFullYear()
+    ) {
+      return;
+    }
+    setMonth(addMonths(viewMonth, -1));
+  };
+  const handleNextMonth = () => {
+    if (
+      viewMonth.getFullYear() === (today ?? new Date()).getFullYear() &&
+      viewMonth.getMonth() === (today ?? new Date()).getMonth() + MAX_RESERVATION_MONTHS - 1
+    ) {
+      return;
+    }
+    setMonth(addMonths(viewMonth, 1));
+  };
 
   const availabilityMap = useMemo(() => {
     if (!monthAvailability) return undefined;
@@ -144,7 +160,7 @@ export default function DatePicker({
   const monthNum = viewMonth.getMonth() + 1;
 
   return (
-    <div className='flex flex-col px-[2rem]'>
+    <div className='flex flex-col'>
       {/* 이전, 다음 월 이동 */}
       <header className='flex flex-row items-center justify-between px-[1.6rem] py-[1.4rem]'>
         <IconButton className='text-black-7' onClick={handlePrevMonth} aria-label='이전 달'>
@@ -161,7 +177,7 @@ export default function DatePicker({
       {/* 그리드 달력*/}
       <div role='grid' aria-label={`${year}년 ${monthNum}월 달력`} className='flex flex-col'>
         {/* 달력 헤더 (요일) */}
-        <div role='row' className='grid grid-cols-7 px-[1.6rem] py-[1.2rem]'>
+        <div role='row' className='grid grid-cols-7 px-[1.6rem] py-[1rem]'>
           {WEEKDAY_LABELS.map((label) => (
             <span
               key={label}
@@ -173,7 +189,7 @@ export default function DatePicker({
           ))}
         </div>
         {/* 달력 각 셀 */}
-        <div className='flex flex-col gap-y-[0.8rem] p-[1.6rem]'>
+        <div className='flex flex-col gap-y-[0.8rem] px-[1.6rem]'>
           {cellRows.map((row, rowIndex) => (
             <div key={rowIndex} role='row' className='grid grid-cols-7 place-items-center'>
               {row.map((cell) =>
