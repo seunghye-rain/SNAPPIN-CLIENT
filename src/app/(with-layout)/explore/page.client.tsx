@@ -62,7 +62,7 @@ export default function PageClient() {
     router.push(`${pathname}?${base.toString()}`, { scroll: false });
   };
 
-  const handleDrawerOpen = () => {
+  const handleSheetOpen = () => {
     overlay.open(({ isOpen, close }) => <SearchSheet open={isOpen} onOpenChange={close} />);
   };
 
@@ -80,7 +80,7 @@ export default function PageClient() {
             headline={headline}
             supportingText={supportingText}
             supportingTextClassName='text-black-7'
-            onClick={handleDrawerOpen}
+            onClick={handleSheetOpen}
           />
         </div>
 
