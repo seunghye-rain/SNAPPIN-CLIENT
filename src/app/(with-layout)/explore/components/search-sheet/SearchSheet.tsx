@@ -50,10 +50,11 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const formattedCount = `${peopleCount ?? 0}명`;
 
   const handleFieldClick = (category: SearchField) => {
-    if (category === currentField) {
+    // 기획 합의 후 제거
+    /*if (category === currentField) {
       setCurrentField(undefined); // 필드 닫기
       return;
-    }
+    }*/
 
     setCurrentField(category);
   };
