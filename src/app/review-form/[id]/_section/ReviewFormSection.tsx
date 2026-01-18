@@ -14,7 +14,7 @@ export default function ReviewFormSection({
   content,
   handleChangeContent,
 }: ReviewFormSectionProps) {
-  const [errorMessage, setErrorMessage] = useState<string>(' ');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const next = event.target.value;
@@ -25,10 +25,10 @@ export default function ReviewFormSection({
       return;
     }
 
-    setErrorMessage(' ');
+    setErrorMessage('');
   };
 
-  const hasError = Boolean(errorMessage);
+  const hasError = errorMessage !== '';
 
   return (
     <section className='bg-black-1 flex flex-col px-[2rem]'>
