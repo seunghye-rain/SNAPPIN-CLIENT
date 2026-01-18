@@ -7,7 +7,7 @@ import { IMAGE_ACCEPT, MAX_IMAGE_SIZE } from '@/constants/image-type/imageAccept
 
 export const REVIEW_CONTENT_MAX_LENGTH = 500;
 export const MAX_RATING = 5;
-const MAX_IMAGE_COUNT = 5;
+export const MAX_IMAGE_COUNT = 5;
 const ALLOWED_TYPES = new Set(IMAGE_ACCEPT.WITH_HEIC.split(','));
 
 type ContentValidationResult = {
@@ -82,12 +82,13 @@ export const useReviewWrite = () => {
     handleSubmit((data) => onValid(data))();
   };
 
-  const validateFiles = (files: FileList) => {
+  const validateFiles = (files: FileList, currentCount = 0) => {
     const selected = Array.from(files);
+    const totalCount = currentCount + selected.length;
 
     const hasInvalidType = selected.some((file) => !ALLOWED_TYPES.has(file.type));
     const exceedsSize = selected.some((file) => file.size > MAX_IMAGE_SIZE);
-    const exceedsCount = selected.length > MAX_IMAGE_COUNT;
+    const exceedsCount = totalCount > MAX_IMAGE_COUNT;
 
     if (hasInvalidType) {
       setError('imageUrls', { message: 'JPG/PNG/WEBP/HEIC만 업로드 가능해요.' });

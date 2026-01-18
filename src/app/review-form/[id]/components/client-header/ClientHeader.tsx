@@ -42,6 +42,7 @@ export default function ClientHeader() {
           </IconButton>
         }
         className='border-black-5 items-center border-b'
+        isFixed
       />
       <CancelModal open={open} handleOpenChange={setOpen} handleClickConfirm={handleConfirm} />
     </>
