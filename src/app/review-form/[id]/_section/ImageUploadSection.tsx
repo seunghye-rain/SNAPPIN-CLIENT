@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { ImageUploadButton, ImagePreview, Carousel, CarouselContent, CarouselItem } from '@/ui';
+import { ImageUploadButton, ImagePreview } from '@/ui';
 import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
 import { cn } from '@/utils/cn';
 
@@ -51,37 +53,20 @@ export default function ImageUploadSection({
 
   return (
     <section className='flex flex-col gap-[1.2rem] px-[2rem] pt-[1rem]'>
-      {previews.length > 0 &&
-        (previews.length >= 3 ? (
-          <div className='mt-[1.2rem] -mr-[2.4rem]'>
-            <Carousel opts={{ align: 'start', dragFree: true, containScroll: 'trimSnaps' }}>
-              <CarouselContent className='ml-0 gap-[0.4rem]'>
-                {previews.map(({ url }) => (
-                  <CarouselItem key={url} className='basis-[14rem] pl-0'>
-                    <ImagePreview
-                      imageSrc={url}
-                      imageAlt='업로드한 리뷰 이미지'
-                      showRemoveButton
-                      handleRemove={() => handleImageRemove(url)}
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
-        ) : (
-          <div className='mt-[1.2rem] flex gap-[0.8rem]'>
-            {previews.map(({ url }) => (
-              <ImagePreview
-                key={url}
-                imageSrc={url}
-                imageAlt='업로드한 리뷰 이미지'
-                showRemoveButton
-                handleRemove={() => handleImageRemove(url)}
-              />
-            ))}
-          </div>
-        ))}
+      {previews.length > 0 && (
+        <div className='scrollbar-hide mt-[1.2rem] -mr-[2rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'>
+          {previews.map(({ url }) => (
+            <ImagePreview
+              key={url}
+              imageSrc={url}
+              imageAlt='업로드한 리뷰 이미지'
+              showRemoveButton
+              handleRemove={() => handleImageRemove(url)}
+              className='shrink-0'
+            />
+          ))}
+        </div>
+      )}
 
       <ImageUploadButton handleUploadAction={handleUploadClick} accept={IMAGE_ACCEPT.WITH_HEIC} />
 
