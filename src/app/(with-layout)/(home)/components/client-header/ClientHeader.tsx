@@ -4,6 +4,7 @@ import { Navigation, Button, IconButton } from '@/ui';
 import { IconSearch, Logo } from '@/assets';
 import { cn } from '@/utils/cn';
 import { useAuth } from '@/auth/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 interface ClientHeaderProps {
   isVisible: boolean;
@@ -11,13 +12,13 @@ interface ClientHeaderProps {
 
 export default function ClientHeader({ isVisible }: ClientHeaderProps) {
   const { isLogIn } = useAuth();
-
+  const router = useRouter();
   const handleSearchClick = () => {
     //TODO: 검색 페이지로 이동
   };
 
   const handleClickLogin = () => {
-    //TODO: 로그인 페이지로 이동
+    router.push('/login');
   };
 
   const handleClickLogo = () => {
