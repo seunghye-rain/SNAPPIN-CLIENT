@@ -182,7 +182,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
       <SearchFooter
         handleLeftClick={resetSearchDraft}
         handleRightClick={handleSearch}
-        rightDisabled={!isButtonActive}
+        rightDisabled={!isButtonActive} // 기획 요구사항 수정 얘기하기
       />
     </ControlSheet>
   );
