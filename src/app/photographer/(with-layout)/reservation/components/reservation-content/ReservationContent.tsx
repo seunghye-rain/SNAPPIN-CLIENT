@@ -1,39 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { StateCode } from '@/types/stateCode';
 import { Divider, SectionTabs } from '@/ui';
-import { RESERVATION_TABS, ReservationTabValue } from '../../constants/tabs';
+import { RESERVATION_TAB, RESERVATION_TAB_MAP, ReservationTab } from '../../constants/tabs';
 import ReservationCard from '../reservation-card/ReservationCard';
-import { RESERVATION_MOCK } from '../../mock/reservation.mock';
 import EmtpyView from '../emtpy-view/EmtpyView';
+import { RESERVATION_MOCK } from '../../mock/reservation.mock';
+
+
+const isReservationTab = (value: string | null) => {
+  return value === RESERVATION_TAB.PHOTOGRAPHER_REQUESTED || value === RESERVATION_TAB.PHOTOGRAPHER_ADJUSTING || value === RESERVATION_TAB.PHOTOGRAPHER_CONFIRMED || value === RESERVATION_TAB.PHOTOGRAPHER_DONE;
+};
 
 export default function ReservationContent() {
-  const [selectedTabValue, setSelectedTabValue] =
-    useState<ReservationTabValue>('PHOTOGRAPHER_REQUESTED');
-
-  const handleTabChange = (value: string) => {
-    setSelectedTabValue(value as ReservationTabValue);
-  };
-
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const selectedTab = isReservationTab(searchParams.get('tab')) ? searchParams.get('tab') as ReservationTab : RESERVATION_TAB.PHOTOGRAPHER_REQUESTED;
+  
   //TODO: 서버 데이터 연동, 파라미터에 selectedTabValue 추가
   const data = RESERVATION_MOCK;
 
+  const handleTabChange = (value: string) => {
+    const updatedSearchParams = new URLSearchParams(searchParams.toString());
+    updatedSearchParams.set('tab', value);
+    router.push(`${pathname}?${updatedSearchParams.toString()}`);
+  };
+
   return (
     <div className='flex flex-col'>
-      <SectionTabs
-        value={selectedTabValue}
+      <SectionTabs  
+        value={selectedTab}
         handleValueChange={handleTabChange}
       >
         <SectionTabs.List>
-          {RESERVATION_TABS.map((tab) => (
-            <SectionTabs.Tab key={tab.value} value={tab.value}>
-              {tab.label}
-            </SectionTabs.Tab>
-          ))}
+          <SectionTabs.Tab value={RESERVATION_TAB.PHOTOGRAPHER_REQUESTED}>
+            {RESERVATION_TAB_MAP.PHOTOGRAPHER_REQUESTED}
+          </SectionTabs.Tab>
+          <SectionTabs.Tab value={RESERVATION_TAB.PHOTOGRAPHER_ADJUSTING}>
+            {RESERVATION_TAB_MAP.PHOTOGRAPHER_ADJUSTING}
+          </SectionTabs.Tab>
+          <SectionTabs.Tab value={RESERVATION_TAB.PHOTOGRAPHER_CONFIRMED}>
+            {RESERVATION_TAB_MAP.PHOTOGRAPHER_CONFIRMED}
+          </SectionTabs.Tab>
+          <SectionTabs.Tab value={RESERVATION_TAB.PHOTOGRAPHER_DONE}>
+            {RESERVATION_TAB_MAP.PHOTOGRAPHER_DONE}
+          </SectionTabs.Tab>
         </SectionTabs.List>
 
-        <SectionTabs.Contents value={selectedTabValue}>
+        <SectionTabs.Contents value={selectedTab}>
           {data.reservations.length === 0 ? (
             <EmtpyView
               title='상품이 없어요'
