@@ -6,7 +6,6 @@ import { Divider, SectionTabs } from '@/ui';
 import { RESERVATION_TAB, RESERVATION_TAB_MAP, ReservationTab } from '../../constants/tabs';
 import ReservationCard from '../reservation-card/ReservationCard';
 import EmtpyView from '../emtpy-view/EmtpyView';
-import { RESERVATION_MOCK } from '../../mock/reservation.mock';
 import { useGetReservationList } from '../../api';
 
 
@@ -70,8 +69,9 @@ export default function ReservationContent() {
                       name={product?.title ?? ''}
                       rate={product?.rate ?? 0}
                       reviewCount={product?.reviewCount ?? 0}
-                      photographer={item.client ?? ''}
+                      client={item.client ?? ''}
                       price={product?.price ?? 0}
+                      photographer={product?.photographer ?? ''}
                       moods={product?.moods ?? []}
                       date={item.createdAt ?? ''}
                     />
