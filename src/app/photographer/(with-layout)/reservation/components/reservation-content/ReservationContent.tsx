@@ -7,6 +7,7 @@ import { RESERVATION_TAB, RESERVATION_TAB_MAP, ReservationTab } from '../../cons
 import ReservationCard from '../reservation-card/ReservationCard';
 import EmtpyView from '../emtpy-view/EmtpyView';
 import { RESERVATION_MOCK } from '../../mock/reservation.mock';
+import { useGetReservationList } from '../../api';
 
 
 const isReservationTab = (value: string | null) => {
@@ -20,8 +21,9 @@ export default function ReservationContent() {
   const selectedTab = isReservationTab(searchParams.get('tab')) ? searchParams.get('tab') as ReservationTab : RESERVATION_TAB.PHOTOGRAPHER_REQUESTED;
   
   //TODO: 서버 데이터 연동, 파라미터에 selectedTabValue 추가
-  const data = RESERVATION_MOCK;
 
+  const { data } = useGetReservationList(selectedTab);
+  
   const handleTabChange = (value: string) => {
     const updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set('tab', value);
@@ -50,31 +52,30 @@ export default function ReservationContent() {
         </SectionTabs.List>
 
         <SectionTabs.Contents value={selectedTab}>
-          {data.reservations.length === 0 ? (
+          {data?.reservations?.length === 0 ? (
             <EmtpyView
               title='상품이 없어요'
-              description='‘탐색’에서 다양한 포트폴리오를 확인해보세요'
+              description='‘예약’에서 다양한 예약을 확인해보세요'
             />
           ) : (
             <div className='flex flex-col'>
-              {data.reservations.map((item, index) => {
-                const { reservation } = item;
-                const { product } = reservation;
+              {data?.reservations?.map((item, index) => {
+                const { product } = item;
                 return (
-                  <div key={reservation.reservationId}>
+                  <div key={index}>
                     <ReservationCard
-                      reservationId={reservation.reservationId}
-                      status={reservation.status as StateCode}
-                      image={{ src: product.imageUrl, alt: product.title }}
-                      name={product.title}
-                      rate={product.rate}
-                      reviewCount={product.reviewCount}
-                      photographer={product.photographer}
-                      price={product.price}
-                      moods={product.moods}
-                      date={reservation.createdAt}
+                      reservationId={product?.id ?? 0}
+                      status={item.status as StateCode ?? ''}
+                      image={{ src:  '', alt: product?.title ?? '' }}
+                      name={product?.title ?? ''}
+                      rate={product?.rate ?? 0}
+                      reviewCount={product?.reviewCount ?? 0}
+                      photographer={item.client ?? ''}
+                      price={product?.price ?? 0}
+                      moods={product?.moods ?? []}
+                      date={item.createdAt ?? ''}
                     />
-                    {index !== data.reservations.length - 1 && (
+                    {index !== (data?.reservations?.length ?? 0) - 1 && (
                       <Divider thickness='large' color='bg-black-3' />
                     )}
                   </div>
