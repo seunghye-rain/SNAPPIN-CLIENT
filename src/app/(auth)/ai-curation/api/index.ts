@@ -1,0 +1,23 @@
+import { useQuery } from '@tanstack/react-query';
+import { apiRequest } from '@/api/apiRequest';
+import type { GetCurationQuestionData, GetCurationQuestionPhotosResponse } from '@/swagger-api/data-contracts';
+import { USER_QUERY_KEY } from '@/query-key/user';
+
+export const useGetAiCuration = (step: number) => {
+  return useQuery<GetCurationQuestionPhotosResponse>({
+    queryKey: USER_QUERY_KEY.AI_CURATION_QUESTION_STEP(step),
+    queryFn: async () => {
+      const res = await apiRequest<GetCurationQuestionData>({
+        endPoint: '/api/v1/curation',
+        method: 'GET',
+        params: { step: String(step) },
+      });
+
+      if (!res.data) throw new Error('No data from /api/v1/curation');
+      return res.data; 
+    },
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
+  });
+};
