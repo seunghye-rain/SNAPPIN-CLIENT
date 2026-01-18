@@ -1,12 +1,12 @@
 'use client';
 
 import { Divider, ProductCard } from '@/ui';
+import { useRouter } from 'next/navigation';
 import { ClientHeader } from './components';
-import { REVIEW_PRODUCT } from './mock/reviewProduct.mock';
 import { ReviewFormSection, ReviewStarSection, ImageUploadSection } from './_section';
 import ClientFooter from './components/client-footer/ClientFooter';
 import { useReviewWrite } from './hooks/useReviewWrite';
-import { useRouter } from 'next/navigation';
+import { REVIEW_PRODUCT } from './mock/reviewProduct.mock';
 
 export default function Page() {
   const {

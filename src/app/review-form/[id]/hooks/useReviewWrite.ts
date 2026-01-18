@@ -3,12 +3,11 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IMAGE_ACCEPT } from '@/utils/imageAccept';
+import { IMAGE_ACCEPT, MAX_IMAGE_SIZE } from '@/constants/image-type/imageAccept';
 
 const REVIEW_CONTENT_MAX_LENGTH = 500;
 const MAX_RATING = 5;
 const MAX_IMAGE_COUNT = 5;
-const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(IMAGE_ACCEPT.WITH_HEIC.split(','));
 
 type ContentValidationResult = {

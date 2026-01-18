@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ImageUploadButton, ImagePreview, Carousel, CarouselContent, CarouselItem } from '@/ui';
-import { IMAGE_ACCEPT } from '@/utils/imageAccept';
+import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
+import { cn } from '@/utils/cn';
 
 type ImageUploadSectionProps = {
   imageUrls: string[];
@@ -84,7 +85,7 @@ export default function ImageUploadSection({
 
       <ImageUploadButton handleUploadAction={handleUploadClick} accept={IMAGE_ACCEPT.WITH_HEIC} />
 
-      <p className={`caption-12-md ${isError ? 'text-red-error' : 'text-black-6'}`}>
+      <p className={cn('caption-12-md', isError ? 'text-red-error' : 'text-black-6')}>
         20MB 이하의 JPG, PNG, HEIC, WEBP 이미지로 최대 5장까지 업로드가 가능합니다.
       </p>
       {previews.length > 0 && <div className='h-[8.4rem]' />}

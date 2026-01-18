@@ -1,1 +1,1 @@
-export { IMAGE_ACCEPT } from '@/utils/imageAccept';
+export { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
