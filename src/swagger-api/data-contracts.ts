@@ -953,7 +953,7 @@ export interface ReservationListItemResponse {
   client?: string;
   /**
    * 예약 생성 일시
-   * @example "2026-01-12 15:00"
+   * @example "2026-01-12 15:00:02"
    */
   createdAt?: string;
   /** 예약 목록 상품 응답 DTO */
@@ -1047,7 +1047,7 @@ export interface ReservationDetailInfoResponse {
   client?: string;
   /**
    * 예약 생성 일시
-   * @example "2026-02-18 10:05"
+   * @example "2026-02-18 10:05:44"
    */
   createdAt?: string;
   /**
@@ -2047,8 +2047,6 @@ export interface GetRecommendationPhotographerInfoResponse {
   profileImageUrl?: string;
   /** 신규 작가 여부 */
   isNew?: boolean;
-  /** 작가 한 줄 소개 */
-  bio?: string;
   /** 작가 촬영 상품 목록 */
   specialties?: string[];
 }
