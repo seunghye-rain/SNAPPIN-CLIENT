@@ -17,15 +17,8 @@ export const USER_QUERY_KEY = {
   // 포트폴리오
   PORTFOLIO: ['portfolio'],
   PORTFOLIO_DETAIL: (id: number, isLogIn: boolean) => [...USER_QUERY_KEY.PORTFOLIO, id, isLogIn ? 'login' : 'not-login'],
-  
-  // TODO: 네이밍
-  PRODUCT: ['product'],
-  PRODUCT_DETAIL: (id: number) => [...USER_QUERY_KEY.PRODUCT, id],
-  PRODUCT_PORTFOLIO_LIST: (id: number) => [...USER_QUERY_KEY.PRODUCT, id, 'portfolios'],
-  PRODUCT_REVIEW_LIST: (id: number) => [...USER_QUERY_KEY.PRODUCT, id, 'reviews'],
 
-  PHOTOGRAPHER: ['photographer'],
-  PHOTOGRAPHER_DETAIL: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id],
-  PHOTOGRAPHER_PORTFOLIO_LIST: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id, 'portfolios'],
-  PHOTOGRAPHER_PRODUCT_LIST: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id, 'products'],
+  WISH: ['wish'],
+  WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],
+  WISHED_PRODUCTS: () => [...USER_QUERY_KEY.WISH, 'products'],
 } as const;
