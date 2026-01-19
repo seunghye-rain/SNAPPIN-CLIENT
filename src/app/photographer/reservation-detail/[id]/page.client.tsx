@@ -5,13 +5,18 @@ import { StateCode } from '@/types/stateCode';
 import { Divider } from '@/ui';
 import { useGetReservationDetail } from './api';
 import ProducctImage from "@/../public/product.png";
+import SectionSkeleton from './_section/SectionSkeleton';
 
 type PageClientProps = {
   id: string;
 };
-export default function PageClient({ id }: PageClientProps) {
 
-    const { data } = useGetReservationDetail(Number(id));
+export default function PageClient({ id }: PageClientProps) {
+  const { data , isPending} = useGetReservationDetail(Number(id));
+
+  if (isPending) {
+    return <SectionSkeleton />;
+  }
   return (
     <div className='flex flex-col'>
     <ProductStatus
