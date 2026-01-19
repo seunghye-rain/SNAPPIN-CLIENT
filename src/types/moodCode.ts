@@ -42,6 +42,6 @@ export type MoodCategoryLabel = (typeof MOOD_CATEGORY_MAP)[MoodCategory];
 export type Mood = {
   id: number;
   name: string;
-  category: MoodCategory;
+  category: MoodCategoryLabel;
   isCurated: boolean;
 };
