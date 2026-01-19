@@ -50,3 +50,30 @@ export const useGetPortfolioList = (id: number) => {
     enabled: !Number.isNaN(id),
   });
 }
+
+// 상품 목록 조회 API
+export const useGetProductList = (id: number) => {
+  return useInfiniteQuery<GetProductListData>({
+    queryKey: USER_QUERY_KEY.PHOTOGRAPHER_PRODUCTS(id),
+    initialPageParam: undefined,
+    queryFn: async ({ pageParam }) => {
+      const url = new URL(`${SERVER_API_BASE_URL}/api/v1/products`);
+      url.searchParams.append('productId', String(id));
+      if (pageParam) {
+        url.searchParams.append('cursor', String(pageParam));
+      }
+
+      const res = await fetch(url.toString(), { method: 'GET' });
+
+      if (!res.ok) {
+        throw new Error('/api/v1/products 응답에 데이터가 존재하지 않습니다.')
+      }
+      const data = await res.json();
+      return data;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
+    },
+    enabled: !Number.isNaN(id),
+  });
+}
