@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useExtraPrices } from './useExtraPrices';
 import { useRouter } from 'next/navigation';
+import { useRequestPayment } from '../api';
 
 // 결제 요약 관리
 export const usePaymentSummary = (id: number, basePrice: number) => {
@@ -13,7 +14,7 @@ export const usePaymentSummary = (id: number, basePrice: number) => {
     () => extraPrices.reduce((acc, cur) => acc + cur.amount, basePrice),
     [extraPrices, basePrice],
   );
-
+  const requestPaymentMutation = useRequestPayment(id);
   const submitPayment = () => {
     console.info('id', id);
     console.info('basePrice', basePrice);
@@ -21,6 +22,7 @@ export const usePaymentSummary = (id: number, basePrice: number) => {
     console.info('totalAmount', totalAmount);
     // TODO: API
     //쿼리키 무효화
+    
 
     router.push(`/photographer/reservation-detail/${id}`);
   };

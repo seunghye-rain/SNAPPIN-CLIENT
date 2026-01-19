@@ -69,7 +69,7 @@ export default function PageClient({ id }: PageClientProps) {
     ) : (
       <>
         <DetailPageFooter
-          id={data?.productInfo?.id ?? -1}
+          id={Number(id)}
           date={data?.reservationInfo?.date ?? ''}
           startTime={data?.reservationInfo?.startTime ?? ''}
           status={data?.status as StateCode ?? ''}
