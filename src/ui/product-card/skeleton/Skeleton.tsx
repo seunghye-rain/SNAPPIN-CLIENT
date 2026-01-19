@@ -1,6 +1,7 @@
+import { Divider } from '@/ui';
 import { cn } from '@/utils/cn';
 
-type PortfolioListSkeletonProps = {
+type ProductListSkeletonProps = {
   length?: number;
 };
 
@@ -10,7 +11,7 @@ type ProductCardSkeletonProps = {
 
 export function ProductCardSkeleton({ className }: ProductCardSkeletonProps) {
   return (
-    <div className={cn('flex w-full gap-[1.2rem]', className)}>
+    <div className={cn('bg-black-1 flex w-full gap-[1.2rem] px-[2rem] py-[1.6rem]', className)}>
       <div className='bg-black-3 relative h-[10.2rem] w-[10.2rem] shrink-0' />
       <div className='flex flex-col justify-between'>
         <div className='flex w-full flex-col gap-[0.4rem]'>
@@ -24,11 +25,14 @@ export function ProductCardSkeleton({ className }: ProductCardSkeletonProps) {
   );
 }
 
-export function PortfolioListSkeleton({ length = 15 }: PortfolioListSkeletonProps) {
+export function ProductListSkeleton({ length = 15 }: ProductListSkeletonProps) {
   return (
-    <div className='grid grid-cols-3 gap-[0.2rem]'>
+    <div className='flex flex-col'>
       {Array.from({ length: length }).map((_, i) => (
-        <ProductCardSkeleton key={i} />
+        <div key={i} className='flex flex-col'>
+          <ProductCardSkeleton />
+          {i < length - 1 && <Divider thickness='large' color='bg-black-3' className='w-full' />}
+        </div>
       ))}
     </div>
   );
