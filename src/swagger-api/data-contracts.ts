@@ -1148,12 +1148,8 @@ export interface ReservationDetailPaymentResponse {
    * @example 80000
    */
   basePrice?: number;
-  /**
-   * 추가 비용
-   * @format int32
-   * @example 10000
-   */
-  extraPrice?: number;
+  /** 추가 비용 */
+  extraPrices?: ExtraPriceResponse[];
   /**
    * 최종 결제 금액
    * @format int32
@@ -1808,10 +1804,59 @@ export interface GetPortfolioDetailResponse {
   startsAt?: string;
   /** 스냅 무드 */
   moods?: string[];
-  /** 작가 정보 응답 DTO */
-  photographerInfo?: GetPhotographerInfoResponse;
-  /** 상품 안내 정보 응답 DTO */
-  productInfo?: GetProductInfoResponse;
+  /** 포트폴리오 작가 응답 DTO */
+  photographerInfo?: GetPortfolioPhotographerInfoResponse;
+  /** 상품 응답 DTO */
+  productInfo?: GetPortfolioProductInfoResponse;
+}
+
+/** 포트폴리오 작가 응답 DTO */
+export interface GetPortfolioPhotographerInfoResponse {
+  /**
+   * 작가 ID
+   * @format int64
+   */
+  id?: number;
+  /** 작가명 */
+  name?: string;
+  /** 작가 한줄 소개 */
+  bio?: string;
+  /** 작가 촬영 상품 종류 */
+  specialties?: string[];
+  /** 작가 활동 지역 */
+  locations?: string[];
+}
+
+/** 상품 응답 DTO */
+export interface GetPortfolioProductInfoResponse {
+  /**
+   * 상품 ID
+   * @format int64
+   */
+  id?: number;
+  /** 상품 썸네일 */
+  imageUrl?: string;
+  /** 상품명 */
+  title?: string;
+  /**
+   * 리뷰 별점 평균
+   * @format double
+   */
+  rate?: number;
+  /**
+   * 리뷰 수
+   * @format int64
+   */
+  reviewCount?: number;
+  /** 작가명 */
+  photographer?: string;
+  /**
+   * 상품 기본 가격
+   * @format int32
+   */
+  price?: number;
+  /** 관련 상품 무드 */
+  moods?: string[];
 }
 
 /** 공통 응답 DTO */

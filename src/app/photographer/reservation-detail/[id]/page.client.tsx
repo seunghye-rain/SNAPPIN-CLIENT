@@ -50,7 +50,7 @@ export default function PageClient({ id }: PageClientProps) {
         <Divider thickness='large' color='bg-black-3' />
         <Receipt
           basePrice={data?.paymentInfo?.basePrice ?? 0}
-          extraPrice={data?.paymentInfo?.extraPrice ?? 0}
+          extraPrice={data?.paymentInfo?.extraPrices ?? []}
           totalPrice={data?.paymentInfo?.totalPrice ?? 0}
         />
       </>
