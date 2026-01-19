@@ -60,7 +60,7 @@ export default function PageClient() {
           {!isLogIn ? (
             <LikeEmpty tab={currentTab} />
           ) : (
-            <Suspense fallback={<PortfolioListSkeleton />}>
+            <Suspense fallback={<PortfolioListSkeleton className='p-[1rem]' />}>
               <PortfolioListSection />
             </Suspense>
           )}
