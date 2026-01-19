@@ -5,7 +5,6 @@ import { ImageCarousel } from '@/ui';
 import imageEmpty from '@/../public/imgs/image-empty.png';
 import { GetPlaceInfoResponse } from '@/swagger-api/data-contracts';
 
-
 type InfiniteBannerProps = {
   items:  GetPlaceInfoResponse[];
   durationSec?: number;

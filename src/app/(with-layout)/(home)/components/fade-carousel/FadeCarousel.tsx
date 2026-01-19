@@ -63,7 +63,7 @@ export default function FadeCarousel({ images }: FadeCarouselProps) {
           <div className='flex flex-col items-center gap-[0.4rem]'>
             <h1 className='title-20-bd text-black-1'>나만의 무드에서 시작되는 스냅</h1>
             <p className='caption-14-rg text-black-1 text-center'>
-              나만의 무드 태그로 내 취향에 딱 맞는 스냅 촬영을 예약해보세요
+              나만의 무드 태그로 내 취향에 딱 맞는
               <br />
               스냅 촬영을 예약해보세요
             </p>

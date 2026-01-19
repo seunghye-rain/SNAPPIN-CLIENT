@@ -11,7 +11,6 @@ export const useGetRecommendation = () => {
     queryFn: () => fetch(`${SERVER_API_BASE_URL}/api/v1/home/recommendation`, {
       method: 'GET',
     }).then((res) => res.json()).then((data) => {
- 
       return data.data;
     }), 
 
@@ -21,7 +20,7 @@ export const useGetRecommendation = () => {
 //비로그인 시 인기 무드 기반 포폴 추천
 export const useGetPopularPortfoliosRecommendation = (enabled?: boolean) => {
   return useQuery<GetPopularPortfolioListResponse>({
-    queryKey: USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS(),
+    queryKey: USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS_LOGIN(false),
     enabled: enabled ?? true,
     queryFn: () => fetch(`${SERVER_API_BASE_URL}/api/v1/portfolios/popular`, {
       method: 'GET',
@@ -34,7 +33,7 @@ export const useGetPopularPortfoliosRecommendation = (enabled?: boolean) => {
 //로그인 시 큐레이션 기반 포폴 추천
 export const useGetPortfoliosRecommendation = (enabled?: boolean) => {
   return useQuery<GetCurationResponse>({
-    queryKey: USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS(),
+    queryKey: USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS_LOGIN(true),
     enabled: enabled ?? true,
     queryFn: () => apiRequest<ApiResponseBodyGetCurationResponseVoid>({
       endPoint: '/api/v1/portfolios/recommendation',

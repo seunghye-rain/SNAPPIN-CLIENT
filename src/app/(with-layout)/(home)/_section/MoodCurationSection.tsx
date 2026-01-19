@@ -17,7 +17,6 @@ export default function MoodCurationSection() {
   const portfolios = isLogIn ? data?.portfolios ?? [] : popularPortfolios?.portfolios ?? [];
   const moods = isLogIn ? data?.curatedMoods ?? [] : popularPortfolios?.popularMoods ?? [];
 
-
   const sectionHeaderTitle = isLogIn ? `${userName}님을 위한 큐레이션`:"요즘 많이 찾는 무드 큐레이션" ;
   return (
     <section className='scrollbar-hide flex flex-col gap-[1.6rem]'>

@@ -12,4 +12,5 @@ export const USER_QUERY_KEY = {
     // 추천 포트폴리오
     RECOMMENDATION_PORTFOLIOS: ['recommendation-portfolios'],
     RECOMMENDATION_PORTFOLIOS_PORTFOLIOS: () => [...USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS, 'portfolios'],
+    RECOMMENDATION_PORTFOLIOS_PORTFOLIOS_LOGIN: (isLogin?: boolean) => [...USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS(), isLogin ? 'login' : 'not-login'],
   } as const;
