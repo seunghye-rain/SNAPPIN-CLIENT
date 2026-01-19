@@ -22,7 +22,7 @@ export default function PageClient({ id }: PageClientProps) {
   return (
     <div className='flex flex-col'>
     <ProductStatus
-    reservationId={reservationId}
+      reservationId={reservationId}
       id={data?.productInfo?.id ?? -1}
       status={data?.status as StateCode ?? ''}
       imageUrl={data?.productInfo?.imageUrl ?? ProducctImage.src}
@@ -71,7 +71,8 @@ export default function PageClient({ id }: PageClientProps) {
     ) : (
       <>
         <DetailPageFooter
-          id={Number(id)}
+          reservationId={reservationId}
+          productId={data?.productInfo?.id ?? -1}
           date={data?.reservationInfo?.date ?? ''}
           startTime={data?.reservationInfo?.startTime ?? ''}
           status={data?.status as StateCode ?? ''}

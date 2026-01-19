@@ -2,7 +2,9 @@ import { PHOTOGRAPHER_QUERY_KEY } from "@/query-key/photographer";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/api/apiRequest";
 import {
+  ApiResponseBodyCompleteReservationResponseVoid,
   ApiResponseBodyRefuseReservationResponseVoid,
+  CompleteReservationResponse,
   GetReservationDetailData,
   RefuseReservationResponse,
   ReservationDetailResponse,
@@ -45,6 +47,31 @@ export const useRefuseReservation = (reservationId: number) => {
       }
 
         return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+    },
+  });
+};
+
+
+export const useCompleteReservation = (reservationId: number) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation<CompleteReservationResponse, Error, number>({
+    mutationFn: async (reservationId: number) => {
+      const res = await apiRequest<ApiResponseBodyCompleteReservationResponseVoid>({
+        endPoint: `/api/v1/reservations/${reservationId}/complete`,
+        method: "PATCH",
+      });
+
+      if (!res.data) {
+        throw new Error(
+          `Failed to fetch /api/v1/reservations/${reservationId}/complete`
+        );
+      }
+
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });

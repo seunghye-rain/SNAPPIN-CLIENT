@@ -3,9 +3,11 @@
 import { STATE_CODES, StateCode } from '@/types/stateCode';
 import { BottomCTAButton } from '@/ui';
 import { useRouter } from 'next/navigation';
+import { useCompleteReservation } from '../api';
 
 type DetailPageFooterProps = {
-  id: number;
+  reservationId: number;
+  productId: number;
   date: string; // 예약 날짜 (YYYY-MM-DD)
   startTime: string; // 10:00
   status: StateCode;
@@ -17,11 +19,11 @@ type ButtonConfig = {
   onClick?: () => void;
 };
 
-export default function DetailPageFooter({ id, date, startTime, status }: DetailPageFooterProps) {
+export default function DetailPageFooter({ reservationId, productId, date, startTime, status }: DetailPageFooterProps) {
   const router = useRouter();
   const now = new Date();
   const start = new Date(`${date}T${startTime}:00`);
-
+  const { mutate: completeReservation } = useCompleteReservation(reservationId);
   const isAfterStart = now >= start;
 
   const getButtonConfig = (): ButtonConfig => {
@@ -31,7 +33,7 @@ export default function DetailPageFooter({ id, date, startTime, status }: Detail
           label: '결제 요청하기',
           disabled: false,
           onClick: () => {
-            router.push(`/photographer/payment/${id}`);
+            router.push(`/photographer/payment/${productId}`);
           },
         };
       case STATE_CODES.PAYMENT_REQUESTED:
@@ -56,6 +58,7 @@ export default function DetailPageFooter({ id, date, startTime, status }: Detail
             disabled: false,
             onClick: () => {
               // TODO:  API 호출 후 성공 시 쿼리키 무효화
+              completeReservation(reservationId);
             },
           };
         }
