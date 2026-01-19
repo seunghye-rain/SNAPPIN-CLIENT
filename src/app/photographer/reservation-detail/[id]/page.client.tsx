@@ -12,7 +12,8 @@ type PageClientProps = {
 };
 
 export default function PageClient({ id }: PageClientProps) {
-  const { data , isPending} = useGetReservationDetail(Number(id));
+  const reservationId = Number(id);
+  const { data , isPending} = useGetReservationDetail(reservationId);
 
   if (isPending) {
     return <SectionSkeleton />;
@@ -21,6 +22,7 @@ export default function PageClient({ id }: PageClientProps) {
   return (
     <div className='flex flex-col'>
     <ProductStatus
+    reservationId={reservationId}
       id={data?.productInfo?.id ?? -1}
       status={data?.status as StateCode ?? ''}
       imageUrl={data?.productInfo?.imageUrl ?? ProducctImage.src}

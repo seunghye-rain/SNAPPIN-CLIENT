@@ -1,8 +1,10 @@
 import { PHOTOGRAPHER_QUERY_KEY } from "@/query-key/photographer";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/api/apiRequest";
 import {
+  ApiResponseBodyRefuseReservationResponseVoid,
   GetReservationDetailData,
+  RefuseReservationResponse,
   ReservationDetailResponse,
 } from "@/swagger-api/data-contracts";
 
@@ -23,6 +25,29 @@ export const useGetReservationDetail = (reservationId: number) => {
       }
 
       return res.data!;
+    },
+  });
+};
+
+export const useRefuseReservation = (reservationId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation<RefuseReservationResponse, Error, number>({
+    mutationFn: async (reservationId: number) => {
+      const res = await apiRequest<ApiResponseBodyRefuseReservationResponseVoid>({
+        endPoint: `/api/v1/reservations/${reservationId}/refuse`,
+        method: "PATCH",
+      });
+
+      if (!res.data) {
+        throw new Error(
+          `Failed to fetch /api/v1/reservations/${reservationId}/refuse`
+        );
+      }
+
+        return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
     },
   });
 };
