@@ -4,13 +4,18 @@ import { ImageSlide } from './components';
 import { ReviewStar } from '@/ui';
 import { formatShortDate } from '@/utils/formatNumberWithComma';
 import { useGetReviewDetail } from './api';
+import Skeleton from './components/skeleton/Skeleton';
 
 type PageClientProps = {
   reviewId: number;
 };
 
 export default function PageClient({ reviewId }: PageClientProps) {
-  const { data } = useGetReviewDetail(reviewId);
+  const { data ,isPending} = useGetReviewDetail(reviewId);
+
+  if (isPending) {
+    return <Skeleton />;
+  }
 
   return (
     <>
