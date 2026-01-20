@@ -42,13 +42,16 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     handleSubmitForm,
   } = useReviewWrite();
 
+  // 여기서 필요 없을 듯
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
   const router = useRouter();
 
+  // 여기서 필요 없을 듯
   const [issuedImages, setIssuedImages] = useState<IssuedImage[]>([]);
   const uploadImageMutation = useImageUpload();
   const { mutate: submitReviewMutation } = useSubmitReview();
 
+  // useReviewWrite에서 handleSubmit 처리 가능하게끔? 여기서 필요 없을 듯
   const handleSubmit = () => {
     handleSubmitForm((review) => {
       submitReviewMutation({
@@ -62,6 +65,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     });
   };
 
+  // 이건 여기 두기
   const scrollImagesToEnd = () => {
     const el = document.getElementById('review-image-list');
     if (!el) return;
@@ -73,6 +77,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
+  // 여기서 필요 없을 듯
   const handleUploadClick = async (selected: FileList) => {
     const validation = validateFiles(selected, compatibleFormData.imageUrls.length);
     if (!validation.ok) return;
@@ -121,6 +126,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     }
   };
 
+  // 여기서 필요 없을 듯
   const handleImageRemove = (targetUrl: string) => {
     setPreviews((prev) => {
       const removed = prev.find(({ url }) => url === targetUrl);
@@ -139,6 +145,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     updateImageUrls(compatibleFormData.imageUrls.filter((url) => url !== removeKey));
   };
 
+  // 그럼 이거 오류도 여기서 필요 없을 듯
   const hasContentError = Boolean(compatibleErrors.content);
   const hasImageError = Boolean(compatibleErrors.imageUrls);
   const isContentEmpty = compatibleFormData.content.trim().length < 1;
@@ -216,8 +223,6 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
             20MB 이하의 JPG, PNG, HEIC, WEBP 이미지로 최대 5장까지 업로드가 가능합니다.
           </p>
         </section>
-
-        <div className='pb-[10rem]' />
       </form>
 
       <ClientFooter disabled={!isValid || isContentEmpty} handleClick={handleSubmit} />

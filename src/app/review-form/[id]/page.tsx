@@ -1,4 +1,4 @@
-import { ProductInfoSection, ReviewFormSection } from './_section';
+import { ProductInfoSection, ReviewFormSection } from './_form';
 import { ClientHeader } from './components';
 import { Divider } from '@/ui';
 
