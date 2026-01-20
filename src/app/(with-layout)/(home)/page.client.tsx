@@ -48,8 +48,7 @@ export default function PageClient() {
         {/*  작가 추천 영역 */}
         <RecommendationAuthor />
         {/*  베너 영역 */}
-        {/* TODO: 베너 클릭 시 노션 페이지 연결 */}
-        <Link href='/'>
+        <Link href='https://pretty-shake-931.notion.site/Snappin-2eea9c9b4473802d9d2ddcb2a202bc18'>
           <Image src={banner} alt='banner' />
         </Link>
         {/*  요즘 많이 찾는 무드 큐레이션  영역 */}
