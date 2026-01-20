@@ -1,13 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { USER_QUERY_KEY } from '@/query-key/user';
 import {
-  type ReservationDetailResponse,
-  type GetReservationDetailData,
+  ReservationDetailResponse,
+  GetReservationDetailData,
+  CancelReservationResponse,
+  UpdateReservationCancelData,
 } from '@/swagger-api/data-contracts';
 
 export const useGetReservationDetail = (reservationId: number, isEnabled = true) => {
-  // reservationId가 null일 때 쿼리가 실행되지 않도록 하기 위함
   const enabled = isEnabled && reservationId != null;
 
   return useQuery<ReservationDetailResponse>({
@@ -20,6 +21,29 @@ export const useGetReservationDetail = (reservationId: number, isEnabled = true)
       });
       if (!response.data) throw new Error(`No data from /api/v1/reservations/${reservationId}`);
       return response.data;
+    },
+  });
+};
+
+export const useCancelReservation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<CancelReservationResponse, Error, number>({
+    mutationFn: async (reservationId) => {
+      const response = await apiRequest<UpdateReservationCancelData>({
+        endPoint: `/api/v1/reservations/${reservationId}/cancel`,
+        method: 'PATCH',
+      });
+
+      if (!response.data) {
+        throw new Error(`No data from /api/v1/reservations/${reservationId}/cancel`);
+      }
+
+      return response.data;
+    },
+    onSuccess: (_, reservationId) => {
+      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_LISTS() });
     },
   });
 };

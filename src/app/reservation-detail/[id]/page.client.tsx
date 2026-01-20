@@ -11,7 +11,7 @@ import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { ACCESS_TOKEN_COOKIE_NAME } from '@/auth/constant/cookie';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { useGetReservationDetail } from './api';
+import { useGetReservationDetail, useCancelReservation } from './api';
 
 type ReservationDetailPageClientProps = {
   reservationId: string;
@@ -26,6 +26,8 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     Number(reservationId),
     hasAccessToken && isLogIn === true,
   );
+
+  const { mutate: cancelReservation } = useCancelReservation();
 
   const [cancelOpen, setCancelOpen] = useState(false);
 
@@ -61,9 +63,15 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   const handleReservationCancel = () => {
-    setReservationStatus(STATE_CODES.RESERVATION_CANCELED);
-    setCancelOpen(false);
-    // TODO: API 호출 로직 추가
+    cancelReservation(Number(reservationId), {
+      onSuccess: (cancelResponse) => {
+        setReservationStatus(cancelResponse.status as StateCode);
+        setCancelOpen(false);
+      },
+      onError: () => {
+        toast.error('취소 중 오류가 발생했습니다. 다시 시도해주세요.');
+      },
+    });
   };
 
   const handlePaymentConfirmClick = () => {
