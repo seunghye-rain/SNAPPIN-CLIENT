@@ -57,6 +57,7 @@ export default function PageClient({ id }: PageClientProps) {
       <>
         <Divider thickness='large' color='bg-black-3' />
         <ReviewDetail
+          reservationId={reservationId}
           id={data?.reviewInfo?.id ?? -1}
           reviewer={data?.reviewInfo?.reviewer ?? ''}
           rating={data?.reviewInfo?.rating ?? 0}
