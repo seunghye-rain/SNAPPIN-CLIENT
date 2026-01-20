@@ -24,6 +24,6 @@ export const USER_QUERY_KEY = {
   WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],
   WISHED_PRODUCTS: () => [...USER_QUERY_KEY.WISH, 'products'],
 
-  CATEGORIES: ['categories'],
-  CATEGORIES_MOOD_FILTER: (scope: 'guest' | 'user') => [...USER_QUERY_KEY.CATEGORIES, 'mood-filters', scope],
+  MOODS: ['moods'],
+  MOODS_FILTER: (scope: 'guest' | 'user') => [...USER_QUERY_KEY.MOODS, 'filter', scope],
 } as const;
