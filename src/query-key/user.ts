@@ -1,9 +1,8 @@
 export const USER_QUERY_KEY = {
-  // AI 큐레이션
-  AI_CURATION: ['ai-curation'],
-  AI_CURATION_QUESTIONS: () => [...USER_QUERY_KEY.AI_CURATION, 'questions'],
-  AI_CURATION_QUESTION_STEP: (step: number) => [...USER_QUERY_KEY.AI_CURATION_QUESTIONS(), step],
-  AI_CURATION_RESULT: () => [...USER_QUERY_KEY.AI_CURATION, 'result'],
+    // AI 큐레이션
+    AI_CURATION: ['ai-curation'],
+    AI_CURATION_ALL: () => [...USER_QUERY_KEY.AI_CURATION, 'all'],
+    AI_CURATION_RESULT: () => [...USER_QUERY_KEY.AI_CURATION, 'result'],
 
   // 추천 스냅 명소
   RECOMMENDATION: ['recommendation'],
@@ -20,10 +19,22 @@ export const USER_QUERY_KEY = {
     isLogin ? 'login' : 'not-login',
   ],
 
+  // 포트폴리오
+  PORTFOLIO: ['portfolio'],
+  PORTFOLIO_DETAIL: (id: number, isLogIn: boolean) => [...USER_QUERY_KEY.PORTFOLIO, id, isLogIn ? 'login' : 'not-login'],
+
   WISH: ['wish'],
   WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],
   WISHED_PRODUCTS: () => [...USER_QUERY_KEY.WISH, 'products'],
 
+  // 작가
+  PHOTOGRAPHER: ['photographer'],
+  PHOTOGRAPHER_DETAIL: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id],
+  PHOTOGRAPHER_PRODUCTS: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id, 'products'],
+  PHOTOGRAPHER_PORTFOLIOS: (id: number) => [...USER_QUERY_KEY.PHOTOGRAPHER, id, 'portfolios'],
+
+  CATEGORIES: ['categories'],
+    
   MOODS: ['moods'],
   MOODS_FILTER: (scope: 'guest' | 'user') => [...USER_QUERY_KEY.MOODS, 'filter', scope],
 
