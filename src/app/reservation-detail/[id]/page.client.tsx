@@ -9,22 +9,20 @@ import { STATE_LABEL } from '@/ui/chip/state-chip/constants/stateLabel';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import { useToast } from '@/ui/toast/hooks/useToast';
-import { ACCESS_TOKEN_COOKIE_NAME } from '@/auth/constant/cookie';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useGetReservationDetail, useCancelReservation, useRequestPayment } from './api';
+import SectionSkeleton from './_section/SectionSkeleton';
 
 type ReservationDetailPageClientProps = {
   reservationId: string;
 };
 
 export default function PageClient({ reservationId }: ReservationDetailPageClientProps) {
-  const hasAccessToken =
-    typeof document !== 'undefined' && document.cookie.includes(`${ACCESS_TOKEN_COOKIE_NAME}=`);
   const { isLogIn } = useAuth();
 
-  const { data: reservationData } = useGetReservationDetail(
+  const { data: reservationData, isPending } = useGetReservationDetail(
     Number(reservationId),
-    hasAccessToken && isLogIn === true,
+    isLogIn === true,
   );
 
   const { mutate: cancelReservation } = useCancelReservation();
@@ -93,6 +91,15 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
       hasBottomCta ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
     );
   };
+
+  if (isPending) {
+    return (
+      <div className='bg-black-3 flex min-h-dvh flex-col'>
+        <ClientNavigation title='예약 상세' />
+        <SectionSkeleton />
+      </div>
+    );
+  }
 
   return (
     <>
