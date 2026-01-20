@@ -27,7 +27,7 @@ type SearchSheetProps = {
 const MIN_PARTICIPANT_COUNT = 0;
 const MAX_PARTICIPANT_COUNT = 15;
 
-function useDebouncedValue<T>(value: T, delay =500) {
+function useDebouncedValue<T>(value: T, delay = 500) {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
@@ -59,14 +59,13 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const [placeKeyword, setPlaceKeyword] = useState('');
-  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 1000);
+  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 200);
   const { data: places } = useSearchPlaces(debouncedPlaceKeyword);
   const placeNameToId = new Map(
     (places ?? [])
       .filter((p) => p.name && p.id != null)
       .map((p) => [p.name as string, p.id as number]),
   );
-
 
   const { snapCategory, peopleCount, date } = searchDraft;
   const formattedCount = `${peopleCount ?? 0}명`;
