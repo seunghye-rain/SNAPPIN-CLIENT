@@ -27,6 +27,18 @@ type SearchSheetProps = {
 const MIN_PARTICIPANT_COUNT = 0;
 const MAX_PARTICIPANT_COUNT = 15;
 
+function useDebouncedValue<T>(value: T, delay =500) {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedValue(value), delay);
+
+    return () => clearTimeout(id);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -45,12 +57,33 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const [currentField, setCurrentField] = useState<SearchField>('snapCategory');
   const didInitRef = useRef(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const { data: places } = useSearchPlaces(searchDraft.placeId ?? '');
+
+  const [placeKeyword, setPlaceKeyword] = useState('');
+  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 1000);
+  const { data: places } = useSearchPlaces(debouncedPlaceKeyword);
+  const placeNameToId = new Map(
+    (places ?? [])
+      .filter((p) => p.name && p.id != null)
+      .map((p) => [p.name as string, p.id as number]),
+  );
+
+
   const { snapCategory, peopleCount, placeId, date } = searchDraft;
   const formattedCount = `${peopleCount ?? 0}명`;
 
   const handleFieldClick = (category: SearchField) => {
     setCurrentField(category);
+  };
+
+  const handlePlaceKeywordChange = (next: string) => {
+    setPlaceKeyword(next);
+
+    const matchedId = placeNameToId.get(next);
+    if (matchedId != null) {
+      setPlaceId(String(matchedId)); // draft가 string이면 String으로
+    } else {
+      setPlaceId(''); // 선택 해제
+    }
   };
 
   const handleSearch = () => {
@@ -135,8 +168,9 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
         >
           <ComboBox
             placeholder='장소·학교명을 검색 후 선택해 주세요'
-            options={places?.map((item) => item.name ?? '') ?? []}
-            onChange={setPlaceId}
+            value={placeKeyword}
+            options={(places ?? []).map((item) => item.name ?? '').filter(Boolean)}
+            onChange={handlePlaceKeywordChange}
           />
         </ControlSheet.Field>
 
