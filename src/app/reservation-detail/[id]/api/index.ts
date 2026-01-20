@@ -6,8 +6,11 @@ import {
   GetReservationDetailData,
   CancelReservationResponse,
   UpdateReservationCancelData,
+  UpdateReservationRequestPaymentData,
+  RequestPaymentReservationResponse,
 } from '@/swagger-api/data-contracts';
 
+// 예약 상세 조회 API
 export const useGetReservationDetail = (reservationId: number, isEnabled = true) => {
   const enabled = isEnabled && reservationId != null;
 
@@ -25,6 +28,7 @@ export const useGetReservationDetail = (reservationId: number, isEnabled = true)
   });
 };
 
+// 예약 취소 API
 export const useCancelReservation = () => {
   const queryClient = useQueryClient();
 
@@ -37,6 +41,31 @@ export const useCancelReservation = () => {
 
       if (!response.data) {
         throw new Error(`No data from /api/v1/reservations/${reservationId}/cancel`);
+      }
+
+      return response.data;
+    },
+    //  뮤테이션이 성공하면 React Query 캐시를 무효화해서 최신 데이터를 다시 받아오게 함
+    onSuccess: (_, reservationId) => {
+      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_LISTS() });
+    },
+  });
+};
+
+// 결제 요청 API
+export const useRequestPayment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<RequestPaymentReservationResponse, Error, number>({
+    mutationFn: async (reservationId) => {
+      const response = await apiRequest<UpdateReservationRequestPaymentData>({
+        endPoint: `/api/v1/reservations/${reservationId}/pay`,
+        method: 'PATCH',
+      });
+
+      if (!response.data) {
+        throw new Error(`No data from /api/v1/reservations/${reservationId}/pay`);
       }
 
       return response.data;
