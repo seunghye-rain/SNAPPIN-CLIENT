@@ -33,7 +33,7 @@ export const usePaymentSummary = (reservationId: number, basePrice: number) => {
         totalPrice: totalAmount,
     });
 
-    router.push(`/photographer/reservation-detail/${reservationId}`);
+    router.replace(`/photographer/reservation-detail/${reservationId}`);
   };
 
   return { extraPrices, totalAmount, submitPayment };

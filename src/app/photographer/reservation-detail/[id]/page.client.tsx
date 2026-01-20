@@ -1,11 +1,10 @@
 'use client';
 
-import { ProductStatus, ReservationDetail, Receipt, ReviewDetail, DetailPageFooter } from './_section';
+import { ProductStatus, ReservationDetail, Receipt, ReviewDetail, DetailPageFooter, SectionSkeleton } from './_section';
 import { StateCode } from '@/types/stateCode';  
 import { Divider } from '@/ui';
 import { useGetReservationDetail } from './api';
-import ProducctImage from "@/../public/product.png";
-import SectionSkeleton from './_section/SectionSkeleton';
+
 
 type PageClientProps = {
   id: string;
@@ -23,9 +22,8 @@ export default function PageClient({ id }: PageClientProps) {
     <div className='flex flex-col'>
     <ProductStatus
       reservationId={reservationId}
-      id={data?.productInfo?.id ?? -1}
       status={data?.status as StateCode ?? ''}
-      imageUrl={data?.productInfo?.imageUrl ?? ProducctImage.src}
+      imageUrl={data?.productInfo?.imageUrl ?? ""}
       title={data?.productInfo?.title ?? ''}
       rate={data?.productInfo?.rate ?? 0}
       reviewCount={data?.productInfo?.reviewCount ?? 0}

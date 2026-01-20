@@ -1,15 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { STATE_CODES, StateCode } from '@/types/stateCode';
 import { Button, ProductCard } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useRefuseReservation } from '../api';
-import { useState } from 'react';
 import RefuseModal from '../@modal/(.)refuse-modal/RefuseModal';
 
 type ProductStatusProps = {
   reservationId: number;
-  id: number;
   imageUrl: string;
   title: string;
   rate: number;
@@ -22,7 +21,6 @@ type ProductStatusProps = {
 
 export default function ProductStatus({
   reservationId,
-  id,
   imageUrl,
   title,
   rate,

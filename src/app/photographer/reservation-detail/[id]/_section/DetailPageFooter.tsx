@@ -22,9 +22,11 @@ export default function DetailPageFooter({ reservationId, date, startTime, statu
   const router = useRouter();
   const now = new Date();
   const start = new Date(`${date}T${startTime}:00`);
+  const isAfterStart = now >= start;
+
   const { mutate: completeReservation } = useCompleteReservation(reservationId);
   const { mutate: confirmReservation } = useConfirmReservation(reservationId);
-  const isAfterStart = now >= start;
+
 
   const getButtonConfig = (): ButtonConfig => {
     switch (status) {
@@ -57,7 +59,6 @@ export default function DetailPageFooter({ reservationId, date, startTime, statu
             label: '촬영 완료하고 리뷰 요청하기',
             disabled: false,
             onClick: () => {
-              // TODO:  API 호출 후 성공 시 쿼리키 무효화
               completeReservation(reservationId);
             },
           };
@@ -88,7 +89,7 @@ export default function DetailPageFooter({ reservationId, date, startTime, statu
 
       default:
         return {
-          label: '예약 확정',
+          label: '',
           disabled: true,
           onClick: undefined,
         };

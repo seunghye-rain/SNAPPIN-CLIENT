@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 type ReservationDetailPageProps = {
   params: Promise<{ id: string }>;
 };
+
 export default async function Page({ params }: ReservationDetailPageProps) {
   const { id } = await params;
   

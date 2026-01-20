@@ -24,8 +24,6 @@ export const useGetPaymentPrice = (reservationId: number) => {
   });
 };
 
-
-
 export const useRequestPayment = (reservationId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
