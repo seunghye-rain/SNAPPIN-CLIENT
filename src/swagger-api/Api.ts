@@ -20,6 +20,7 @@ import {
   CreateReissuedTokensData,
   CreateReviewData,
   CreateReviewPayload,
+  GetAllCurationQuestionsData,
   GetAllMoodFiltersData,
   GetCategoriesData,
   GetCuratedPortfoliosData,
@@ -36,7 +37,6 @@ import {
   GetProductListData,
   GetProductListQuery,
   GetProductPeopleRangeData,
-  GetProductPriceData,
   GetProductReviewsData,
   GetRecommendationData,
   GetReservationDetailData,
@@ -653,23 +653,6 @@ export class Api<
       ...params,
     });
   /**
-   * @description 작가의 결제 요청 과정에서 상품의 기본 촬영 비용을 조회합니다.
-   *
-   * @tags 06 - Product
-   * @name GetProductPrice
-   * @summary 기본 촬영 비용 조회 API
-   * @request GET:/api/v1/products/{productId}/price
-   * @secure
-   * @response `200` `GetProductPriceData` OK
-   */
-  getProductPrice = (productId: string, params: RequestParams = {}) =>
-    this.request<GetProductPriceData, any>({
-      path: `/api/v1/products/${productId}/price`,
-      method: "GET",
-      secure: true,
-      ...params,
-    });
-  /**
    * @description 상품 예약 과정에서 달별 휴무일을 조회합니다.
    *
    * @tags 06 - Product
@@ -890,6 +873,23 @@ export class Api<
   getRecommendation = (params: RequestParams = {}) =>
     this.request<GetRecommendationData, any>({
       path: `/api/v1/home/recommendation`,
+      method: "GET",
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 로그인한 사용자가 전체 큐레이션 질문과 각 질문 별 사진을 한꺼번에 조회할 수 있습니다.
+   *
+   * @tags 03 - Curation
+   * @name GetAllCurationQuestions
+   * @summary 큐레이션 전체 질문/사진 조회
+   * @request GET:/api/v1/curation/all
+   * @secure
+   * @response `200` `GetAllCurationQuestionsData` OK
+   */
+  getAllCurationQuestions = (params: RequestParams = {}) =>
+    this.request<GetAllCurationQuestionsData, any>({
+      path: `/api/v1/curation/all`,
       method: "GET",
       secure: true,
       ...params,

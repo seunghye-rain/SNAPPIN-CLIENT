@@ -5,7 +5,6 @@ import { IconSearch, Logo } from '@/assets';
 import { cn } from '@/utils/cn';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 
 interface ClientHeaderProps {
   isVisible: boolean;
