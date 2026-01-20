@@ -5,6 +5,7 @@ import {
   ApiResponseBodyGetMoodFilterListResponseVoid,
   GetMoodFilterListResponse,
 } from '@/swagger-api/data-contracts';
+import { USER_QUERY_KEY } from '@/query-key/user';
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}`;
 const ENDPOINT = '/api/v1/moods';
@@ -13,7 +14,7 @@ const FULL_URL = BASE_URL + ENDPOINT;
 export const useMoodFilters = () => {
   const { isLogIn } = useAuth();
   return useSuspenseQuery<GetMoodFilterListResponse>({
-    queryKey: ['explore', 'mood-filters', isLogIn],
+    queryKey: USER_QUERY_KEY.CATEGORIES_MOOD_FILTER(isLogIn ? 'user' : 'guest'),
     queryFn: async () => {
       // 로그인 상태
       if (isLogIn) {
