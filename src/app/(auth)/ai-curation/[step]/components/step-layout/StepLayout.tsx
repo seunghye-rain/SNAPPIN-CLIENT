@@ -2,10 +2,11 @@
 
 import ImageAnimation from '../image-animation/ImageAnimation';
 import { padNumber } from '@/utils/padNumber';
+import { GetPhotoResponse, GetQuestionResponse } from '@/swagger-api/data-contracts';
 
 type StepLayoutProps = {
-  question: { step: number; contents: string };
-  photos: { id: number; imageUrl: string; order: number }[];
+  question: GetQuestionResponse;
+  photos: GetPhotoResponse[];
 };
 
 export default function StepLayout({ question, photos }: StepLayoutProps) {

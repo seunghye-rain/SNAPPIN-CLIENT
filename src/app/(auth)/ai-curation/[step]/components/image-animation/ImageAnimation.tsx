@@ -5,9 +5,10 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { useAiCuration } from '../../../hooks/useAiCuration';
+import { GetPhotoResponse } from '@/swagger-api/data-contracts';
 
 type ImageAnimationProps = {
-  images: { id: number; imageUrl: string; order: number }[];
+  images: GetPhotoResponse[];
 };
 
 type Pose = {
@@ -71,12 +72,12 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
                   selectedByStep[currentStep] !== img.id &&
                   'opacity-80 brightness-[0.6]',
               )}
-              onClick={() => handleSelect(img.id)}
+              onClick={() => handleSelect(img.id ?? 0)}
               initial={false}
               animate={isAnimating ? pose.animation : pose.default}
             >
               <Image
-                src={img.imageUrl}
+                src={img.imageUrl ?? ''}
                 alt='큐레이션 선택 이미지'
                 fill
                 className='object-cover'
