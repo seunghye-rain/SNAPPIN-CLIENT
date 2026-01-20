@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, startTransition } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { useAiCuration } from '../../../hooks/useAiCuration';
@@ -55,7 +55,9 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
   // 이미지가 변경될 때마다 모든 이미지를 로딩 중 상태로 설정
   useEffect(() => {
     const imageIds = sorted.map((img) => img.id ?? 0).filter((id) => id !== 0);
-    setLoadingImages(new Set(imageIds));
+    startTransition(() => {
+      setLoadingImages(new Set(imageIds));
+    });
   }, [sorted]);
 
   const handleSelect = (id: number,isLoading: boolean) => {

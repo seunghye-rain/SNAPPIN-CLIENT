@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, startTransition } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import MoodAnimationResult from './components/mood-animation-result-state/MoodAnimationResult';
 import MoodAnimationPending from './components/mood-animation-pending-state/MoodAnimationPending';
@@ -20,10 +20,12 @@ export default function Page() {
   }, []);
   
   useEffect(() => {
-    if (data && !isPending) {
-      setIsPending(false);
+    if (data && isPending) {
+      startTransition(() => {
+        setIsPending(false);
+      });
     }
-  }, [data]);
+  }, [data, isPending]);
   
   return (
     <div className='bg-neon-black h-dvh'>
