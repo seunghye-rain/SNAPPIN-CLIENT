@@ -12,15 +12,23 @@ import {
   REVIEW_CONTENT_MAX_LENGTH,
   useReviewWrite,
 } from '../hooks/useReviewWrite';
-import { REVIEW_PRODUCT } from '../mock/reviewProduct.mock';
 import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
 import { StarRating } from '../components';
+import { useImageUpload, useSubmitReview } from '../api';
 
 type ReviewFormSectionProps = {
   reservationId: number;
 };
 
-type PreviewItem = { file: File; url: string };
+type PreviewItem = { file: File; url: string; s3Key?: string };
+type IssuedImage = { uploadUrl: string; imageUrl: string; s3Key?: string };
+type NormalizedIssued = { uploadUrl: string; imageUrl: string; s3Key?: string };
+
+const toNormalizedIssued = ({ uploadUrl = '', imageUrl = '', s3Key }: NormalizedIssued) => ({
+  uploadUrl,
+  imageUrl,
+  s3Key,
+});
 
 export default function ReviewFormSection({ reservationId }: ReviewFormSectionProps) {
   const {
@@ -37,12 +45,19 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
   const router = useRouter();
 
+  const [issuedImages, setIssuedImages] = useState<IssuedImage[]>([]);
+  const uploadImageMutation = useImageUpload();
+  const { mutate: submitReviewMutation } = useSubmitReview();
+
   const handleSubmit = () => {
     handleSubmitForm((review) => {
-      // TODO: API 연동 시 reservationId
-      router.push(
-        `/photo-final-detail/${reservationId || REVIEW_PRODUCT.reservations.reservation.reservationId}`,
-      );
+      submitReviewMutation({
+        reservationId: reservationId,
+        rating: review.rating,
+        content: review.content,
+        imageUrls: review?.imageUrls,
+      });
+      router.replace(`/photo-final-detail/${reservationId}`);
       console.log(review);
     });
   };
@@ -58,23 +73,52 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
-  const handleUploadClick = (selected: FileList) => {
+  const handleUploadClick = async (selected: FileList) => {
     const validation = validateFiles(selected, compatibleFormData.imageUrls.length);
     if (!validation.ok) return;
 
     const selectedFiles = Array.from(selected);
-    const nextPreviews = selectedFiles.map((file) => ({ file, url: URL.createObjectURL(file) }));
-
-    const mergedPreviews = [...previews, ...nextPreviews].slice(0, MAX_IMAGE_COUNT);
-    const mergedUrls = [
-      ...compatibleFormData.imageUrls,
-      ...nextPreviews.map(({ url }) => url),
-    ].slice(0, MAX_IMAGE_COUNT);
-
-    setPreviews(mergedPreviews);
-    updateImageUrls(mergedUrls);
-
     requestAnimationFrame(scrollImagesToEnd);
+
+    try {
+      const issuedWithPreview = await Promise.all(
+        selectedFiles.map(async (file) => {
+          const issued = await uploadImageMutation.mutateAsync({
+            fileName: file.name,
+            contentType: file.type,
+          });
+
+          const key = issued.s3Key ?? issued.imageUrl ?? '';
+
+          return {
+            issued,
+            preview: { file, url: URL.createObjectURL(file), s3Key: key || undefined },
+            key,
+          };
+        }),
+      );
+
+      const normalizedIssued: NormalizedIssued[] = issuedWithPreview.map(({ issued }) =>
+        toNormalizedIssued(issued),
+      );
+
+      setIssuedImages((prev) => [...prev, ...normalizedIssued]);
+
+      const issuedKeys = issuedWithPreview
+        .map(({ key }) => key)
+        .filter((key): key is string => Boolean(key));
+
+      const mergedPreviews = [
+        ...previews,
+        ...issuedWithPreview.map(({ preview }) => preview),
+      ].slice(0, MAX_IMAGE_COUNT);
+      const mergedUrls = [...compatibleFormData.imageUrls, ...issuedKeys].slice(0, MAX_IMAGE_COUNT);
+
+      setPreviews(mergedPreviews);
+      updateImageUrls(mergedUrls);
+    } catch (error) {
+      console.error('Presigned URL 발급 실패:', error);
+    }
   };
 
   const handleImageRemove = (targetUrl: string) => {
@@ -83,7 +127,16 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
       if (removed) URL.revokeObjectURL(removed.url);
       return prev.filter(({ url }) => url !== targetUrl);
     });
-    updateImageUrls(compatibleFormData.imageUrls.filter((url) => url !== targetUrl));
+
+    const removeKey =
+      issuedImages.find((image) => image.imageUrl === targetUrl || image.s3Key === targetUrl)
+        ?.s3Key ?? targetUrl;
+
+    setIssuedImages((prev) =>
+      prev.filter((image) => (image.s3Key ?? image.imageUrl) !== removeKey),
+    );
+
+    updateImageUrls(compatibleFormData.imageUrls.filter((url) => url !== removeKey));
   };
 
   const hasContentError = Boolean(compatibleErrors.content);

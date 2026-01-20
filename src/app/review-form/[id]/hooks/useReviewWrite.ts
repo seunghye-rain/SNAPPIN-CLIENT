@@ -22,7 +22,7 @@ export const enrollReviewSchema = z.object({
     .trim()
     .min(0)
     .max(REVIEW_CONTENT_MAX_LENGTH, `최대 ${REVIEW_CONTENT_MAX_LENGTH}자까지 입력할 수 있어요.`),
-  imageUrls: z.array(z.string().url('이미지 URL이 올바르지 않습니다.')).max(MAX_IMAGE_COUNT),
+  imageUrls: z.array(z.string()).max(MAX_IMAGE_COUNT),
 });
 
 export type EnrollReviewInput = z.infer<typeof enrollReviewSchema>;

@@ -29,16 +29,37 @@ export const useImageUpload = () => {
   return useMutation<PostPresignedUrlResponse, Error, { fileName: string; contentType: string }>({
     mutationFn: async ({ fileName, contentType }) => {
       const res = await apiRequest<ApiResponseBodyPostPresignedUrlResponseVoid>({
-        endPoint: '/api/v1/reviews/images',
+        endPoint: '/api/v1/reviews/image',
         method: 'POST',
         data: { fileName, contentType },
       });
 
       if (!res.data || !res.data.uploadUrl || !res.data.imageUrl) {
-        throw new Error('No data from POST /api/v1/reviews/images');
+        throw new Error('No data from POST /api/v1/reviews/image');
       }
 
       return res.data;
+    },
+  });
+};
+
+export const useSubmitReview = () => {
+  return useMutation<
+    void,
+    Error,
+    { reservationId: number; rating: number; content: string; imageUrls: string[] }
+  >({
+    mutationFn: async ({ reservationId, rating, content, imageUrls }) => {
+      await apiRequest<void>({
+        endPoint: `/api/v1/reservations/${reservationId}/reviews`,
+        method: 'POST',
+        data: {
+          reservationId,
+          rating,
+          content,
+          imageUrls,
+        },
+      });
     },
   });
 };
