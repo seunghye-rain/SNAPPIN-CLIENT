@@ -8,6 +8,7 @@ import {
   GetProductDetailData,
   WishProductResponse,
   UpdateWishProductData,
+  GetProductReviewsData,
   GetPortfolioListData,
 } from '@/swagger-api/data-contracts';
 
@@ -126,6 +127,32 @@ export const useGetPortfolioList = (id: number) => {
 
       if (!res.ok) {
         throw new Error('/api/v1/portfolios 응답에 데이터가 존재하지 않습니다.');
+      }
+      const data = await res.json();
+      return data;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
+    },
+    enabled: !Number.isNaN(id),
+  });
+}
+
+// 상품 리뷰 목록 조회 API
+export const useGetProductReviewList = (id: number) => {
+  return useInfiniteQuery<GetProductReviewsData>({
+    queryKey: USER_QUERY_KEY.PRODUCT_REVIEWS(id),
+    initialPageParam: undefined,
+    queryFn: async ({ pageParam }) => {
+      const url = new URL(`${SERVER_API_BASE_URL}/api/v1/products/${id}/reviews`);
+      if (pageParam) {
+        url.searchParams.append('cursor', String(pageParam));
+      }
+
+      const res = await fetch(url.toString(), { method: 'GET' });
+
+      if (!res.ok) {
+        throw new Error('/api/v1/products/{productId}/reviews 응답에 데이터가 존재하지 않습니다.');
       }
       const data = await res.json();
       return data;
