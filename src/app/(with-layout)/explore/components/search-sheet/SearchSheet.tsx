@@ -17,6 +17,7 @@ import { parseInitialDraft, patchSearchParams } from '@/app/(with-layout)/explor
 import { SNAP_CATEGORY } from '@/constants/categories/snap-category';
 import { SearchFooter, SnapCategory } from '@/app/(with-layout)/explore/components';
 import { MOCK_SNAP_CATEGORIES } from '@/app/(with-layout)/explore/mocks/search';
+import { useSearchPlaces } from '@/app/(with-layout)/explore/api';
 
 type SearchSheetProps = {
   open: boolean;
@@ -44,6 +45,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const [currentField, setCurrentField] = useState<SearchField>('snapCategory');
   const didInitRef = useRef(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { data: places } = useSearchPlaces(searchDraft.placeId ?? '');
   const { snapCategory, peopleCount, placeId, date } = searchDraft;
   const formattedCount = `${peopleCount ?? 0}명`;
 
@@ -133,7 +135,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
         >
           <ComboBox
             placeholder='장소·학교명을 검색 후 선택해 주세요'
-            options={['건국대학교', '이화여자대학교', '연세대학교', '고려대학교']}
+            options={places?.map((item) => item.name ?? '') ?? []}
             onChange={setPlaceId}
           />
         </ControlSheet.Field>
