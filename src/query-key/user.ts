@@ -21,11 +21,16 @@ export const USER_QUERY_KEY = {
 
   // 포트폴리오
   PORTFOLIO: ['portfolio'],
+  PORTFOLIO_LIST: (query: string) => [...USER_QUERY_KEY.PORTFOLIO, 'list', query],
   PORTFOLIO_DETAIL: (id: number, isLogIn: boolean) => [
     ...USER_QUERY_KEY.PORTFOLIO,
     id,
     isLogIn ? 'login' : 'not-login',
   ],
+
+  // 상품
+  PRODUCT: ['product'],
+  PRODUCT_LIST: (query: string) => [...USER_QUERY_KEY.PRODUCT, 'list', query],
 
   WISH: ['wish'],
   WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],

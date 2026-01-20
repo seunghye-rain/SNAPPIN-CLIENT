@@ -153,7 +153,7 @@ export const useGetPortfolioList = (sp: URLSearchParams) => {
   const baseQuery = buildExploreQuery(sp);
 
   return useSuspenseInfiniteQuery<ApiResponseBodyGetPortfolioListResponseGetPortfolioMetaResponse>({
-    queryKey: ['explorePortfolios', baseQuery.toString()],
+    queryKey: USER_QUERY_KEY.PORTFOLIO_LIST(baseQuery.toString()),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(PORTFOLIO_FULL_URL);
@@ -181,7 +181,7 @@ export const useGetProductList = (sq: URLSearchParams) => {
   const baseQuery = buildExploreQuery(sq);
 
   return useSuspenseInfiniteQuery<GetProductListData>({
-    queryKey: ['exploreProducts', baseQuery.toString()],
+    queryKey: USER_QUERY_KEY.PRODUCT_LIST(baseQuery.toString()),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(PRODUCT_FULL_URL);
