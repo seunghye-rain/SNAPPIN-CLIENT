@@ -68,7 +68,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   );
 
 
-  const { snapCategory, peopleCount, placeId, date } = searchDraft;
+  const { snapCategory, peopleCount, date } = searchDraft;
   const formattedCount = `${peopleCount ?? 0}명`;
 
   const handleFieldClick = (category: SearchField) => {
@@ -80,14 +80,22 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
 
     const matchedId = placeNameToId.get(next);
     if (matchedId != null) {
-      setPlaceId(String(matchedId)); // draft가 string이면 String으로
+      setPlaceId(String(matchedId));
     } else {
-      setPlaceId(''); // 선택 해제
+      setPlaceId('');
     }
   };
 
   const handleSearch = () => {
-    const nextParams = patchSearchParams(searchParams, searchDraft);
+    const nextParams = patchSearchParams(searchParams, searchDraft, placeKeyword);
+
+    if (searchDraft.placeId) {
+      // id가 있을 때만 (=선택 확정) placeName 저장
+      nextParams.set('placeName', placeKeyword);
+    } else {
+      nextParams.delete('placeName');
+    }
+
     const qs = nextParams.toString();
     const target = qs ? `/explore?${qs}` : '/explore';
 
@@ -162,7 +170,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
         {/* 촬영 장소 검색 */}
         <ControlSheet.Field
           label='촬영 장소'
-          selectedValue={placeId}
+          selectedValue={placeKeyword}
           onClick={() => handleFieldClick('placeId')}
           active={currentField === 'placeId'}
         >
