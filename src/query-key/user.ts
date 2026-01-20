@@ -14,4 +14,8 @@ export const USER_QUERY_KEY = {
     RECOMMENDATION_PORTFOLIOS: ['recommendation-portfolios'],
     RECOMMENDATION_PORTFOLIOS_PORTFOLIOS: () => [...USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS, 'portfolios'],
     RECOMMENDATION_PORTFOLIOS_PORTFOLIOS_LOGIN: (isLogin?: boolean) => [...USER_QUERY_KEY.RECOMMENDATION_PORTFOLIOS_PORTFOLIOS(), isLogin ? 'login' : 'not-login'],
+
+    WISH: ['wish'],
+    WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],
+    WISHED_PRODUCTS: () => [...USER_QUERY_KEY.WISH, 'products'],
   } as const;
