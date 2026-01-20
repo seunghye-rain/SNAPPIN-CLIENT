@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { apiRequest } from '@/api/apiRequest';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
@@ -8,6 +8,7 @@ import {
   GetProductDetailData,
   WishProductResponse,
   UpdateWishProductData,
+  GetPortfolioListData,
 } from '@/swagger-api/data-contracts';
 
 type WishProductContext = {
@@ -106,5 +107,32 @@ export const useWishProduct = () => {
         queryKey: USER_QUERY_KEY.PRODUCT_DETAIL(id, true),
       });
     },
+  });
+}
+
+// 포폴 목록 조회 API
+export const useGetPortfolioList = (id: number) => {
+  return useInfiniteQuery<GetPortfolioListData>({
+    queryKey: USER_QUERY_KEY.PRODUCT_PORTFOLIOS(id),
+    initialPageParam: undefined,
+    queryFn: async ({ pageParam }) => {
+      const url = new URL(`${SERVER_API_BASE_URL}/api/v1/portfolios`);
+      url.searchParams.append('productId', String(id));
+      if (pageParam) {
+        url.searchParams.append('cursor', String(pageParam));
+      }
+
+      const res = await fetch(url.toString(), { method: 'GET' });
+
+      if (!res.ok) {
+        throw new Error('/api/v1/portfolios 응답에 데이터가 존재하지 않습니다.');
+      }
+      const data = await res.json();
+      return data;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
+    },
+    enabled: !Number.isNaN(id),
   });
 }
