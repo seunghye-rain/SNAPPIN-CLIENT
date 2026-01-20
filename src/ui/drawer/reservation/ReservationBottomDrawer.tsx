@@ -135,8 +135,8 @@ export default function ReservationBottomDrawer({
       >
         {/* 날짜 선택 */}
         <BottomDrawer.Section>
-          <BottomDrawer.Row>
-            <BottomDrawer.Title className='px-[3rem] py-[2rem]'>
+          <BottomDrawer.Row className='px-[2rem]'>
+            <BottomDrawer.Title className='px-[1rem] py-[2rem]'>
               희망 날짜 및 시간을 선택해 주세요
             </BottomDrawer.Title>
             <DatePicker
@@ -252,8 +252,11 @@ export default function ReservationBottomDrawer({
       <BottomDrawer.Footer className='border-black-3 border-t-[0.1rem] px-[1.6rem] pt-[0.8rem] pb-[2.4rem]'>
         <div className='flex flex-row'>
           <div className='text-black-10 flex flex-1 items-center gap-[0.4rem]'>
-            <span className='font-12-md'>기본가</span>
-            <strong className='title-23-eb'>{`${formatNumberWithComma(amount)}원`}</strong>
+            <span className='caption-12-md'>기본가</span>
+            <div className='flex items-center gap-[0.2rem]'>
+              <strong className='title-23-eb'>{formatNumberWithComma(amount)}</strong>
+              <span className='caption-14-md pt-[0.3rem]'>원</span>
+            </div>
           </div>
           <BottomCTAButton className='flex-1'>
             <BottomCTAButton.Single

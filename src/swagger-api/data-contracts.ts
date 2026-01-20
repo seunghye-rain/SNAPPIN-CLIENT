@@ -415,6 +415,8 @@ export interface ApiResponseBodyCreateKakaoLoginResponseVoid {
 
 /** 카카오 로그인 응답 DTO */
 export interface CreateKakaoLoginResponse {
+  /** 신규 가입 여부 */
+  isNew?: boolean;
   /** 인증 시 필요한 accessToken입니다. refreshToken은 쿠키로 내려드립니다. */
   accessToken?: string;
 }
@@ -447,6 +449,39 @@ export interface GetSwitchedUserProfileResponse {
   accessToken?: string;
 }
 
+/** 촬영 추가 비용 DTO */
+export interface ExtraPriceRequest {
+  /**
+   * 비용명
+   * @example "원본 JPG 추가"
+   */
+  name?: string;
+  /**
+   * 금액
+   * @format int32
+   * @example 10000
+   */
+  amount?: number;
+}
+
+/** 예약 결제 요청 금액 목록 DTO */
+export interface RequestPaymentReservationRequest {
+  /**
+   * 기본 촬영 비용
+   * @format int32
+   * @example 80000
+   */
+  basePrice: number;
+  /** 추가 비용 목록 */
+  extraPrices?: ExtraPriceRequest[];
+  /**
+   * 최종 결제 금액
+   * @format int32
+   * @example 90000
+   */
+  totalPrice: number;
+}
+
 /** 공통 응답 DTO */
 export interface ApiResponseBodyRequestPaymentReservationResponseVoid {
   /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
@@ -463,25 +498,57 @@ export interface ApiResponseBodyRequestPaymentReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 결제 요청 응답 DTO */
   data?: RequestPaymentReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-export interface Payment {
-  /** @format int32 */
+/** 촬영 추가 비용 DTO */
+export interface ExtraPriceResponse {
+  /**
+   * 비용명
+   * @example "원본 JPG 추가"
+   */
+  name?: string;
+  /**
+   * 금액
+   * @format int32
+   * @example 10000
+   */
+  amount?: number;
+}
+
+/** 결제 정보 DTO */
+export interface PaymentResponse {
+  /**
+   * 기본 촬영 비용
+   * @format int32
+   * @example 200000
+   */
   basePrice?: number;
-  /** @format int32 */
-  extraPrice?: number;
-  /** @format int32 */
+  /** 추가 비용 목록 */
+  extraPrices?: ExtraPriceResponse[];
+  /**
+   * 최종 결제 금액
+   * @format int32
+   * @example 210000
+   */
   totalPrice?: number;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 결제 요청 응답 DTO */
 export interface RequestPaymentReservationResponse {
-  /** @format int64 */
+  /**
+   * 결제 요청 처리된 예약 ID
+   * @format int64
+   * @example 501
+   */
   reservationId?: number;
+  /**
+   * 변경된 예약 상태
+   * @example "PAYMENT_REQUESTED"
+   */
   status?:
     | "RESERVATION_REQUESTED"
     | "PHOTOGRAPHER_CHECKING"
@@ -491,7 +558,8 @@ export interface RequestPaymentReservationResponse {
     | "RESERVATION_CANCELED"
     | "RESERVATION_REFUSED"
     | "SHOOT_COMPLETED";
-  payment?: Payment;
+  /** 결제 정보 DTO */
+  payment?: PaymentResponse;
 }
 
 /** 공통 응답 DTO */
@@ -510,16 +578,24 @@ export interface ApiResponseBodyRefuseReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 거절 응답 DTO */
   data?: RefuseReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 거절 응답 DTO */
 export interface RefuseReservationResponse {
-  /** @format int64 */
+  /**
+   * 거절 완료된 예약 ID
+   * @format int64
+   * @example 51
+   */
   reservationId?: number;
+  /**
+   * 변경된 예약 상태
+   * @example "RESERVATION_REFUSED"
+   */
   status?: string;
 }
 
@@ -539,16 +615,24 @@ export interface ApiResponseBodyPayReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 결제하기 응답 DTO */
   data?: PayReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 결제하기 응답 DTO */
 export interface PayReservationResponse {
-  /** @format int64 */
+  /**
+   * 결제 완료된 예약 아이디
+   * @format int64
+   * @example 501
+   */
   reservationId?: number;
+  /**
+   * 변경된 예약 상태
+   * @example "PAYMENT_COMPLETED"
+   */
   status?: string;
 }
 
@@ -568,16 +652,24 @@ export interface ApiResponseBodyConfirmReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 확정 응답 DTO */
   data?: ConfirmReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 확정 응답 DTO */
 export interface ConfirmReservationResponse {
-  /** @format int64 */
+  /**
+   * 확정된 예약 ID
+   * @format int64
+   * @example 501
+   */
   reservationId?: number;
+  /**
+   * 변경된 예약 상태
+   * @example "RESERVATION_CONFIRMED"
+   */
   status?: string;
 }
 
@@ -597,16 +689,24 @@ export interface ApiResponseBodyCompleteReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 촬영 완료/리뷰 요청 응답 DTO */
   data?: CompleteReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 촬영 완료/리뷰 요청 응답 DTO */
 export interface CompleteReservationResponse {
-  /** @format int64 */
+  /**
+   * 촬영 완료 처리된 예약 ID
+   * @format int64
+   * @example 501
+   */
   reservationId?: number;
+  /**
+   * 변경된 예약 상태
+   * @example "SHOOT_COMPLETED"
+   */
   status?: string;
 }
 
@@ -626,17 +726,29 @@ export interface ApiResponseBodyCancelReservationResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 취소 응답 DTO */
   data?: CancelReservationResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 취소 응답 DTO */
 export interface CancelReservationResponse {
-  /** @format int64 */
+  /**
+   * 취소 처리된 예약 ID
+   * @format int64
+   * @example 501
+   */
   reservationId?: number;
+  /**
+   * 취소 처리 이전의 예약 상태
+   * @example "PAYMENT_REQUESTED"
+   */
   previousStatus?: string;
+  /**
+   * 변경된 예약 상태
+   * @example "RESERVATION_CANCELED"
+   */
   status?: string;
 }
 
@@ -871,39 +983,92 @@ export interface ApiResponseBodyReservationListResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 목록 조회 응답 DTO */
   data?: ReservationListResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
+/** 예약 목록 단일 응답 DTO */
 export interface ReservationListItemResponse {
-  /** @format int64 */
+  /**
+   * 예약 ID
+   * @format int64
+   * @example 51
+   */
   reservationId?: number;
+  /**
+   * 예약 상태(진행 단계)
+   * @example "RESERVATION_REQUESTED"
+   */
   status?: string;
+  /**
+   * 예약자명
+   * @example "홍길동"
+   */
   client?: string;
+  /**
+   * 예약 생성 일시
+   * @example "2026-01-12 15:00"
+   */
   createdAt?: string;
+  /** 예약 목록 상품 응답 DTO */
   product?: ReservationListProductResponse;
 }
 
+/** 예약 목록 상품 응답 DTO */
 export interface ReservationListProductResponse {
-  /** @format int64 */
+  /**
+   * 상품 ID
+   * @format int64
+   * @example 501
+   */
   id?: number;
+  /**
+   * 상품 대표 이미지
+   * @example "product/product_grad_12.jpg"
+   */
   imageUrl?: string;
+  /**
+   * 상품명
+   * @example "한여름밤의 스냅"
+   */
   title?: string;
-  /** @format double */
+  /**
+   * 평균 별점
+   * @format double
+   * @example 4.7
+   */
   rate?: number;
-  /** @format int32 */
+  /**
+   * 리뷰 개수
+   * @format int32
+   * @example 20
+   */
   reviewCount?: number;
+  /**
+   * 상품 등록 작가명
+   * @example "김작가"
+   */
   photographer?: string;
-  /** @format int32 */
+  /**
+   * 상품 가격
+   * @format int32
+   * @example 90000
+   */
   price?: number;
+  /** 상품 무드 태그 목록 */
   moods?: string[];
+  /**
+   * 리뷰 작성 여부
+   * @example true
+   */
   isReviewed?: boolean;
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 목록 조회 응답 DTO */
 export interface ReservationListResponse {
+  /** 예약 목록 */
   reservations?: ReservationListItemResponse[];
 }
 
@@ -923,67 +1088,211 @@ export interface ApiResponseBodyReservationDetailResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 해당 API에서 반환하는 결과 데이터입니다. */
+  /** 예약 상세 전체 응답 DTO */
   data?: ReservationDetailResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
 }
 
+/** 예약 상세 정보 DTO */
 export interface ReservationDetailInfoResponse {
+  /**
+   * 예약자명
+   * @example "홍길동"
+   */
   client?: string;
+  /**
+   * 예약 생성 일시
+   * @example "2026-02-18 10:05"
+   */
   createdAt?: string;
+  /**
+   * 촬영 희망 날짜
+   * @example "2026-03-15"
+   */
   date?: string;
+  /**
+   * 촬영 시작 시간
+   * @example "10:00"
+   */
   startTime?: string;
-  /** @format double */
+  /**
+   * 촬영 시간
+   * @format double
+   * @example 1.5
+   */
   durationTime?: number;
+  /**
+   * 촬영 장소
+   * @example "건국대"
+   */
   place?: string;
-  /** @format int32 */
+  /**
+   * 촬영 인원
+   * @format int32
+   * @example 2
+   */
   peopleCount?: number;
+  /**
+   * 기타 요청 사항
+   * @example "예쁘게 찍어주세요."
+   */
   requestNote?: string;
 }
 
+/** 예약 상세 결제 정보 DTO */
 export interface ReservationDetailPaymentResponse {
-  /** @format int32 */
+  /**
+   * 기본 촬영 비용
+   * @format int32
+   * @example 80000
+   */
   basePrice?: number;
-  /** @format int32 */
+  /**
+   * 추가 비용
+   * @format int32
+   * @example 10000
+   */
   extraPrice?: number;
-  /** @format int32 */
+  /**
+   * 최종 결제 금액
+   * @format int32
+   * @example 90000
+   */
   totalPrice?: number;
 }
 
+/** 예약 상세 상품 정보 응답 DTO */
 export interface ReservationDetailProductResponse {
-  /** @format int64 */
+  /**
+   * 상품 ID
+   * @format int64
+   * @example 51
+   */
   id?: number;
+  /**
+   * 상품 대표 이미지
+   * @example "https://example.com/product301_thumb.jpg"
+   */
   imageUrl?: string;
+  /**
+   * 상품명
+   * @example "한여름밤의 스냅"
+   */
   title?: string;
-  /** @format double */
+  /**
+   * 평균 별점
+   * @format double
+   * @example 4.7
+   */
   rate?: number;
-  /** @format int32 */
+  /**
+   * 리뷰 개수
+   * @format int32
+   * @example 20
+   */
   reviewCount?: number;
+  /**
+   * 상품 등록 작가
+   * @example "김작가"
+   */
   photographer?: string;
-  /** @format int32 */
+  /**
+   * 상품 가격
+   * @format int32
+   * @example 90000
+   */
   price?: number;
+  /** 상품 무드 태그 목록 */
   moods?: string[];
 }
 
-/** 해당 API에서 반환하는 결과 데이터입니다. */
+/** 예약 상세 전체 응답 DTO */
 export interface ReservationDetailResponse {
+  /**
+   * 예약 상태(진행 단계)
+   * @example "RESERVATION_REQUESTED"
+   */
   status?: string;
+  /** 예약 상세 상품 정보 응답 DTO */
   productInfo?: ReservationDetailProductResponse;
+  /** 예약 상세 정보 DTO */
   reservationInfo?: ReservationDetailInfoResponse;
+  /** 예약 상세 결제 정보 DTO */
   paymentInfo?: ReservationDetailPaymentResponse;
+  /** 예약 리뷰 상세 응답 DTO */
   reviewInfo?: ReservationDetailReviewResponse;
 }
 
+/** 예약 리뷰 상세 응답 DTO */
 export interface ReservationDetailReviewResponse {
-  /** @format int64 */
+  /**
+   * 리뷰 ID
+   * @format int64
+   * @example 40
+   */
   id?: number;
+  /**
+   * 작성자명
+   * @example "홍길동"
+   */
   reviewer?: string;
-  /** @format int32 */
+  /**
+   * 별점
+   * @format int32
+   * @example 4
+   */
   rating?: number;
+  /**
+   * 작성일
+   * @example "2026-01-08"
+   */
   createdAt?: string;
+  /** 이미지 url 목록 */
   images?: string[];
+  /**
+   * 리뷰 내용
+   * @example "친절하셔서 좋았어요."
+   */
   content?: string;
+}
+
+/** 공통 응답 DTO */
+export interface ApiResponseBodyReservationPriceResponseVoid {
+  /** 해당 API의 성공 여부를 반환합니다. true면 성공, false면 실패입니다. */
+  success?: boolean;
+  /**
+   * 해당 API의 HTTP 상태 코드입니다.
+   * @format int32
+   */
+  status?: number;
+  /** 해당 API의 결과에 대한 상태 메시지입니다. */
+  message?: string;
+  /**
+   * 해당 API 관련 커스텀 코드입니다. 도메인(3글자)-상태코드-순번 으로 이루어져 있습니다.
+   * @example "TIC_200_001"
+   */
+  code?: string;
+  /** 예약 상품 기본 촬영 비용 응답 DTO */
+  data?: ReservationPriceResponse;
+  /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
+  meta?: object;
+}
+
+/** 예약 상품 기본 촬영 비용 응답 DTO */
+export interface ReservationPriceResponse {
+  /**
+   * 예약 ID
+   * @format int64
+   * @example 501
+   */
+  reservationId?: number;
+  /**
+   * 예약 상품 가격
+   * @format int32
+   * @example 80000
+   */
+  price?: number;
 }
 
 export interface GetProductListQuery {
@@ -1531,10 +1840,59 @@ export interface GetPortfolioDetailResponse {
   startsAt?: string;
   /** 스냅 무드 */
   moods?: string[];
-  /** 작가 정보 응답 DTO */
-  photographerInfo?: GetPhotographerInfoResponse;
-  /** 상품 안내 정보 응답 DTO */
-  productInfo?: GetProductInfoResponse;
+  /** 포트폴리오 작가 응답 DTO */
+  photographerInfo?: GetPortfolioPhotographerInfoResponse;
+  /** 상품 응답 DTO */
+  productInfo?: GetPortfolioProductInfoResponse;
+}
+
+/** 포트폴리오 작가 응답 DTO */
+export interface GetPortfolioPhotographerInfoResponse {
+  /**
+   * 작가 ID
+   * @format int64
+   */
+  id?: number;
+  /** 작가명 */
+  name?: string;
+  /** 작가 한줄 소개 */
+  bio?: string;
+  /** 작가 촬영 상품 종류 */
+  specialties?: string[];
+  /** 작가 활동 지역 */
+  locations?: string[];
+}
+
+/** 상품 응답 DTO */
+export interface GetPortfolioProductInfoResponse {
+  /**
+   * 상품 ID
+   * @format int64
+   */
+  id?: number;
+  /** 상품 썸네일 */
+  imageUrl?: string;
+  /** 상품명 */
+  title?: string;
+  /**
+   * 리뷰 별점 평균
+   * @format double
+   */
+  rate?: number;
+  /**
+   * 리뷰 수
+   * @format int64
+   */
+  reviewCount?: number;
+  /** 작가명 */
+  photographer?: string;
+  /**
+   * 상품 기본 가격
+   * @format int32
+   */
+  price?: number;
+  /** 관련 상품 무드 */
+  moods?: string[];
 }
 
 /** 공통 응답 DTO */
@@ -1816,7 +2174,26 @@ export interface GetPlacePhotographerRecommendationResponse {
   /** 추천 장소 목록 */
   places?: GetPlaceInfoResponse[];
   /** 추천 작가 목록 */
-  photographers?: GetPhotographerInfoResponse[];
+  photographers?: GetRecommendationPhotographerInfoResponse[];
+}
+
+/** 추천 작가 응답 DTO */
+export interface GetRecommendationPhotographerInfoResponse {
+  /**
+   * 작가 ID
+   * @format int64
+   */
+  id?: number;
+  /** 작가명 */
+  name?: string;
+  /** 작가 프로필 이미지 */
+  profileImageUrl?: string;
+  /** 신규 작가 여부 */
+  isNew?: boolean;
+  /** 작가 한 줄 소개 */
+  bio?: string;
+  /** 작가 촬영 상품 목록 */
+  specialties?: string[];
 }
 
 /** 공통 응답 DTO */
@@ -1971,9 +2348,6 @@ export type CreateKakaoLoginData = ApiResponseBodyCreateKakaoLoginResponseVoid;
 export type PatchUserRoleData =
   ApiResponseBodyGetSwitchedUserProfileResponseVoid;
 
-/** 결제 정보 */
-export type UpdateReservationRequestPaymentPayload = string;
-
 export type UpdateReservationRequestPaymentData =
   ApiResponseBodyRequestPaymentReservationResponseVoid;
 
@@ -2000,6 +2374,9 @@ export type GetReservationsData = ApiResponseBodyReservationListResponseVoid;
 
 export type GetReservationDetailData =
   ApiResponseBodyReservationDetailResponseVoid;
+
+export type GetReservationPriceData =
+  ApiResponseBodyReservationPriceResponseVoid;
 
 export type GetProductListData =
   ApiResponseBodyGetProductListResponseGetProductListMeta;

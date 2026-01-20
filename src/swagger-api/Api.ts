@@ -40,6 +40,7 @@ import {
   GetProductReviewsData,
   GetRecommendationData,
   GetReservationDetailData,
+  GetReservationPriceData,
   GetReservationsData,
   GetReviewDetailData,
   GetUserInfoData,
@@ -50,6 +51,7 @@ import {
   PostPresignedUrlData,
   PostPresignedUrlRequest,
   ProductReservationRequest,
+  RequestPaymentReservationRequest,
   Type무드태그와연결할사진정보DTO,
   UpdateReservationCancelData,
   UpdateReservationCompleteData,
@@ -57,7 +59,6 @@ import {
   UpdateReservationPaymentData,
   UpdateReservationRefuseData,
   UpdateReservationRequestPaymentData,
-  UpdateReservationRequestPaymentPayload,
   UpdateWishPortfolioData,
   UpdateWishProductData,
   WishPortfolioRequest,
@@ -377,7 +378,7 @@ export class Api<
    */
   updateReservationRequestPayment = (
     reservationId: string,
-    data: UpdateReservationRequestPaymentPayload,
+    data: RequestPaymentReservationRequest,
     params: RequestParams = {},
   ) =>
     this.request<UpdateReservationRequestPaymentData, any>({
@@ -562,6 +563,23 @@ export class Api<
   getReservationDetail = (reservationId: string, params: RequestParams = {}) =>
     this.request<GetReservationDetailData, any>({
       path: `/api/v1/reservations/${reservationId}`,
+      method: "GET",
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 작가의 결제 요청 과정에서 상품의 기본 촬영 비용을 조회합니다.
+   *
+   * @tags 010 - Reservation
+   * @name GetReservationPrice
+   * @summary 기본 촬영 비용 조회 API
+   * @request GET:/api/v1/reservations/{reservationId}/price
+   * @secure
+   * @response `200` `GetReservationPriceData` OK
+   */
+  getReservationPrice = (reservationId: string, params: RequestParams = {}) =>
+    this.request<GetReservationPriceData, any>({
+      path: `/api/v1/reservations/${reservationId}/price`,
       method: "GET",
       secure: true,
       ...params,
