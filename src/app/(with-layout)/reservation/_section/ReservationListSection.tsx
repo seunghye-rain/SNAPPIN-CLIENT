@@ -1,46 +1,36 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Divider, ProductCardSkeleton } from '@/ui';
+import { Divider, ProductListSkeleton } from '@/ui';
 import { EmptyView, ReservationCard } from '../components';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { StateCode } from '@/types/stateCode';
 import { formatCreatedAt } from '@/utils/formatNumberWithComma';
 import { useGetReservationList } from '../api';
 import { RESERVATION_TAB } from '../constants/tabs';
-import { ACCESS_TOKEN_COOKIE_NAME } from '@/auth/constant/cookie';
 import { useAuth } from '@/auth/hooks/useAuth';
 
 export default function ReservationListSection() {
-  const hasAccessToken =
-    typeof document !== 'undefined' && document.cookie.includes(`${ACCESS_TOKEN_COOKIE_NAME}=`);
-
-  const { data, isPending } = useGetReservationList(
-    RESERVATION_TAB.CLIENT_OVERVIEW,
-    hasAccessToken,
-  );
   const toast = useToast();
-
-  const reservations = data?.reservations ?? [];
-  const isReservationListEmpty = reservations.length === 0;
 
   const { isLogIn } = useAuth();
 
   useEffect(() => {
-    if (isLogIn === null) return;
     if (isLogIn === false) {
       toast.login('예약 기능은 로그인 후에 사용할 수 있어요.', undefined, 'bottom-[8.6rem]');
     }
   }, [isLogIn, toast]);
 
-  if (isPending && isLogIn)
-    return (
-      <section className='px-[1rem] py-[1rem]'>
-        <ProductCardSkeleton />
-      </section>
-    );
+  const { data, isFetching } = useGetReservationList(RESERVATION_TAB.CLIENT_OVERVIEW);
 
-  if (isReservationListEmpty || !isLogIn) {
+  const reservations = data?.reservations ?? [];
+  const hasData = (data?.reservations?.length ?? 0) > 0;
+
+  if (isFetching && !hasData) {
+    return <ProductListSkeleton />;
+  }
+
+  if (!hasData || isLogIn === false) {
     return (
       <EmptyView
         title='예약 문의한 상품이 없어요'

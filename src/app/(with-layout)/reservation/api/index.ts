@@ -1,5 +1,5 @@
 import { ReservationListResponse, GetReservationsData } from '@/swagger-api/data-contracts';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { USER_QUERY_KEY } from '@/query-key/user';
 import { RESERVATION_TAB, type ReservationTab } from '../constants/tabs';
@@ -19,5 +19,6 @@ export const useGetReservationList = (
       return response.data;
     },
     enabled: isEnabled,
+    placeholderData: keepPreviousData,
   });
 };

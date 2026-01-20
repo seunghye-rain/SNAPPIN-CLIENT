@@ -1,10 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { USER_QUERY_KEY } from '@/query-key/user';
-import {
-  type ReservationDetailResponse,
-  type GetReservationDetailData,
-} from '@/swagger-api/data-contracts';
+import { ReservationDetailResponse, GetReservationDetailData } from '@/swagger-api/data-contracts';
 
 export const useGetReservationDetail = (reservationId: number, isEnabled = true) => {
   const enabled = isEnabled && reservationId != null;
