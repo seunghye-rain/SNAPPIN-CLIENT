@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { apiRequest } from '@/api/apiRequest';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
@@ -6,7 +6,13 @@ import { USER_QUERY_KEY } from '@/query-key/user';
 import {
   GetProductDetailResponse,
   GetProductDetailData,
+  WishProductResponse,
+  UpdateWishProductData,
 } from '@/swagger-api/data-contracts';
+
+type WishProductContext = {
+  previousData?: GetProductDetailResponse;
+};
 
 const getProductDetail = async (
   id: number,
@@ -42,4 +48,63 @@ export const useGetProductDetail = (id: number) => {
     queryFn: () => getProductDetail(id, !!isLogIn),
     enabled: !Number.isNaN(id),
   })
+}
+
+// 상품 좋아요/취소 (위시) API
+export const useWishProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<WishProductResponse, Error, number, WishProductContext>({
+    mutationFn: async (id: number) => {
+      const res = await apiRequest<UpdateWishProductData>({
+        endPoint: '/api/v1/wishes/products',
+        method: 'POST',
+        data: { productId: id },
+      });
+
+      if (!res.data) {
+        throw new Error('/api/v1/wishes/products 응답에 데이터가 존재하지 않습니다.');
+      }
+      return res.data;
+    },
+    // 낙관적 업데이트 수행
+    onMutate: async (id) => {
+      const authKey = USER_QUERY_KEY.PRODUCT_DETAIL(id, true);
+
+      await queryClient.cancelQueries({ queryKey: authKey });
+
+      const previousData = queryClient.getQueryData<GetProductDetailResponse>(authKey);
+
+      queryClient.setQueryData<GetProductDetailResponse>(
+        authKey,
+        (old) => {
+          if (!old) return old;
+
+          const willBeLiked = !old.isLiked;
+
+          return {
+            ...old,
+            isLiked: willBeLiked,
+          };
+        }
+      );
+
+      return { previousData };
+    },
+    // 서버 실패 시 이전 상태 복구
+    onError: (_error, id, context) => {
+      if (!context?.previousData) return;
+
+      queryClient.setQueryData(
+        USER_QUERY_KEY.PRODUCT_DETAIL(id, true),
+        context.previousData
+      );
+    },
+    // 서버 상태와 동기화
+    onSettled: (_data, _error, id) => {
+      queryClient.invalidateQueries({
+        queryKey: USER_QUERY_KEY.PRODUCT_DETAIL(id, true),
+      });
+    },
+  });
 }
