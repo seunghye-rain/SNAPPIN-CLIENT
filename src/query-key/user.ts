@@ -20,6 +20,10 @@ export const USER_QUERY_KEY = {
     isLogin ? 'login' : 'not-login',
   ],
 
+  // 포트폴리오
+  PORTFOLIO: ['portfolio'],
+  PORTFOLIO_DETAIL: (id: number, isLogIn: boolean) => [...USER_QUERY_KEY.PORTFOLIO, id, isLogIn ? 'login' : 'not-login'],
+
   WISH: ['wish'],
   WISHED_PORTFOLIOS: () => [...USER_QUERY_KEY.WISH, 'portfolios'],
   WISHED_PRODUCTS: () => [...USER_QUERY_KEY.WISH, 'products'],
