@@ -19,9 +19,10 @@ type ReservationDetailPageClientProps = {
 
 export default function PageClient({ reservationId }: ReservationDetailPageClientProps) {
   const { isLogIn } = useAuth();
+  const parsedReservationId = Number(reservationId);
 
   const { data: reservationData, isPending } = useGetReservationDetail(
-    Number(reservationId),
+    parsedReservationId,
     isLogIn === true,
   );
 
@@ -68,7 +69,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   const handleReservationCancel = () => {
-    cancelReservationMutation(Number(reservationId), {
+    cancelReservationMutation(parsedReservationId, {
       onSuccess: (cancelResponse) => {
         setPreviousStatus(status);
         setReservationStatus(cancelResponse.status as StateCode);
@@ -81,7 +82,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   const handlePaymentConfirmClick = () => {
-    requestPaymentMutation(Number(reservationId), {
+    requestPaymentMutation(parsedReservationId, {
       onSuccess: (paymentResponse) => {
         setPreviousStatus(status);
         setReservationStatus(paymentResponse.status as StateCode);

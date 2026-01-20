@@ -43,7 +43,7 @@ export const useCancelReservation = () => {
         throw new Error(`No data from /api/v1/reservations/${reservationId}/cancel`);
       }
 
-      return response.data;
+      return response.data ?? null;
     },
     onSuccess: (_, reservationId) => {
       queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
@@ -67,7 +67,7 @@ export const useRequestPayment = () => {
         throw new Error(`No data from /api/v1/reservations/${reservationId}/pay`);
       }
 
-      return response.data;
+      return response.data ?? null;
     },
     onSuccess: (_, reservationId) => {
       queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
