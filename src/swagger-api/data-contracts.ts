@@ -1624,7 +1624,7 @@ export interface ApiResponseBodyProductAvailableTimesResponseVoid {
    * @example "TIC_200_001"
    */
   code?: string;
-  /** 상품 예약 가능 시간대 목록 응답 DTO */
+  /** 상품 예약 가능 시간대 응답 DTO */
   data?: ProductAvailableTimesResponse;
   /** 해당 API의 data를 설명하는 meta data입니다. 페이지네이션 정보나, 에러 발생 시 에러 정보를 반환합니다. */
   meta?: object;
@@ -1644,15 +1644,26 @@ export interface ProductAvailableTimeResponse {
   isAvailable?: boolean;
 }
 
-/** 상품 예약 가능 시간대 목록 응답 DTO */
+/** 오전/오후 시간대 섹션 DTO */
+export interface ProductAvailableTimeSectionResponse {
+  /**
+   * 시간대 구분
+   * @example "am"
+   */
+  label?: string;
+  /** 해당 시간대 슬롯 목록 */
+  slots?: ProductAvailableTimeResponse[];
+}
+
+/** 상품 예약 가능 시간대 응답 DTO */
 export interface ProductAvailableTimesResponse {
   /**
    * 조회 기준 날짜
    * @example "2026-03-15"
    */
   date?: string;
-  /** 시간대별 예약 가능 여부 목록 */
-  times?: ProductAvailableTimeResponse[];
+  /** 오전/오후 시간대 목록 */
+  sections?: ProductAvailableTimeSectionResponse[];
 }
 
 /** 공통 응답 DTO */
