@@ -1,33 +1,33 @@
-name: deploy
+name: Synchronize to forked repo
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  sync:
+    name: Sync forked repo
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout main
         uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
         with:
-          version: 10.13.1
+          token: ${{ secrets.AUTO_ACTIONS }}
+          fetch-depth: 0
+          ref: main
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          cache: "pnpm"
+      - name: Add remote-url
+        run: |
+          git remote add forked-repo https://seunghye-rain:${{ secrets.AUTO_ACTIONS }}@github.com/seunghye-rain/SNAPPIN-CLIENT.git
+          git config user.name "seunghye-rain"
+          git config user.email ${{ secrets.EMAIL }}
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Push changes to forked-repo
+        run: git push -f forked-repo main
 
-      - name: Build (Next server)
-        run: pnpm run build
+      - name: Clean up
+        run: git remote remove forked-repo
