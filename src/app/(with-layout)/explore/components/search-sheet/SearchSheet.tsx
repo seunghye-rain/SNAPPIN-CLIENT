@@ -58,7 +58,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const [placeKeyword, setPlaceKeyword] = useState('');
-  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 200);
+  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 300);
   const { data: places } = useSearchPlaces(debouncedPlaceKeyword);
   const placeNameToId = new Map(
     (places ?? [])
