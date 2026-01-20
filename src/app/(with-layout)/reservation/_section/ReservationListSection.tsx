@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Divider, ProductListSkeleton } from '@/ui';
-import { EmptyView, ReservationCard } from '../components';
+import { Divider } from '@/ui';
+import { EmptyView, ReservationCard, ReservationCardSkeleton } from '../components';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { StateCode } from '@/types/stateCode';
 import { formatCreatedAt } from '@/utils/formatNumberWithComma';
@@ -27,7 +27,7 @@ export default function ReservationListSection() {
   const hasData = (data?.reservations?.length ?? 0) > 0;
 
   if (isFetching && !hasData) {
-    return <ProductListSkeleton />;
+    return <ReservationCardSkeleton />;
   }
 
   if (!hasData || isLogIn === false) {

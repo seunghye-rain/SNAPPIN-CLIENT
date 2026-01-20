@@ -18,19 +18,16 @@ export default function Receipt({ basePrice, extraPrices, totalPrice }: ReceiptP
         valueClassName='caption-14-bd'
       />
 
-      {(extraPrices ?? []).length > 0 && (
-        <>
-          {(extraPrices ?? []).map(({ name, amount }, index) => (
-            <DetailRow
-              key={`${name ?? 'extra'}-${index}`}
-              label={name ?? `추가 비용 ${index + 1}`}
-              value={`${formatPrice(amount ?? 0)}원`}
-              className='justify-between'
-              valueClassName='caption-14-bd'
-            />
-          ))}
-        </>
-      )}
+      {extraPrices?.map(({ name, amount }, index) => (
+        <DetailRow
+          key={`${name ?? 'extra'}-${index}`}
+          label={name ?? `추가 비용 ${index + 1}`}
+          value={`${formatPrice(amount ?? 0)}원`}
+          className='justify-between'
+          valueClassName='caption-14-bd'
+        />
+      ))}
+
       <Divider thickness='small' color='bg-black-3' />
       <div className='flex items-center justify-between'>
         <span className='caption-14-bd'>최종 결제 금액</span>

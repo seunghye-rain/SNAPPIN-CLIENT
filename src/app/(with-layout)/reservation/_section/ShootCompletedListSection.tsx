@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Divider, ProductListSkeleton } from '@/ui';
-import { EmptyView, ReservationCard } from '../components';
+import { Divider } from '@/ui';
+import { EmptyView, ReservationCard, ReservationCardSkeleton } from '../components';
 import { StateCode } from '@/types/stateCode';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useGetReservationList } from '../api';
@@ -26,7 +26,7 @@ export default function ShootCompletedListSection() {
   const hasData = (data?.reservations?.length ?? 0) > 0;
 
   if (isFetching && !hasData) {
-    return <ProductListSkeleton />;
+    return <ReservationCardSkeleton />;
   }
 
   if (!hasData || isLogIn === false) {
