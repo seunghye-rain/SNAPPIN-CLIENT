@@ -12,15 +12,31 @@ import { USER_QUERY_KEY } from '@/query-key/user';
 import {
   ApiResponseBodyProductAvailableTimesResponseVoid,
   ApiResponseBodyProductClosedDatesResponseVoid,
+  ApiResponseBodyProductDurationTimeResponseVoid,
   ApiResponseBodyProductPeopleRangeResponseVoid,
+  ApiResponseBodyProductReservationResponseVoid,
   GetPortfolioListData,
   GetProductDetailData,
   GetProductDetailResponse,
   GetProductReviewsData,
-  ProductAvailableTimesResponse,
+  ProductReservationRequest,
   UpdateWishProductData,
   WishProductResponse,
 } from '@/swagger-api/data-contracts';
+import { ApiError } from 'next/dist/server/api-utils';
+
+export const useAvailableTime = (productId: string) => {
+  const END_POINT = `/api/v1/products/${productId}/available/duration-time`;
+  return useSuspenseQuery({
+    queryKey: ['availableTime', productId],
+    queryFn: async () => {
+      return await apiRequest<ApiResponseBodyProductDurationTimeResponseVoid>({
+        endPoint: END_POINT,
+        method: 'GET',
+      }).then((res) => res.data?.minDurationTime ?? 1);
+    },
+  });
+};
 
 /**
  * 촬영 가능 인원수 조회 API
@@ -73,11 +89,10 @@ export const useClosedDates = (productId: string, date: Date) => {
  * @param productId 상품 아이디
  * @param date 조회할 날짜 (YYYY-MM-DD)
  */
-
 export const useAvailableTimes = (productId: string, date: string) => {
   const END_POINT = `/api/v1/products/${productId}/available/times?date=${date}`;
 
-  return useSuspenseQuery<ProductAvailableTimesResponse>({
+  return useSuspenseQuery({
     queryKey: ['productAvailableTimes', productId, date],
     queryFn: async () => {
       const res = await apiRequest<ApiResponseBodyProductAvailableTimesResponseVoid>({
@@ -85,29 +100,27 @@ export const useAvailableTimes = (productId: string, date: string) => {
         method: 'GET',
       });
 
-      const rawSections = res.data?.sections ?? [];
+      return res.data;
+    },
+    staleTime: 0,
+  });
+};
 
-      const sections = rawSections
-        .filter((s): s is NonNullable<typeof s> => Boolean(s))
-        .map((section) => {
-          const label = section.label ?? '';
+export const useReservation = (productId: string) => {
+  const END_POINT = `/api/v1/products/${productId}/reservations`;
 
-          const slots = (section.slots ?? [])
-            .filter((slot): slot is NonNullable<typeof slot> => Boolean(slot))
-            .filter((slot) => Boolean(slot.time))
-            .map((slot) => ({
-              time: slot.time!,
-              disabled: !(slot.isAvailable ?? false),
-            }));
+  return useMutation({
+    mutationKey: ['reservation', productId],
+    mutationFn: async (body: ProductReservationRequest) => {
+      const res = await apiRequest<ApiResponseBodyProductReservationResponseVoid>({
+        endPoint: END_POINT,
+        method: 'POST',
+        data: body,
+      });
 
-          return { label, slots };
-        })
-        .filter((section) => section.label !== '' && section.slots.length > 0);
+      if (res.status === 409) throw new ApiError(409, '예약 시간이 중복됩니다.');
 
-      return {
-        date: res.data?.date ?? date,
-        sections,
-      };
+      return res.data;
     },
   });
 };
