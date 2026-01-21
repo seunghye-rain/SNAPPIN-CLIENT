@@ -25,6 +25,7 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
                 src={defaultProfile}
                 alt='기본 프로필 이미지'
                 fill
+                className='object-cover'
               />
             </div>
             {/* 작가명, 한줄 소개, 촬영 상품, 활동 지역 */}

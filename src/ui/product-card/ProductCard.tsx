@@ -37,6 +37,7 @@ export default function ProductCard({
           src={image.src==='' ? productPlaceholder : image.src}
           alt={image.alt ?? `${name} 상품 이미지`}
           fill
+          className='object-cover'
         />
       </div>
       <div className='flex min-w-0 flex-col gap-[0.3rem]'>

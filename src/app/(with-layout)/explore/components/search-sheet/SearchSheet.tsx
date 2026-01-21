@@ -17,6 +17,7 @@ import { parseInitialDraft, patchSearchParams } from '@/app/(with-layout)/explor
 import { SNAP_CATEGORY } from '@/constants/categories/snap-category';
 import { SearchFooter, SnapCategory } from '@/app/(with-layout)/explore/components';
 import { useSearchPlaces } from '@/app/(with-layout)/explore/api';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 
 type SearchSheetProps = {
   open: boolean;
@@ -25,18 +26,6 @@ type SearchSheetProps = {
 
 const MIN_PARTICIPANT_COUNT = 0;
 const MAX_PARTICIPANT_COUNT = 15;
-
-function useDebouncedValue<T>(value: T, delay = 500) {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const id = setTimeout(() => setDebouncedValue(value), delay);
-
-    return () => clearTimeout(id);
-  }, [value, delay]);
-
-  return debouncedValue;
-}
 
 export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   const pathname = usePathname();
