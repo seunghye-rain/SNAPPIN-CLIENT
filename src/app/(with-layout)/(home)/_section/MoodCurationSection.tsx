@@ -6,6 +6,7 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { SectionHeader } from '../components';
 import { useGetPopularPortfoliosRecommendation, useGetPortfoliosRecommendation } from '../api';
 import { GetPortfolioResponse } from '@/swagger-api/data-contracts';
+import Link from 'next/link';
 
 export default function MoodCurationSection() {
   const { isLogIn } = useAuth();
@@ -38,15 +39,16 @@ export default function MoodCurationSection() {
       </div>
       <div className='flex flex-col items-center justify-center gap-[1.6rem]'>
           {portfolios?.map((portfolio: GetPortfolioResponse) => (
-          <CarouselCuration
-            key={portfolio.id}
-            images={portfolio.images?.map((image) => ({
-              src: image.imageUrl ?? '',
-              alt: portfolio.photographerName ?? '',
-            })) ?? []}
-            tags={portfolio.moods ?? []}
-            name={portfolio.photographerName ?? ''}
-          />
+          <Link href={`/portfolio-detail/${portfolio.id}`} key={portfolio.id}>
+            <CarouselCuration
+              images={portfolio.images?.map((image) => ({
+                src: image.imageUrl ?? '',
+                alt: portfolio.photographerName ?? '',
+              })) ?? []}
+              tags={portfolio.moods ?? []}
+              name={portfolio.photographerName ?? ''}
+            />
+          </Link>
         ))}
       </div>
     </section>

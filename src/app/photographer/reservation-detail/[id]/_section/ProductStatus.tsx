@@ -37,7 +37,7 @@ export default function ProductStatus({
     status !== STATE_CODES.RESERVATION_REFUSED &&
     status !== STATE_CODES.SHOOT_COMPLETED;
 
-  const { mutate: refuseReservation } = useRefuseReservation(reservationId);
+  const { mutate: refuseReservation } = useRefuseReservation();
   const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false);
 
   const handleRefuse = () => {

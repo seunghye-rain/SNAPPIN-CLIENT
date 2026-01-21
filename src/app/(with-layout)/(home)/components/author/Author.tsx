@@ -25,7 +25,7 @@ export default function Author({
       href={`/photographer-detail/${id}`}
       className='bg-black-3 border-black-4 flex w-[18.4rem] shrink-0 flex-col gap-[0.5rem] rounded-[0.4rem] border-[0.5px] p-[1.2rem]'
     >
-      <div className='relative'>
+      <div className='relative w-[16.4rem] h-[16.4rem]'>
         {isNew && (
           <Chip
             label='NEW'
@@ -34,10 +34,9 @@ export default function Author({
           />
         )}
         <Image
-          src={profileImageUrl}
+          src={profileImageUrl==="" ? '/imgs/image-default.png' : profileImageUrl}
           alt={`${name}의 포토폴리오 이미지-${profileImageUrl}`}
-          width={164}
-          height={164}
+          fill
           className='rounded-[0.2rem] object-cover'
         />
       </div>
