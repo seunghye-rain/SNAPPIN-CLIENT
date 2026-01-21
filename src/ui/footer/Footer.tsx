@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { SVGProps, useEffect } from 'react';
 import {
   IconHomeFill,
   IconHome,
@@ -15,14 +17,11 @@ import {
   IconHeartFill,
   IconHeart,
 } from '@/assets';
-import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { SVGProps } from 'react';
+import { useGetUserInfo } from '@/auth/apis';
+import { setUserType } from '@/auth/userType';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { USER_TYPE, UserType } from '@/auth/constant/userType';
-
-type FooterProps = {
-  userRole: UserType;
-};
 
 //TODO: 메뉴 경로 수정
 const menuUserItems: {
@@ -75,7 +74,7 @@ const menuAuthorItems: {
     label: '홈',
   },
   {
-    href: '/',
+    href: '/empty',
     activeIcon: IconMessageFill,
     inactiveIcon: IconMessage,
     label: '상품 관리',
@@ -87,7 +86,7 @@ const menuAuthorItems: {
     label: '예약 관리',
   },
   {
-    href: '/',
+    href: '/empty',
     activeIcon: IconMessageFill,
     inactiveIcon: IconMessage,
     label: '메시지함',
@@ -100,9 +99,21 @@ const menuAuthorItems: {
   },
 ];
 
-export default function Footer({ userRole }: FooterProps) {
+export default function Footer() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
+
+  const { isLogIn } = useAuth();
+  const { data } = useGetUserInfo();
+  const canSwitch = data?.role === USER_TYPE.PHOTOGRAPHER || data?.hasPhotographerProfile;
+
+  useEffect(() => {
+    if (isLogIn) {
+      setUserType(data?.role as UserType);
+    }
+  }, [isLogIn, data?.role]);
+
+  const userRole = canSwitch ? USER_TYPE.PHOTOGRAPHER : USER_TYPE.CLIENT;
 
   return (
     <div className='z-20'>
