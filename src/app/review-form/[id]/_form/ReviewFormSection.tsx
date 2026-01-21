@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FieldMessage, ImagePreview, TextareaField } from '@/ui';
 import ImageUploadButton from '@/ui/button/upload/ImageUploadButton';
@@ -14,21 +13,12 @@ import {
 } from '../hooks/useReviewWrite';
 import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
 import { StarRating } from '../components';
-import { useImageUpload, useSubmitReview } from '../api';
+import { useSubmitReview } from '../api';
+import { useUploadImages, useImagePreviews } from '../hooks/useUploadImages';
 
 type ReviewFormSectionProps = {
   reservationId: number;
 };
-
-type PreviewItem = { file: File; url: string; s3Key?: string };
-type IssuedImage = { uploadUrl: string; imageUrl: string; s3Key?: string };
-type NormalizedIssued = { uploadUrl: string; imageUrl: string; s3Key?: string };
-
-const toNormalizedIssued = ({ uploadUrl = '', imageUrl = '', s3Key }: NormalizedIssued) => ({
-  uploadUrl,
-  imageUrl,
-  s3Key,
-});
 
 export default function ReviewFormSection({ reservationId }: ReviewFormSectionProps) {
   const {
@@ -37,115 +27,48 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     isValid,
     updateRating,
     updateContent,
-    updateImageUrls,
-    validateFiles,
+    queueImages,
+    removeQueuedImage,
     handleSubmitForm,
   } = useReviewWrite();
 
-  // 여기서 필요 없을 듯
-  const [previews, setPreviews] = useState<PreviewItem[]>([]);
+  const { uploadImages, isUploading } = useUploadImages();
+  const { previews, addFiles, removeByUrl, clear } = useImagePreviews();
+  const { mutate: submitReviewMutation } = useSubmitReview();
   const router = useRouter();
 
-  // 여기서 필요 없을 듯
-  const [issuedImages, setIssuedImages] = useState<IssuedImage[]>([]);
-  const uploadImageMutation = useImageUpload();
-  const { mutate: submitReviewMutation } = useSubmitReview();
-
-  // useReviewWrite에서 handleSubmit 처리 가능하게끔? 여기서 필요 없을 듯
-  const handleSubmit = () => {
-    handleSubmitForm((review) => {
-      submitReviewMutation({
-        reservationId: reservationId,
-        rating: review.rating,
-        content: review.content,
-        imageUrls: review?.imageUrls,
-      });
-      router.replace(`/photo-final-detail/${reservationId}`);
-      console.log(review);
-    });
-  };
-
-  // 이건 여기 두기
-  const scrollImagesToEnd = () => {
-    const el = document.getElementById('review-image-list');
-    if (!el) return;
-
-    el.scrollTo({ left: el.scrollWidth, behavior: 'smooth' });
-
-    const rect = el.getBoundingClientRect();
-    const y = rect.top + window.scrollY - 50;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  };
-
-  // 여기서 필요 없을 듯
-  const handleUploadClick = async (selected: FileList) => {
-    const validation = validateFiles(selected, compatibleFormData.imageUrls.length);
+  const handleUpdateImageUrls = (selected: FileList) => {
+    const files = Array.from(selected);
+    const validation = queueImages(files);
     if (!validation.ok) return;
 
-    const selectedFiles = Array.from(selected);
-    requestAnimationFrame(scrollImagesToEnd);
+    const remainingSlots =
+      MAX_IMAGE_COUNT - compatibleFormData.imageUrls.length - compatibleFormData.queuedFiles.length;
+    if (remainingSlots < 1) return;
 
-    try {
-      const issuedWithPreview = await Promise.all(
-        selectedFiles.map(async (file) => {
-          const issued = await uploadImageMutation.mutateAsync({
-            fileName: file.name,
-            contentType: file.type,
-          });
-
-          const key = issued.s3Key ?? issued.imageUrl ?? '';
-
-          return {
-            issued,
-            preview: { file, url: URL.createObjectURL(file), s3Key: key || undefined },
-            key,
-          };
-        }),
-      );
-
-      const normalizedIssued: NormalizedIssued[] = issuedWithPreview.map(({ issued }) =>
-        toNormalizedIssued(issued),
-      );
-
-      setIssuedImages((prev) => [...prev, ...normalizedIssued]);
-
-      const issuedKeys = issuedWithPreview
-        .map(({ key }) => key)
-        .filter((key): key is string => Boolean(key));
-
-      const mergedPreviews = [
-        ...previews,
-        ...issuedWithPreview.map(({ preview }) => preview),
-      ].slice(0, MAX_IMAGE_COUNT);
-      const mergedUrls = [...compatibleFormData.imageUrls, ...issuedKeys].slice(0, MAX_IMAGE_COUNT);
-
-      setPreviews(mergedPreviews);
-      updateImageUrls(mergedUrls);
-    } catch (error) {
-      console.error('Presigned URL 발급 실패:', error);
-    }
+    addFiles(files.slice(0, remainingSlots), MAX_IMAGE_COUNT);
   };
 
-  // 여기서 필요 없을 듯
   const handleImageRemove = (targetUrl: string) => {
-    setPreviews((prev) => {
-      const removed = prev.find(({ url }) => url === targetUrl);
-      if (removed) URL.revokeObjectURL(removed.url);
-      return prev.filter(({ url }) => url !== targetUrl);
-    });
-
-    const removeKey =
-      issuedImages.find((image) => image.imageUrl === targetUrl || image.s3Key === targetUrl)
-        ?.s3Key ?? targetUrl;
-
-    setIssuedImages((prev) =>
-      prev.filter((image) => (image.s3Key ?? image.imageUrl) !== removeKey),
-    );
-
-    updateImageUrls(compatibleFormData.imageUrls.filter((url) => url !== removeKey));
+    const target = previews.find(({ url }) => url === targetUrl);
+    if (!target) return;
+    removeByUrl(targetUrl);
+    removeQueuedImage(target.file.name);
   };
 
-  // 그럼 이거 오류도 여기서 필요 없을 듯
+  const handleSubmit = () => {
+    handleSubmitForm(uploadImages, (review) => {
+      submitReviewMutation({
+        reservationId,
+        rating: review.rating,
+        content: review.content,
+        imageUrls: review.imageUrls,
+      });
+      clear();
+      router.replace(`/photo-final-detail/${reservationId}`);
+    });
+  };
+
   const hasContentError = Boolean(compatibleErrors.content);
   const hasImageError = Boolean(compatibleErrors.imageUrls);
   const isContentEmpty = compatibleFormData.content.trim().length < 1;
@@ -215,17 +138,21 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
           )}
 
           <ImageUploadButton
-            handleUploadAction={handleUploadClick}
+            handleUploadAction={handleUpdateImageUrls}
             accept={IMAGE_ACCEPT.WITH_HEIC}
           />
 
           <p className={cn('caption-12-md', hasImageError ? 'text-red-error' : 'text-black-6')}>
             20MB 이하의 JPG, PNG, HEIC, WEBP 이미지로 최대 5장까지 업로드가 가능합니다.
           </p>
+          <div className='bg-black-1 h-[10rem] w-full' />
         </section>
       </form>
 
-      <ClientFooter disabled={!isValid || isContentEmpty} handleClick={handleSubmit} />
+      <ClientFooter
+        disabled={!isValid || isContentEmpty || isUploading}
+        handleClick={handleSubmit}
+      />
     </>
   );
 }
