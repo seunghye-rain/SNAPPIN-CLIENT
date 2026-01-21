@@ -12,6 +12,7 @@ import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useGetReservationDetail, useCancelReservation, useRequestPayment } from './api';
 import SectionSkeleton from './_section/SectionSkeleton';
+import { notFound } from 'next/navigation';
 
 type ReservationDetailPageClientProps = {
   reservationId: string;
@@ -20,11 +21,12 @@ type ReservationDetailPageClientProps = {
 export default function PageClient({ reservationId }: ReservationDetailPageClientProps) {
   const { isLogIn } = useAuth();
   const parsedReservationId = Number(reservationId);
+  
+  if (Number.isNaN(parsedReservationId) || isLogIn === false) {
+    return notFound();
+  }
 
-  const { data: reservationData, isPending } = useGetReservationDetail(
-    parsedReservationId,
-    isLogIn === true,
-  );
+  const { data: reservationData, isPending } = useGetReservationDetail(parsedReservationId);
 
   const { mutate: cancelReservationMutation } = useCancelReservation();
   const { mutate: requestPaymentMutation } = useRequestPayment();
