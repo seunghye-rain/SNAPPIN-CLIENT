@@ -14,7 +14,7 @@ export default function ClientProfileCard() {
         alt='프로필 이미지'
         width={64}
         height={64}
-        className='rounded-full'
+        className='rounded-full object-cover'
       />
       <div className='flex w-full items-center justify-between'>
         <span className='caption-14-bd'>

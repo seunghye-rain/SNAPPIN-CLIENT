@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'd2rmq8808ov4o.cloudfront.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'd2rmq8808ov4o.cloudfront.net',
       }
     ],
   },
