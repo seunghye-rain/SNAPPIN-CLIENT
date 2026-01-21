@@ -16,12 +16,12 @@ export default function AvailableTimeSection({
 }: AvailableTimeSectionProps) {
   const { data } = useAvailableTimes(productId, date);
 
-  if (data.sections?.length === 0) return null;
+  if (data?.sections?.length === 0) return null;
 
   return (
     <BottomDrawer.Row className='flex flex-col gap-[1.2rem]'>
       <TimePicker
-        sections={data.sections ?? []}
+        sections={data?.sections ?? []}
         value={time ?? undefined}
         handleChange={onChangeTime}
       />

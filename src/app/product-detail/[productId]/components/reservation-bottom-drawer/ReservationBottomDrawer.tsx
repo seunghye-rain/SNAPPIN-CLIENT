@@ -3,6 +3,7 @@
 import {
   BottomCTAButton,
   BottomDrawer,
+  ComboBox,
   ControlRow,
   DatePicker,
   Divider,
@@ -11,23 +12,30 @@ import {
   FieldMessage,
   Stepper,
   TextareaField,
-  TextField,
 } from '@/ui';
 import { formatNumberWithComma } from '@/utils/formatNumberWithComma';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { ReservationDraft } from '@/app/product-detail/[productId]/types/reservation';
-import { useAvailablePeopleRange, useClosedDates } from '@/app/product-detail/[productId]/api';
+import {
+  useAvailablePeopleRange,
+  useAvailableTime,
+  useClosedDates,
+  useReservation,
+} from '@/app/product-detail/[productId]/api';
 import AvailableTimeSection from '@/app/product-detail/[productId]/components/time-picker/AvailableTimePicker';
+import { ProductReservationRequest } from '@/swagger-api/data-contracts';
+import { useSearchPlaces } from '@/app/(with-layout)/explore/api';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 type ReservationBottomDrawerProps = {
   isOpen: boolean;
   productId: string;
   amount: number;
-  handleOpenChangeAction: (open: boolean) => void;
-  onFormSubmitAction: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleOpenChangeAction: () => void;
+  onSuccessReservationAction?: () => void;
 };
 
-const MIN_DURATION_HOURS = 1;
 const MAX_DURATION_HOURS = 5;
 const DURATION_HOURS_STEP = 0.5;
 const PARTICIPANT_COUNT_STEP = 1;
@@ -38,40 +46,86 @@ export default function ReservationBottomDrawer({
   productId,
   amount,
   handleOpenChangeAction,
-  onFormSubmitAction,
+  onSuccessReservationAction,
 }: ReservationBottomDrawerProps) {
+  const { mutate, isError } = useReservation(productId);
+  const timeSectionRef = useRef<HTMLDivElement>(null);
+  const [viewMonth, setViewMonth] = useState<Date>(new Date());
+  const [isRequestFocused, setIsRequestFocused] = useState(false);
+  const [placeKeyword, setPlaceKeyword] = useState('');
+
+  const { data: peopleRange } = useAvailablePeopleRange(productId);
+  const { data: closedDates } = useClosedDates(productId, viewMonth);
+  const { data: minAvailableTime } = useAvailableTime(productId);
+
   const [draft, setDraft] = useState<ReservationDraft>({
     date: null,
     time: null,
-    durationHours: 1,
+    durationHours: minAvailableTime,
     participantCount: 1,
+    placeId: null,
     place: '',
     request: '',
   });
 
-  const timeSectionRef = useRef<HTMLDivElement>(null);
-  const [viewMonth, setViewMonth] = useState<Date>(new Date());
-  const [isRequestFocused, setIsRequestFocused] = useState(false);
-
-  const { data: peopleRange } = useAvailablePeopleRange(productId);
-  const { data: closedDates } = useClosedDates(productId, viewMonth);
-
   const { date, time, durationHours, place, participantCount, request } = draft;
+
+  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 300);
+  const { data: places } = useSearchPlaces(debouncedPlaceKeyword ?? '');
 
   const minParticipantCount = peopleRange?.minPeople ?? 1;
   const maxParticipantCount = peopleRange?.maxPeople ?? 10;
-  const isButtonDisabled = !date || !time;
+  const isButtonDisabled = !date || !time || !draft.placeId;
+
   const formattedTime = `${durationHours}시간`;
   const formattedCount = `${participantCount}명`;
   const requestLength = request.length;
   const isRequestTextareaError = requestLength > REQUEST_TEXTAREA_MAX_LENGTH;
+
+  const placeNameToId = new Map(
+    places?.filter((p) => p.name && p.id != null).map((p) => [p.name as string, p.id as number]),
+  );
+
+  const handlePlaceChange = (next: string) => {
+    setPlaceKeyword(next);
+
+    const matchedId = placeNameToId.get(next);
+    if (matchedId != null) {
+      patch({ place: next, placeId: matchedId });
+    } else {
+      // “정확히 선택된 값”이 아니면 id 비워두는게 안전
+      patch({ place: next, placeId: null });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!date || !time || !participantCount || !durationHours) return;
+    if (!draft.placeId) return;
+
+    const requestBody: ProductReservationRequest = {
+      date,
+      durationTime: durationHours,
+      startTime: time,
+      peopleCount: participantCount,
+      placeId: draft.placeId,
+      requestNote: request,
+    };
+
+    mutate(requestBody, {
+      onSuccess: () => {
+        handleOpenChangeAction();
+        onSuccessReservationAction?.();
+      },
+    });
+  };
 
   const patch = (p: Partial<ReservationDraft>) => setDraft((prev) => ({ ...prev, ...p }));
 
   const decreaseDurationHours = () =>
     setDraft((prev) => ({
       ...prev,
-      durationHours: Math.max(MIN_DURATION_HOURS, prev.durationHours - DURATION_HOURS_STEP),
+      durationHours: Math.max(minAvailableTime ?? 1, prev.durationHours - DURATION_HOURS_STEP),
     }));
 
   const increaseDurationHours = () =>
@@ -110,6 +164,10 @@ export default function ReservationBottomDrawer({
     return () => cancelAnimationFrame(rafId);
   }, [date]);
 
+  if (isError) {
+    return;
+  }
+
   return (
     <BottomDrawer
       isOpen={isOpen}
@@ -125,7 +183,7 @@ export default function ReservationBottomDrawer({
       {/* 예약 폼 */}
       <form
         id='reservation-form'
-        onSubmit={onFormSubmitAction}
+        onSubmit={handleSubmit}
         className='scrollbar-hide overflow-y-auto'
       >
         {/* 날짜 선택 */}
@@ -180,19 +238,28 @@ export default function ReservationBottomDrawer({
                 value={formattedTime}
                 handleClickMinus={decreaseDurationHours}
                 handleClickAdd={increaseDurationHours}
-                isDisabledMinus={durationHours <= MIN_DURATION_HOURS}
+                isDisabledMinus={durationHours <= (minAvailableTime ?? 1)}
                 isDisabledAdd={durationHours >= MAX_DURATION_HOURS}
               />
             }
           />
 
           {/* 촬영 장소 입력 */}
-          <TextField
-            id='reservation-place'
-            label='촬영 장소'
-            value={place}
-            onChange={(e) => patch({ place: e.target.value })}
-            placeholder='작가님의 활동 지역 내 장소만 검색할 수 있어요'
+          <ControlRow
+            className='flex flex-col gap-[1rem]'
+            leftLabel={
+              <BottomDrawer.Title as='span' className='caption-14-md'>
+                촬영 장소
+              </BottomDrawer.Title>
+            }
+            rightControl={
+              <ComboBox
+                value={place}
+                onChange={handlePlaceChange}
+                options={(places ?? []).map((item) => item.name ?? '').filter(Boolean)}
+                placeholder='작가님의 활동 지역 내 장소만 검색할 수 있어요'
+              />
+            }
           />
 
           {/* 촬영 인원 선택 */}
