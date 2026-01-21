@@ -29,8 +29,8 @@ export default function DetailPageFooter({
   const start = new Date(`${date}T${startTime}:00`);
   const isAfterStart = now >= start;
 
-  const { mutate: completeReservation } = useCompleteReservation(reservationId);
-  const { mutate: confirmReservation } = useConfirmReservation(reservationId);
+  const { mutate: completeReservation } = useCompleteReservation();
+  const { mutate: confirmReservation } = useConfirmReservation();
 
   const getButtonConfig = (): ButtonConfig => {
     switch (status) {
