@@ -14,7 +14,9 @@ import {
 import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
 import { StarRating } from '../components';
 import { useSubmitReview } from '../api';
-import { useUploadImages, useImagePreviews } from '../hooks/useUploadImages';
+import { useUploadImages } from '../hooks/useUploadImages';
+import { useImageSelection } from '../hooks/useImageSelection';
+import validateImage from '@/utils/validateImage';
 
 type ReviewFormSectionProps = {
   reservationId: number;
@@ -27,45 +29,49 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
     isValid,
     updateRating,
     updateContent,
-    queueImages,
-    removeQueuedImage,
     handleSubmitForm,
   } = useReviewWrite();
 
+  const { images, addImage, removeImage, files } = useImageSelection();
+
   const { uploadImages, isUploading } = useUploadImages();
-  const { previews, addFiles, removeByUrl, clear } = useImagePreviews();
-  const { mutate: submitReviewMutation } = useSubmitReview();
+  const { mutateAsync: submitReview } = useSubmitReview();
   const router = useRouter();
 
-  const handleUpdateImageUrls = (selected: FileList) => {
-    const files = Array.from(selected);
-    const validation = queueImages(files);
-    if (!validation.ok) return;
-
-    const remainingSlots =
-      MAX_IMAGE_COUNT - compatibleFormData.imageUrls.length - compatibleFormData.queuedFiles.length;
-    if (remainingSlots < 1) return;
-
-    addFiles(files.slice(0, remainingSlots), MAX_IMAGE_COUNT);
-  };
-
-  const handleImageRemove = (targetUrl: string) => {
-    const target = previews.find(({ url }) => url === targetUrl);
-    if (!target) return;
-    removeByUrl(targetUrl);
-    removeQueuedImage(target.file.name);
-  };
-
-  const handleSubmit = () => {
-    handleSubmitForm(uploadImages, (review) => {
-      submitReviewMutation({
-        reservationId,
-        rating: review.rating,
-        content: review.content,
-        imageUrls: review.imageUrls,
+  const handleUploadAction = (fileList: FileList) => {
+    Array.from(fileList).forEach((file) => {
+      const { ok } = validateImage({
+        file,
+        currentCount: images.length,
+        maxImageCount: MAX_IMAGE_COUNT,
       });
-      clear();
-      router.replace(`/photo-final-detail/${reservationId}`);
+
+      if (!ok) return;
+
+      addImage(file);
+    });
+  };
+
+  const handleSubmit = async () => {
+    handleSubmitForm(async (formData) => {
+      try {
+        // 1. 이미지 업로드 (선택된 파일들)
+        const imageUrls = await uploadImages(files);
+
+        // 2. 리뷰 등록
+        await submitReview({
+          reservationId,
+          rating: formData.rating,
+          content: formData.content,
+          imageUrls,
+        });
+
+        // 3. 성공 시 이동
+        router.replace(`/photo-final-detail/${reservationId}`);
+      } catch (error) {
+        // TODO: 실패 UX (toast, alert 등)
+        console.error(error);
+      }
     });
   };
 
@@ -76,8 +82,8 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
   return (
     <>
       <form
-        onSubmit={(event) => {
-          event.preventDefault();
+        onSubmit={(e) => {
+          e.preventDefault();
           handleSubmit();
         }}
       >
@@ -101,7 +107,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
             hasError={hasContentError}
             className='min-h-[11rem]'
             helpText={
-              <div className='flex flex-row justify-between'>
+              <div className='flex justify-between'>
                 <FieldMessage
                   id='review-form-error'
                   message={compatibleErrors.content ?? ' '}
@@ -114,23 +120,20 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
                 />
               </div>
             }
-            onChange={(event) => updateContent(event.target.value)}
+            onChange={(e) => updateContent(e.target.value)}
           />
         </section>
 
         <section className='mt-[1.2rem] flex flex-col gap-[1.2rem] px-[2rem]'>
-          {previews.length > 0 && (
-            <div
-              id='review-image-list'
-              className='scrollbar-hide -mr-[1.4rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'
-            >
-              {previews.map(({ url }) => (
+          {images.length > 0 && (
+            <div className='scrollbar-hide -mr-[1.4rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'>
+              {images.map(({ previewUrl }) => (
                 <ImagePreview
-                  key={url}
-                  imageSrc={url}
+                  key={previewUrl}
+                  imageSrc={previewUrl}
                   imageAlt='업로드한 리뷰 이미지'
                   showRemoveButton
-                  handleRemove={() => handleImageRemove(url)}
+                  handleRemove={() => removeImage(previewUrl)}
                   className='shrink-0'
                 />
               ))}
@@ -138,7 +141,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
           )}
 
           <ImageUploadButton
-            handleUploadAction={handleUpdateImageUrls}
+            handleUploadAction={handleUploadAction}
             accept={IMAGE_ACCEPT.WITH_HEIC}
           />
 
