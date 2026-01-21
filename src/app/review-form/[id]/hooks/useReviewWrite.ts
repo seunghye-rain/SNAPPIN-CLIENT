@@ -8,9 +8,6 @@ export const REVIEW_CONTENT_MAX_LENGTH = 500;
 export const MAX_RATING = 5;
 export const MAX_IMAGE_COUNT = 5;
 
-// 검증 결과 타입
-type ContentValidationResult = { ok: boolean; reason?: 'min' | 'max' };
-
 // 리뷰 작성 폼 스키마
 export const enrollReviewSchema = z.object({
   rating: z.number().min(1, '별점을 선택해 주세요.').max(MAX_RATING),
@@ -32,7 +29,6 @@ export const useReviewWrite = () => {
     handleSubmit,
     setValue,
     setError,
-    clearErrors,
     trigger,
     formState: { errors, isValid },
   } = useForm<EnrollReviewInput>({
@@ -53,17 +49,12 @@ export const useReviewWrite = () => {
   };
 
   // 리뷰 내용 업데이트 함수
-  const updateContent = (value: string): ContentValidationResult => {
+  const updateContent = (value: string) => {
     const isOverMax = value.length > REVIEW_CONTENT_MAX_LENGTH;
-    setValue('content', value, { shouldValidate: true });
-
     if (isOverMax) {
       setError('content', { message: `최대 ${REVIEW_CONTENT_MAX_LENGTH}자까지 입력할 수 있어요.` });
-      return { ok: false, reason: 'max' };
     }
-
-    clearErrors('content');
-    return { ok: true };
+    setValue('content', value, { shouldValidate: true });
   };
 
   // 폼 제출 처리 함수

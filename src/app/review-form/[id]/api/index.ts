@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import {
   ApiResponseBodyPostPresignedUrlResponseVoid,
@@ -34,7 +34,7 @@ export const useImageUpload = () => {
         data: { fileName, contentType },
       });
 
-      if (!res.data || !res.data.uploadUrl || !res.data.imageUrl) {
+      if (!res.data) {
         throw new Error('No data from POST /api/v1/reviews/image');
       }
 
@@ -44,6 +44,8 @@ export const useImageUpload = () => {
 };
 
 export const useSubmitReview = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<
     void,
     Error,
@@ -53,12 +55,12 @@ export const useSubmitReview = () => {
       await apiRequest<void>({
         endPoint: `/api/v1/reservations/${reservationId}/reviews`,
         method: 'POST',
-        data: {
-          reservationId,
-          rating,
-          content,
-          imageUrls,
-        },
+        data: { reservationId, rating, content, imageUrls },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: USER_QUERY_KEY.RESERVATION_LISTS(),
       });
     },
   });

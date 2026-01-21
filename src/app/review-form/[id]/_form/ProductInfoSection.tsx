@@ -13,7 +13,12 @@ export default function ProductInfoSection({ reservationId }: ProductInfoSection
     isLogIn === true,
   );
 
-  if (isPending || !reservationData?.productInfo) return <ProductCardSkeleton />; // 스켈레톤/로더로 대체 가능
+  if (isPending || !reservationData?.productInfo)
+    return (
+      <div className='p-[1.6rem_4.2rem_0_2rem]'>
+        <ProductCardSkeleton />;
+      </div>
+    );
 
   const {
     imageUrl = '',
