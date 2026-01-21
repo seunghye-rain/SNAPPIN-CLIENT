@@ -9,7 +9,6 @@ import { STATE_LABEL } from '@/ui/chip/state-chip/constants/stateLabel';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import { useToast } from '@/ui/toast/hooks/useToast';
-import { useAuth } from '@/auth/hooks/useAuth';
 import { useGetReservationDetail, useCancelReservation, useRequestPayment } from './api';
 import SectionSkeleton from './_section/SectionSkeleton';
 
@@ -18,13 +17,9 @@ type ReservationDetailPageClientProps = {
 };
 
 export default function PageClient({ reservationId }: ReservationDetailPageClientProps) {
-  const { isLogIn } = useAuth();
   const parsedReservationId = Number(reservationId);
-
-  const { data: reservationData, isPending } = useGetReservationDetail(
-    parsedReservationId,
-    isLogIn === true,
-  );
+  
+  const { data: reservationData, isPending } = useGetReservationDetail(parsedReservationId);
 
   const { mutate: cancelReservationMutation } = useCancelReservation();
   const { mutate: requestPaymentMutation } = useRequestPayment();

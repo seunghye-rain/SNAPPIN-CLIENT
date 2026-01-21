@@ -11,12 +11,9 @@ import {
 } from '@/swagger-api/data-contracts';
 
 // 예약 상세 조회 API
-export const useGetReservationDetail = (reservationId: number, isEnabled = true) => {
-  const enabled = isEnabled && reservationId != null;
-
+export const useGetReservationDetail = (reservationId: number) => {
   return useQuery<ReservationDetailResponse>({
     queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
-    enabled,
     queryFn: async () => {
       const response = await apiRequest<GetReservationDetailData>({
         endPoint: `/api/v1/reservations/${reservationId}`,
@@ -45,8 +42,7 @@ export const useCancelReservation = () => {
 
       return response.data ?? null;
     },
-    onSuccess: (_, reservationId) => {
-      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_LISTS() });
     },
   });
@@ -69,8 +65,7 @@ export const useRequestPayment = () => {
 
       return response.data ?? null;
     },
-    onSuccess: (_, reservationId) => {
-      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY.RESERVATION_LISTS() });
     },
   });

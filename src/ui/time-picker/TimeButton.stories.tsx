@@ -15,7 +15,7 @@ const meta: Meta<typeof TimeButton> = {
       options: ['default', 'selected'],
       description: '버튼 상태',
     },
-    disabled: {
+    isAvailable: {
       control: { type: 'boolean' },
       description: '비활성화 여부',
     },
@@ -43,6 +43,6 @@ export const Selected: Story = {
 
 export const Disabled: Story = {
   args: {
-    disabled: true,
+    isAvailable: false,
   },
 };

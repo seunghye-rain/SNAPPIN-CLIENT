@@ -31,7 +31,7 @@ export const useGetReservationDetail = (reservationId: number) => {
   });
 };
 
-export const useRefuseReservation = (reservationId: number) => {
+export const useRefuseReservation = () => {
   const queryClient = useQueryClient();
   return useMutation<RefuseReservationResponse, Error, number>({
     mutationFn: async (reservationId: number) => {
@@ -48,13 +48,13 @@ export const useRefuseReservation = (reservationId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_LISTS(),
       });
     },
   });
 };
 
-export const useCompleteReservation = (reservationId: number) => {
+export const useCompleteReservation = () => {
   const queryClient = useQueryClient();
 
   return useMutation<CompleteReservationResponse, Error, number>({
@@ -72,13 +72,13 @@ export const useCompleteReservation = (reservationId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_LISTS(),
       });
     },
   });
 };
 
-export const useConfirmReservation = (reservationId: number) => {
+export const useConfirmReservation = () => {
   const queryClient = useQueryClient();
   return useMutation<ConfirmReservationResponse, Error, number>({
     mutationFn: async (reservationId: number) => {
@@ -95,7 +95,7 @@ export const useConfirmReservation = (reservationId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+        queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_LISTS(),
       });
     },
   });

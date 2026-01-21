@@ -44,7 +44,7 @@ export const useRequestPayment = (reservationId: number) => {
       return res;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId) });
+      queryClient.invalidateQueries({ queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_LISTS() });
     },
   });
 };

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import defaultProfile from '@/../public/imgs/default-profile.png';
-import { IconButton } from '@/ui';
 import { IconArrowForward } from '@/assets';
 
 type PhotographerSectionProps = {
@@ -26,6 +25,7 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
                 src={defaultProfile}
                 alt='기본 프로필 이미지'
                 fill
+                className='object-cover'
               />
             </div>
             {/* 작가명, 한줄 소개, 촬영 상품, 활동 지역 */}
