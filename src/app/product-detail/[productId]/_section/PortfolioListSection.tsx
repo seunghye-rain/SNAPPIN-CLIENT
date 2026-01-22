@@ -31,7 +31,7 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
   if (isEmpty) {
     return (
       <section>
-        <div className='flex justify-center items-center min-h-[calc(100vh-29.9rem)] '>
+        <div className='flex justify-center items-center pt-[8rem] pb-[15.8rem]'>
           <span className='caption-14-rg text-black-6 text-center'>
             아직 작가님이<br/>포트폴리오를 등록하지 않았어요
           </span>
