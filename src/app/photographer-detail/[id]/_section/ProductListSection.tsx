@@ -52,7 +52,7 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
   };
   
   return (
-    <section>
+    <section className='mt-[17.1rem]'>
       <ProductList productList={productList} />
       <div ref={ref} className='h-[0.1rem]' />
     </section>

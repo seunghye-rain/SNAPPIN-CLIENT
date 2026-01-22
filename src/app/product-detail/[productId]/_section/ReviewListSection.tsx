@@ -46,7 +46,7 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
   if (isEmpty) {
     return (
       <section>
-        <div className='flex justify-center items-center py-[8rem]'>
+        <div className='flex justify-center items-center pt-[8rem] pb-[15.8rem]'>
           <span className='caption-14-rg text-black-6 text-center'>
             아직 작성된 리뷰가 없어요
           </span>
@@ -122,6 +122,7 @@ function Review({
               src={image.src}
               alt={image.alt}
               fill
+              className='object-cover'
             />
           </Link>
         ))}

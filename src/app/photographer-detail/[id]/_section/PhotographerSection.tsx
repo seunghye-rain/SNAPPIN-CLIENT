@@ -20,7 +20,7 @@ export function PhotographerSection({
   locations
 }: PhotographerSectionProps) {
   return (
-    <section className='sticky top-[5rem] p-[2rem] bg-black-1 z-10'>
+    <section className='fixed w-full max-w-[45rem] top-[5rem] p-[2rem] bg-black-1 z-10'>
       <div className='flex gap-[1.2rem]'>
         {/* 프로필 이미지 */}
         <div className='relative w-[8.7rem] h-[8.7rem]'>
@@ -59,7 +59,6 @@ function DetailRow({
   );
 }
 
-// TODO: 스켈레톤 위치
 export const PhotographerSectionSkeleton = () => {
   return (
     <section className='flex gap-[1.2rem] p-[2rem]'>

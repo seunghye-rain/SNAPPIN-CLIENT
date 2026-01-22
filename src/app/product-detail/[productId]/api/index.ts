@@ -128,7 +128,7 @@ type WishProductContext = {
   previousData?: GetProductDetailResponse;
 };
 
-const getProductDetail = async (
+export const getProductDetail = async (
   id: number,
   isLogIn: boolean,
 ): Promise<GetProductDetailResponse> => {
@@ -184,6 +184,7 @@ export const useWishProduct = () => {
     // 낙관적 업데이트 수행
     onMutate: async (id) => {
       const authKey = USER_QUERY_KEY.PRODUCT_DETAIL(id, true);
+      // const authKey = USER_QUERY_KEY.PRODUCT_LIKE(id);
 
       await queryClient.cancelQueries({ queryKey: authKey });
 
@@ -207,12 +208,6 @@ export const useWishProduct = () => {
       if (!context?.previousData) return;
 
       queryClient.setQueryData(USER_QUERY_KEY.PRODUCT_DETAIL(id, true), context.previousData);
-    },
-    // 서버 상태와 동기화
-    onSettled: (_data, _error, id) => {
-      queryClient.invalidateQueries({
-        queryKey: USER_QUERY_KEY.PRODUCT_DETAIL(id, true),
-      });
     },
   });
 };
