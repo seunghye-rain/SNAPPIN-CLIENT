@@ -4,7 +4,7 @@ import '@/styles/global.css';
 import { Viewport } from 'next';
 
 const suit = localFont({
-  src: '../../public/fonts/SUIT-Variable.woff2',
+  src: '../../public/fonts/PretendardVariable.ttf',
 });
 
 export const viewport: Viewport = {
