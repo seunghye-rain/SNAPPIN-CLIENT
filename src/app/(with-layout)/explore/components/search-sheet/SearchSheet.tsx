@@ -117,10 +117,10 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
     setPlaceKeyword('');
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (!open) return;
     setPlaceKeyword(searchParams.get('placeName') ?? '');
-  }, [open]);
+  }, [open]);*/
 
   useEffect(() => {
     if (!open) {

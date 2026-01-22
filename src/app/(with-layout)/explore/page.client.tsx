@@ -74,9 +74,11 @@ export default function PageClient() {
   };
 
   const handleSheetOpen = () => {
+    const placeName = sp.get('placeName') ?? '';
+    const key = `search-sheet:${placeName}:${sp.toString()}`;
     overlay.open(({ isOpen, close }) => (
       <Suspense fallback={<Loading className='h-full w-full self-center' />}>
-        <SearchSheet open={isOpen} onOpenChange={close} />
+        <SearchSheet key={key} open={isOpen} onOpenChange={close} />
       </Suspense>
     ));
   };
