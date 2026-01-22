@@ -6,7 +6,7 @@ import imageEmpty from '@/../public/imgs/image-empty.png';
 import { GetPlaceInfoResponse } from '@/swagger-api/data-contracts';
 
 type InfiniteBannerProps = {
-  items:  GetPlaceInfoResponse[];
+  items: GetPlaceInfoResponse[];
   durationSec?: number;
 };
 
@@ -21,7 +21,11 @@ export default function InfiniteBanner({ items, durationSec = 18 }: InfiniteBann
     >
       <div className='infinite-track flex w-max gap-[0.4rem]'>
         {loopItems.map((item, idx) => (
-          <Link key={`${item.id}-${idx}`} href={""} className='relative shrink-0'>
+          <Link
+            key={`${item.id}-${idx}`}
+            href={`/explore?placeId=${item.id}&placeName=${item.name}`}
+            className='relative shrink-0'
+          >
             <ImageCarousel
               src={item.imageUrl ?? imageEmpty.src}
               alt={`${item.name} 이미지`}

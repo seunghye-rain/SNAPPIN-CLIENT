@@ -2,9 +2,16 @@
 
 import Image from 'next/image';
 import { useGetUserInfo } from '@/auth/apis';
+import { useAuth } from '@/auth/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function ClientProfileCard() {
   const { data, isFetching } = useGetUserInfo();
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
 
   if (isFetching) {
     return (
