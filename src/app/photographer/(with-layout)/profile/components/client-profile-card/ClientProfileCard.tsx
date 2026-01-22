@@ -32,7 +32,6 @@ export default function ClientProfileCard({ userType, isSwitching }: ClientProfi
         specialties={data?.photographerInfo?.specialties ?? []}
         locations={data?.photographerInfo?.locations ?? []}
         isLoggedIn={!!isLogIn}
-        className='h-[11.3rem]'
       />
     );
   }
@@ -42,7 +41,7 @@ export default function ClientProfileCard({ userType, isSwitching }: ClientProfi
       <div className='flex items-center gap-[1.2rem] p-[2rem] pb-[2.9rem] bg-black-1'>
         <div className='w-[64px] h-[64px] rounded-full overflow-hidden shrink-0'>
           <Image
-            src='/imgs/default-profile.png'
+            src={data?.profileImageUrl ?? '/imgs/default-profile.png'}
             alt='프로필 이미지'
             width={64}
             height={64}
