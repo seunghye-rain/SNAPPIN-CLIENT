@@ -12,16 +12,22 @@ import { StateCode } from '@/types/stateCode';
 import { Divider } from '@/ui';
 import { useGetReservationDetail } from './api';
 import { useAuth } from '@/auth/hooks/useAuth';
+import { notFound } from 'next/navigation';
 
 type PhotoFinalDetailPageProps = {
-  reservationId: string;
+  id: string;
 };
 
-export default function Page({ reservationId }: PhotoFinalDetailPageProps) {
+export default function Page({ id }: PhotoFinalDetailPageProps) {
   const { isLogIn } = useAuth();
+  const reservationId = Number(id);
+
+  if (Number.isNaN(reservationId)) {
+    notFound();
+  }
 
   const { data: reservationData, isPending } = useGetReservationDetail(
-    Number(reservationId),
+    reservationId,
     isLogIn === true,
   );
 
@@ -33,7 +39,7 @@ export default function Page({ reservationId }: PhotoFinalDetailPageProps) {
       </div>
     );
   }
-
+  console.log(reservationData);
   if (!reservationData) return null;
 
   return (
@@ -41,7 +47,7 @@ export default function Page({ reservationId }: PhotoFinalDetailPageProps) {
       <NavigationClient />
       <div className='relative flex flex-col'>
         <ProductStatus
-          id={reservationData.productInfo?.id ?? 0}
+          id={reservationId}
           imageUrl={reservationData.productInfo?.imageUrl ?? ''}
           title={reservationData.productInfo?.title ?? ''}
           rate={reservationData.productInfo?.rate ?? 0}

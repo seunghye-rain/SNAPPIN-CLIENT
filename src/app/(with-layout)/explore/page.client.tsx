@@ -2,7 +2,13 @@
 
 import { Suspense, useMemo } from 'react';
 import { overlay } from 'overlay-kit';
-import { ButtonSearchBar, Loading, SectionTabs } from '@/ui';
+import {
+  ButtonSearchBar,
+  Loading,
+  PortfolioListSkeleton,
+  ProductCardSkeleton,
+  SectionTabs,
+} from '@/ui';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { parseInitialDraft, pickAllowedParams } from '@/app/(with-layout)/explore/utils/query';
 import { ExploreFilter, SearchSheet } from '@/app/(with-layout)/explore/components';
@@ -34,16 +40,24 @@ export default function PageClient() {
   const pathname = usePathname();
   const sp = useSearchParams();
 
-  const { snapCategory, placeName, date, peopleCount } = parseInitialDraft(sp);
+  const { snapCategory, placeName, date, peopleCount } = useMemo(() => parseInitialDraft(sp), [sp]);
   const snapCategoryLabel = SNAP_CATEGORY[snapCategory as keyof typeof SNAP_CATEGORY] ?? null;
   const placeLabel = placeName ?? null;
 
-  const headline = joinOrFallback([snapCategoryLabel, placeLabel], '어떤 스냅 작가를 찾고 있나요?');
+  const hasHeadline = Boolean(snapCategoryLabel || placeLabel);
+  const hasSupporting = Boolean(date || (peopleCount && peopleCount > 0));
 
-  const supportingText = joinOrFallback(
-    [formatDateDot(date), formatPeople(peopleCount)],
-    '날짜, 스냅 종류, 지역 기반으로 정교한 검색',
-  );
+  const headline = hasHeadline
+    ? joinOrFallback([snapCategoryLabel, placeLabel], '')
+    : hasSupporting
+      ? '-'
+      : '어떤 스냅 작가를 찾고 있나요?';
+
+  const supportingText = hasSupporting
+    ? joinOrFallback([formatDateDot(date), formatPeople(peopleCount)], '')
+    : hasHeadline
+      ? '-'
+      : '날짜, 스냅 종류, 지역 기반으로 정교한 검색';
 
   const currentTab = useMemo(() => {
     const raw = sp.get('tab'); // string | null
@@ -60,9 +74,11 @@ export default function PageClient() {
   };
 
   const handleSheetOpen = () => {
+    const placeName = sp.get('placeName') ?? '';
+    const key = `search-sheet:${placeName}:${sp.toString()}`;
     overlay.open(({ isOpen, close }) => (
       <Suspense fallback={<Loading className='h-full w-full self-center' />}>
-        <SearchSheet open={isOpen} onOpenChange={close} />
+        <SearchSheet key={key} open={isOpen} onOpenChange={close} />
       </Suspense>
     ));
   };
@@ -96,19 +112,31 @@ export default function PageClient() {
         </SectionTabs.List>
 
         {/* 필터 */}
-        <ExploreFilter />
+        <Suspense fallback={<div className='h-[5.6rem]' />}>
+          <ExploreFilter />
+        </Suspense>
       </header>
 
       {/* 탐색 페이지 탭 메인 콘텐츠 영역 */}
       <main className='scrollbar-hide min-h-0 overflow-y-hidden'>
         <SectionTabs.Contents value={EXPLORE_TAB.PORTFOLIO} className='min-h-full'>
           {/* 포트폴리오 목록 */}
-          <PortfolioListSection />
+          <Suspense fallback={<PortfolioListSkeleton length={15} />}>
+            <PortfolioListSection />
+          </Suspense>
         </SectionTabs.Contents>
 
         <SectionTabs.Contents value={EXPLORE_TAB.PRODUCT} className='min-h-full'>
           {/* 상품 목록 */}
-          <ProductListSection />
+          <Suspense
+            fallback={
+              <div className='bg-black-1 px-[2rem] py-[1.6rem]'>
+                <ProductCardSkeleton />
+              </div>
+            }
+          >
+            <ProductListSection />
+          </Suspense>
         </SectionTabs.Contents>
       </main>
     </SectionTabs>
