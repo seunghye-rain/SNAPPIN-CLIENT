@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { Divider } from '@/ui';
 import { EmptyView, ReservationCard, ReservationCardSkeleton } from '../components';
 import { useToast } from '@/ui/toast/hooks/useToast';
@@ -9,6 +9,7 @@ import { formatCreatedAt } from '@/utils/formatNumberWithComma';
 import { useGetReservationList } from '../api';
 import { RESERVATION_TAB } from '../constants/tabs';
 import { useAuth } from '@/auth/hooks/useAuth';
+import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 
 export default function ReservationListSection() {
   // 로그인 여부
@@ -20,6 +21,16 @@ export default function ReservationListSection() {
     isLogIn === true,
   );
   const hasData = (data?.reservations?.length ?? 0) > 0;
+
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+  const scrollKey = useMemo(
+    () => `reservation:list:${RESERVATION_TAB.CLIENT_OVERVIEW}:${isLogIn ?? 'unknown'}`,
+    [isLogIn],
+  );
+
+  useScrollRestoreOnParent(anchorRef, scrollKey, [data?.reservations?.length ?? 0], {
+    enabled: isLogIn === true,
+  });
 
   useEffect(() => {
     if (isLogIn === false) {
@@ -47,7 +58,7 @@ export default function ReservationListSection() {
   }
 
   return (
-    <section className='flex flex-col gap-[1.6rem] p-[1.6rem]'>
+    <section className='flex flex-col gap-[1.6rem] p-[1.6rem]' ref={anchorRef}>
       {reservations.map((reservation, reservationIndex) => {
         const product = reservation.product;
         return (
