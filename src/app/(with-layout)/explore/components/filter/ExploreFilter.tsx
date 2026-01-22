@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FilterChip, IconButton } from '@/ui';
 import { IconFilter, IconSettingsBackupRestore } from '@/assets';
@@ -8,7 +8,12 @@ import { ExploreFilterPanel } from '@/app/(with-layout)/explore/components';
 import { useMoodFilters } from '@/app/(with-layout)/explore/api';
 import { GetMoodFilterResponse } from '@/swagger-api/data-contracts';
 
-const CURATED_APPLIED_KEY = 'explore_curated_applied_v1';
+const SKIP_AUTO_APPLY_ON_RETURN_KEY = 'explore_skip_auto_apply_on_return_v1';
+
+const isDetailPath = (path: string) =>
+  path.startsWith('/product-detail/') || path.startsWith('/portfolio-detail/');
+
+const isExplorePath = (path: string) => path === '/explore';
 
 const parseMoodIds = (params: URLSearchParams): number[] => {
   const rawMoodIds = params.get('moodIds');
@@ -29,6 +34,58 @@ export default function ExploreFilter() {
 
   const moodIds = useMemo(() => parseMoodIds(searchParams), [searchParams]);
 
+  const userResetRef = useRef(false);
+  const autoAppliedRef = useRef(false);
+  const prevPathRef = useRef<string | null>(null);
+
+  const popRef = useRef(false);
+
+  // 뒤로가기/앞으로가기 감지
+  useEffect(() => {
+    const onPopState = () => {
+      popRef.current = true;
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  useEffect(() => {
+    const prev = prevPathRef.current;
+    prevPathRef.current = pathname;
+
+    if (!prev) return;
+
+    // explore -> detail 로 나갈 때: "복귀 시 자동세팅 금지" 플래그 세팅
+    if (isExplorePath(prev) && isDetailPath(pathname)) {
+      sessionStorage.setItem(SKIP_AUTO_APPLY_ON_RETURN_KEY, 'true');
+      return;
+    }
+
+    // explore -> (detail 제외 다른 곳) 로 나가면: 방문 상태 리셋(원하면)
+    if (isExplorePath(prev) && !isExplorePath(pathname) && !isDetailPath(pathname)) {
+      userResetRef.current = false;
+      autoAppliedRef.current = false;
+      sessionStorage.removeItem(SKIP_AUTO_APPLY_ON_RETURN_KEY);
+    }
+  }, [pathname]);
+
+  const curatedIds = useMemo(() => {
+    return (data.moods ?? [])
+      .filter((m) => m.isCurated)
+      .map((m) => m.id)
+      .filter((id): id is number => typeof id === 'number');
+  }, [data.moods]);
+
+  const replaceMoodIds = (nextIds: number[]) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (nextIds.length === 0) params.delete('moodIds');
+    else params.set('moodIds', nextIds.join(','));
+
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname);
+  };
+
   const moodById = useMemo(() => {
     const map = new Map<number, GetMoodFilterResponse>();
     data.moods?.forEach((m) =>
@@ -43,58 +100,48 @@ export default function ExploreFilter() {
   }, [data]);
 
   const selectedMoods = useMemo(() => {
-    return moodIds.map((id) => moodById.get(id)).filter((m): m is GetMoodFilterResponse => Boolean(m));
+    return moodIds
+      .map((id) => moodById.get(id))
+      .filter((m): m is GetMoodFilterResponse => Boolean(m));
   }, [moodIds, moodById]);
+
+  const handleReset = () => {
+    // 유저가 빈 상태를 의도함 → 이번 방문 동안 자동세팅 금지
+    userResetRef.current = true;
+    replaceMoodIds([]); // moodIds 제거
+  };
 
   const handleRemoveMood = (removeId: number) => {
     const nextIds = moodIds.filter((id) => id !== removeId);
 
-    const params = new URLSearchParams(searchParams.toString());
-
     if (nextIds.length === 0) {
-      params.delete('moodIds');
-    } else {
-      params.set('moodIds', nextIds.join(','));
+      // 마지막까지 삭제 = 유저가 빈 상태 의도
+      userResetRef.current = true;
+      replaceMoodIds([]);
+      return;
     }
 
-    const qs = params.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname);
-  };
-
-  const handleReset = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('moodIds');
-    const qs = params.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname);
+    replaceMoodIds(nextIds);
   };
 
   useEffect(() => {
-    // 이미 moodIds가 존재하면 최초 진입 이후 필터 적용, 임의 필터 추가 적용한 상태
+    if (!isExplorePath(pathname)) return;
+
+    // explore<-detail 복귀면 자동세팅 금지
+    const skip = sessionStorage.getItem(SKIP_AUTO_APPLY_ON_RETURN_KEY) === 'true';
+    if (skip) {
+      sessionStorage.removeItem(SKIP_AUTO_APPLY_ON_RETURN_KEY); // 1회 소모
+      return;
+    }
+
     if (moodIds.length > 0) return;
+    if (userResetRef.current) return;
+    if (autoAppliedRef.current) return;
+    if (curatedIds.length === 0) return;
 
-    // 최초 진입 이후 큐레이션된 필터가 적용된 상태 인지 확인
-    const alreadyApplied = sessionStorage.getItem(CURATED_APPLIED_KEY) === 'true';
-    if (alreadyApplied) return;
-
-    // 큐레이션된 무드 필터 아이디들 추출
-    const curatedIds = data.moods?.filter((mood) => mood.isCurated).map((mood) => mood.id);
-
-    // curated가 비어 있으면 플래그만 세우고 종료
-    sessionStorage.setItem(CURATED_APPLIED_KEY, 'true');
-    if (curatedIds?.length === 0) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('moodIds', curatedIds?.join(',') ?? '');
-
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [moodIds, data, pathname, router, searchParams]);
-
-  useEffect(() => {
-    return () => {
-      // Explore 페이지를 벗어날 때(언마운트) → 다음 진입 시 다시 curated 적용되게
-      sessionStorage.removeItem(CURATED_APPLIED_KEY);
-    };
-  }, []);
+    autoAppliedRef.current = true;
+    replaceMoodIds(curatedIds);
+  }, [pathname, moodIds, curatedIds, router, searchParams]);
 
   return (
     <>
