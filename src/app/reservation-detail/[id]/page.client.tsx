@@ -42,7 +42,6 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   const previousComputedStatus =
     previousStatus ?? (reservationData?.status as StateCode | undefined);
 
-  // 이전 상태가 예약 요청 또는 작가 확인일 때 취소된 상태인지 확인
   const isCanceledFrom =
     status === STATE_CODES.RESERVATION_CANCELED &&
     (previousComputedStatus === STATE_CODES.RESERVATION_REQUESTED ||

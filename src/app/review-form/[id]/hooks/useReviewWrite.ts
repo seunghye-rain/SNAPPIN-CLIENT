@@ -3,18 +3,12 @@
 import { z } from 'zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IMAGE_ACCEPT, MAX_IMAGE_SIZE } from '@/constants/image-type/imageAccept';
 
 export const REVIEW_CONTENT_MAX_LENGTH = 500;
 export const MAX_RATING = 5;
 export const MAX_IMAGE_COUNT = 5;
-const ALLOWED_TYPES = new Set(IMAGE_ACCEPT.WITH_HEIC.split(','));
 
-type ContentValidationResult = {
-  ok: boolean;
-  reason?: 'min' | 'max';
-};
-
+// 리뷰 작성 폼 스키마
 export const enrollReviewSchema = z.object({
   rating: z.number().min(1, '별점을 선택해 주세요.').max(MAX_RATING),
   content: z
@@ -22,18 +16,19 @@ export const enrollReviewSchema = z.object({
     .trim()
     .min(0)
     .max(REVIEW_CONTENT_MAX_LENGTH, `최대 ${REVIEW_CONTENT_MAX_LENGTH}자까지 입력할 수 있어요.`),
-  imageUrls: z.array(z.string().url('이미지 URL이 올바르지 않습니다.')).max(MAX_IMAGE_COUNT),
+  imageUrls: z.array(z.string()).max(MAX_IMAGE_COUNT),
 });
 
+// 리뷰 작성 폼 입력 타입
 export type EnrollReviewInput = z.infer<typeof enrollReviewSchema>;
 
+// 리뷰 작성 훅
 export const useReviewWrite = () => {
   const {
     control,
     handleSubmit,
     setValue,
     setError,
-    clearErrors,
     trigger,
     formState: { errors, isValid },
   } = useForm<EnrollReviewInput>({
@@ -42,62 +37,32 @@ export const useReviewWrite = () => {
     mode: 'onChange',
   });
 
+  // 폼 데이터 감시
   const [rating, content, imageUrls] = useWatch({
     control,
     name: ['rating', 'content', 'imageUrls'],
   });
 
+  // 별점 업데이트 함수
   const updateRating = (value: number) => {
     setValue('rating', value, { shouldValidate: true });
   };
 
-  const updateContent = (value: string): ContentValidationResult => {
+  // 리뷰 내용 업데이트 함수
+  const updateContent = (value: string) => {
     const isOverMax = value.length > REVIEW_CONTENT_MAX_LENGTH;
-
-    setValue('content', value, { shouldValidate: true });
-
     if (isOverMax) {
       setError('content', { message: `최대 ${REVIEW_CONTENT_MAX_LENGTH}자까지 입력할 수 있어요.` });
-      return { ok: false, reason: 'max' };
     }
-
-    clearErrors('content');
-    return { ok: true };
+    setValue('content', value, { shouldValidate: true });
   };
 
-  const updateImageUrls = (urls: string[]) => {
-    setValue('imageUrls', urls, { shouldValidate: true });
-  };
-
-  const handleSubmitForm = async (onValid: (data: EnrollReviewInput) => void) => {
-    const ok = await trigger();
-    if (!ok) return;
-    handleSubmit((data) => onValid(data))();
-  };
-
-  const validateFiles = (files: FileList, currentCount = 0) => {
-    const selected = Array.from(files);
-    const totalCount = currentCount + selected.length;
-
-    const hasInvalidType = selected.some((file) => !ALLOWED_TYPES.has(file.type));
-    const exceedsSize = selected.some((file) => file.size > MAX_IMAGE_SIZE);
-    const exceedsCount = totalCount > MAX_IMAGE_COUNT;
-
-    if (hasInvalidType) {
-      setError('imageUrls', { message: 'JPG/PNG/WEBP/HEIC만 업로드 가능해요.' });
-      return { ok: false };
+  // 폼 제출 처리 함수
+  const handleSubmitForm = async (onSuccess: (data: EnrollReviewInput) => void) => {
+    const isValid = await trigger();
+    if (isValid) {
+      handleSubmit((data) => onSuccess(data))();
     }
-    if (exceedsSize) {
-      setError('imageUrls', { message: '이미지 하나당 최대 20MB까지 업로드 가능해요.' });
-      return { ok: false };
-    }
-    if (exceedsCount) {
-      setError('imageUrls', { message: `최대 ${MAX_IMAGE_COUNT}장까지 업로드 가능해요.` });
-      return { ok: false };
-    }
-
-    clearErrors('imageUrls');
-    return { ok: true };
   };
 
   const compatibleErrors = {
@@ -119,8 +84,7 @@ export const useReviewWrite = () => {
     handleSubmitForm,
     updateRating,
     updateContent,
-    updateImageUrls,
-    validateFiles,
     compatibleErrors,
+    setValue,
   };
 };
