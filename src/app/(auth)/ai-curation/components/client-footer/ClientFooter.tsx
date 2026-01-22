@@ -24,11 +24,11 @@ export default function ClientFooter() {
   };
 
   return (
-    <BottomCTAButton fixed={true} hasPadding={true} className=' flex flex-col gap-[0.7rem] px-[2rem] pb-[3rem] z-100'>
-      <Button color='primary' size='large' onClick={handleStartCuration}>
+    <BottomCTAButton fixed={true} hasPadding={true} className='flex flex-col gap-[0.7rem] px-[2rem] pb-[3rem] z-100'>
+      <Button color='primary' size='large' onClick={handleStartCuration} className='font-16-bd'>
         AI 무드 큐레이션 시작하기
       </Button>
-      <Button color='primary' size='large' onClick={handleGoHome} className='bg-black-4'>
+      <Button color='white' size='large' onClick={handleGoHome} className='font-16-bd text-black-10'>
         홈으로 가기
       </Button>
     </BottomCTAButton>
