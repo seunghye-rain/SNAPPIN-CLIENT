@@ -105,11 +105,5 @@ export const useWishPortfolio = () => {
         context.previousData
       );
     },
-    // 서버 상태와 동기화
-    onSettled: (_data, _error, id) => {
-      queryClient.invalidateQueries({
-        queryKey: USER_QUERY_KEY.PORTFOLIO_DETAIL(id, true),
-      });
-    },
   });
 }
