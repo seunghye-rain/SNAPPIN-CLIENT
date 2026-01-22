@@ -13,7 +13,7 @@ function isPathMatch(pathname: string, basePath: string) {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get('AccessToken')?.value;
- // const userType = request.cookies.get('UserType')?.value;
+  //const userType = request.cookies.get('UserType')?.value;
   //  로그인 상태면 로그인 페이지 접근 차단
   if (accessToken && LOGIN_RESTRICTED_PATHS.some((p) => isPathMatch(pathname, p))) {
     return NextResponse.redirect(new URL('/', request.url));

@@ -9,13 +9,12 @@ export function useAuth() {
   const router = useRouter();
   const [isLogIn, setIsLogIn] = useState<boolean|null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
   useEffect(() => {
     getAccessToken().then((token) => {
       setIsLogIn(!!token);
     });
   }, []);
-  
+
   const logout = async () => {
     setIsLoggingOut(true);
     await deleteAccessToken();
@@ -30,5 +29,4 @@ export function useAuth() {
     logout,
     isLoggingOut,
   };
-
 }

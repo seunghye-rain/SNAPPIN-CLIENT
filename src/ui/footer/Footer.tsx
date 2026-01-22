@@ -124,7 +124,7 @@ export default function Footer() {
                 <Icon className={cn(active && 'text-black-10')} width={26} height={26} />
                 <span className="caption-10-md">{item.label}</span>
               </button>
-            );      
+            );           
         })}
       </footer>
     </div>
