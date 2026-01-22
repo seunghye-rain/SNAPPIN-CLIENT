@@ -31,7 +31,7 @@ export default function ProductStatus({
   const router = useRouter();
 
   const handleWriteReview = () => {
-    router.push(`review-form/${id}`);
+    router.replace(`/review-form/${id}`);
   };
 
   const handleSendMessage = () => {
