@@ -1,64 +1,97 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, startTransition } from 'react';
 import { Divider } from '@/ui';
 import { ClientHeader, ClientProfileCard, Menus, SwitchProfile } from './components';
-import { USER_TYPE, UserType } from '@/auth/constant/userType';
+import type { UserType } from '@/auth/constant/userType';
 import { getUserType, setUserType } from '@/auth/userType';
 
-const MIN_DURATION = 800; 
+const MIN_DURATION = 800;
+
+type SwitchControl = {
+  startTime: number | null;
+  timeoutId: NodeJS.Timeout | null;
+};
 
 export default function Page() {
-  const [userType, setUserTypeState] = useState<UserType>(USER_TYPE.CLIENT);
+  const [userType, setUserTypeState] = useState<UserType | null>(null);
   const [isSwitching, setIsSwitching] = useState(false);
 
-  const startTimeRef = useRef<number | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const switchControlRef = useRef<SwitchControl>({
+    startTime: null,
+    timeoutId: null,
+  });
 
+  // 초기 role 로드
   useEffect(() => {
+    let mounted = true;
+
     const fetchRole = async () => {
       const type = await getUserType();
+      if (!mounted) return;
       if (type) setUserTypeState(type as UserType);
     };
+
     fetchRole();
+
+    return () => {
+      mounted = false;
+      // unmount 시 타이머 정리
+      const { timeoutId } = switchControlRef.current;
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
-  // 전환 시작 : 전환 시작 시간 기록
-  const startSwitching = () => {
-    startTimeRef.current = Date.now();
+  // 전환 시작: 시작시간 기록 + UI on
+  const startSwitching = useCallback(() => {
+    const ctrl = switchControlRef.current;
+    ctrl.startTime = Date.now();
     setIsSwitching(true);
-  };
+  }, []);
 
-  // 전환 종료 : 최소 지속 시간(minDuration) 보장
-  const endSwitching = () => {
-    const elapsed = Date.now() - (startTimeRef.current ?? 0);
+  // 전환 종료: MIN_DURATION 보장 + 타이머 관리
+  const endSwitching = useCallback(() => {
+    const ctrl = switchControlRef.current;
+
+    const elapsed = Date.now() - (ctrl.startTime ?? 0);
     const remaining = Math.max(MIN_DURATION - elapsed, 0);
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    if (ctrl.timeoutId) clearTimeout(ctrl.timeoutId);
 
-    timeoutRef.current = setTimeout(() => {
+    ctrl.timeoutId = setTimeout(() => {
       setIsSwitching(false);
-      startTimeRef.current = null;
+      ctrl.startTime = null;
+      ctrl.timeoutId = null;
     }, remaining);
-  };
+  }, []);
 
-  const handleUserTypeChange = (type: UserType) => {
-    startSwitching();
+  const handleUserTypeChange = useCallback(
+    (type: UserType) => {
+      startSwitching();
 
-    // 여기서 요청이 끝났다고 가정
-    setUserTypeState(type);
-    setUserType(type);
-    endSwitching();
-  };
+      // storage/cookie 등 side-effect
+      setUserType(type);
+
+      // UI 업데이트는 transition으로
+      startTransition(() => {
+        setUserTypeState(type);
+      });
+
+      endSwitching();
+    },
+    [startSwitching, endSwitching],
+  );
 
   return (
-    <div className='relative bg-black-3 flex flex-col'>
+    <div className='relative flex flex-col bg-black-3'>
       <ClientHeader />
+
       <ClientProfileCard userType={userType} isSwitching={isSwitching} />
+
       <Divider color='bg-black-3' className='h-[0.6rem]' />
+
       <Menus />
+
       <SwitchProfile
         userType={userType}
         onChange={handleUserTypeChange}
@@ -67,7 +100,7 @@ export default function Page() {
       />
 
       {isSwitching && (
-        <div className='absolute h-dvh inset-0 z-50 flex items-center justify-center bg-black/30'>
+        <div className='absolute inset-0 z-50 flex h-dvh items-center justify-center bg-black/30'>
           <span className='title-20-bd text-neon-black'>계정 전환 중...</span>
         </div>
       )}
