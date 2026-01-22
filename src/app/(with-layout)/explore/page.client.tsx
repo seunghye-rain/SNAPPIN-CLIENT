@@ -112,15 +112,21 @@ export default function PageClient() {
       </header>
 
       {/* 탐색 페이지 탭 메인 콘텐츠 영역 */}
-      <main className='scrollbar-hide min-h-0 overflow-y-hidden'>
-        <SectionTabs.Contents value={EXPLORE_TAB.PORTFOLIO} className='min-h-full'>
+      <main className='scrollbar-hide min-h-0 flex-1 overflow-hidden'>
+        <SectionTabs.Contents
+          value={EXPLORE_TAB.PORTFOLIO}
+          className='min-h-0 flex-1 overflow-y-auto'
+        >
           {/* 포트폴리오 목록 */}
           <Suspense fallback={<PortfolioListSkeleton length={15} />}>
             <PortfolioListSection />
           </Suspense>
         </SectionTabs.Contents>
 
-        <SectionTabs.Contents value={EXPLORE_TAB.PRODUCT} className='min-h-full'>
+        <SectionTabs.Contents
+          value={EXPLORE_TAB.PRODUCT}
+          className='min-h-0 flex-1 overflow-y-auto'
+        >
           {/* 상품 목록 */}
           <Suspense
             fallback={

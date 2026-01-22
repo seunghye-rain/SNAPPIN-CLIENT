@@ -45,8 +45,8 @@ export default function PortfolioListSection() {
 
   return (
     <section className='px-[1rem] py-[1rem]'>
+      <div ref={anchorRef} />
       <PortfolioList portfolioList={portfolios} />
-      <div ref={anchorRef} className='h-[1px]' />
       {/* 다음 페이지 로딩 트리거 */}
       <div ref={sentinelRef} className='h-[1px]' />
 
