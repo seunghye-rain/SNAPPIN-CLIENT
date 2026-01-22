@@ -58,7 +58,7 @@ export const useGetProductList = (id: number) => {
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(`${SERVER_API_BASE_URL}/api/v1/products`);
-      url.searchParams.append('productId', String(id));
+      url.searchParams.append('photographerId', String(id));
       if (pageParam) {
         url.searchParams.append('cursor', String(pageParam));
       }
