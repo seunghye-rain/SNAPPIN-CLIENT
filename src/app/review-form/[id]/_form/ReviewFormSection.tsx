@@ -115,13 +115,13 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
               className='scrollbar-hide -mr-[1.4rem] flex gap-[0.8rem] overflow-x-auto pr-[2rem]'
               id='review-image-list'
             >
-              {images.map(({ preview }) => (
+              {images.map(({ id, preview }) => (
                 <ImagePreview
-                  key={preview}
+                  key={id}
                   imageSrc={preview}
                   imageAlt='업로드한 리뷰 이미지'
                   showRemoveButton
-                  handleRemove={() => removeImage(preview)}
+                  handleRemove={() => removeImage(id)}
                   className='shrink-0'
                 />
               ))}

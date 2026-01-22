@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useImageUpload } from '../api';
 import validateImage from '@/utils/validateImage';
 
@@ -57,8 +57,14 @@ export const useReviewImages = () => {
   }, []);
 
   const useAutoScrollReviewImages = (imageCount: number) => {
+    const previousCountRef = useRef(imageCount);
+
     useEffect(() => {
+      const previousCount = previousCountRef.current;
+      previousCountRef.current = imageCount;
+
       if (imageCount < 1) return;
+      if (imageCount <= previousCount) return; // skip when removing or same size
 
       const element = document.getElementById('review-image-list');
       if (!element) return;
