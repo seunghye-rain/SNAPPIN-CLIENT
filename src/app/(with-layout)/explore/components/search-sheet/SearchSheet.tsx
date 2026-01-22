@@ -57,7 +57,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
   );
 
   const { snapCategory, peopleCount, date } = searchDraft;
-  const formattedCount = peopleCount && peopleCount > 0 ? `${peopleCount}명` : '';
+  const formattedCount = peopleCount && peopleCount > 0 ? `${peopleCount}명` : '0명';
 
   const handleFieldClick = (category: SearchField) => {
     setCurrentField(category);
