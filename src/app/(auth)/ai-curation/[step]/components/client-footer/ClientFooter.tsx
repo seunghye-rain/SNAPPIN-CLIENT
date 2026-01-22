@@ -24,12 +24,11 @@ export default function ClientFooter({ step }: ClientFooterProps) {
 
   const handleNextStep = async () => {
     if (!isSelected) {
-      error('마음에 드는 사진 한 장을 선택해 주세요', undefined, 'bottom-[8rem]');
+      error('이미지를 선택해주세요.', undefined, 'bottom-[8rem]');
       return;
     }
 
     if (!isLast) {
-      removeToast();
       router.push(`/ai-curation/${step + 1}`);
       return;
     }
@@ -46,7 +45,7 @@ export default function ClientFooter({ step }: ClientFooterProps) {
   };
 
   return (
-    <BottomCTAButton fixed className='px-[2rem] pb-[2rem] z-100' >
+    <BottomCTAButton>
       <BottomCTAButton.Single
         color='primary'
         size='large'
