@@ -144,7 +144,7 @@ export default function ReviewFormSection({ reservationId }: ReviewFormSectionPr
         </section>
       </form>
       <ClientFooter
-        disabled={!isValid || isContentEmpty || isSubmitting}
+        disabled={!isValid || isContentEmpty || isSubmitting || hasError}
         handleClick={handleSubmit}
       />
     </>
