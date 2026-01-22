@@ -12,6 +12,7 @@ import { setAccessToken } from '../token';
 import { setUserType } from '../userType';
 import { UserType } from '../constant/userType';
 import { useToast } from '@/ui/toast/hooks/useToast';
+import { useAuth } from '../hooks/useAuth';
 
 export const getRefreshToken = async () => {
   const refreshResponse = await fetch(`${SERVER_API_BASE_URL}/api/v1/auth/reissue`, {
@@ -24,6 +25,8 @@ export const getRefreshToken = async () => {
 
 // 유저 정보 조회 API
 export const useGetUserInfo = () => {
+  const { isLogIn } = useAuth();
+
   return useQuery<GetUserInfoResponse>({
     queryKey: AUTH_QUERY_KEY.AUTH,
     queryFn: async () => {
@@ -37,6 +40,7 @@ export const useGetUserInfo = () => {
       }
       return res.data;
     },
+    enabled: !!isLogIn,
   });
 }
 

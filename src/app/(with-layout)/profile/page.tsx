@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { Divider, Button } from '@/ui';
 import { ClientHeader, ClientProfileCard, Menus } from './components';
 import Image from 'next/image';
