@@ -32,7 +32,7 @@ export default function SwitchProfile({ userType, onChange, onSwitchStart, onSwi
           <p className='caption-14-md text-black-10'>
             {userType === USER_TYPE.PHOTOGRAPHER ? '고객 계정으로 전환하기' : '작가 계정으로 전환하기'}
           </p>
-          <UserTypeToggle selectedType={userType} onClick={handleClick} disabled={isPending} />
+          <UserTypeToggle selectedType={userType} onClick={handleClick}  disabled={isPending}/>
         </div>
       </section>
     </>
