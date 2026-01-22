@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { ProductList, ProductListSkeleton } from '@/ui';
+import { ProductList, ProductListSkeleton, ProductCardSkeleton, Divider } from '@/ui';
 import { useGetProductList } from '../api';
 
 type ProductListSectionProps = {
@@ -33,7 +33,7 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
 
   if (isFetching && isEmpty) {
     return (
-      <section>
+      <section className='mt-[4.6rem]'>
         <ProductListSkeleton />
       </section>
     );

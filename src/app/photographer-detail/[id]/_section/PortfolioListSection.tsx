@@ -22,7 +22,7 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
 
   if (isFetching && isEmpty) {
     return (
-      <section>
+      <section className='mt-[4.6rem]'>
         <PortfolioListSkeleton />
       </section>
     );
