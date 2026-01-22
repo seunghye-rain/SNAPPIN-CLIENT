@@ -57,7 +57,7 @@ export default function ProductMainSection({
         <div className='flex flex-col'>
           {/* 상품명, 좋아요 */}
           <div className='flex items-center justify-between'>
-            <span className='font-16-bd text-black-10'>{title}</span>
+            <span className='font-18-bd text-black-10'>{title}</span>
             <div className='flex h-[3rem] w-[4.4rem] items-center justify-end gap-[1rem]'>
               <IconButton className='h-[2.4rem] w-[2.4rem]' onClick={handleLike}>
                 {isLiked ? <IconHeartFill /> : <IconHeart />}
