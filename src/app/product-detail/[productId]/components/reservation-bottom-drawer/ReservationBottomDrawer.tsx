@@ -123,11 +123,7 @@ export default function ReservationBottomDrawer({
       },
       onError: (error) => {
         const message = getErrorMessage(error);
-
-        // 409면 "이미 예약" 같이 서버 메시지 그대로
         toast.error(message, 3000, 'bottom-[8.6rem]');
-
-        // 실패 시 닫을지 말지는 취향인데, 보통은 안 닫는 게 UX 좋음
         handleOpenChangeAction();
       },
     });
