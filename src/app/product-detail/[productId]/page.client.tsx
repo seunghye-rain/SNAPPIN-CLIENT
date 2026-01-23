@@ -21,10 +21,10 @@ export default function ClientPage({ productId }: { productId: string }) {
   const tabParam = searchParams.get('tab');
   const [selectedTab, setSelectedTab] = useState(tabParam ?? PRODUCT_TAB.PRODUCT_DETAIL);
 
-  const { data, isFetching } = useGetProductDetail(Number(productId));
+  const { data, isPending } = useGetProductDetail(Number(productId));
 
   const productInfo = {
-    snapCategory: data?.productInfo?.snapCategory ?? '-',
+    snapCategory: data?.productInfo?.snapCategory ?? 'asdfasdf',
     regions: data?.productInfo?.regions ?? [],
     moods: data?.productInfo?.moods ?? [],
     maxPeople: data?.productInfo?.maxPeople ?? '-',
@@ -60,7 +60,7 @@ export default function ClientPage({ productId }: { productId: string }) {
   return (
     <div>
       <Header />
-      {isFetching ? (
+      {isPending ? (
         <ProductDetailSkeleton selectedTab={selectedTab} />
       ) : (
         <>
