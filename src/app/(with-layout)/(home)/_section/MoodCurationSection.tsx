@@ -13,8 +13,10 @@ export default function MoodCurationSection() {
   const { isLogIn } = useAuth();
   const { data: userInfo } = useGetUserInfo();
   const userName = userInfo?.clientInfo?.name ?? 'snappin 고객';
-  const { data } = useGetPortfoliosRecommendation(isLogIn ?? false);
-  const { data: popularPortfolios } = useGetPopularPortfoliosRecommendation(!isLogIn);
+
+  const isLoginResolved = isLogIn !== null;
+  const { data } = useGetPortfoliosRecommendation(isLoginResolved && isLogIn === true);
+  const { data: popularPortfolios } = useGetPopularPortfoliosRecommendation(isLoginResolved && isLogIn === false);
 
   const portfolios = isLogIn ? (data?.portfolios ?? []) : (popularPortfolios?.portfolios ?? []);
   const moods = isLogIn ? (data?.curatedMoods ?? []) : (popularPortfolios?.popularMoods ?? []);
@@ -33,7 +35,7 @@ export default function MoodCurationSection() {
                 key={index}
                 label={mood as MoodCode}
                 chipClassName='px-[0.6rem] py-[0.3rem] border-1 border-black-10 '
-                labelClassName='caption-12-md'
+                labelClassName='caption-14-md'
               />
             ))}
           </div>
