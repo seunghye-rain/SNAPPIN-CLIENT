@@ -23,8 +23,6 @@ export default function ShootCompletedListSection() {
     }
   }, [isLogIn, login]);
 
-  const hasData = (data?.reservations?.length ?? 0) > 0;
-
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const scrollKey = useMemo(
     () => `reservation:list:${RESERVATION_TAB.CLIENT_OVERVIEW}:${isLogIn ?? 'unknown'}`,
@@ -35,21 +33,35 @@ export default function ShootCompletedListSection() {
     enabled: isLogIn === true,
   });
 
-  if (isLogIn === null) return <ReservationCardSkeleton />;
-
-  if (isFetching && !hasData && isLogIn === true) {
-    return <ReservationCardSkeleton />;
-  }
+  if (isLogIn === null) return null;
 
   const reservations = data?.reservations ?? [];
+  const hasData = (data?.reservations?.length ?? 0) > 0;
+
+  if (isFetching && isLogIn === true) {
+    return (
+      <div className='p-[1.6rem]'>
+        <ReservationCardSkeleton />
+      </div>
+    );
+  }
 
   const isEmpty = isLogIn === true && !isFetching && !hasData;
 
-  if (isEmpty) {
+  if (isLogIn === false) {
     return (
       <EmptyView
         title='촬영 완료된 상품이 없어요'
-        description='&#39;탐색&#39;에서 다양한 상품을 확인해 보세요'
+        description='&#39;탐색&#39;에서 다양한 포트폴리오를 확인해보세요'
+      />
+    );
+  }
+
+  if (!hasData) {
+    return (
+      <EmptyView
+        title='촬영 완료된 상품이 없어요'
+        description='&#39;탐색&#39;에서 다양한 포트폴리오를 확인해보세요'
       />
     );
   }
