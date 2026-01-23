@@ -23,6 +23,7 @@ export default function Menus() {
     handleModalOpen(true);
   };
 
+  // 이전 버전
   // const handleConfirm = async () => {
   //   try {
   //     await logoutApi();
