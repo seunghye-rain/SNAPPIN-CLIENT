@@ -22,7 +22,8 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   const { data: reservationData, isPending } = useGetReservationDetail(parsedReservationId);
 
   const { mutate: cancelReservationMutation } = useCancelReservation(parsedReservationId);
-  const { mutate: requestPaymentMutation } = useRequestPayment();
+  const { mutate: requestPaymentMutation, isPending: isPaymentRequestPending } =
+    useRequestPayment();
 
   const [cancelOpen, setCancelOpen] = useState(false);
   const [reservationStatus, setReservationStatus] = useState<StateCode>();
@@ -59,6 +60,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   const handlePaymentConfirmClick = () => {
+    if (isPaymentRequestPending) return;
     requestPaymentMutation(parsedReservationId, {
       onSuccess: (paymentResponse) => {
         setPreviousStatus(status);
@@ -147,7 +149,12 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
         {hasBottomCta && (
           <>
             <div className='h-[8.4rem]' />
-            <ClientFooter status={status} handlePaymentConfirmClick={handlePaymentConfirmClick} />
+
+            <ClientFooter
+              status={status}
+              handlePaymentConfirmClick={handlePaymentConfirmClick}
+              isPaymentRequestPending={isPaymentRequestPending}
+            />
           </>
         )}
       </div>
