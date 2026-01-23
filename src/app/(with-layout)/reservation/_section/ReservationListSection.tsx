@@ -16,7 +16,7 @@ export default function ReservationListSection() {
   const { isLogIn } = useAuth();
   const { login } = useToast();
 
-  const { data, isFetching } = useGetReservationList(
+  const { data, isFetching, isPending } = useGetReservationList(
     RESERVATION_TAB.CLIENT_OVERVIEW,
     isLogIn === true,
   );
@@ -42,11 +42,11 @@ export default function ReservationListSection() {
 
   if (isLogIn === undefined) return <ReservationCardSkeleton />;
 
-  if (isFetching && hasData && isLogIn === true) {
+  if (isPending && !hasData && isLogIn === true) {
     return <ReservationCardSkeleton />;
   }
 
-  const isEmpty = isLogIn === true && !isFetching && !hasData;
+  const isEmpty = isLogIn === true && !isFetching && !isPending && !hasData;
 
   if (isEmpty) {
     return (

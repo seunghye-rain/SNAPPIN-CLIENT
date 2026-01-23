@@ -15,7 +15,10 @@ export default function ShootCompletedListSection() {
   // 로그인 여부
   const { isLogIn } = useAuth();
   const { login } = useToast();
-  const { data, isFetching } = useGetReservationList(RESERVATION_TAB.CLIENT_DONE, isLogIn === true);
+  const { data, isFetching, isPending } = useGetReservationList(
+    RESERVATION_TAB.CLIENT_DONE,
+    isLogIn === true,
+  );
 
   useEffect(() => {
     if (isLogIn === false) {
@@ -38,7 +41,7 @@ export default function ShootCompletedListSection() {
 
   if (isLogIn === undefined) return <ReservationCardSkeleton />;
 
-  if (isFetching && hasData && isLogIn === true) {
+  if (isPending && !hasData && isLogIn === true) {
     return <ReservationCardSkeleton />;
   }
 
