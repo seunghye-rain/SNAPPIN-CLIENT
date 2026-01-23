@@ -26,7 +26,18 @@ export default function MoodAnimationResult({ data }: MoodAnimationResultProps) 
   const [phase, setPhase] = useState<Phase>('intro');
 
   const handleGoToSnap = () => {
-    router.push('/explore');
+    if (!data?.moods?.length) return;
+  
+    const params = new URLSearchParams();
+    params.set(
+      'moodIds',
+      data.moods
+        .map((mood) => mood.id)
+        .filter((id): id is number => typeof id === 'number')
+        .join(','),
+    );
+  
+    router.push(`/explore?${params.toString()}`);
   };
 
   const handleGoHome = () => {
