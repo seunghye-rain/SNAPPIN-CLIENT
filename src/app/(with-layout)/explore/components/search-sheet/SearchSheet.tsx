@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   ComboBox,
   ControlSheet,
@@ -13,11 +12,12 @@ import {
 import { IconClose } from '@/assets';
 import { useSearchReducer } from '@/app/(with-layout)/explore/hooks/use-search-reducer';
 import { SearchField } from '@/app/(with-layout)/explore/types/search';
-import { parseInitialDraft, patchSearchParams } from '@/app/(with-layout)/explore/utils/query';
+import { parseInitialDraft } from '@/app/(with-layout)/explore/utils/query';
 import { SNAP_CATEGORY } from '@/constants/categories/snap-category';
 import { SearchFooter, SnapCategory } from '@/app/(with-layout)/explore/components';
-import { useSearchPlaces } from '@/app/(with-layout)/explore/api';
-import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useQueryParams } from '@/hooks/useSearchQuery';
+import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
+import { ALLOWED_KEYS } from '@/app/(with-layout)/explore/constants/query';
 
 type SearchSheetProps = {
   open: boolean;
@@ -28,11 +28,11 @@ const MIN_PARTICIPANT_COUNT = 0;
 const MAX_PARTICIPANT_COUNT = 15;
 
 export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialPlaceName = searchParams.get('placeName') ?? '';
-  const [placeKeyword, setPlaceKeyword] = useState(initialPlaceName);
+  const { read, patch, navigate, searchParams } = useQueryParams(ALLOWED_KEYS);
+  const initialPlaceName = read.get('placeName');
+  const [currentField, setCurrentField] = useState<SearchField>('snapCategory');
+  const didInitRef = useRef(false);
+  const placeFieldKey = `${open}-${initialPlaceName}`;
 
   const {
     searchDraft,
@@ -44,17 +44,19 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
     setCategory,
     setPeopleCount,
   } = useSearchReducer();
-  const [currentField, setCurrentField] = useState<SearchField>('snapCategory');
-  const didInitRef = useRef(false);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const debouncedPlaceKeyword = useDebouncedValue(placeKeyword, 300);
-  const { data: places } = useSearchPlaces(debouncedPlaceKeyword);
-  const placeNameToId = new Map(
-    (places ?? [])
-      .filter((p) => p.name && p.id != null)
-      .map((p) => [p.name as string, p.id as number]),
-  );
+  const {
+    value: placeKeyword,
+    setValue: setPlaceKeyword,
+    options: placeOptions,
+    handleChange: handlePlaceKeywordChange,
+    handleBlur: handlePlaceBlur,
+    reset: resetPlaceField,
+  } = usePlaceSearchField<string>({
+    initialValue: initialPlaceName,
+    selectedId: searchDraft.placeId,
+    setSelectedId: setPlaceId,
+  });
 
   const { snapCategory, peopleCount, date } = searchDraft;
   const formattedCount = peopleCount && peopleCount > 0 ? `${peopleCount}명` : '0명';
@@ -71,50 +73,22 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
     setDate(nextDate);
   };
 
-  const handlePlaceKeywordChange = (next: string) => {
-    setPlaceKeyword(next);
-
-    const matchedId = placeNameToId.get(next);
-    if (matchedId != null) {
-      setPlaceId(String(matchedId));
-    } else {
-      setPlaceId('');
-    }
-  };
-
   const handleSearch = () => {
-    const nextParams = patchSearchParams(searchParams, searchDraft, placeKeyword);
+    const nextParams = patch({
+      snapCategory: searchDraft.snapCategory ?? null,
+      placeId: searchDraft.placeId || null,
+      placeName: searchDraft.placeId ? placeKeyword : null,
+      date: searchDraft.date ?? null,
+      peopleCount: searchDraft.peopleCount ?? null,
+    });
 
-    if (searchDraft.placeId) {
-      // id가 있을 때만 (=선택 확정) placeName 저장
-      nextParams.set('placeName', placeKeyword);
-    } else {
-      nextParams.delete('placeName');
-    }
-
-    const qs = nextParams.toString();
-    const target = qs ? `/explore?${qs}` : '/explore';
-
-    const isAlreadyExplore = pathname === '/explore';
-    if (isAlreadyExplore) {
-      router.replace(target);
-    } else {
-      router.push(target);
-    }
-
+    navigate(nextParams, { basePath: '/explore' });
     onOpenChange();
-  };
-
-  const handlePlaceBlur = () => {
-    if (!searchDraft.placeId) {
-      setPlaceKeyword('');
-      setPlaceId('');
-    }
   };
 
   const handleReset = () => {
     resetSearchDraft();
-    setPlaceKeyword('');
+    resetPlaceField();
   };
 
   useEffect(() => {
@@ -179,9 +153,10 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
           active={currentField === 'placeId'}
         >
           <ComboBox
+            key={placeFieldKey}
             placeholder='장소·학교명을 검색 후 선택해 주세요'
             value={placeKeyword}
-            options={(places ?? []).map((item) => item.name ?? '').filter(Boolean)}
+            options={placeOptions}
             onChange={handlePlaceKeywordChange}
             onBlur={handlePlaceBlur}
           />
@@ -194,12 +169,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
           onClick={() => handleFieldClick('date')}
           active={currentField === 'date'}
         >
-          <DatePicker
-            viewDateMonth={currentMonth}
-            handleMonthChangeAction={setCurrentMonth}
-            selectedDate={date ?? ''}
-            handleDateChangeAction={handleDateChange}
-          />
+          <DatePicker selectedDate={date ?? ''} handleDateChangeAction={handleDateChange} />
         </ControlSheet.Field>
 
         {/* 촬영 인원 선택 */}
