@@ -61,9 +61,10 @@ export default function PageClient() {
 
   const handleTabChange = (nextTab: string) => {
     if (!isExploreTab(nextTab)) return;
+    if (nextTab === currentTab) return;
 
     const nextParams = patch({ tab: nextTab });
-    navigate(nextParams, { basePath: pathname, mode: 'replace' }); // scroll:false는 훅에 옵션 없으면 그대로 두거나, 필요하면 훅 확장
+    navigate(nextParams, { basePath: pathname, mode: 'replace' });
   };
 
   const handleSheetOpen = () => {
