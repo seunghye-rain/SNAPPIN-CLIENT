@@ -52,7 +52,7 @@ export default function SearchSheet({ open, onOpenChange }: SearchSheetProps) {
     handleChange: handlePlaceKeywordChange,
     handleBlur: handlePlaceBlur,
     reset: resetPlaceField,
-  } = usePlaceSearchField<string>({
+  } = usePlaceSearchField({
     initialValue: initialPlaceName,
     selectedId: searchDraft.placeId,
     setSelectedId: setPlaceId,

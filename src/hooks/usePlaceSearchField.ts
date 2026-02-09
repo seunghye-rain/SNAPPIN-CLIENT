@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useSearchPlaces } from '@/app/(with-layout)/explore/api';
 
-type PlaceId = string | number;
+type PlaceId = string;
 
 type PlaceSearchParams<Id extends PlaceId> = {
   // controlled props
@@ -33,7 +33,7 @@ type PlaceSearchParams<Id extends PlaceId> = {
  * - input value(문자열)과 selectedId(id)는 **의도적으로 분리**
  * - 정확히 선택된 경우에만 selectedId가 존재
  */
-export const usePlaceSearchField = <Id extends PlaceId = string>({
+export const usePlaceSearchField = <Id extends PlaceId>({
   // controlled input을 사용할 경우 value / onValueChange 제공 ex. 상위에서 keyword 상태를 관리하는 경우
   value,
   onValueChange,
@@ -105,7 +105,7 @@ export const usePlaceSearchField = <Id extends PlaceId = string>({
   // blur 핸들러
   const handleBlur = useCallback(() => {
     if (!clearOnBlurWhenNoId) return;
-    if (!selectedId) {
+    if (selectedId == null) {
       setValue('');
       setSelectedId(null);
     }

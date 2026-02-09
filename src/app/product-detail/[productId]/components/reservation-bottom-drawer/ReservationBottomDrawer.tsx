@@ -64,11 +64,11 @@ export default function ReservationBottomDrawer({
     options: placeOptions,
     handleChange: handlePlaceChange,
     handleBlur: handlePlaceBlur,
-  } = usePlaceSearchField<number>({
+  } = usePlaceSearchField({
     value: place ?? '',
     onValueChange: (next) => patch({ place: next }),
-    selectedId: placeId ?? null,
-    setSelectedId: (next) => patch({ placeId: next }),
+    selectedId: placeId?.toString() ?? null,
+    setSelectedId: (next) => patch({ placeId: Number(next) ?? null }),
     initialValue: place ?? '',
     debounceMs: 300,
     clearOnBlurWhenNoId: true,
