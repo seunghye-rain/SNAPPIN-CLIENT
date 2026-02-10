@@ -22,7 +22,6 @@ export default function ImageCarouselWithDots({
 }: ImageCarouselWithDotsProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [isLongImageMap, setIsLongImageMap] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     if (!api) return;
@@ -47,27 +46,8 @@ export default function ImageCarouselWithDots({
         <CarouselContent>
           {images.map((img, idx) => (
             <CarouselItem key={`image-${img.src}-${idx}`}>
-              <div
-                className={cn(
-                  'relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden',
-                  isLongImageMap[idx] && 'bg-black',
-                )}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className={isLongImageMap[idx] ? 'object-contain' : 'object-cover'}
-                  onLoad={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    const isLongImage = target.naturalWidth > target.naturalHeight;
-
-                    setIsLongImageMap((prev) => ({
-                      ...prev,
-                      [idx]: isLongImage,
-                    }));
-                  }}
-                />
+              <div className='relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden'>
+                <Image src={img.src} alt={img.alt} fill className='object-cover' />
               </div>
             </CarouselItem>
           ))}
