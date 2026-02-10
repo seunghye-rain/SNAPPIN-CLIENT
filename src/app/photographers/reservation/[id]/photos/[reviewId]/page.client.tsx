@@ -1,10 +1,9 @@
 'use client';
 
-import { ImageSlide } from './components';
-import { ReviewStar } from '@/ui';
+import { Skeleton } from './components';
+import { ImageCarouselWithSideBtn, ReviewStar } from '@/ui';
 import { formatShortDate } from '@/utils/formatNumberWithComma';
 import { useGetReviewDetail } from './api';
-import Skeleton from './components/skeleton/Skeleton';
 import { useSearchParams } from 'next/navigation';
 
 type PageClientProps = {
@@ -14,7 +13,7 @@ type PageClientProps = {
 export default function PageClient({ reviewId }: PageClientProps) {
   const searchParams = useSearchParams();
   const initialIndex = Number(searchParams.get('image') ?? 0);
-  const { data ,isPending} = useGetReviewDetail(reviewId);
+  const { data, isPending } = useGetReviewDetail(reviewId);
 
   if (isPending) {
     return <Skeleton />;
@@ -22,7 +21,7 @@ export default function PageClient({ reviewId }: PageClientProps) {
 
   return (
     <>
-      <ImageSlide
+      <ImageCarouselWithSideBtn
         images={data?.images?.map((image) => ({ src: image })) ?? []}
         initialIndex={initialIndex}
       />

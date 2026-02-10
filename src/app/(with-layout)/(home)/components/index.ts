@@ -4,4 +4,3 @@ export { default as InfiniteBanner } from './infinite-banner/InfiniteBanner';
 export { default as Author } from './author/Author';
 export { default as SectionHeader } from './section-header/SectionHeader';
 export { default as CarouselCuration } from './carousel-curation/CarouselCuration';
-export { default as ImageWithShadow } from './ImageWithShadow/ImageWithShadow';

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ImageWithShadow } from '../index';
+import { ImageWithShadow } from '@/ui';
 import imageEmpty from '@/../public/imgs/image-empty.png';
 import { GetPlaceInfoResponse } from '@/swagger-api/data-contracts';
 

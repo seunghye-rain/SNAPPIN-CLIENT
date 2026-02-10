@@ -4,8 +4,14 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@/utils/cn';
 import { IconEllipse } from '@/assets';
-import { TagChip, Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/ui';
-import { ImageWithShadow } from '../index';
+import {
+  TagChip,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+  ImageWithShadow,
+} from '@/ui';
 
 type CarouselCurationProps = {
   images: { src: string; alt?: string }[];
