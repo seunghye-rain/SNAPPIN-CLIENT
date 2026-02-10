@@ -1,11 +1,10 @@
 'use client';
 
-import { IconButton } from '@/ui';
+import { IconButton, ImageCarouselWithDots } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { IconHeart, IconHeartFill, IconStar } from '@/assets';
 import { formatNumberWithComma } from '@/utils/formatNumberWithComma';
-import { ProductCarousel } from '../components/index';
 import { useWishProduct } from '../api';
 
 type ProductMainSectionProps = {
@@ -41,7 +40,7 @@ export default function ProductMainSection({
   const handleLike = async () => {
     if (isLogIn) {
       mutateAsync(id);
-    } else if(isLogIn===false) {
+    } else if (isLogIn === false) {
       toast.login(
         '좋아요 기능은 로그인 후에 사용할 수 있어요.',
         undefined,
@@ -52,7 +51,7 @@ export default function ProductMainSection({
 
   return (
     <section>
-      <ProductCarousel images={productImages} />
+      <ImageCarouselWithDots images={productImages} />
       <div className='flex flex-col gap-[0.8rem] px-[2rem] py-[1.6rem]'>
         <div className='flex flex-col'>
           {/* 상품명, 좋아요 */}

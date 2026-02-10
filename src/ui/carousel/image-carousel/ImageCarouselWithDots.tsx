@@ -11,12 +11,15 @@ import {
 } from '@/ui/carousel/base/Carousel';
 import { IconEllipse } from '@/assets';
 
-type ProductCarouselProps = {
+type ImageCarouselWithDotsProps = React.ComponentProps<'div'> & {
   images: { src: string; alt: string }[];
-  className?: string;
 };
 
-export default function ProductCarousel({ images, className }: ProductCarouselProps) {
+export default function ImageCarouselWithDots({
+  images,
+  className,
+  ...props
+}: ImageCarouselWithDotsProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isLongImageMap, setIsLongImageMap] = useState<Record<number, boolean>>({});
@@ -39,15 +42,15 @@ export default function ProductCarousel({ images, className }: ProductCarouselPr
   if (images.length === 0) return null;
 
   return (
-    <div className={cn('relative w-full aspect-[3/4] overflow-hidden', className)}>
+    <div className={cn('relative aspect-[3/4] w-full overflow-hidden', className)} {...props}>
       <Carousel setApi={setApi}>
         <CarouselContent>
           {images.map((img, idx) => (
             <CarouselItem key={`image-${img.src}-${idx}`}>
               <div
                 className={cn(
-                  'relative w-full aspect-[3/4] overflow-hidden flex items-center justify-center',
-                  isLongImageMap[idx] && 'bg-black'
+                  'relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden',
+                  isLongImageMap[idx] && 'bg-black',
                 )}
               >
                 <Image
@@ -71,7 +74,7 @@ export default function ProductCarousel({ images, className }: ProductCarouselPr
         </CarouselContent>
       </Carousel>
 
-      {/* 하단 컨텐츠 */}
+      {/* dots */}
       <div className='absolute bottom-[1.8rem] z-10 flex w-full flex-col items-center gap-[0.4rem] px-[1.2rem]'>
         <div className='flex w-full items-center justify-center gap-[0.6rem]'>
           {images.map((_, i) => {
