@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ImageCarousel } from '@/ui';
+import { ImageWithShadow } from '../index';
 import imageEmpty from '@/../public/imgs/image-empty.png';
 import { GetPlaceInfoResponse } from '@/swagger-api/data-contracts';
 
@@ -26,7 +26,7 @@ export default function InfiniteBanner({ items, durationSec = 18 }: InfiniteBann
             href={`/explore?placeId=${item.id}&placeName=${item.name}`}
             className='relative shrink-0'
           >
-            <ImageCarousel
+            <ImageWithShadow
               src={item.imageUrl ?? imageEmpty.src}
               alt={`${item.name} 이미지`}
               imageWidth={`11.8rem`}
