@@ -19,7 +19,7 @@ type ProductCarouselProps = {
 export default function ProductCarousel({ images, className }: ProductCarouselProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [isLongImageMap, setIsLongImageMap] = useState<Record<number, boolean>>({});
+  const [imageMetaMap, setImageMetaMap] = useState<Record<number, { isReady: boolean; isLong: boolean; }>>({});
 
   useEffect(() => {
     if (!api) return;
@@ -46,25 +46,37 @@ export default function ProductCarousel({ images, className }: ProductCarouselPr
             <CarouselItem key={`image-${img.src}-${idx}`}>
               <div
                 className={cn(
-                  'relative w-full aspect-[3/4] overflow-hidden flex items-center justify-center',
-                  isLongImageMap[idx] && 'bg-black'
+                  'relative w-full aspect-[3/4] overflow-hidden bg-black-3',
+                  imageMetaMap[idx]?.isLong && 'bg-black'
                 )}
               >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className={isLongImageMap[idx] ? 'object-contain' : 'object-cover'}
-                  onLoad={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    const isLongImage = target.naturalWidth > target.naturalHeight;
+                {/* 이미지 크기 확인 중 -> 이미지 숨기기 */}
+                {!imageMetaMap[idx] && (
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className='absolute opacity-0 pointer-events-none'
+                    onLoad={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      const isLong = target.naturalWidth > target.naturalHeight;
 
-                    setIsLongImageMap((prev) => ({
-                      ...prev,
-                      [idx]: isLongImage,
-                    }));
-                  }}
-                />
+                      setImageMetaMap((prev) => ({
+                        ...prev,
+                        [idx]: { isReady: true, isLong },
+                      }));
+                    }}
+                  />
+                )}
+                {/* 이미지 크기 확인 완료 -> 이미지 표시 */}
+                {imageMetaMap[idx]?.isReady && (
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className={imageMetaMap[idx].isLong ? 'object-contain' : 'object-cover'}
+                  />
+                )}
               </div>
             </CarouselItem>
           ))}
