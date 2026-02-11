@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, ImageCarouselWithDots } from '@/ui';
+import { IconButton, ImageCarousel } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { IconHeart, IconHeartFill, IconStar } from '@/assets';
@@ -51,7 +51,7 @@ export default function ProductMainSection({
 
   return (
     <section>
-      <ImageCarouselWithDots images={productImages} />
+      <ImageCarousel variant='dots' images={productImages} />
       <div className='flex flex-col gap-[0.8rem] px-[2rem] py-[1.6rem]'>
         <div className='flex flex-col'>
           {/* 상품명, 좋아요 */}

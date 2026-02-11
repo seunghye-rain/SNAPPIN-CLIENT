@@ -1,6 +1,6 @@
 'use client';
 
-import { TagChip, ImageCarouselWithDots } from '@/ui';
+import { TagChip, ImageCarousel } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui/toast/hooks/useToast';
@@ -50,7 +50,7 @@ export default function PortfolioSection({
   return (
     <section className='bg-black-1'>
       {/* 포트폴리오 캐러셀 */}
-      <ImageCarouselWithDots images={images} />
+      <ImageCarousel variant='dots' images={images} />
       {/* 한줄 설명, 좋아요 */}
       <div className='flex items-center justify-between px-[2rem] py-[1.6rem]'>
         <h1 className='font-18-bd text-black-10'>{description}</h1>

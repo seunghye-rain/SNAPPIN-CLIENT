@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ImageCarousel from './ImageCarousel';
 
 const images = [
-  { src: '/imgs/banner1.png', alt: 'carousel 1' },
-  { src: '/imgs/banner2.png', alt: 'carousel 2' },
-  { src: '/imgs/banner3.png', alt: 'carousel 3' },
+  { src: '@/../public/imgs/image-banner1.png', alt: 'carousel 1' },
+  { src: '@/../public/imgs/image-banner2.png', alt: 'carousel 2' },
+  { src: '@/../public/imgs/image-banner3.png', alt: 'carousel 3' },
 ];
 
 const meta = {
-  title: 'Components/ImageCarousel',
+  title: 'UI/ImageCarousel',
   component: ImageCarousel,
   parameters: {
     layout: 'centered',

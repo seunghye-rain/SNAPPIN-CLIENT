@@ -2,7 +2,7 @@
 
 import { useGetReviewDetail } from '@/app/photo-final/[id]/photos/[reviewId]/api';
 import { Skeleton } from './components';
-import { ImageCarouselWithSideBtn, ReviewStar } from '@/ui';
+import { ImageCarousel, ReviewStar } from '@/ui';
 import { formatShortDate } from '@/utils/formatNumberWithComma';
 import { useSearchParams } from 'next/navigation';
 
@@ -22,7 +22,8 @@ export default function PageClient({ reviewId }: PageClientProps) {
 
   return (
     <>
-      <ImageCarouselWithSideBtn
+      <ImageCarousel
+        variant='sideButtons'
         images={data?.images?.map((image) => ({ src: image })) ?? []}
         initialIndex={initialIndex}
       />
