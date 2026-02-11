@@ -1,5 +1,5 @@
 import PageClient from './page.client';
-import { NavigationClient } from './components';
+import NavigationClient from './components/navigation-client/Navigation.client';
 import { notFound } from 'next/navigation';
 
 type ReservationDetailPageProps = {
@@ -15,7 +15,7 @@ export default async function Page({ params }: ReservationDetailPageProps) {
   }
 
   return (
-    <div className='bg-black-10 min-h-dvh relative flex flex-col items-center '>
+    <div className='bg-black-10 relative flex min-h-dvh flex-col items-center'>
       <NavigationClient />
       <PageClient reviewId={reviewIdNumber} />
     </div>
