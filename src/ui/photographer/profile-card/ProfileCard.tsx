@@ -39,7 +39,7 @@ export default function ProfileCard({
 
   return (
     <div className={cn('bg-black-1 flex items-center gap-[1.2rem] p-[2rem]', className)} {...props}>
-      <div className='relative w-[64px] h-[64px] rounded-full overflow-hidden shrink-0'>
+      <div className='relative w-[6.4rem] h-[6.4rem] rounded-full overflow-hidden shrink-0'>
         <Image
           src={profileImageUrl ?? '/imgs/default-profile.png'}
           alt='프로필 이미지'

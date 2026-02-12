@@ -20,9 +20,9 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
         <div className='border-black-4 rounded-[0.6rem] border-1 p-[1.2rem]'>
           <div className='flex items-center gap-[1.2rem]'>
             {/* 프로필 이미지 */}
-            <div className='relative h-[6.4rem] w-[6.4rem]'>
+            <div className='relative h-[6.4rem] w-[6.4rem] overflow-hidden rounded-full'>
               <Image
-                src={photographerInfo.imageUrl ?? '/imgs/default-profile.png'}
+                src={photographerInfo.imageUrl || '/imgs/default-profile.png'}
                 alt='프로필 이미지'
                 fill
                 className='object-cover rounded-full'
