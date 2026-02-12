@@ -31,6 +31,7 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   if (isFetching && isEmpty) {
     return (
       <section className='mt-[4.6rem]'>
+        <div ref={anchorRef} />
         <PortfolioListSkeleton />
       </section>
     );
