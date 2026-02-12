@@ -5,7 +5,7 @@ import { Chip } from '@/ui';
 type AuthorProps = {
   id: number;
   name: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string;
   isNew: boolean;
   bio: string;
   specialties: string[];

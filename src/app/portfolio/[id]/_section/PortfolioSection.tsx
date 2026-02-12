@@ -1,10 +1,10 @@
 'use client';
 
-import { TagChip } from '@/ui';
+import { TagChip, ImageCarousel } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui/toast/hooks/useToast';
-import { PortfolioCarousel, LikeButton } from '../components/index';
+import { LikeButton } from '../components/index';
 import { useWishPortfolio } from '../api';
 
 type PortfolioSectionProps = {
@@ -42,7 +42,7 @@ export default function PortfolioSection({
   const handleLike = () => {
     if (isLogIn) {
       mutateAsync(id);
-    } else if(isLogIn===false) {
+    } else if (isLogIn === false) {
       toast.login('좋아요 기능은 로그인 후에 사용할 수 있어요.', undefined, 'bottom-[2rem]');
     }
   };
@@ -50,7 +50,7 @@ export default function PortfolioSection({
   return (
     <section className='bg-black-1'>
       {/* 포트폴리오 캐러셀 */}
-      <PortfolioCarousel images={images} />
+      <ImageCarousel variant='dots' images={images} />
       {/* 한줄 설명, 좋아요 */}
       <div className='flex items-center justify-between px-[2rem] py-[1.6rem]'>
         <h1 className='font-18-bd text-black-10'>{description}</h1>
