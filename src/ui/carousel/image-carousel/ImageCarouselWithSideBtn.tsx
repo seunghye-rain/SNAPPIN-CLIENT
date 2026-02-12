@@ -17,11 +17,8 @@ export default function ImageCarouselWithSideBtn({
   return (
     <Carousel opts={{ startIndex: initialIndex }} className={className} {...props}>
       <CarouselContent>
-        {images.map((image) => (
-          <CarouselItem
-            key={`${image.src}-${image.alt}`}
-            className='flex h-[480px] w-full items-center'
-          >
+        {images.map((image, idx) => (
+          <CarouselItem key={`${image.src}-${idx}`} className='flex h-[480px] w-full items-center'>
             <Image
               src={image.src}
               alt={image.alt ?? `image-${image.src}`}
