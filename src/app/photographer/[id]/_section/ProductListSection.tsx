@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { ProductList, ProductListSkeleton } from '@/ui';
@@ -5,7 +7,7 @@ import { useGetProductList } from '../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 
 type ProductListSectionProps = {
-  id: number;
+  id: string;
 }
 
 export default function ProductListSection({ id }: ProductListSectionProps) {

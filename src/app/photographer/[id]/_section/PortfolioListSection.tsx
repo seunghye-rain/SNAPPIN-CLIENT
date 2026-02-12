@@ -5,7 +5,7 @@ import { useGetPortfolioList } from '../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 
 type PortfolioListSectionProps = {
-  id: number;
+  id: string;
 }
 
 export default function PortfolioListSection({ id }: PortfolioListSectionProps) {
