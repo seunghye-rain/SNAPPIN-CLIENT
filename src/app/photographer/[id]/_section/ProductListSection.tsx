@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useSearchParams } from 'next/navigation';
 import { ProductList, ProductListSkeleton } from '@/ui';
 import { useGetProductList } from '../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
