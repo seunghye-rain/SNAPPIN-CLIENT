@@ -17,6 +17,7 @@ export * from './photographer/index';
 export * from './portfolio-list/index';
 export * from './product-card/index';
 export * from './review-star/index';
+export * from './section-tabs-new/index';
 export * from './section-tabs/index';
 export * from './sheet/index';
 export * from './stepper/index';
