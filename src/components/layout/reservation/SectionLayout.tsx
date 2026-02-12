@@ -1,50 +1,44 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
-import { StateChip } from '@/ui/chip';
-import { StateCode } from '@/types/stateCode';
-import { formatCreatedAt } from '@/utils/formatDate';
 
-type SectionFrameProps = React.PropsWithChildren<{
+type FrameProps = React.PropsWithChildren<{
   title: string;
-  stateCode?: StateCode;
+  right?: React.ReactNode;
   className?: string;
 }>;
 
-type SectionCardProps = React.PropsWithChildren<{ className?: string }>;
+type CardProps = React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>;
 
-type SectionHeaderProps = {
-  client?: string;
-  createdAt: string;
-};
+type HeaderProps = React.PropsWithChildren;
 
-type SectionBodyProps = React.PropsWithChildren;
+type BodyProps = React.PropsWithChildren;
 
-type SectionRowProps = {
+type RowProps = {
   label: string;
-  value: string;
-  labelClassName?: string;
+  value: React.ReactNode;
   className?: string;
+  labelClassName?: string;
   valueClassName?: string;
 };
 
-type SectionFooterProps = {
+type FooterProps = {
   label: string;
-  value: string;
+  value: React.ReactNode;
 };
 
-const Frame = ({ title, stateCode, children, className }: SectionFrameProps) => {
+const Frame = ({ title, right, children, className }: FrameProps) => {
   return (
     <div className='bg-black-1 flex flex-col px-[2rem] pt-[1.7rem]'>
       <div className='flex items-center justify-between'>
         <p className='caption-14-bd'>{title}</p>
-        {stateCode && <StateChip label={stateCode} />}
+        {right}
       </div>
       <div className={cn('pt-[1.2rem] pb-[2.4rem]', className)}>{children}</div>
     </div>
   );
 };
 
-const Card = ({ children, className }: SectionCardProps) => {
+const Card = ({ children, className }: CardProps) => {
   return (
     <div
       className={cn(
@@ -57,25 +51,15 @@ const Card = ({ children, className }: SectionCardProps) => {
   );
 };
 
-const Header = ({ client, createdAt }: SectionHeaderProps) => {
-  return (
-    <div className='flex flex-col gap-[0.4rem]'>
-      {client && (
-        <div className='flex items-center gap-[0.2rem]'>
-          <span className='font-16-bd'>{client}</span>
-          <span className='font-16-md'>님</span>
-        </div>
-      )}
-      <span className='caption-10-md text-black-7'>{formatCreatedAt(createdAt)}</span>
-    </div>
-  );
+const Header = ({ children }: HeaderProps) => {
+  return <div className='flex flex-col gap-[0.4rem]'>{children}</div>;
 };
 
-const Body = ({ children }: SectionBodyProps) => {
+const Body = ({ children }: BodyProps) => {
   return <div className='flex flex-col gap-[2rem]'>{children}</div>;
 };
 
-const Row = ({ label, value, labelClassName, className, valueClassName }: SectionRowProps) => {
+const Row = ({ label, value, labelClassName, className, valueClassName }: RowProps) => {
   return (
     <div className={cn('caption-12-md flex items-start gap-[1rem]', className)}>
       <p className={cn('text-black-7 min-w-[8rem]', labelClassName)}>{label}</p>
@@ -84,14 +68,11 @@ const Row = ({ label, value, labelClassName, className, valueClassName }: Sectio
   );
 };
 
-const Footer = ({ label, value }: SectionFooterProps) => {
+const Footer = ({ label, value }: FooterProps) => {
   return (
     <div className='flex items-center justify-between'>
       <span className='caption-14-bd'>{label}</span>
-      <div className='flex items-center gap-[0.2rem]'>
-        <span className='title-23-eb'>{value}</span>
-        <span className='caption-14-md'>원</span>
-      </div>
+      {value}
     </div>
   );
 };
