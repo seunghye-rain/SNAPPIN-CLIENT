@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ConfirmModal } from '@/ui';
 import { deleteAccessToken } from '@/auth/token';
-import { deleteUserType } from '@/auth/userType';
+import { deleteAuthUser } from '@/auth/userType';
 import { useLogout } from '@/auth/apis';
 import { useAuth } from '@/auth/hooks/useAuth';
 
@@ -39,7 +39,7 @@ export default function Menus() {
     logout(undefined, {
       onSuccess: () => {
         deleteAccessToken();
-        deleteUserType();
+        deleteAuthUser();
 
         router.push('/');
         setIsLogoutModalOpen(false);
@@ -52,9 +52,18 @@ export default function Menus() {
 
   return (
     <section className='bg-black-1 flex flex-col py-[0.8rem]'>
-      <MenuItem label='공지사항' href='https://pretty-shake-931.notion.site/2efa9c9b4473803f9f46fdb17944d7e0?source=copy_link' />
-      <MenuItem label='FAQ' href='https://pretty-shake-931.notion.site/FAQ-2efa9c9b447380b69797cff125db7e5e?source=copy_link' />
-      <MenuItem label='고객센터' href='https://pretty-shake-931.notion.site/2efa9c9b447380a59d79ce7cae04a0bc?source=copy_link' />
+      <MenuItem
+        label='공지사항'
+        href='https://pretty-shake-931.notion.site/2efa9c9b4473803f9f46fdb17944d7e0?source=copy_link'
+      />
+      <MenuItem
+        label='FAQ'
+        href='https://pretty-shake-931.notion.site/FAQ-2efa9c9b447380b69797cff125db7e5e?source=copy_link'
+      />
+      <MenuItem
+        label='고객센터'
+        href='https://pretty-shake-931.notion.site/2efa9c9b447380a59d79ce7cae04a0bc?source=copy_link'
+      />
       <button
         type='button'
         disabled={!isLogIn}
@@ -63,7 +72,7 @@ export default function Menus() {
       >
         로그아웃
       </button>
-      
+
       <ConfirmModal
         open={isLogoutModalOpen}
         handleOpenChange={(open) => handleModalOpen(open)}
@@ -89,10 +98,7 @@ type MenuItemProps = {
 
 const MenuItem = ({ label, href }: MenuItemProps) => {
   return (
-    <Link
-      href={href}
-      className='caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left'
-    >
+    <Link href={href} className='caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left'>
       {label}
     </Link>
   );

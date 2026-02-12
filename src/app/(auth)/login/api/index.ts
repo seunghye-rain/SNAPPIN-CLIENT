@@ -5,10 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { CreateKakaoLoginData } from '@/swagger-api/data-contracts';
 import { USER_TYPE, UserType } from '@/auth/constant/userType';
-import { setUserType } from '@/auth/userType';
+import { setAuthUser } from '@/auth/userType';
 import { setAccessToken } from '@/auth/token';
 import { useToast } from '@/ui/toast/hooks/useToast';
-import { usePrefetchUserProfile } from '@/auth/apis';
 
 type KakaoCodePayload = { code: string };
 
@@ -19,7 +18,6 @@ export const useKakaoLoginMutation = () => {
   const URL =
     `${SERVER_API_BASE_URL}/api/v1/auth/login/kakao` +
     `?redirect_uri=${encodeURIComponent(CLIENT_REDIRECT_URI!)}`;
-  const prefetchUserProfile = usePrefetchUserProfile();
 
   return useMutation<CreateKakaoLoginData, Error, KakaoCodePayload>({
     mutationFn: async ({ code }) => {
@@ -39,8 +37,8 @@ export const useKakaoLoginMutation = () => {
 
     onSuccess: (data) => {
       setAccessToken(data.data?.accessToken ?? '');
-      setUserType(data.data?.role as UserType);
-      prefetchUserProfile();
+      setAuthUser({ role: data.data?.role as UserType, hasPhotographerProfile: true });
+
       if (data.data?.isNew) {
         router.replace('/ai-curation');
       } else if (data.data?.role === USER_TYPE.PHOTOGRAPHER) {

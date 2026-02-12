@@ -21,7 +21,7 @@ import {
 } from '@/assets';
 import { cn } from '@/utils/cn';
 import { useGetUserInfo, usePrefetchUserProfile } from '@/auth/apis';
-import { setUserType } from '@/auth/userType';
+import { getUserType } from '@/auth/userType';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { USER_TYPE, type UserType } from '@/auth/constant/userType';
 import { useToast } from '../toast/hooks/useToast';
@@ -108,7 +108,11 @@ export default function Footer() {
   useEffect(() => {
     if (!isLogIn) return;
     if (!data?.role) return;
-    setUserType(data.role as UserType);
+    getUserType().then((userType) => {
+      if (userType === USER_TYPE.PHOTOGRAPHER) {
+        prefetchUserProfile();
+      }
+    });
   }, [isLogIn, data?.role]);
 
   const items = getMenuItems({

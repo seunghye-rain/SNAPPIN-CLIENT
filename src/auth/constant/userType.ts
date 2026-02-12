@@ -1,3 +1,8 @@
+export type AuthUser = {
+  role: UserType;
+  hasPhotographerProfile: boolean;
+};
+
 export const USER_TYPE = {
   CLIENT: 'CLIENT',
   PHOTOGRAPHER: 'PHOTOGRAPHER',

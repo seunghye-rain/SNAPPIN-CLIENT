@@ -9,7 +9,7 @@ import {
   PatchUserRoleData,
 } from '@/swagger-api/data-contracts';
 import { setAccessToken, getAccessToken } from '../token';
-import { setUserType } from '../userType';
+import { setAuthUser } from '../userType';
 import { UserType } from '../constant/userType';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
@@ -62,7 +62,7 @@ export const useSwitchUserProfile = () => {
 
     onSuccess: (data) => {
       if (data.accessToken) setAccessToken(data.accessToken);
-      if (data.role) setUserType(data.role as UserType);
+      if (data.role) setAuthUser({ role: data.role as UserType, hasPhotographerProfile: true });
 
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY.AUTH });
     },
@@ -80,18 +80,7 @@ export const usePrefetchUserProfile = () => {
     queryClient.prefetchQuery({ queryKey: AUTH_QUERY_KEY.AUTH });
   };
 };
-// apiRequest로 수정했는데 !res.data로 와서 주석처리해놓을게요
-// export const logoutApi = async () => {
-//   const res = await apiRequest<LogoutData>({
-//     endPoint: '/api/v1/auth/logout',
-//     method: 'POST',
-//   })
 
-//   if (!res.data) {
-//     throw new Error('/api/v1/auth/logout 응답에 데이터가 존재하지 않습니다.');
-//   }
-//   return res.data;
-// };
 export const logoutApi = async () => {
   const accessToken = await getAccessToken();
 

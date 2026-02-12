@@ -1,8 +1,19 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { UserType } from './constant/userType';
-import { USER_TYPE_COOKIE_NAME } from './constant/cookie';
+import { AuthUser, UserType } from './constant/userType';
+import { HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, USER_TYPE_COOKIE_NAME } from './constant/cookie';
+
+async function setAuthUser(value: AuthUser) {
+  await Promise.all([
+    setUserType(value.role),
+    setHasPhotographerProfile(value.hasPhotographerProfile),
+  ]);
+}
+
+async function deleteAuthUser() {
+  await Promise.all([deleteUserType(), deleteHasPhotographerProfile()]);
+}
 
 async function setUserType(value: UserType) {
   const cookieStore = await cookies();
@@ -19,4 +30,19 @@ async function deleteUserType() {
   cookieStore.delete(USER_TYPE_COOKIE_NAME);
 }
 
-export { setUserType, getUserType, deleteUserType };
+async function setHasPhotographerProfile(value: boolean) {
+  const cookieStore = await cookies();
+  cookieStore.set(HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, value.toString());
+}
+
+async function getHasPhotographerProfile() {
+  const cookieStore = await cookies();
+  return cookieStore.get(HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME)?.value;
+}
+
+async function deleteHasPhotographerProfile() {
+  const cookieStore = await cookies();
+  cookieStore.delete(HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME);
+}
+
+export { setAuthUser, deleteAuthUser, getUserType, getHasPhotographerProfile };

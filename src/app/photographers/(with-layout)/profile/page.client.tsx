@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef, useCallback, startTransition } from 'react';
 import { Divider } from '@/ui';
-import {  ClientProfileCard, Menus, SwitchProfile } from './components';
+import { ClientProfileCard, Menus, SwitchProfile } from './components';
 import type { UserType } from '@/auth/constant/userType';
-import { getUserType, setUserType } from '@/auth/userType';
+import { getUserType, setAuthUser } from '@/auth/userType';
 import Lottie from 'lottie-react';
 import loadingAnimation from '@/assets/lotties/loading.json';
 
@@ -72,7 +72,7 @@ export default function PageClient() {
       startSwitching();
 
       // storage/cookie 등 side-effect
-      setUserType(type);
+      setAuthUser({ role: type as UserType, hasPhotographerProfile: true });
 
       // UI 업데이트는 transition으로
       startTransition(() => {
@@ -96,7 +96,7 @@ export default function PageClient() {
         onSwitchEnd={endSwitching}
       />
       {isSwitching && (
-        <div className='absolute inset-0 z-50 flex flex-col h-dvh items-center justify-center bg-black/30'>
+        <div className='absolute inset-0 z-50 flex h-dvh flex-col items-center justify-center bg-black/30'>
           <Lottie animationData={loadingAnimation} className='h-[15rem] w-[15rem]' />
           <span className='title-20-bd text-neon-black'>계정 전환 중...</span>
         </div>
