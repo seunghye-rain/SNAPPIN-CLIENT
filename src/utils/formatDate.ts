@@ -1,8 +1,4 @@
-import { padNumber } from './padNumber';
-
-export function formatNumberWithComma(value: number): string {
-  return new Intl.NumberFormat('ko-KR').format(value);
-}
+import { formatNumber } from './formatNumber';
 
 /**
  * 날짜를 년.월.일 형식으로 포맷팅하는 함수
@@ -23,7 +19,7 @@ export const formatShortDate = (date: string) => {
   return formatDate(date)
     .slice(2)
     .split('.')
-    .map((number) => padNumber(Number(number)))
+    .map((number) => formatNumber(Number(number)))
     .join('.');
 };
 
@@ -70,15 +66,4 @@ export const formatCreatedAt = (date: string) => {
   const yearShort = year.slice(-2);
 
   return `${yearShort}년 ${month.padStart(2, '0')}월 ${day.padStart(2, '0')}일 ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
-};
-
-/**
- * 촬영 시간을 포맷팅하는 함수
- * @param durationTime 촬영 시간 (분)
- * @returns 포맷팅된 촬영 시간 (ex. 2시간, 2.5시간)
- */
-export const formatDurationTime = (durationTime: number) => {
-  const hours = Math.floor(durationTime / 60)!== 0 ? `${Math.floor(durationTime / 60)}시간` : "";
-  const minutes = durationTime % 60 !== 0 ? `${durationTime % 60}분` : "";
-  return `${hours}${minutes}`;
 };

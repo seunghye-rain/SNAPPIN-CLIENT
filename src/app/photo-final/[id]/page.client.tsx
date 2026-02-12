@@ -1,18 +1,13 @@
 'use client';
 
+import { ProductStatus, Receipt, ReservationDetail, ReviewDetail } from './_section';
+import NavigationClient from './components/navigation-client/Navigation.client';
+import { useGetReservationDetail } from './api';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { notFound } from 'next/navigation';
 import { Divider } from '@/ui';
 import { StateCode } from '@/types/stateCode';
-import { useAuth } from '@/auth/hooks/useAuth';
-import {
-  ProductStatus,
-  Receipt,
-  ReservationDetail,
-  ReviewDetail,
-  SectionSkeleton,
-} from './_section';
-import NavigationClient from './components/navigation-client/Navigation.client';
-import { useGetReservationDetail } from './api';
+import SectionSkeleton from '@/components/layout/reservation/SectionSkeleton';
 
 type PhotoFinalDetailPageProps = {
   id: string;
@@ -39,7 +34,7 @@ export default function Page({ id }: PhotoFinalDetailPageProps) {
       </div>
     );
   }
-  console.log(reservationData);
+
   if (!reservationData) return null;
 
   return (

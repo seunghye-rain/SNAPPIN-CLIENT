@@ -35,13 +35,13 @@ export default function PortfolioSection({
   startsAt,
   moods,
 }: PortfolioSectionProps) {
-  const { mutateAsync } = useWishPortfolio();
+  const { mutate } = useWishPortfolio();
   const { isLogIn } = useAuth();
   const toast = useToast();
 
   const handleLike = () => {
     if (isLogIn) {
-      mutateAsync(id);
+      mutate(id);
     } else if (isLogIn === false) {
       toast.login('좋아요 기능은 로그인 후에 사용할 수 있어요.', undefined, 'bottom-[2rem]');
     }
