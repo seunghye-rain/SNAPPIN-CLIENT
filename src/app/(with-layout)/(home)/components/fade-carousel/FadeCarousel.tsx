@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
-import Logo from '@/assets/components/Logo';
-import { ButtonSearchBar } from '@/ui';
 import { openSearchSheet } from '@/utils/openSearchSheet';
+import { Logo } from '@/assets/index';
+import { ButtonSearchBar } from '@/ui';
 
 type FadeCarouselProps = {
   images: { src: string; alt?: string }[];
@@ -58,7 +58,7 @@ export default function FadeCarousel({ images }: FadeCarouselProps) {
       </div>
       {/* overlay */}
       <div className='absolute inset-0 flex h-full w-full flex-col items-center justify-between bg-black/40 px-[2rem] py-[2.2rem]'>
-        <Logo className='text-neon-white w-full h-auto' />
+        <Logo className='text-neon-white h-auto w-full' />
         <div className='flex w-full flex-col items-center gap-[3.2rem]'>
           <div className='flex flex-col items-center gap-[0.4rem]'>
             <h1 className='title-20-bd text-black-1'>나만의 무드에서 시작되는 스냅</h1>

@@ -8,7 +8,7 @@ export * from './date/index';
 export * from './divider/index';
 export * from './drawer/index';
 export * from './footer/index';
-export * from './image-preview/index';
+export * from './image/index';
 export * from './input/index';
 export * from './loading/index';
 export * from './modal/index';

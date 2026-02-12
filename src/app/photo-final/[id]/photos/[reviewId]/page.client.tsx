@@ -1,11 +1,10 @@
 'use client';
 
-import { useGetReviewDetail } from '@/app/photo-final/[id]/photos/[reviewId]/api';
-import Skeleton from './components/skeleton/Skeleton';
-import { ImageSlide } from './components';
-import { ReviewStar } from '@/ui';
-import { formatShortDate } from '@/utils/formatNumberWithComma';
 import { useSearchParams } from 'next/navigation';
+import { ImageCarousel, ReviewStar } from '@/ui';
+import { formatShortDate } from '@/utils/formatNumberWithComma';
+import { useGetReviewDetail } from './api';
+import { Skeleton } from './components';
 
 type PageClientProps = {
   id: number;
@@ -23,7 +22,8 @@ export default function PageClient({ reviewId }: PageClientProps) {
 
   return (
     <>
-      <ImageSlide
+      <ImageCarousel
+        variant='sideButtons'
         images={data?.images?.map((image) => ({ src: image })) ?? []}
         initialIndex={initialIndex}
       />

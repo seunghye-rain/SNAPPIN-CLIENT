@@ -1,34 +1,31 @@
-import React from 'react';
-import Image from 'next/image';
-import { cn } from '@/utils/cn';
+import type React from 'react';
+import ImageCarouselWithDots from './ImageCarouselWithDots';
+import ImageCarouselWithSideBtn from './ImageCarouselWithSideBtn';
 
-type RemUnit = `${number}rem`;
+type Variant = 'sideButtons' | 'dots';
 
-type ImageCarouselProps = React.ComponentProps<typeof Image> & {
-  imageHeight: RemUnit;
-  imageWidth: RemUnit;
+export type ImageCarouselBaseProps = React.ComponentProps<'div'> & {
+  images: { src: string; alt?: string }[];
+  initialIndex?: number;
+};
+
+export type ImageCarouselProps = ImageCarouselBaseProps & {
+  variant?: Variant;
+};
+
+const VARIANT_COMPONENT: Record<Variant, React.ComponentType<ImageCarouselBaseProps>> = {
+  sideButtons: ImageCarouselWithSideBtn,
+  dots: ImageCarouselWithDots,
 };
 
 export default function ImageCarousel({
-  src,
-  alt,
-  className,
-  imageHeight,
-  imageWidth,
+  images,
+  variant = 'sideButtons',
+  initialIndex = 0,
   ...props
 }: ImageCarouselProps) {
-  return (
-    <div
-      style={{ height: imageHeight, width: imageWidth }}
-      className={cn('relative overflow-hidden', className)}
-    >
-      <Image src={src} alt={alt} fill className='object-cover select-none' {...props} />
-      <div
-        className='pointer-events-none absolute inset-0 h-full w-full'
-        style={{
-          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 46.63%, #000 100%)',
-        }}
-      />
-    </div>
-  );
+  const Component = VARIANT_COMPONENT[variant];
+
+  if (images.length === 0) return null;
+  return <Component images={images} initialIndex={initialIndex} {...props} />;
 }

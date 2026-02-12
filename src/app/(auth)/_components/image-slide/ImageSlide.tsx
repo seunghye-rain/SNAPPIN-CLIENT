@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ImageCarousel, TagChip } from '@/ui';
+import { TagChip, ImageWithShadow } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import { IMAGE_SLIDE_MOCK } from './ImageSlide.mock';
 
@@ -58,8 +58,6 @@ export default function ImageSlide() {
     [activeIndex, leftIndex, rightIndex, data],
   );
 
-  const center = data[activeIndex];
-
   return (
     <div className='relative w-full overflow-hidden'>
       <div className='relative mx-auto flex h-[35.7rem] items-center justify-center'>
@@ -79,7 +77,7 @@ export default function ImageSlide() {
                 transform: 'translateZ(0)',
               }}
             >
-              <ImageCarousel
+              <ImageWithShadow
                 src={item.imageUrl}
                 alt={item.photographerName}
                 imageWidth={pos === 'center' ? '24.2rem' : '20.2rem'}
