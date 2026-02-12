@@ -19,9 +19,9 @@ export default function Receipt({ basePrice, extraPrice, totalPrice }: ReceiptPr
           className='justify-between'
           valueClassName='caption-14-bd'
         />
-        {extraPrice.map((item) => (
+        {extraPrice.map((item, index) => (
           <Section.Row
-            key={item.name ?? ''}
+            key={`${item.name ?? 'extra'}-${index}`}
             label={item.name ?? ''}
             value={`${formatPrice(item.amount ?? 0)}원`}
             className='justify-between'

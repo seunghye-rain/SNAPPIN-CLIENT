@@ -24,7 +24,7 @@ export default function PhotoReview({ isPending, data, initialIndex }: PhotoRevi
     <>
       <ImageCarousel
         variant='sideButtons'
-        images={data?.images?.map((image) => ({ src: image })) ?? []}
+        images={data.images?.map((image) => ({ src: image })) ?? []}
         initialIndex={initialIndex}
       />
       <div className='mt-[2rem] mb-[5rem] flex w-full flex-col gap-[1.2rem] px-[2rem]'>
@@ -33,15 +33,15 @@ export default function PhotoReview({ isPending, data, initialIndex }: PhotoRevi
             <ReviewStar
               starSize='small'
               starFillColor='text-neon-black'
-              rating={data?.rating ?? 0}
+              rating={data.rating ?? 0}
             />
             <span className='caption-12-md text-black-7'>
-              {formatShortDate(data?.createdAt ?? '')}
+              {formatShortDate(data.createdAt ?? '')}
             </span>
           </div>
-          <span className='caption-12-md text-black-7'>{data?.reviewer ?? ''}</span>
+          <span className='caption-12-md text-black-7'>{data.reviewer ?? ''}</span>
         </div>
-        <p className='caption-14-rg text-black-1'>{data?.content ?? ''}</p>
+        <p className='caption-14-rg text-black-1'>{data.content ?? ''}</p>
       </div>
     </>
   );

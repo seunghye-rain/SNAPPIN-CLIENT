@@ -31,7 +31,7 @@ export default function ReservationDetail({
         <Section.Header createdAt={createdAt} />
         <Section.Body>
           <Section.Row label='날짜 및 시간' value={formatReservationDateTime(date, startTime)} />
-          <Section.Row label='촬영 시간' value={`${durationTime}시간`} />
+          <Section.Row label='촬영 시간' value={durationTime ? `${durationTime}시간` : '-'} />
           <Section.Row label='장소' value={place} />
           <Section.Row label='인원' value={`${peopleCount}인`} />
           <Section.Row label='기타 요청 사항' value={requestNoteText} />

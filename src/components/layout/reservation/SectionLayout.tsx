@@ -4,12 +4,11 @@ import { StateChip } from '@/ui/chip';
 import { StateCode } from '@/types/stateCode';
 import { formatCreatedAt } from '@/utils/formatDate';
 
-type SectionFrameProps = React.PropsWithChildren<
-  {
-    title: string;
-    stateCode?: StateCode;
-  } & React.HTMLAttributes<HTMLDivElement>
->;
+type SectionFrameProps = React.PropsWithChildren<{
+  title: string;
+  stateCode?: StateCode;
+  className?: string;
+}>;
 
 type SectionCardProps = React.PropsWithChildren<{ className?: string }>;
 
@@ -18,7 +17,7 @@ type SectionHeaderProps = {
   createdAt: string;
 };
 
-type SectionBodyProps = React.PropsWithChildren<{}>;
+type SectionBodyProps = React.PropsWithChildren;
 
 type SectionRowProps = {
   label: string;

@@ -19,6 +19,7 @@ export default function ImageWithShadow({
 }: ImageWithShadowProps) {
   return (
     <div
+      aria-hidden='true'
       style={{ height: imageHeight, width: imageWidth }}
       className={cn('relative overflow-hidden', className)}
     >

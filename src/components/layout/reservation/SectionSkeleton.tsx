@@ -29,7 +29,7 @@ export default function SectionSkeleton() {
       <Divider thickness='large' color='bg-black-3' />
       <Section title='결제 상세' className='gap-[1.5rem]'>
         <Section.Card>
-          <div className='bg-black-3 w-full] h-[1.4rem]' />
+          <div className='bg-black-3 h-[1.4rem] w-full' />
           <Divider thickness='small' color='bg-black-3' />
           <div className='bg-black-3 h-[2.8rem] w-full' />
         </Section.Card>
