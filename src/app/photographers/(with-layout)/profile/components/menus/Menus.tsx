@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ConfirmModal } from '@/ui';
-import { deleteAccessToken } from '@/auth/token';
-import { deleteAuthUser } from '@/auth/userType';
 import { useLogout } from '@/auth/apis';
 import { useAuth } from '@/auth/hooks/useAuth';
 
@@ -22,30 +20,11 @@ export default function Menus() {
     handleModalOpen(true);
   };
 
-  // const handleConfirm = async () => {
-  //   try {
-  //     await logoutApi();
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     deleteAccessToken();
-  //     deleteUserType();
-  //     router.push('/');
-  //     handleModalOpen(false);
-  //   }
-  // };
   const handleConfirm = () => {
-    console.log('로그아웃');
     logout(undefined, {
       onSuccess: () => {
-        deleteAccessToken();
-        deleteAuthUser();
-
         router.push('/');
         setIsLogoutModalOpen(false);
-      },
-      onError: (error) => {
-        console.error(error);
       },
     });
   };

@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { ConfirmModal } from '@/ui';
 import { cn } from '@/utils/cn';
 import { useLogout } from '@/auth/apis';
-import { deleteAccessToken } from '@/auth/token';
-import { deleteAuthUser } from '@/auth/userType';
 import { useAuth } from '@/auth/hooks/useAuth';
 
 export default function Menus() {
@@ -23,31 +21,11 @@ export default function Menus() {
     handleModalOpen(true);
   };
 
-  // 이전 버전
-  // const handleConfirm = async () => {
-  //   try {
-  //     await logoutApi();
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     deleteAccessToken();
-  //     deleteUserType();
-  //     router.push('/');
-  //     handleModalOpen(false);
-  //   }
-  // };
   const handleConfirm = () => {
-    console.log('로그아웃');
     logout(undefined, {
       onSuccess: () => {
-        deleteAccessToken();
-        deleteAuthUser();
-
         router.push('/');
         setIsLogoutModalOpen(false);
-      },
-      onError: (error) => {
-        console.error(error);
       },
     });
   };

@@ -68,7 +68,7 @@ const PHOTOGRAPHER_MENU: MenuItem[] = [
   },
 ];
 
-export const getMenuItems = (isLogIn: boolean, role: UserType) => {
-  if (isLogIn && role === USER_TYPE.PHOTOGRAPHER) return PHOTOGRAPHER_MENU;
+export const getMenuItems = (isLogIn: boolean, role: UserType | null) => {
+  if (isLogIn && role && role === USER_TYPE.PHOTOGRAPHER) return PHOTOGRAPHER_MENU;
   return USER_MENU;
 };

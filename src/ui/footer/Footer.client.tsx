@@ -1,43 +1,23 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { usePrefetchUserProfile, useGetUserInfo } from '@/auth/apis';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { USER_TYPE, type UserType } from '@/auth/constant/userType';
+import { type UserType } from '@/auth/constant/userType';
 import { useToast } from '../toast/hooks/useToast';
 import { getMenuItems } from './menu';
 
-type Props = {
+type FooterClientProps = {
   initialUserType: UserType | null;
 };
 
-export default function FooterClient({ initialUserType }: Props) {
+export default function FooterClient({ initialUserType }: FooterClientProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const prefetchUserProfile = usePrefetchUserProfile();
+
   const { isLogIn } = useAuth();
   const { error, removeToast } = useToast();
-  const { data } = useGetUserInfo();
 
-  // 서버에서 내려준 쿠키 값(초기) + userInfo(최신) 중 최신을 우선
-  const userType = (data?.role as UserType | undefined) ?? initialUserType;
-
-  useEffect(() => {
-    if (!isLogIn) return;
-    if (userType === USER_TYPE.PHOTOGRAPHER) {
-      prefetchUserProfile();
-    }
-  }, [isLogIn, userType, prefetchUserProfile]);
-
-  const items = getMenuItems(Boolean(isLogIn), (data?.role as UserType) ?? USER_TYPE.CLIENT);
-  const normalizePathForMenu = (path: string) => {
-    // 의미상 같은 메뉴로 취급할 경로만 여기서 정규화
-    if (path === '/photographers/profile' || path.startsWith('/photographers/profile/')) {
-      return path.replace('/photographers/profile', '/profile');
-    }
-    return path;
-  };
+  const items = getMenuItems(Boolean(isLogIn), initialUserType);
 
   const isActive = (href: string | null) => {
     if (!href) return false;
@@ -89,3 +69,10 @@ export default function FooterClient({ initialUserType }: Props) {
     </div>
   );
 }
+
+const normalizePathForMenu = (path: string) => {
+  if (path === '/photographers/profile' || path.startsWith('/photographers/profile/')) {
+    return path.replace('/photographers/profile', '/profile');
+  }
+  return path;
+};
