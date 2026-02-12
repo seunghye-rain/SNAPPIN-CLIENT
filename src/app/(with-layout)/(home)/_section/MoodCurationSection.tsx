@@ -1,13 +1,14 @@
 'use client';
 
-import { Chip, CarouselCuration } from '@/ui';
+import Link from 'next/link';
+import { Chip } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { SectionHeader } from '../components';
-import { useGetPopularPortfoliosRecommendation, useGetPortfoliosRecommendation } from '../api';
-import { GetPortfolioResponse } from '@/swagger-api/data-contracts';
-import Link from 'next/link';
+import { SectionHeader, CarouselCuration } from '../components';
+
 import { useGetUserInfo } from '@/auth/apis';
+import { GetPortfolioResponse } from '@/swagger-api/data-contracts';
+import { useGetPopularPortfoliosRecommendation, useGetPortfoliosRecommendation } from '../api';
 
 export default function MoodCurationSection() {
   const { isLogIn } = useAuth();
@@ -26,6 +27,7 @@ export default function MoodCurationSection() {
   const sectionHeaderTitle = isLogIn
     ? `${userName}님을 위한 큐레이션`
     : '요즘 많이 찾는 무드 큐레이션';
+
   return (
     <section className='scrollbar-hide flex flex-col gap-[1.6rem]'>
       <div className='flex w-full flex-col gap-[0.5rem]'>

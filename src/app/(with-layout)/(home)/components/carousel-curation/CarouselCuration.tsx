@@ -3,15 +3,15 @@
 import { useEffect, useState } from 'react';
 
 import { cn } from '@/utils/cn';
+import { IconEllipse } from '@/assets';
 import {
+  TagChip,
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
-} from '@/ui/carousel/base/Carousel';
-import { ImageCarousel } from '@/ui/carousel';
-import { IconEllipse } from '@/assets';
-import { TagChip } from '@/ui/chip';
+  ImageWithShadow,
+} from '@/ui';
 
 type CarouselCurationProps = {
   images: { src: string; alt?: string }[];
@@ -70,7 +70,7 @@ export default function CarouselCuration({ images, tags, name, className }: Caro
         <CarouselContent>
           {images.map((img, idx) => (
             <CarouselItem key={`image-${img.src}-${idx}`}>
-              <ImageCarousel
+              <ImageWithShadow
                 src={img.src}
                 alt={img.alt ?? `image-${img.src}`}
                 imageHeight='36rem'
