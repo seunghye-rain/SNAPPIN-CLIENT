@@ -4,13 +4,16 @@ import ImageCarouselWithSideBtn from './ImageCarouselWithSideBtn';
 
 type Variant = 'sideButtons' | 'dots';
 
-export type ImageCarouselProps = React.ComponentProps<'div'> & {
+export type ImageCarouselBaseProps = React.ComponentProps<'div'> & {
   images: { src: string; alt?: string }[];
-  variant?: Variant;
   initialIndex?: number;
 };
 
-const VARIANT_COMPONENT: Record<Variant, React.ComponentType<ImageCarouselProps>> = {
+export type ImageCarouselProps = ImageCarouselBaseProps & {
+  variant?: Variant;
+};
+
+const VARIANT_COMPONENT: Record<Variant, React.ComponentType<ImageCarouselBaseProps>> = {
   sideButtons: ImageCarouselWithSideBtn,
   dots: ImageCarouselWithDots,
 };

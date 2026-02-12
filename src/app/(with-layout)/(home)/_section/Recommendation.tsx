@@ -1,5 +1,6 @@
 import { Author, InfiniteBanner, SectionHeader } from '../components';
 import { useGetRecommendation } from '../api/index';
+import { GetRecommendationPhotographerInfoResponse } from '@/swagger-api/data-contracts';
 
 const RecommendationSnapPlace = () => {
   const { data: places, isPending } = useGetRecommendation();
@@ -39,9 +40,9 @@ const RecommendationAuthor = () => {
     <section className='scrollbar-hide flex flex-col gap-[0.8rem]'>
       <SectionHeader title='이런 작가는 어때요?' />
       <div className='scrollbar-hide flex gap-[0.8rem] overflow-x-auto'>
-        {data?.photographers?.map((photographer, index) => (
+        {data?.photographers?.map((photographer: GetRecommendationPhotographerInfoResponse) => (
           <Author
-            key={index}
+            key={photographer.id}
             id={photographer.id ?? 0}
             name={photographer.name ?? ''}
             profileImageUrl={photographer.profileImageUrl ?? ''}

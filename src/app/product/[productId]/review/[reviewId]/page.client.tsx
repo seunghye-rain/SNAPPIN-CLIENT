@@ -12,7 +12,7 @@ type ClientPageProps = {
 
 export default function ClientPage({ reviewId }: ClientPageProps) {
   const searchParams = useSearchParams();
-  const initialIndex = Number(searchParams.get('image') ?? 0);
+  const initialIndex = Math.max(Number(searchParams.get('image') || 0), 0);
   const { data, isPending } = useGetReviewDetail(Number(reviewId));
 
   const reviewImages = data?.images?.map((image, idx) => ({

@@ -22,7 +22,7 @@ export default function ImageWithShadow({
       style={{ height: imageHeight, width: imageWidth }}
       className={cn('relative overflow-hidden', className)}
     >
-      <Image src={src} alt={alt} fill className='object-cover select-none' {...props} />
+      <Image {...props} src={src} alt={alt} fill className='object-cover select-none' />
       <div
         className='pointer-events-none absolute inset-0 h-full w-full'
         style={{

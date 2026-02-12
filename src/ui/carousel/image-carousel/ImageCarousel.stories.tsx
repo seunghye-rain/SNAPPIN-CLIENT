@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ImageCarousel from './ImageCarousel';
 
-const images = [
+const IMAGES = [
   { src: '@/../public/imgs/image-banner1.png', alt: 'carousel 1' },
   { src: '@/../public/imgs/image-banner2.png', alt: 'carousel 2' },
   { src: '@/../public/imgs/image-banner3.png', alt: 'carousel 3' },
@@ -18,7 +18,7 @@ const meta = {
     initialIndex: { control: { type: 'number', min: 0 } },
   },
   args: {
-    images,
+    images: IMAGES,
     variant: 'sideButtons',
     initialIndex: 0,
   },
