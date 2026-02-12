@@ -1,6 +1,4 @@
-'use client';
-
-import { useMemo, useRef, useState, useLayoutEffect, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 type SectionTabItem = {
@@ -11,83 +9,52 @@ type SectionTabItem = {
 type SectionTabsNewProps = {
   tabs: SectionTabItem[];
   activeValue: string;
-  onChange: (value: string) => void;
+  basePath: string;
   className?: string;
 };
 
 export default function SectionTabsNew({
   tabs,
   activeValue,
-  onChange,
+  basePath,
   className,
 }: SectionTabsNewProps) {
-  const activeIndex = useMemo(
-    () => tabs.findIndex(({ value }) => value === activeValue),
-    [tabs, activeValue],
-  );
-
-  // indicator 위치와 길이 계산
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [indicatorStyle, setIndicatorStyle] = useState({
-    left: 0,
-    width: 0,
-  });
-
-  const updateIndicator = useCallback(() => {
-    const el = tabRefs.current[activeIndex];
-    if (!el) {
-      return;
-    }
-
-    setIndicatorStyle({
-      left: el.offsetLeft,
-      width: el.offsetWidth,
-    });
-  }, [activeIndex]);
-
-  useLayoutEffect(() => {
-    updateIndicator();
-  }, [updateIndicator]);
-
-  useEffect(() => {
-    window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
-  }, [updateIndicator]);
+  const activeIndex = tabs.findIndex((t) => t.value === activeValue);
 
   return (
     <div
       className={cn(
-        'border-b-black-4 bg-black-1 relative flex h-[4.5rem] w-full gap-[0.4rem] border-b px-[2rem]',
+        'border-b-black-4 bg-black-1 relative flex h-[4.5rem] w-full border-b px-[2rem]',
         className,
       )}
     >
-      {tabs.map(({ label, value }, index) => {
+      {tabs.map(({ label, value }) => {
         const isActive = value === activeValue;
 
         return (
-          <button
+          <Link
             key={value}
-            ref={(el) => {
-              tabRefs.current[index] = el;
+            href={{
+              pathname: basePath,
+              query: { tab: value },
             }}
-            type='button'
-            onClick={() => onChange(value)}
+            scroll={false}
             className={cn(
-              'caption-14-bd flex-1 text-center transition-colors',
+              'caption-14-bd flex flex-1 items-center justify-center gap-[0.4rem] transition-colors',
               isActive ? 'text-black-10' : 'text-black-5',
             )}
           >
             {label}
-          </button>
+          </Link>
         );
       })}
 
-      {/* indicator 애니메이션 및 적용*/}
+      {/* indicator */}
       <div
-        className='bg-black-10 transition-[left, width] pointer-events-none absolute bottom-0 h-[0.2rem] duration-200 ease-out'
+        className='bg-black-10 pointer-events-none absolute bottom-0 h-[0.2rem] transition-transform duration-200 ease-out'
         style={{
-          left: indicatorStyle.left,
-          width: indicatorStyle.width,
+          width: `${90 / tabs.length}%`,
+          transform: `translateX(${activeIndex * 100}%)`,
         }}
       />
     </div>
