@@ -15,7 +15,9 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   const { data, isFetching, fetchNextPage, hasNextPage, dataUpdatedAt } = useGetPortfolioList(Number(id));
   const { ref, inView } = useInView();
 
-  const portfolioList = data?.pages.flatMap(page => page.data?.portfolios ?? []) ?? [];
+  const portfolioList = useMemo(() => {
+    return data?.pages.flatMap(page => page.data?.portfolios ?? []) ?? [];
+  }, [data?.pages]);
   const isEmpty = portfolioList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);

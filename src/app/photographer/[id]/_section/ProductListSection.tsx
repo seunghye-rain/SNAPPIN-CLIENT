@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { ProductList, ProductListSkeleton } from '@/ui';
 import { useGetProductList } from '../api';
@@ -29,7 +29,7 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
   const isEmpty = productList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = `photographer/${id}:scroll?tab=PRODUCT`;
+  const scrollKey = useMemo(() => `photographer/${id}:scroll?tab=PRODUCT`, [id]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [productList.length, dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,
