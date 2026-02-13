@@ -53,8 +53,8 @@ export default function ClientPage({ productId }: { productId: string }) {
   };
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = 'PRODUCT_SCROLL_MAP';
-  useScrollRestoreOnParent(anchorRef, scrollKey, productId, [data]);
+  const scrollKey = `product/${productId}:scroll`;
+  useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
 
   const handleTabChange = (value: string) => {
     setSelectedTab(value);

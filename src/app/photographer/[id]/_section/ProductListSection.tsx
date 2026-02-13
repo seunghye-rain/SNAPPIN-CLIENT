@@ -29,8 +29,8 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
   const isEmpty = productList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = 'PHOTOGRAPHER_SCROLL_MAP';
-  useScrollRestoreOnParent(anchorRef, scrollKey, `${id}?tab=PRODUCT`, [productList.length, dataUpdatedAt], {
+  const scrollKey = `photographer/${id}?tab=PRODUCT`;
+  useScrollRestoreOnParent(anchorRef, scrollKey, [productList.length, dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,
   });

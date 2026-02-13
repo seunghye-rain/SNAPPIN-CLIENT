@@ -16,8 +16,8 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   const isEmpty = portfolioList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = 'PHOTOGRAPHER_SCROLL_MAP';
-  useScrollRestoreOnParent(anchorRef, scrollKey, `${id}?tab=PORTFOLIO`, [portfolioList.length, dataUpdatedAt], {
+  const scrollKey = `photographer/${id}?tab=PORTFOLIO`;
+  useScrollRestoreOnParent(anchorRef, scrollKey, [portfolioList.length, dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,
   });

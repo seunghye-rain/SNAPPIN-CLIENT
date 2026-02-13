@@ -25,8 +25,8 @@ export default function ClientPage({ id }: ClientPageProps) {
   };
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = 'PORTFOLIO_SCROLL_MAP';
-  useScrollRestoreOnParent(anchorRef, scrollKey, id, [data]);
+  const scrollKey = `portfolio/${id}:scroll`;
+  useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
 
   return (
     <div>
