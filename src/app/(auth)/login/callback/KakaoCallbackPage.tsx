@@ -11,6 +11,11 @@ import { useKakaoLogin } from '@/auth/apis';
 import { Loading } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 
+const CLIENT_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL;
+const KAKAO_LOGIN_URL =
+  `${SERVER_API_BASE_URL}/api/v1/auth/login/kakao` +
+  `?redirect_uri=${encodeURIComponent(CLIENT_REDIRECT_URI!)}`;
+
 export default function KakaoCallbackPage() {
   const router = useRouter();
   const params = useSearchParams();
@@ -21,12 +26,7 @@ export default function KakaoCallbackPage() {
 
   const startedRef = useRef(false);
 
-  const CLIENT_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL;
-  const url =
-    `${SERVER_API_BASE_URL}/api/v1/auth/login/kakao` +
-    `?redirect_uri=${encodeURIComponent(CLIENT_REDIRECT_URI!)}`;
-
-  const { mutateAsync } = useKakaoLogin(url);
+  const { mutateAsync } = useKakaoLogin(KAKAO_LOGIN_URL);
 
   useEffect(() => {
     if (startedRef.current) return;
@@ -44,15 +44,18 @@ export default function KakaoCallbackPage() {
     (async () => {
       try {
         const data = await mutateAsync({ code });
+        if (!data.data?.accessToken || !data.data?.role) {
+          throw new Error('Invalid login response');
+        }
 
-        setAccessToken(data.data?.accessToken ?? '');
+        setAccessToken(data.data.accessToken);
         // TODO: 서버 응답에 hasPhotographerProfile 있으면 그걸로 교체
         setAuthUser({
-          role: data.data?.role as UserType,
+          role: data.data.role as UserType,
           hasPhotographerProfile: true,
         });
 
-        if (data.data?.isNew) {
+        if (data.data.isNew) {
           router.replace('/ai-curation');
         } else if (data.data?.role === USER_TYPE.PHOTOGRAPHER) {
           router.replace('/photographers/reservations');

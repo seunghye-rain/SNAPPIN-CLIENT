@@ -11,7 +11,7 @@ import {
 } from '@/swagger-api/data-contracts';
 import { setAccessToken, getAccessToken, deleteAccessToken } from '../token';
 import { deleteAuthUser, setAuthUser } from '../userType';
-import { UserType } from '../constant/userType';
+import { isValidUserType, UserType } from '../constant/userType';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
 
@@ -126,7 +126,8 @@ export const useSwitchUserProfile = () => {
 
     onSuccess: (data) => {
       if (data.accessToken) setAccessToken(data.accessToken);
-      if (data.role) setAuthUser({ role: data.role as UserType, hasPhotographerProfile: true });
+      if (data.role && isValidUserType(data.role))
+        setAuthUser({ role: data.role, hasPhotographerProfile: true });
 
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY.AUTH });
     },

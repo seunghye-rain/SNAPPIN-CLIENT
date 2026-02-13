@@ -2,7 +2,7 @@
 
 import Lottie from 'lottie-react';
 import { useState, useEffect, useRef, useCallback, startTransition } from 'react';
-import type { UserType } from '@/auth/constant/userType';
+import { isValidUserType, type UserType } from '@/auth/constant/userType';
 import { getUserType, setAuthUser } from '@/auth/userType';
 import loadingAnimation from '@/assets/lotties/loading.json';
 import ProfileLayout from '@/components/layout/profile/ProfileLayout';
@@ -31,7 +31,7 @@ export default function PageClient() {
     const fetchRole = async () => {
       const type = await getUserType();
       if (!mounted) return;
-      if (type) setUserTypeState(type as UserType);
+      if (type && isValidUserType(type)) setUserTypeState(type);
     };
 
     fetchRole();
@@ -72,7 +72,7 @@ export default function PageClient() {
       startSwitching();
 
       // storage/cookie 등 side-effect
-      setAuthUser({ role: type as UserType, hasPhotographerProfile: true });
+      setAuthUser({ role: type, hasPhotographerProfile: true });
 
       // UI 업데이트는 transition으로
       startTransition(() => {
@@ -85,7 +85,7 @@ export default function PageClient() {
   );
 
   return (
-    <ProfileLayout userType={userType as UserType}>
+    <ProfileLayout userType={userType}>
       <SwitchProfile
         userType={userType}
         onChange={handleUserTypeChange}

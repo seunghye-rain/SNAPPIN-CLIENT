@@ -4,9 +4,9 @@ import { USER_TYPE } from '@/auth/constant/userType';
 import ProfileLayout from '@/components/layout/profile/ProfileLayout';
 
 export default async function Page() {
-  const has = await getHasPhotographerProfile();
+  const hasPhotographerProfile = await getHasPhotographerProfile();
 
-  if (has === 'true') {
+  if (hasPhotographerProfile) {
     redirect('/photographers/profile');
   }
   return <ProfileLayout userType={USER_TYPE.CLIENT} />;
