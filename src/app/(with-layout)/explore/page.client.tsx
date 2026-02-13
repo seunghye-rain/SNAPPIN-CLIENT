@@ -2,20 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { Suspense, useMemo } from 'react';
-import { overlay } from 'overlay-kit';
-import {
-  ButtonSearchBar,
-  Loading,
-  PortfolioListSkeleton,
-  ProductListSkeleton,
-  SectionTabs,
-} from '@/ui';
+import { ButtonSearchBar, PortfolioListSkeleton, ProductListSkeleton, SectionTabs } from '@/ui';
 import { parseInitialDraft } from '@/app/(with-layout)/explore/utils/query';
-import { ExploreFilter, SearchSheet } from '@/app/(with-layout)/explore/components';
+import { ExploreFilter } from '@/app/(with-layout)/explore/components';
 import { SNAP_CATEGORY } from '@/constants/categories/snap-category';
 import { EXPLORE_TAB, EXPLORE_TAB_MAP } from '@/app/(with-layout)/explore/constants/tab';
 import { useQueryParams } from '@/hooks/useSearchQuery';
 import { ALLOWED_KEYS } from '@/app/(with-layout)/explore/constants/query';
+import { openSearchSheet } from '@/utils/openSearchSheet';
 
 const PortfolioListSection = dynamic(
   () => import('@/app/(with-layout)/explore/_section/PortfolioListSection'),
@@ -88,11 +82,7 @@ export default function PageClient() {
   const handleSheetOpen = () => {
     const placeName = read.get('placeName') ?? '';
     const key = `search-sheet:${placeName}:${searchParams.toString()}`;
-    overlay.open(({ isOpen, close }) => (
-      <Suspense fallback={<Loading className='h-full w-full self-center' />}>
-        <SearchSheet key={key} open={isOpen} onOpenChange={close} />
-      </Suspense>
-    ));
+    openSearchSheet(key);
   };
 
   return (
