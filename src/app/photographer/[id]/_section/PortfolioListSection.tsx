@@ -1,5 +1,8 @@
-import { useEffect, useRef } from 'react';
+'use client';
+
+import { useEffect, useRef, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useSearchParams } from 'next/navigation';
 import { PortfolioList, PortfolioListSkeleton } from '@/ui';
 import { useGetPortfolioList } from '../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
@@ -16,7 +19,12 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   const isEmpty = portfolioList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = `photographer/${id}?tab=PORTFOLIO`;
+  const searchParams = useSearchParams();
+  const scrollKey = useMemo(() => {
+    const sp = new URLSearchParams(searchParams.toString());
+    sp.set('tab', 'PORTFOLIO');
+    return `photographer/${id}:scroll?${sp.toString()}`;
+  }, [searchParams, id]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [portfolioList.length, dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,
