@@ -1,35 +1,13 @@
 import { Divider, UserTypeToggle } from '@/ui';
-import { isValidUserType, USER_TYPE, UserType } from '@/auth/constant/userType';
-import { useSwitchUserProfile } from '@/auth/apis';
+import { USER_TYPE, type UserType } from '@/auth/constant/userType';
 
 type SwitchProfileProps = {
-  userType: UserType | null;
-  onChange: (type: UserType) => void;
-  onSwitchStart: () => void;
-  onSwitchEnd: () => void;
+  userType: UserType;
+  onClick: () => void;
+  disabled?: boolean;
 };
 
-export default function SwitchProfile({
-  userType,
-  onChange,
-  onSwitchStart,
-  onSwitchEnd,
-}: SwitchProfileProps) {
-  const { mutateAsync, isPending } = useSwitchUserProfile();
-
-  const handleClick = async () => {
-    onSwitchStart();
-
-    try {
-      const data = await mutateAsync();
-      if (data.role && isValidUserType(data.role)) onChange(data.role);
-    } finally {
-      onSwitchEnd();
-    }
-  };
-
-  if (isPending || !userType) return null;
-
+export default function SwitchProfile({ userType, onClick, disabled }: SwitchProfileProps) {
   return (
     <>
       <Divider color='bg-black-3' className='h-[0.6rem]' />
@@ -40,7 +18,8 @@ export default function SwitchProfile({
               ? '고객 계정으로 전환하기'
               : '작가 계정으로 전환하기'}
           </p>
-          <UserTypeToggle selectedType={userType} onClick={handleClick} disabled={isPending} />
+
+          <UserTypeToggle selectedType={userType} onClick={onClick} disabled={disabled} />
         </div>
       </section>
     </>

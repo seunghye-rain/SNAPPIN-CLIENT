@@ -1,96 +1,66 @@
 'use client';
 
 import Lottie from 'lottie-react';
-import { useState, useEffect, useRef, useCallback, startTransition } from 'react';
+import { startTransition, useCallback, useEffect, useState } from 'react';
 import { isValidUserType, type UserType } from '@/auth/constant/userType';
 import { getUserType, setAuthUser } from '@/auth/userType';
+import { useSwitchUserProfile } from '@/auth/apis';
 import loadingAnimation from '@/assets/lotties/loading.json';
 import ProfileLayout from '@/components/layout/profile/ProfileLayout';
 import SwitchProfile from './components/switch-profile/SwitchProfile';
+import { useMinDurationLoading } from './hooks/useMinDurationLoading';
 
 const MIN_DURATION = 1600;
 
-type SwitchControl = {
-  startTime: number | null;
-  timeoutId: NodeJS.Timeout | null;
-};
-
 export default function PageClient() {
   const [userType, setUserTypeState] = useState<UserType | null>(null);
-  const [isSwitching, setIsSwitching] = useState(false);
 
-  const switchControlRef = useRef<SwitchControl>({
-    startTime: null,
-    timeoutId: null,
-  });
+  const { loading: isSwitching, start, end } = useMinDurationLoading(MIN_DURATION);
+  const { mutateAsync, isPending } = useSwitchUserProfile();
 
-  // 초기 role 로드
   useEffect(() => {
     let mounted = true;
 
-    const fetchRole = async () => {
+    (async () => {
       const type = await getUserType();
       if (!mounted) return;
       if (type && isValidUserType(type)) setUserTypeState(type);
-    };
-
-    fetchRole();
+    })();
 
     return () => {
       mounted = false;
-      // unmount 시 타이머 정리
-      const { timeoutId } = switchControlRef.current;
-      if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
 
-  // 전환 시작: 시작시간 기록 + UI on
-  const startSwitching = useCallback(() => {
-    const ctrl = switchControlRef.current;
-    ctrl.startTime = Date.now();
-    setIsSwitching(true);
-  }, []);
+  const handleSwitchClick = useCallback(async () => {
+    if (!userType) return;
 
-  // 전환 종료: MIN_DURATION 보장 + 타이머 관리
-  const endSwitching = useCallback(() => {
-    const ctrl = switchControlRef.current;
+    start();
 
-    const elapsed = Date.now() - (ctrl.startTime ?? 0);
-    const remaining = Math.max(MIN_DURATION - elapsed, 0);
+    try {
+      const data = await mutateAsync();
 
-    if (ctrl.timeoutId) clearTimeout(ctrl.timeoutId);
+      const nextRole = data?.role;
+      if (!nextRole || !isValidUserType(nextRole)) return;
 
-    ctrl.timeoutId = setTimeout(() => {
-      setIsSwitching(false);
-      ctrl.startTime = null;
-      ctrl.timeoutId = null;
-    }, remaining);
-  }, []);
+      await setAuthUser({ role: nextRole, hasPhotographerProfile: true });
 
-  const handleUserTypeChange = useCallback(
-    (type: UserType) => {
-      startSwitching();
-
-      // storage/cookie 등 side-effect
-      setAuthUser({ role: type, hasPhotographerProfile: true });
-
-      // UI 업데이트는 transition으로
       startTransition(() => {
-        setUserTypeState(type);
+        setUserTypeState(nextRole);
       });
+    } finally {
+      end();
+    }
+  }, [userType, mutateAsync, start, end]);
 
-      endSwitching();
-    },
-    [startSwitching, endSwitching],
-  );
+  if (!userType) return null;
 
   return (
     <ProfileLayout userType={userType}>
       <SwitchProfile
         userType={userType}
-        onChange={handleUserTypeChange}
-        onSwitchStart={startSwitching}
-        onSwitchEnd={endSwitching}
+        onClick={handleSwitchClick}
+        disabled={isPending || isSwitching || !userType}
       />
       {isSwitching && (
         <div className='absolute inset-0 z-50 flex h-dvh flex-col items-center justify-center bg-black/30'>
