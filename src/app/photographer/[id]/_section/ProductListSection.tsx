@@ -26,7 +26,6 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
       title: p.title ?? '',
       imageUrl: p.imageUrl ?? '',
     })) ?? [];
-  const isEmpty = productList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const scrollKey = useMemo(() => `photographer/${id}:scroll?tab=PRODUCT`, [id]);
@@ -41,16 +40,15 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isFetching && isEmpty) {
+  if (isFetching) {
     return (
-      <section className='mt-[4.6rem]'>
-        <div ref={anchorRef} />
+      <section className='mt-[17.1rem]'>
         <ProductListSkeleton />
       </section>
     );
   };
 
-  if (isEmpty) {
+  if (productList.length === 0) {
     return (
       <section>
         <div className='flex justify-center items-center min-h-[calc(100dvh-7.5rem-7.2rem)]'>

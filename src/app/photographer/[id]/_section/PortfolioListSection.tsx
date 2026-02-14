@@ -18,7 +18,6 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   const portfolioList = useMemo(() => {
     return data?.pages.flatMap(page => page.data?.portfolios ?? []) ?? [];
   }, [data?.pages]);
-  const isEmpty = portfolioList.length === 0;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const searchParams = useSearchParams();
@@ -38,16 +37,15 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isFetching && isEmpty) {
+  if (isFetching) {
     return (
-      <section className='mt-[4.6rem]'>
-        <div ref={anchorRef} />
+      <section className='mt-[17.1rem]'>
         <PortfolioListSkeleton />
       </section>
     );
   };
 
-  if (isEmpty) {
+  if (portfolioList.length === 0) {
     return (
       <section>
         <div className='flex justify-center items-center min-h-[calc(100dvh-9.5rem-7.2rem)]'>

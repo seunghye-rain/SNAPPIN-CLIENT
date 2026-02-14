@@ -15,13 +15,13 @@ type ClientPageProps = {
 export default function ClientPage({ id }: ClientPageProps) {
   const { data, isPending } = useGetPortfolioDetail(Number(id));
 
-  const portfolioImages = data?.images?.map((image, idx) => ({
+  const portfolioImages = data?.images?.map((image) => ({
     src: image,
-    alt: `${data.description} 포트폴리오 이미지 ${idx}`,
+    alt: data?.description ?? '',
   }));
   const productImage = {
     src: data?.productInfo?.imageUrl ?? '',
-    alt: `${data?.productInfo?.title ?? ''} 상품 이미지`,
+    alt: data?.productInfo?.title ?? '',
   };
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
