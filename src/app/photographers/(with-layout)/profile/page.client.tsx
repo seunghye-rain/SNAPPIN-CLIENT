@@ -1,7 +1,7 @@
 'use client';
 
 import Lottie from 'lottie-react';
-import { startTransition, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { isValidUserType, type UserType } from '@/auth/constant/userType';
 import { getUserType, setAuthUser } from '@/auth/userType';
 import { useSwitchUserProfile } from '@/auth/apis';
@@ -43,12 +43,7 @@ export default function PageClient() {
       const nextRole = data?.role;
       if (!nextRole || !isValidUserType(nextRole)) return;
 
-      // TODO: 서버 응답에 hasPhotographerProfile 있으면 그걸로 교체
-      await setAuthUser({ role: nextRole, hasPhotographerProfile: true });
-
-      startTransition(() => {
-        setUserTypeState(nextRole);
-      });
+      setUserTypeState(nextRole);
     } finally {
       end();
     }
@@ -61,7 +56,7 @@ export default function PageClient() {
       <SwitchProfile
         userType={userType}
         onClick={handleSwitchClick}
-        disabled={isPending || isSwitching || !userType}
+        disabled={isPending || isSwitching}
       />
       {isSwitching && (
         <div className='absolute inset-0 z-50 flex h-dvh flex-col items-center justify-center bg-black/30'>

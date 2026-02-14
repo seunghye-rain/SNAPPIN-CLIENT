@@ -6,8 +6,8 @@ import { HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, USER_TYPE_COOKIE_NAME } from './c
 
 async function setAuthUser(value: AuthUser) {
   const cookieStore = await cookies();
-  +cookieStore.set(USER_TYPE_COOKIE_NAME, value.role);
-  +cookieStore.set(HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, value.hasPhotographerProfile.toString());
+  cookieStore.set(USER_TYPE_COOKIE_NAME, value.role);
+  cookieStore.set(HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, value.hasPhotographerProfile.toString());
 }
 
 async function deleteAuthUser() {

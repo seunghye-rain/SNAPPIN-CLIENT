@@ -57,7 +57,7 @@ export default function KakaoCallbackPage() {
 
         if (data.data.isNew) {
           router.replace('/ai-curation');
-        } else if (data.data?.role === USER_TYPE.PHOTOGRAPHER) {
+        } else if (data.data.role === USER_TYPE.PHOTOGRAPHER) {
           router.replace('/photographers/reservations');
         } else {
           router.replace('/');

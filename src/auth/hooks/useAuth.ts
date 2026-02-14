@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getAccessToken } from '../token';
 
-export function useAuth() {
+export const useAuth = () => {
   const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -15,4 +15,4 @@ export function useAuth() {
   return {
     isLogIn,
   };
-}
+};

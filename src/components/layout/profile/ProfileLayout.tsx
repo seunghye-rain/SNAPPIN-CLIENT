@@ -14,7 +14,7 @@ export default function ProfileLayout({ userType, children }: ProfileLayoutProps
       <ProfileCard userType={userType} />
       <Divider color='bg-black-3' className='h-[0.6rem]' />
       <Menus />
-      {children && children}
+      {children}
     </div>
   );
 }

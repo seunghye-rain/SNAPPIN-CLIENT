@@ -5,7 +5,7 @@ type SwitchControl = {
   timeoutId: ReturnType<typeof setTimeout> | null;
 };
 
-export function useMinDurationLoading(minDuration: number) {
+export const useMinDurationLoading = (minDuration: number) => {
   const [loading, setLoading] = useState(false);
   const ctrlRef = useRef<SwitchControl>({ startTime: null, timeoutId: null });
 
@@ -31,11 +31,13 @@ export function useMinDurationLoading(minDuration: number) {
   }, [minDuration]);
 
   useEffect(() => {
+    const ctrl = ctrlRef.current;
+
     return () => {
-      const { timeoutId } = ctrlRef.current;
+      const { timeoutId } = ctrl;
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
 
   return { loading, start, end };
-}
+};

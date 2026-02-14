@@ -35,7 +35,7 @@ export default function PhotographerSection({
     >
       <div className='h-[64px] w-[64px] shrink-0 overflow-hidden rounded-full'>
         <Image
-          src={imageUrl ?? '/imgs/default-profile.png'}
+          src={imageUrl || '/imgs/default-profile.png'}
           alt='프로필 이미지'
           width={64}
           height={64}

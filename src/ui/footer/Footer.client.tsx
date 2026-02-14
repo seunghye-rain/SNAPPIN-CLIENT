@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { type UserType } from '@/auth/constant/userType';
 import { useToast } from '../toast/hooks/useToast';
-import { getMenuItems } from './menu';
+import { getMenuItems } from './constants/menu';
 
 type FooterClientProps = {
   initialUserType: UserType | null;
@@ -45,28 +45,25 @@ export default function FooterClient({ initialUserType }: FooterClientProps) {
   };
 
   return (
-    <div className='z-20'>
-      <div className='bg-black-1 footer-height pointer-events-none' aria-hidden />
-      <footer className='border-black-5 footer-height fixed-center bg-black-1 bottom-0 flex items-center justify-between border-t-[0.5px] px-[2rem] pt-[0.2rem] pb-[0.6rem]'>
-        {items.map((item) => {
-          const active = isActive(item.href);
-          const Icon = active ? item.activeIcon : item.inactiveIcon;
+    <>
+      {items.map((item) => {
+        const active = isActive(item.href);
+        const Icon = active ? item.activeIcon : item.inactiveIcon;
 
-          return (
-            <button
-              key={item.label}
-              type='button'
-              onClick={() => handleClickMenuItem(item.href)}
-              className='flex h-[4.8rem] w-[4.8rem] flex-col items-center justify-center gap-[0.2rem]'
-              aria-label={item.label}
-            >
-              {Icon}
-              <span className='caption-10-md'>{item.label}</span>
-            </button>
-          );
-        })}
-      </footer>
-    </div>
+        return (
+          <button
+            key={item.label}
+            type='button'
+            onClick={() => handleClickMenuItem(item.href)}
+            className='flex h-[4.8rem] w-[4.8rem] flex-col items-center justify-center gap-[0.2rem]'
+            aria-label={item.label}
+          >
+            {Icon}
+            <span className='caption-10-md'>{item.label}</span>
+          </button>
+        );
+      })}
+    </>
   );
 }
 

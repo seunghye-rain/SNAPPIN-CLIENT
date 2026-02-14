@@ -11,7 +11,7 @@ import {
 } from '@/swagger-api/data-contracts';
 import { setAccessToken, getAccessToken, deleteAccessToken } from '../token';
 import { deleteAuthUser, setAuthUser } from '../userType';
-import { isValidUserType, UserType } from '../constant/userType';
+import { isValidUserType } from '../constant/userType';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
 
@@ -56,6 +56,7 @@ export const useLogout = () => {
 
 const logoutApi = async () => {
   const accessToken = await getAccessToken();
+  if (!accessToken) throw new Error('No access token available');
 
   const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/auth/logout`, {
     method: 'POST',

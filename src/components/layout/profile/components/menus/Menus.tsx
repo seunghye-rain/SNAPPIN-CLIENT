@@ -83,8 +83,13 @@ type MenuItemProps = {
 
 const MenuItem = ({ label, href }: MenuItemProps) => {
   return (
-    <Link href={href} className='caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left'>
+    <a
+      href={href}
+      target='_blank'
+      rel='noopener noreferrer'
+      className='caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left'
+    >
       {label}
-    </Link>
+    </a>
   );
 };
