@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
-import { USER_TYPE, type UserType } from '@/auth/constant/userType';
+import { isValidUserType, USER_TYPE, type UserType } from '@/auth/constant/userType';
 import { setAuthUser } from '@/auth/userType';
 import { setAccessToken } from '@/auth/token';
 import { useKakaoLogin } from '@/auth/apis';
@@ -20,6 +20,8 @@ export default function KakaoCallbackPage() {
   const router = useRouter();
   const params = useSearchParams();
   const toast = useToast();
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
 
   const code = params.get('code');
   const error = params.get('error');
@@ -48,7 +50,11 @@ export default function KakaoCallbackPage() {
           throw new Error('Invalid login response');
         }
 
-        setAccessToken(data.data.accessToken);
+        await setAccessToken(data.data.accessToken);
+
+        if (!isValidUserType(data.data.role)) {
+          throw new Error(`Invalid role: ${data.data.role}`);
+        }
         // TODO: 서버 응답에 hasPhotographerProfile 있으면 그걸로 교체
         setAuthUser({
           role: data.data.role as UserType,
@@ -71,7 +77,7 @@ export default function KakaoCallbackPage() {
         );
       }
     })();
-  }, [code, error, mutateAsync, router, toast]);
+  }, [code, error, mutateAsync, router]);
 
   return (
     <div className='bg-black-10 flex h-dvh flex-col items-center justify-center gap-[1.5rem]'>

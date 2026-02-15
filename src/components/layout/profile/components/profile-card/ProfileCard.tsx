@@ -24,9 +24,9 @@ type PhotographerProfileCardProps = {
 };
 
 export default function ProfileCard({ userType, isSwitching }: ProfileCardProps) {
-  const { data, isPending } = useGetUserInfo();
+  const { data, isFetching } = useGetUserInfo();
 
-  if (isPending || isSwitching || !userType) {
+  if (isFetching || isSwitching || !userType) {
     return <ProfileCardSkeleton />;
   }
 

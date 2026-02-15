@@ -125,10 +125,10 @@ export const useSwitchUserProfile = () => {
       return res.data;
     },
 
-    onSuccess: (data) => {
-      if (data.accessToken) setAccessToken(data.accessToken);
+    onSuccess: async (data) => {
+      if (data.accessToken) await setAccessToken(data.accessToken);
       if (data.role && isValidUserType(data.role))
-        setAuthUser({ role: data.role, hasPhotographerProfile: true });
+        await setAuthUser({ role: data.role, hasPhotographerProfile: true });
 
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY.AUTH });
     },

@@ -17,7 +17,7 @@ export default function FooterClient({ initialUserType }: FooterClientProps) {
   const { isLogIn } = useAuth();
   const { error, removeToast } = useToast();
 
-  const items = getMenuItems(Boolean(isLogIn), initialUserType);
+  const items = getMenuItems(isLogIn, initialUserType);
 
   const isActive = (href: string | null) => {
     if (!href) return false;

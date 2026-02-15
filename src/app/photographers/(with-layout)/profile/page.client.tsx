@@ -3,7 +3,7 @@
 import Lottie from 'lottie-react';
 import { useCallback, useEffect, useState } from 'react';
 import { isValidUserType, type UserType } from '@/auth/constant/userType';
-import { getUserType, setAuthUser } from '@/auth/userType';
+import { getUserType } from '@/auth/userType';
 import { useSwitchUserProfile } from '@/auth/apis';
 import loadingAnimation from '@/assets/lotties/loading.json';
 import ProfileLayout from '@/components/layout/profile/ProfileLayout';
@@ -59,7 +59,7 @@ export default function PageClient() {
         disabled={isPending || isSwitching}
       />
       {isSwitching && (
-        <div className='absolute inset-0 z-50 flex h-dvh flex-col items-center justify-center bg-black/30'>
+        <div className='fixed-center top-0 z-50 flex h-dvh flex-col items-center justify-center bg-black/30'>
           <Lottie animationData={loadingAnimation} className='h-[15rem] w-[15rem]' />
           <span className='title-20-bd text-neon-black'>계정 전환 중...</span>
         </div>
