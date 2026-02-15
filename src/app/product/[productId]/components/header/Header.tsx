@@ -22,6 +22,7 @@ export default function Header() {
         <IconButton
           className='flex h-[4.4rem] w-[4.4rem] items-center gap-[1rem]'
           onClick={handleGoBack}
+          aria-label='이전 페이지로 이동'
         >
           <IconArrowBack />
         </IconButton>
@@ -31,6 +32,7 @@ export default function Header() {
         <IconButton
           className='flex h-[4.4rem] w-[4.4rem] items-center justify-end gap-[1rem]'
           onClick={handleGoHome}
+          aria-label='홈으로 이동'
         >
           <IconHome />
         </IconButton>

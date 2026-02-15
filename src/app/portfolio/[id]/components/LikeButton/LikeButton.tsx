@@ -16,7 +16,11 @@ export default function LikeButton({
   handleClick
 }: LikeButtonProps) {
   return (
-    <IconButton className={cn('w-[2.4rem] h-[2.4rem] shrink-0', className)} onClick={handleClick}>
+    <IconButton
+      className={cn('w-[2.4rem] h-[2.4rem] shrink-0', className)}
+      aria-label='좋아요'
+      onClick={handleClick}
+    >
       {isLiked
         ? <IconHeartFill className='text-black-9' />
         : <IconHeart className='text-black-9' /> 

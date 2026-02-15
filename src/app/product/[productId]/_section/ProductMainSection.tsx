@@ -55,7 +55,11 @@ export default function ProductMainSection({
           <div className='flex items-center justify-between'>
             <span className='font-18-bd text-black-10'>{title}</span>
             <div className='flex h-[3rem] w-[4.4rem] items-center justify-end gap-[1rem]'>
-              <IconButton className='h-[2.4rem] w-[2.4rem]' onClick={handleLike}>
+              <IconButton
+                className='h-[2.4rem] w-[2.4rem]'
+                onClick={handleLike}
+                aria-label='좋아요'
+              >
                 {isLiked ? <IconHeartFill /> : <IconHeart />}
               </IconButton>
             </div>
