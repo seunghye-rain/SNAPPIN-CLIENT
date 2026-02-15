@@ -1,18 +1,16 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ConfirmModal } from '@/ui';
-import { cn } from '@/utils/cn';
 import { useLogout } from '@/auth/apis';
-import { deleteAccessToken } from '@/auth/token';
-import { deleteUserType } from '@/auth/userType';
 import { useAuth } from '@/auth/hooks/useAuth';
+import { useToast } from '@/ui/toast/hooks/useToast';
 
 export default function Menus() {
   const router = useRouter();
   const { isLogIn } = useAuth();
+  const { error } = useToast();
   const { mutate: logout } = useLogout();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -23,48 +21,42 @@ export default function Menus() {
     handleModalOpen(true);
   };
 
-  // 이전 버전
-  // const handleConfirm = async () => {
-  //   try {
-  //     await logoutApi();
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     deleteAccessToken();
-  //     deleteUserType();
-  //     router.push('/');
-  //     handleModalOpen(false);
-  //   }
-  // };
   const handleConfirm = () => {
-    console.log('로그아웃');
     logout(undefined, {
       onSuccess: () => {
-        deleteAccessToken();
-        deleteUserType();
-
         router.push('/');
         setIsLogoutModalOpen(false);
       },
-      onError: (error) => {
-        console.error(error);
+      onError: () => {
+        setIsLogoutModalOpen(false);
+        error('로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.', undefined, 'top-[2rem]');
       },
     });
   };
 
   return (
     <section className='bg-black-1 flex flex-col py-[0.8rem]'>
-      <MenuItem label='공지사항' href='https://pretty-shake-931.notion.site/2efa9c9b4473803f9f46fdb17944d7e0?source=copy_link' />
-      <MenuItem label='FAQ' href='https://pretty-shake-931.notion.site/FAQ-2efa9c9b447380b69797cff125db7e5e?source=copy_link' />
-      <MenuItem label='고객센터' href='https://pretty-shake-931.notion.site/2efa9c9b447380a59d79ce7cae04a0bc?source=copy_link' />
+      <MenuItem
+        label='공지사항'
+        href='https://pretty-shake-931.notion.site/2efa9c9b4473803f9f46fdb17944d7e0?source=copy_link'
+      />
+      <MenuItem
+        label='FAQ'
+        href='https://pretty-shake-931.notion.site/FAQ-2efa9c9b447380b69797cff125db7e5e?source=copy_link'
+      />
+      <MenuItem
+        label='고객센터'
+        href='https://pretty-shake-931.notion.site/2efa9c9b447380a59d79ce7cae04a0bc?source=copy_link'
+      />
       <button
         type='button'
         disabled={!isLogIn}
         className='caption-14-md bg-black-1 text-red-error py-[1.5rem] pl-[2rem] text-left'
         onClick={handleLogoutClick}
-        >
+      >
         로그아웃
       </button>
+
       <ConfirmModal
         open={isLogoutModalOpen}
         handleOpenChange={(open) => handleModalOpen(open)}
@@ -85,17 +77,18 @@ export default function Menus() {
 
 type MenuItemProps = {
   label: string;
-  className?: string;
   href: string;
 };
 
-const MenuItem = ({ label, className, href }: MenuItemProps) => {
+const MenuItem = ({ label, href }: MenuItemProps) => {
   return (
-    <Link
+    <a
       href={href}
-      className={cn('caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left', className)}
+      target='_blank'
+      rel='noopener noreferrer'
+      className='caption-14-md bg-black-1 py-[1.5rem] pl-[2rem] text-left'
     >
       {label}
-    </Link>
+    </a>
   );
 };

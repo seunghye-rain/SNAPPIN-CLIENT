@@ -1,15 +1,13 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { getHasPhotographerProfile } from '@/auth/userType';
+import { USER_TYPE } from '@/auth/constant/userType';
+import ProfileLayout from '@/components/layout/profile/ProfileLayout';
 
-import { Divider } from '@/ui';
-import { ClientHeader, ClientProfileCard, Menus } from './components';
+export default async function Page() {
+  const hasPhotographerProfile = await getHasPhotographerProfile();
 
-export default function Page() {
-  return (
-    <div className='flex flex-col'>
-      <ClientHeader />
-      <ClientProfileCard />
-      <Divider color='bg-black-3' className='h-[0.6rem]' />
-      <Menus />
-    </div>
-  );
+  if (hasPhotographerProfile) {
+    redirect('/photographers/profile');
+  }
+  return <ProfileLayout userType={USER_TYPE.CLIENT} />;
 }

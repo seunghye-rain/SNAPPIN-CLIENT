@@ -46,8 +46,6 @@ export default function ShootCompletedListSection() {
     );
   }
 
-  const isEmpty = isLogIn === true && !isFetching && !hasData;
-
   if (isLogIn === false) {
     return (
       <EmptyView

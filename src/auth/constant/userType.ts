@@ -1,3 +1,8 @@
+export type AuthUser = {
+  role: UserType;
+  hasPhotographerProfile: boolean;
+};
+
 export const USER_TYPE = {
   CLIENT: 'CLIENT',
   PHOTOGRAPHER: 'PHOTOGRAPHER',
@@ -9,3 +14,6 @@ export const USER_TYPE_LABEL: Record<UserType, string> = {
 };
 
 export type UserType = (typeof USER_TYPE)[keyof typeof USER_TYPE];
+
+export const isValidUserType = (role: string): role is UserType =>
+  Object.values(USER_TYPE).includes(role as UserType);
