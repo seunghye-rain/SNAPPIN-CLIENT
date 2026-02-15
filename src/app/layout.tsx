@@ -1,11 +1,6 @@
-import localFont from 'next/font/local';
 import { Providers } from '@/app/providers';
 import '@/styles/global.css';
 import { Metadata, Viewport } from 'next';
-
-const pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.ttf',
-});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -45,7 +40,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='ko' className={pretendard.className}>
+    <html lang='ko'>
+      <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin='anonymous' />
+        <link
+          rel="preload"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>
