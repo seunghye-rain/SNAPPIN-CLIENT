@@ -18,7 +18,7 @@ export default function LikeButton({
   return (
     <IconButton
       className={cn('w-[2.4rem] h-[2.4rem] shrink-0', className)}
-      aria-label='좋아요'
+      aria-label={isLiked ? '좋아요 취소' : '좋아요'}
       onClick={handleClick}
     >
       {isLiked
