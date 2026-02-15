@@ -92,6 +92,8 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     status === STATE_CODES.RESERVATION_CANCELED ||
     status === STATE_CODES.RESERVATION_REFUSED;
 
+  const isPhotoFinal = reservationStatus == STATE_CODES.SHOOT_COMPLETED;
+
   const handleInquiryClick = () => {
     toast.alert(
       '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
@@ -103,7 +105,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   if (isPending) {
     return (
       <div className='bg-black-1 flex min-h-dvh flex-col'>
-        <ClientNavigation title='예약 상세' />
+        <ClientNavigation title={isPhotoFinal ? '촬영 내역' : '예약 상세'} />
         <SectionSkeleton />
       </div>
     );
