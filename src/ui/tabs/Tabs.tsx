@@ -1,16 +1,23 @@
-import {
-  Children,
-  HTMLAttributes,
-  ReactElement,
-  ReactNode,
-  cloneElement,
-  isValidElement,
-} from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 type TabProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
+};
+
+type TabsListProps = HTMLAttributes<HTMLDivElement> & {
+  activeValue: string;
+  tabs: { value: string }[];
+  children: ReactNode;
+};
+
+type TabItemProps = {
+  value: string;
+  activeValue: string;
+  href: string;
+  children: ReactNode;
+  className?: string;
 };
 
 function Tab({ className, children, ...props }: TabProps) {
@@ -21,41 +28,17 @@ function Tab({ className, children, ...props }: TabProps) {
   );
 }
 
-type TabsListProps = HTMLAttributes<HTMLDivElement> & {
-  activeValue: string;
-  tabs: { value: string }[];
-  children: ReactNode;
-};
-
-type TabItemProps = {
-  value: string;
-  activeValue?: string;
-  href: string;
-  children: ReactNode;
-  className?: string;
-};
-
-// Tabs.Item 확인
-const checkIsTabItemElement = (
-  child: ReactNode,
-): child is ReactElement<TabItemProps, typeof TabItem> => {
-  return isValidElement(child) && child.type === TabItem;
-};
-
 function TabsList({ activeValue, tabs, className, children, ...props }: TabsListProps) {
   const selectedTabIndex = tabs.findIndex((tab) => tab.value === activeValue);
   const activeIndex = selectedTabIndex >= 0 ? selectedTabIndex : 0;
 
-  const childrenWithActiveValue = Children.map(children, (child) => {
-    return checkIsTabItemElement(child) ? cloneElement(child, { activeValue }) : child;
-  });
-
   return (
     <div
+      role='tablist'
       className={cn('border-black-4 relative flex h-[4.5rem] w-full border-b px-[2rem]', className)}
       {...props}
     >
-      {childrenWithActiveValue}
+      {children}
       <div
         className='bg-black-10 pointer-events-none absolute bottom-0 h-[0.2rem] transition-transform duration-200 ease-out'
         style={{
@@ -73,6 +56,8 @@ function TabItem({ value, activeValue, href, children, className }: TabItemProps
 
   return (
     <Link
+      role='tab'
+      aria-selected={isActive}
       href={href}
       scroll={false}
       className={cn(
