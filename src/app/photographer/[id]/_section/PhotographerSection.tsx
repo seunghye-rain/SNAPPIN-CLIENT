@@ -38,10 +38,10 @@ export function PhotographerSection({
             <h2 className='font-16-bd text-black-10'>{name}</h2>
             <p className='caption-14-rg text-black-8'>{bio}</p>
           </div>
-          <div className='flex flex-col gap-[0.4rem]'>
+          <dl className='flex flex-col gap-[0.4rem]'>
             <DetailRow label='촬영 상품' content={specialties} />
             <DetailRow label='활동 지역' content={locations} />
-          </div>
+          </dl>
         </div>
       </div>
     </section>
@@ -53,10 +53,10 @@ function DetailRow({
   content,
 }: DetailRowProps) {
   return (
-    <dl className='flex gap-[0.8rem]'>
+    <div className='flex gap-[0.8rem]'>
       <dt className='caption-12-md text-black-7'>{label}</dt>
       <dd className='caption-12-md text-black-9'>{content.join(', ')}</dd>
-    </dl>
+    </div>
   );
 }
 
