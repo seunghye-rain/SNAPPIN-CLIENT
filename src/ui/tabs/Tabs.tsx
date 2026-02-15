@@ -21,7 +21,8 @@ type TabsListProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 function TabsList({ activeValue, tabs, className, children, ...props }: TabsListProps) {
-  const activeIndex = tabs.findIndex((tab) => tab.value === activeValue);
+  const selectedTabIndex = tabs.findIndex((tab) => tab.value === activeValue);
+  const activeIndex = selectedTabIndex >= 0 ? selectedTabIndex : 0;
 
   return (
     <div
@@ -32,7 +33,8 @@ function TabsList({ activeValue, tabs, className, children, ...props }: TabsList
       <div
         className='bg-black-10 pointer-events-none absolute bottom-0 h-[0.2rem] transition-transform duration-200 ease-out'
         style={{
-          width: `${90 / tabs.length}%`,
+          left: '2rem',
+          width: `calc((100% - 4rem) / ${tabs.length})`,
           transform: `translateX(${activeIndex * 100}%)`,
         }}
       />
