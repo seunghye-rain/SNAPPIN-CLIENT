@@ -1,9 +1,8 @@
 const toSegment = (value: number) => encodeURIComponent(String(value));
 
-export const ROUTE_PATHS = {
+export const ROUTES = {
   HOME: '/',
-  LOGIN: '/login',
-  LOGIN_CALLBACK: (params?: string) => `/login/callback${params ? `?${params}` : ''}`,
+  LOGIN: (params?: string) => `/login${params ? `?${params}` : ''}`,
   AI_CURATION: '/ai-curation',
   AI_CURATION_STEP: (step: number) => `/ai-curation/${toSegment(step)}`,
   AI_CURATION_RESULT: '/ai-curation/result',
@@ -14,9 +13,11 @@ export const ROUTE_PATHS = {
   PHOTO_FINAL: (id: number) => `/photo-final/${toSegment(id)}`,
   PHOTO_FINAL_PHOTOS_REVIEW: (id: number, reviewId: number) =>
     `/photo-final/${toSegment(id)}/photos/${toSegment(reviewId)}`,
-  PHOTOGRAPHER: (id: number) => `/photographer/${toSegment(id)}`,
+  PHOTOGRAPHER: (id: number, params?: string) =>
+    `/photographer/${toSegment(id)}${params ? `?${params}` : ''}`,
   PORTFOLIO: (id: number) => `/portfolio/${toSegment(id)}`,
-  PRODUCT: (productId: number) => `/product/${toSegment(productId)}`,
+  PRODUCT: (productId: number, params?: string) =>
+    `/product/${toSegment(productId)}${params ? `?${params}` : ''}`,
   PRODUCT_REVIEW: (productId: number, reviewId: number) =>
     `/product/${toSegment(productId)}/review/${toSegment(reviewId)}`,
   RESERVATION: (id: number) => `/reservation/${toSegment(id)}`,
@@ -24,12 +25,11 @@ export const ROUTE_PATHS = {
 } as const;
 
 export const PHOTOGRAPHERS_ROUTES = {
-  PHOTOGRAPHERS_PROFILE: '/photographers/profile',
-  PHOTOGRAPHERS_RESERVATIONS: '/photographers/reservations',
-  PHOTOGRAPHERS_PAYMENT: (id: number) => `/photographers/payment/${toSegment(id)}`,
-  PHOTOGRAPHERS_PAYMENT_ADD_PAYMENT: (id: number) =>
-    `/photographers/payment/${toSegment(id)}/add-payment`,
-  PHOTOGRAPHERS_RESERVATION: (id: number) => `/photographers/reservation/${toSegment(id)}`,
-  PHOTOGRAPHERS_RESERVATION_PHOTOS_REVIEW: (id: number, reviewId: number) =>
+  PROFILE: '/photographers/profile',
+  RESERVATIONS: (params?: string) => `/photographers/reservations${params ? `?${params}` : ''}`,
+  PAYMENT: (id: number) => `/photographers/payment/${toSegment(id)}`,
+  PAYMENT_ADD_PAYMENT: (id: number) => `/photographers/payment/${toSegment(id)}/add-payment`,
+  RESERVATION: (id: number) => `/photographers/reservation/${toSegment(id)}`,
+  RESERVATION_PHOTOS_REVIEW: (id: number, reviewId: number) =>
     `/photographers/reservation/${toSegment(id)}/photos/${toSegment(reviewId)}`,
 } as const;
