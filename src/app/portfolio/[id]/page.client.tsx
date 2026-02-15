@@ -1,10 +1,12 @@
 'use client';
 
+import { useRef } from 'react';
 import { Divider, ProductCardSkeleton } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import { PhotographerSection, PortfolioSection, ProductSection } from './_section/index';
 import { Header } from './components/index';
 import { useGetPortfolioDetail } from './api';
+import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 
 type ClientPageProps = {
   id: string;
@@ -13,17 +15,22 @@ type ClientPageProps = {
 export default function ClientPage({ id }: ClientPageProps) {
   const { data, isPending } = useGetPortfolioDetail(Number(id));
 
-  const portfolioImages = data?.images?.map((image, idx) => ({
+  const portfolioImages = data?.images?.map((image) => ({
     src: image,
-    alt: `${data.description} 포트폴리오 이미지 ${idx}`,
+    alt: data?.description ?? '',
   }));
   const productImage = {
     src: data?.productInfo?.imageUrl ?? '',
-    alt: `${data?.productInfo?.title ?? ''} 상품 이미지`,
+    alt: data?.productInfo?.title ?? '',
   };
+
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+  const scrollKey = `portfolio/${id}:scroll`;
+  useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
 
   return (
     <div>
+      <div ref={anchorRef} />
       <Header />
       {isPending ? (
         <PortfolioDetailSkeleton />
@@ -44,6 +51,7 @@ export default function ClientPage({ id }: ClientPageProps) {
           <PhotographerSection
             id={data?.photographerInfo?.id ?? 0}
             name={data?.photographerInfo?.name ?? ''}
+            imageUrl={data?.photographerInfo?.imageUrl ?? ''}
             bio={data?.photographerInfo?.bio ?? ''}
             specialties={data?.photographerInfo?.specialties ?? []}
             locations={data?.photographerInfo?.locations ?? []}
@@ -68,7 +76,7 @@ export default function ClientPage({ id }: ClientPageProps) {
 const PortfolioDetailSkeleton = () => {
   return (
     <section>
-      <div className='w-full aspect-[3/4] bg-black-3' />
+      <div className='bg-black-3 aspect-[3/4] w-full' />
       <div className='px-[2rem] py-[1.6rem]'>
         <div className='flex h-[3rem] justify-between'>
           <div className='bg-black-3 h-[2.5rem] w-[14.4rem] rounded-[0.2rem]' />
@@ -77,7 +85,7 @@ const PortfolioDetailSkeleton = () => {
       </div>
       <div className='flex flex-col gap-[0.8rem] p-[2rem]'>
         <span className='caption-14-md text-black-10'>관련 정보</span>
-        <div className='flex flex-col gap-[1.2rem] p-[1.6rem] border-1 border-black-5 rounded-[0.6rem]'>
+        <div className='border-black-5 flex flex-col gap-[1.2rem] rounded-[0.6rem] border-1 p-[1.6rem]'>
           {Array.from({ length: 4 }).map((_, idx) => (
             <div key={idx} className='flex h-[1.4rem] gap-[1rem]'>
               <div className='bg-black-3 flex w-[8rem] rounded-[0.2rem]' />
@@ -107,7 +115,7 @@ const PortfolioDetailSkeleton = () => {
       <Divider thickness='large' color='bg-black-3' />
       <div className='flex flex-col gap-[1.6rem] px-[2rem] py-[1.6rem]'>
         <span className='font-16-bd'>이 작가님의 상품 살펴보기</span>
-        <div className='border-black-5 rounded-[0.6rem] border-1 p-[1.2rem]'>
+        <div className='border-black-5 rounded-[0.6rem] border-1'>
           <ProductCardSkeleton />
         </div>
       </div>
