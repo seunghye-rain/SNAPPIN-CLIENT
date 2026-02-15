@@ -48,7 +48,6 @@ export default function ClientPage({ id }: ClientPageProps) {
             bio={data?.photographerInfo?.bio ?? ''}
             specialties={data?.photographerInfo?.specialties ?? []}
             locations={data?.photographerInfo?.locations ?? []}
-            imageUrl={data?.photographerInfo?.imageUrl ?? ''}
           />
           <Divider thickness='large' color='bg-black-3' />
           <ProductSection
