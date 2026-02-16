@@ -5,6 +5,7 @@ import { Button, ProductCard } from '@/ui';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { Section } from '@/components/layout/reservation/SectionLayout';
+import { ROUTES } from '@/constants/routes/routes';
 
 type ReservationProductProps = {
   id?: number;
@@ -43,7 +44,7 @@ export default function ReservationProduct({
     reservationStatus !== STATE_CODES.RESERVATION_CANCELED;
 
   const handleWriteReview = () => {
-    router.replace(`/review-form/${id}`);
+    router.replace(ROUTES.REVIEW_FORM(id));
   };
 
   const handleSendMessage = () => {
