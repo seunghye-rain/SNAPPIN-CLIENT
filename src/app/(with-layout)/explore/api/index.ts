@@ -86,8 +86,11 @@ export const useGetCategories = () => {
 
 export const useMoodFilters = () => {
   const { isLogIn } = useAuth();
+  const authResolved = isLogIn !== null;
+
   return useQuery<GetMoodFilterListResponse>({
     queryKey: USER_QUERY_KEY.MOODS_FILTER(isLogIn ? 'user' : 'guest'),
+    enabled: authResolved,
     queryFn: async () => {
       // 로그인 상태
       if (isLogIn) {
