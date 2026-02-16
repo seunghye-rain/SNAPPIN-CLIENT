@@ -20,13 +20,12 @@ export default function PageClient({ reviewId }: PageClientProps) {
     if (!imageParam) return 0;
 
     const parsed = Number(imageParam);
-    if (Number.isInteger(parsed) && parsed >= 0) {
-      const maxIndex = Math.max((data?.images?.length ?? 1) - 1, 0);
-      return Math.min(parsed, maxIndex);
-    }
 
-    const imageIndex = data?.images?.findIndex((image) => image === imageParam) ?? -1;
-    return imageIndex >= 0 ? imageIndex : 0;
+    if (!Number.isInteger(parsed) || parsed < 0) return 0;
+
+    const maxIndex = Math.max((data?.images?.length ?? 1) - 1, 0);
+
+    return Math.min(parsed, maxIndex);
   }, [data?.images, searchParams]);
 
   if (isPending) {

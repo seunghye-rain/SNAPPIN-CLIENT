@@ -99,11 +99,11 @@ function Review({ id, rate, createdAt, reviewer, images, content }: ReviewProps)
       </div>
       {/* 이미지 캐러셀 */}
       <div className='scrollbar-hide flex w-full gap-[0.4rem] overflow-x-auto px-[2rem]'>
-        {reviewImages.map((image) => (
+        {reviewImages.map((image, idx) => (
           <Link
             href={{
               pathname: `/review-photo/${id}`,
-              query: { image: image.src },
+              query: { image: idx },
             }}
             key={`image-${image.src}`}
             className='relative h-[14rem] w-[14rem] shrink-0'
