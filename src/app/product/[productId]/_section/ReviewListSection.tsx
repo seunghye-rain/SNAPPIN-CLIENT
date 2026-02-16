@@ -35,7 +35,7 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isFetching && isEmpty) {
+  if (isFetching) {
     return (
       <section>
         <ReviewListSectionSkeleton />
