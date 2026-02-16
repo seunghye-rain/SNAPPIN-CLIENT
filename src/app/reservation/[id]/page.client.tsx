@@ -40,15 +40,18 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
 
   const status = normalizeStatus(reservationStatus ?? reservationData?.status);
   const statusConfig = STATUS_CONFIG[status];
+  const hasPaymentInformation = Boolean(reservationData?.paymentInfo);
 
   const isCanceledAfterPaymentRequested =
-    status === STATE_CODES.RESERVATION_CANCELED && previousStatus === STATE_CODES.PAYMENT_REQUESTED;
+    status === STATE_CODES.RESERVATION_CANCELED &&
+    (previousStatus === STATE_CODES.PAYMENT_REQUESTED || hasPaymentInformation);
 
   const hasPaymentDetailSection =
     statusConfig.hasPaymentDetailSection || isCanceledAfterPaymentRequested;
 
   const hasBottomCta = statusConfig.hasBottomCta;
-  const navigationTitle = statusConfig.navigationTitle;
+  const isInitialLoading = isPending && !reservationData;
+  const navigationTitle = isInitialLoading ? '' : statusConfig.navigationTitle;
 
   const handleReservationCancelClick = () => {
     setCancelOpen(true);
@@ -151,7 +154,6 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
             <Divider color='bg-black-3' thickness='large' />
             <ReviewDetail
               id={reservationData.reviewInfo.id ?? 0}
-              reviewId={reservationData.reviewInfo.id ?? 0}
               reviewer={reservationData.reviewInfo.reviewer ?? ''}
               rating={reservationData.reviewInfo.rating ?? 0}
               createdAt={reservationData.reviewInfo.createdAt ?? ''}

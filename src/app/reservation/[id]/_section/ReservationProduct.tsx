@@ -52,7 +52,7 @@ export default function ReservationProduct({
   };
 
   // 촬영 완료 상태 정의
-  const isPhotoFinal = reservationStatus == STATE_CODES.SHOOT_COMPLETED;
+  const isPhotoFinal = reservationStatus === STATE_CODES.SHOOT_COMPLETED;
   const hasWrittenReview = hasReview === true;
 
   const shouldShowReviewActionButtons = isPhotoFinal && !hasWrittenReview;

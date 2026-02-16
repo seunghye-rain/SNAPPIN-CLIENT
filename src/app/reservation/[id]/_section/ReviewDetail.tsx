@@ -6,7 +6,6 @@ import { Section } from '@/components/layout/reservation/SectionLayout';
 
 type ReviewDetailProps = {
   id: number;
-  reviewId: number;
   reviewer: string;
   rating: number;
   createdAt: string;
@@ -16,7 +15,6 @@ type ReviewDetailProps = {
 
 export default function ReviewDetail({
   id,
-  reviewId,
   reviewer,
   rating,
   createdAt,
