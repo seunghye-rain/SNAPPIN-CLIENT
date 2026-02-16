@@ -64,7 +64,7 @@ export default function ClientPage({ productId }: { productId: string }) {
   };
 
   return (
-    <div>
+    <main>
       <div ref={anchorRef} />
       <Header />
       {isPending ? (
@@ -113,7 +113,7 @@ export default function ClientPage({ productId }: { productId: string }) {
         </>
       )}
       <Footer productId={productId} amount={data?.price ?? 0} />
-    </div>
+    </main>
   );
 }
 

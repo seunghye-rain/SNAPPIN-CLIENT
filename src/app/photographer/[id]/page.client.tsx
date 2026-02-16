@@ -32,7 +32,7 @@ export default function ClientPage({ id }: ClientPageProps) {
   };
 
   return (
-    <div className='flex flex-col'>
+    <main className='flex flex-col'>
       <Header />
       {isPending ? (
         <PhotographerSectionSkeleton />
@@ -68,6 +68,6 @@ export default function ClientPage({ id }: ClientPageProps) {
         </SectionTabs.Contents>
       </SectionTabs>
       <Footer />
-    </div>
+    </main>
   );
 }

@@ -29,7 +29,7 @@ export default function ClientPage({ id }: ClientPageProps) {
   useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
 
   return (
-    <div>
+    <main>
       <div ref={anchorRef} />
       <Header />
       {isPending ? (
@@ -69,7 +69,7 @@ export default function ClientPage({ id }: ClientPageProps) {
           />
         </>
       )}
-    </div>
+    </main>
   );
 }
 
