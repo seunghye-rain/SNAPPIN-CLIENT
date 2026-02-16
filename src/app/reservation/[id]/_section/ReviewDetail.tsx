@@ -34,6 +34,7 @@ export default function ReviewDetail({
           <span className='caption-12-md text-black-7'>{reviewer}</span>
         </div>
 
+        {/* TODO: review photo 머지되면 href 수정 */}
         <div className='scrollbar-hide flex gap-[0.4rem] overflow-scroll'>
           {images.map((image, idx) => (
             <Link

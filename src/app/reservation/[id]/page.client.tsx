@@ -77,6 +77,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   };
 
   const status = normalizeStatus(reservationStatus ?? reservationData?.status);
+  const isPhotoFinal = status === STATE_CODES.SHOOT_COMPLETED;
 
   const isCanceledAfterPaymentRequested =
     status === STATE_CODES.RESERVATION_CANCELED && previousStatus === STATE_CODES.PAYMENT_REQUESTED;
@@ -91,8 +92,6 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     status === STATE_CODES.PAYMENT_COMPLETED ||
     status === STATE_CODES.RESERVATION_CANCELED ||
     status === STATE_CODES.RESERVATION_REFUSED;
-
-  const isPhotoFinal = reservationStatus == STATE_CODES.SHOOT_COMPLETED;
 
   const handleInquiryClick = () => {
     toast.alert(
