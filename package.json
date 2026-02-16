@@ -14,7 +14,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "barrels:ui": "tsx scripts/generate-ui-root-index.ts",
-    "generate:api": "dotenv -e .env -- sh -lc 'swagger-typescript-api generate -p \"$SWAGGER_API_URL\" -r -o ./src/swagger-api --modular -d --extract-request-body --extract-response-body --extract-response-error --axios'"
+    "generate:api": "dotenv -e .env -- sh -lc 'swagger-typescript-api generate -p \"$SWAGGER_API_URL\" -r -o ./src/swagger-api --modular -d --extract-request-body --extract-response-body --extract-response-error --axios'",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@hookform/resolvers": "5.2.1",
@@ -52,6 +54,7 @@
     "@tailwindcss/postcss": "^4.1.16",
     "@tailwindcss/vite": "^4.1.16",
     "@tanstack/react-query-devtools": "^5.91.2",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -67,6 +70,9 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-storybook": "^10.1.11",
+    "jest": "^30.2.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "jest-environment-jsdom": "^30.2.0",
     "playwright": "^1.57.0",
     "postcss": "^8",
     "prettier": "^3.7.4",
