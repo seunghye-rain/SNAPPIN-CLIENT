@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Navigation, IconButton } from '@/ui';
 import { IconArrowBack, IconHome } from '@/assets';
+import { ROUTES } from '@/constants/routes/routes';
 
 export default function Header() {
   const router = useRouter();
@@ -12,14 +13,18 @@ export default function Header() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(ROUTES.HOME);
     sessionStorage.removeItem('home-scroll');
   };
 
   return (
     <Navigation
       left={
-        <IconButton className='h-[2.4rem] w-[2.4rem]' onClick={handleGoBack}>
+        <IconButton
+          className='h-[2.4rem] w-[2.4rem]'
+          aria-label='이전 페이지로 이동'
+          onClick={handleGoBack}
+        >
           <IconArrowBack />
         </IconButton>
       }
@@ -27,7 +32,11 @@ export default function Header() {
         <span className='font-16-bd text-black-10 flex flex-1 text-center'>포트폴리오 상세</span>
       }
       right={
-        <IconButton className='h-[2.4rem] w-[2.4rem]' onClick={handleGoHome}>
+        <IconButton
+          className='h-[2.4rem] w-[2.4rem]'
+          aria-label='홈으로 이동'
+          onClick={handleGoHome}
+        >
           <IconHome />
         </IconButton>
       }

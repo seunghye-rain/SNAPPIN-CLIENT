@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { IconKeyboardArrowRight } from '@/assets';
 import { StateChip, Button } from '@/ui';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
+import { ROUTES } from '@/constants/routes/routes';
 
 export type ReservationCardProps = {
   reservationId: number;
@@ -26,11 +27,15 @@ export default function ReservationCard({
   const hasReviewWriteButton = status === STATE_CODES.SHOOT_COMPLETED && !isReviewed;
 
   const handleDetailClick = () => {
-    router.push(`/reservation/${reservationId}`);
+    if (status === STATE_CODES.SHOOT_COMPLETED) {
+      router.push(ROUTES.PHOTO_FINAL(reservationId));
+    } else {
+      router.push(ROUTES.RESERVATION(reservationId));
+    }
   };
 
   const handleReviewClick = () => {
-    router.push(`/review-form/${reservationId}`);
+    router.push(ROUTES.REVIEW_FORM(reservationId));
   };
 
   return (

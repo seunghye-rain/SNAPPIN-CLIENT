@@ -1,11 +1,12 @@
 'use client';
 
-import { IconButton, ImageCarousel } from '@/ui';
+import { ImageCarousel } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { IconHeart, IconHeartFill, IconStar } from '@/assets';
+import { IconStar } from '@/assets';
 import { formatPrice } from '@/utils/formatPrice';
 import { useWishProduct } from '../api';
+import { LikeButton } from '../components';
 
 type ProductMainSectionProps = {
   id: number;
@@ -55,9 +56,7 @@ export default function ProductMainSection({
           <div className='flex items-center justify-between'>
             <span className='font-18-bd text-black-10'>{title}</span>
             <div className='flex h-[3rem] w-[4.4rem] items-center justify-end gap-[1rem]'>
-              <IconButton className='h-[2.4rem] w-[2.4rem]' onClick={handleLike}>
-                {isLiked ? <IconHeartFill /> : <IconHeart />}
-              </IconButton>
+              <LikeButton isLiked={isLiked} handleClick={handleLike} />
             </div>
           </div>
           {/* 별점, 리뷰 수, 작가명*/}
