@@ -56,7 +56,7 @@ export default function ClientPage({ productId }: { productId: string }) {
 
   const handleTabChange = (value: string) => {
     setSelectedTab(value);
-    router.replace(ROUTES.PRODUCT(Number(productId), `tab=${value}`), { scroll: false });
+    router.replace(ROUTES.PRODUCT(Number(productId), { tab: value }), { scroll: false });
   };
 
   return (

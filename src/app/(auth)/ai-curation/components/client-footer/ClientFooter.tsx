@@ -12,7 +12,7 @@ export default function ClientFooter() {
   const { isLogIn } = useAuth();
 
   const handleStartCuration = () => {
-    if (!isLogIn) {
+    if (isLogIn === false) {
       router.push(ROUTES.LOGIN());
       return;
     }

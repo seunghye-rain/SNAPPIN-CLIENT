@@ -29,16 +29,12 @@ export default function MoodAnimationResult({ data }: MoodAnimationResultProps) 
   const handleGoToSnap = () => {
     if (!data?.moods?.length) return;
 
-    const params = new URLSearchParams();
-    params.set(
-      'moodIds',
-      data.moods
-        .map((mood) => mood.id)
-        .filter((id): id is number => typeof id === 'number')
-        .join(','),
-    );
+    const paramsValue = data.moods
+      .map((mood) => mood.id)
+      .filter((id): id is number => typeof id === 'number')
+      .join(',');
 
-    router.push(ROUTES.EXPLORE(`?${params.toString()}`));
+    router.push(ROUTES.EXPLORE({ moodIds: paramsValue }));
   };
 
   const handleGoHome = () => {

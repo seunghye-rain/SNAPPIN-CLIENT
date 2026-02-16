@@ -45,9 +45,7 @@ export default function ReservationContent() {
   const { data, isPending } = useGetReservationList(selectedTab);
 
   const handleTabChange = (value: string) => {
-    const updatedSearchParams = new URLSearchParams(searchParams.toString());
-    updatedSearchParams.set('tab', value);
-    router.push(PHOTOGRAPHERS_ROUTES.RESERVATIONS(updatedSearchParams.toString()));
+    router.push(PHOTOGRAPHERS_ROUTES.RESERVATIONS({ tab: value }));
   };
 
   return (

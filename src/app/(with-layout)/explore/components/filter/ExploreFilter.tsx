@@ -41,12 +41,8 @@ export default function ExploreFilter() {
   }, [data?.moods]);
 
   const replaceMoodIds = (nextIds: number[]) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (nextIds.length === 0) params.delete('moodIds');
-    else params.set('moodIds', nextIds.join(','));
-
-    const qs = params.toString();
-    router.replace(ROUTES.EXPLORE(qs && qs));
+    if (nextIds.length === 0) router.replace(ROUTES.EXPLORE());
+    else router.replace(ROUTES.EXPLORE({ moodIds: nextIds.join(',') }));
   };
 
   const moodById = useMemo(() => {

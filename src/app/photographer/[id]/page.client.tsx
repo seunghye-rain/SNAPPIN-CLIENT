@@ -28,7 +28,7 @@ export default function ClientPage({ id }: ClientPageProps) {
 
   const handleTabChange = (value: string) => {
     setSelectedTab(value);
-    router.replace(`${ROUTES.PHOTOGRAPHER(Number(id), `tab=${value}`)}`, { scroll: false });
+    router.replace(ROUTES.PHOTOGRAPHER(Number(id), { tab: value }), { scroll: false });
   };
 
   return (
