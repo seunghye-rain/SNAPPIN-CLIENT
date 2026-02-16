@@ -76,6 +76,14 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     });
   };
 
+  const handleInquiryClick = () => {
+    toast.alert(
+      '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
+      undefined,
+      hasBottomCta ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
+    );
+  };
+
   const status = normalizeStatus(reservationStatus ?? reservationData?.status);
   const isPhotoFinal = status === STATE_CODES.SHOOT_COMPLETED;
 
@@ -92,14 +100,6 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     status === STATE_CODES.PAYMENT_COMPLETED ||
     status === STATE_CODES.RESERVATION_CANCELED ||
     status === STATE_CODES.RESERVATION_REFUSED;
-
-  const handleInquiryClick = () => {
-    toast.alert(
-      '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
-      undefined,
-      hasBottomCta ? 'bottom-[8.4rem]' : 'bottom-[2rem]',
-    );
-  };
 
   if (isPending) {
     return (
@@ -139,6 +139,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
           requestNote={reservationData?.reservationInfo?.requestNote ?? ''}
           createdAt={reservationData?.reservationInfo?.createdAt ?? ''}
         />
+
         {(hasPaymentDetailSection || isPhotoFinal) && (
           <>
             <Divider thickness='large' className='h-[0.6rem]' />
@@ -149,18 +150,22 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
             />
           </>
         )}
-        <Divider color='bg-black-3' thickness='large' />
+
         {reservationData?.reviewInfo && (
-          <ReviewDetail
-            id={reservationData.reviewInfo.id ?? 0}
-            reviewId={reservationData.reviewInfo.id ?? 0}
-            reviewer={reservationData.reviewInfo.reviewer ?? ''}
-            rating={reservationData.reviewInfo.rating ?? 0}
-            createdAt={reservationData.reviewInfo.createdAt ?? ''}
-            images={reservationData.reviewInfo.images ?? []}
-            content={reservationData.reviewInfo.content ?? ''}
-          />
+          <>
+            <Divider color='bg-black-3' thickness='large' />
+            <ReviewDetail
+              id={reservationData.reviewInfo.id ?? 0}
+              reviewId={reservationData.reviewInfo.id ?? 0}
+              reviewer={reservationData.reviewInfo.reviewer ?? ''}
+              rating={reservationData.reviewInfo.rating ?? 0}
+              createdAt={reservationData.reviewInfo.createdAt ?? ''}
+              images={reservationData.reviewInfo.images ?? []}
+              content={reservationData.reviewInfo.content ?? ''}
+            />
+          </>
         )}
+
         {hasBottomCta && (
           <>
             <div className='h-[8.4rem]' />
@@ -173,6 +178,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
           </>
         )}
       </div>
+
       <CancelModal
         open={cancelOpen}
         handleOpenChange={setCancelOpen}
