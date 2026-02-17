@@ -60,6 +60,7 @@ export default function ReservationContent() {
               return (
                 <div key={item.reservationId}>
                   <ReservationCard
+                    preload={index <= 4}
                     reservationId={item.reservationId ?? 0}
                     status={(item.status as StateCode) ?? ''}
                     image={{ src: product?.imageUrl ?? '', alt: product?.title ?? '' }}
