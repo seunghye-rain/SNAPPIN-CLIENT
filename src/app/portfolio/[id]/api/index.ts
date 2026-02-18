@@ -40,8 +40,8 @@ const getPortfolioDetail = async (
   return data.data;
 }
 
-export const prefetchPortfolioDetail = async (queryClient: QueryClient, id: number, isLogIn: boolean) => {
-  return await queryClient.prefetchQuery({
+export const prefetchPortfolioDetail = (queryClient: QueryClient, id: number, isLogIn: boolean) => {
+  return queryClient.prefetchQuery({
     queryKey: USER_QUERY_KEY.PORTFOLIO_DETAIL(id, isLogIn),
     queryFn: () => getPortfolioDetail(id, isLogIn),
   });

@@ -11,7 +11,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const isLogIn = cookieStore.has('AccessToken');
   
   const queryClient = new QueryClient();
-  await prefetchPortfolioDetail(queryClient, Number(id), isLogIn);
+  if (!Number.isNaN(Number(id))) {
+    await prefetchPortfolioDetail(queryClient, Number(id), isLogIn);
+  }
 
   return (
     <main>
