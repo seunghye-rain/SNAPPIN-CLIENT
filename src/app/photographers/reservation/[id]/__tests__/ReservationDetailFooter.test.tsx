@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { PHOTOGRAPHERS_ROUTES } from '@/constants/routes/routes';
 import { STATE_CODES } from '@/types/stateCode';
-import DetailPageFooter from '../_section/DetailPageFooter';
+import DetailPageBottomCTA from '../_section/DetailPageBottomCTA';
 
 const pushMock = jest.fn();
 const completeReservationMock = jest.fn();
@@ -26,7 +26,7 @@ jest.mock('../api', () => ({
 }));
 
 jest.mock('@/ui', () => {
-  // eslint-disable-next-line `@typescript-eslint/no-require-imports`
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
 
   const BottomCTAButton = ({ children }: { children: React.ReactNode }) =>
@@ -48,14 +48,14 @@ jest.mock('@/ui', () => {
   };
 });
 
-const renderFooter = (
+const renderBottomCTA = (
   status: (typeof STATE_CODES)[keyof typeof STATE_CODES],
   date = '2099-01-01',
 ) => {
-  return render(<DetailPageFooter reservationId={7} date={date} status={status} />);
+  return render(<DetailPageBottomCTA reservationId={7} date={date} status={status} />);
 };
 
-describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 test', () => {
+describe('[작가] 예약 상세 페이지 하단 CTA 버튼 상태', () => {
   beforeEach(() => {
     pushMock.mockClear();
     completeReservationMock.mockClear();
@@ -63,7 +63,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('PHOTOGRAPHER_CHECKING 상태: 라벨/활성화/라우팅이 동작한다', () => {
-    renderFooter(STATE_CODES.PHOTOGRAPHER_CHECKING);
+    renderBottomCTA(STATE_CODES.PHOTOGRAPHER_CHECKING);
 
     const button = screen.getByRole('button', { name: '결제 요청하기' }) as HTMLButtonElement;
 
@@ -76,7 +76,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('PAYMENT_REQUESTED 상태: 라벨이 맞고 비활성화되어 아무 동작도 하지 않는다', () => {
-    renderFooter(STATE_CODES.PAYMENT_REQUESTED);
+    renderBottomCTA(STATE_CODES.PAYMENT_REQUESTED);
 
     const button = screen.getByRole('button', { name: '결제 요청 중' }) as HTMLButtonElement;
 
@@ -88,7 +88,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('PAYMENT_COMPLETED 상태: 라벨/활성화/예약 확정 mutate 호출이 동작한다', () => {
-    renderFooter(STATE_CODES.PAYMENT_COMPLETED);
+    renderBottomCTA(STATE_CODES.PAYMENT_COMPLETED);
 
     const button = screen.getByRole('button', { name: '예약 확정하기' }) as HTMLButtonElement;
 
@@ -101,7 +101,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('RESERVATION_CONFIRMED 상태 + 예약일 이전: 라벨이 맞고 비활성화된다', () => {
-    renderFooter(STATE_CODES.RESERVATION_CONFIRMED, '2099-01-01');
+    renderBottomCTA(STATE_CODES.RESERVATION_CONFIRMED, '2099-01-01');
 
     const button = screen.getByRole('button', { name: '예약 확정' }) as HTMLButtonElement;
 
@@ -113,7 +113,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('RESERVATION_CONFIRMED 상태 + 예약일 이후: 라벨/활성화/촬영 완료 mutate 호출이 동작한다', () => {
-    renderFooter(STATE_CODES.RESERVATION_CONFIRMED, '2000-01-01');
+    renderBottomCTA(STATE_CODES.RESERVATION_CONFIRMED, '2000-01-01');
 
     const button = screen.getByRole('button', {
       name: '촬영 완료하고 리뷰 요청하기',
@@ -128,7 +128,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('SHOOT_COMPLETED 상태: 라벨이 맞고 비활성화되어 아무 동작도 하지 않는다', () => {
-    renderFooter(STATE_CODES.SHOOT_COMPLETED);
+    renderBottomCTA(STATE_CODES.SHOOT_COMPLETED);
 
     const button = screen.getByRole('button', { name: '리뷰 요청 완료' }) as HTMLButtonElement;
 
@@ -140,7 +140,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('RESERVATION_CANCELED 상태: 라벨이 맞고 비활성화되어 아무 동작도 하지 않는다', () => {
-    renderFooter(STATE_CODES.RESERVATION_CANCELED);
+    renderBottomCTA(STATE_CODES.RESERVATION_CANCELED);
 
     const button = screen.getByRole('button', { name: '고객님의 예약 취소' }) as HTMLButtonElement;
 
@@ -152,7 +152,7 @@ describe('[작가] 예약 상세 페이지 하단 버튼 컴포넌트 상태 tes
   });
 
   it('RESERVATION_REFUSED 상태: 라벨이 맞고 비활성화되어 아무 동작도 하지 않는다', () => {
-    renderFooter(STATE_CODES.RESERVATION_REFUSED);
+    renderBottomCTA(STATE_CODES.RESERVATION_REFUSED);
 
     const button = screen.getByRole('button', { name: '예약 거절 완료' }) as HTMLButtonElement;
 
