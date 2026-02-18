@@ -47,8 +47,9 @@ export default function ReservationContent() {
             </Tabs.Item>
           ))}
         </Tabs.List>
-        {isPending && <ReservationCardSkeleton />}
-        {data?.reservations?.length === 0 ? (
+        {isPending ? (
+          <ReservationCardSkeleton />
+        ) : data?.reservations?.length === 0 ? (
           <EmtpyView
             title={getEmptyText(selectedTab)}
             description='새로운 예약이 생성되면 바로 알려드릴게요'

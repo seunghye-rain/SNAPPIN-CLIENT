@@ -38,7 +38,6 @@ export default function ProductCard({
           fill
           className='rounded-[0.4rem] object-cover'
           preload={preload}
-          fetchPriority={preload ? 'high' : 'auto'}
         />
       </div>
       <div className='flex min-w-0 flex-col gap-[0.3rem]'>

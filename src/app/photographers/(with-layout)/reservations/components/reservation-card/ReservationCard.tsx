@@ -9,7 +9,6 @@ import { formatCreatedAt } from '@/utils/formatDate';
 import { PHOTOGRAPHERS_ROUTES } from '@/constants/routes/routes';
 
 type ReservationCardProps = {
-  preload?: boolean;
   reservationId: number;
   status: StateCode;
   date: string;

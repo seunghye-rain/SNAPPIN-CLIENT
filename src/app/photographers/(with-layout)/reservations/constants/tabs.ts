@@ -14,18 +14,13 @@ export const RESERVATION_TABS = [
 
 export type ReservationTab = (typeof TAB)[keyof typeof TAB];
 
-const isReservationTab = (value: string | null) => {
-  return (
-    value === TAB.PHOTOGRAPHER_REQUESTED ||
-    value === TAB.PHOTOGRAPHER_ADJUSTING ||
-    value === TAB.PHOTOGRAPHER_CONFIRMED ||
-    value === TAB.PHOTOGRAPHER_DONE
-  );
+const isReservationTab = (value: string | null): value is ReservationTab => {
+  return Object.values(TAB).includes(value as ReservationTab);
 };
 
 export const getSelectedTab = (tab: string | null): ReservationTab => {
   if (isReservationTab(tab)) {
     return tab as ReservationTab;
   }
-  throw TAB.PHOTOGRAPHER_REQUESTED;
+  return TAB.PHOTOGRAPHER_REQUESTED;
 };
