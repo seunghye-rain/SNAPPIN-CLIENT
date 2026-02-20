@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ClientNavigation, ClientFooter } from './components';
+import { ClientFooter } from './components';
 import { PaymentDetail, ReservationDetail, ReservationRequested } from './_section';
 import { Divider } from '@/ui';
 import { STATE_CHIP_THEME_BY_LABEL } from '@/ui/chip/state-chip/constants/stateChipTheme';
@@ -11,6 +11,7 @@ import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useGetReservationDetail, useCancelReservation, useRequestPayment } from './api';
 import SectionSkeleton from '@/components/layout/reservation/SectionSkeleton';
+import DetailHeader from '@/components/layout/detail/DetailHeader';
 
 type ReservationDetailPageClientProps = {
   reservationId: string;
@@ -103,7 +104,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   if (isPending) {
     return (
       <div className='bg-black-1 flex min-h-dvh flex-col'>
-        <ClientNavigation title='예약 상세' />
+        <DetailHeader>예약 상세</DetailHeader>
         <SectionSkeleton />
       </div>
     );
@@ -112,7 +113,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   return (
     <>
       <div className='bg-black-1 flex flex-col'>
-        <ClientNavigation title='예약 상세' />
+        <DetailHeader>예약 상세</DetailHeader>
         <ReservationRequested
           reservationStatus={status}
           imageUrl={reservationData?.productInfo?.imageUrl ?? ''}

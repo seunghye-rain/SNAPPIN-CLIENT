@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { IconArrowBack, IconHome } from '@/assets';
-import { IconButton, Navigation } from '@/ui';
 import CancelModal from '../../@modal/(.)cancel-modal/CancelModal';
 import { ROUTES } from '@/constants/routes/routes';
+import DetailHeader from '@/components/layout/detail/DetailHeader';
 
 export default function ClientHeader() {
   const router = useRouter();
@@ -30,21 +29,12 @@ export default function ClientHeader() {
 
   return (
     <>
-      <Navigation
-        left={
-          <IconButton onClick={() => handleOpenModal('back')}>
-            <IconArrowBack />
-          </IconButton>
-        }
-        center={<span className='font-16-bd text-black-10'>리뷰 작성</span>}
-        right={
-          <IconButton onClick={() => handleOpenModal('home')}>
-            <IconHome />
-          </IconButton>
-        }
-        className='border-black-5 items-center border-b'
-        isFixed
-      />
+      <DetailHeader
+        handleBackClick={() => handleOpenModal('back')}
+        handleHomeClick={() => handleOpenModal('home')}
+      >
+        리뷰 작성
+      </DetailHeader>
       <CancelModal open={open} handleOpenChange={setOpen} handleClickConfirm={handleConfirm} />
     </>
   );
