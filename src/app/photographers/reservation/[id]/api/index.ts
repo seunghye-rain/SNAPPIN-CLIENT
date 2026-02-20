@@ -1,5 +1,5 @@
 import { PHOTOGRAPHER_QUERY_KEY } from '@/query-key/photographer';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import {
   ApiResponseBodyCompleteReservationResponseVoid,
@@ -29,6 +29,18 @@ export const useGetReservationDetail = (reservationId: number) => {
       return res.data!;
     },
   });
+};
+
+export const useGetReservationDetailPrefetch = (
+  queryClient: QueryClient,
+  reservationId: number,
+) => {
+  return () => {
+    queryClient.prefetchQuery({
+      queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+      queryFn: () => useGetReservationDetail(reservationId),
+    });
+  };
 };
 
 export const useRefuseReservation = () => {
