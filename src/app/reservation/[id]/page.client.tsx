@@ -19,15 +19,11 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   const { data: reservationData, isPending } = useGetReservationDetail(parsedReservationId);
 
   const status = reservationData?.status as StateCode;
+
+  // 촬영 완료
   const isPhotoFinal = status === STATE_CODES.SHOOT_COMPLETED;
 
-  const hasPaymentInfo = reservationData?.paymentInfo !== undefined;
-
-  const hasPaymentDetailSection =
-    status === STATE_CODES.PAYMENT_REQUESTED ||
-    status === STATE_CODES.PAYMENT_COMPLETED ||
-    (status === STATE_CODES.RESERVATION_CANCELED && hasPaymentInfo);
-
+  // 하단 CTA 버튼 노출 조건 : 예약 요청, 작가 확인 중, 결제 요청, 예약 취소
   const hasBottomCta =
     status === STATE_CODES.PAYMENT_REQUESTED ||
     status === STATE_CODES.PAYMENT_COMPLETED ||
@@ -37,6 +33,7 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
   const {
     cancelOpen,
     setCancelOpen,
+    canceledPreviousStatus,
     isPaymentRequestPending,
     handleReservationCancelClick,
     handleReservationCancel,
@@ -46,6 +43,18 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     reservationId: parsedReservationId,
     hasBottomCta,
   });
+
+  // 예약 취소 시 결제 상세 노출되는 조건
+  const hasCanceledWithPayment =
+    status === STATE_CODES.RESERVATION_CANCELED &&
+    (canceledPreviousStatus === STATE_CODES.PAYMENT_REQUESTED ||
+      canceledPreviousStatus === STATE_CODES.PAYMENT_COMPLETED);
+
+  // 결제 상세 노출 조건
+  const hasPaymentDetailSection =
+    status !== STATE_CODES.RESERVATION_REQUESTED &&
+    status !== STATE_CODES.PHOTOGRAPHER_CHECKING &&
+    hasCanceledWithPayment;
 
   if (isPending) {
     return (
