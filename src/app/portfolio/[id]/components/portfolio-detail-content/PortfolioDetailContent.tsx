@@ -39,7 +39,7 @@ export default function PortfolioDetailContent({ id, isLogIn }: { id: string, is
         snapCategory={data?.snapCategory ?? ''}
         place={data?.place ?? ''}
         startsAt={data?.startsAt ?? ''}
-        moods={data?.moods as MoodCode[]}
+        moods={data?.moods as MoodCode[] ?? []}
       />
       <Divider thickness='large' color='bg-black-3' />
       <PhotographerSection

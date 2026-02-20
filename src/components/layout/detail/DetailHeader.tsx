@@ -23,7 +23,7 @@ export default function DetailHeader({
         <IconButton
           className='h-[2.4rem] w-[2.4rem]'
           aria-label='이전 페이지로 이동'
-          onClick={handleBackClick || (() => router.back())}
+          onClick={handleBackClick ?? (() => router.back())}
         >
           <IconArrowBack />
         </IconButton>
@@ -33,7 +33,7 @@ export default function DetailHeader({
         <IconButton
           className='h-[2.4rem] w-[2.4rem]'
           aria-label='홈으로 이동'
-          onClick={handleHomeClick || (() => router.push(ROUTES.HOME))}
+          onClick={handleHomeClick ?? (() => router.push(ROUTES.HOME))}
         >
           <IconHome />
         </IconButton>
