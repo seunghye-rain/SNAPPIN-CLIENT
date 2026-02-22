@@ -20,9 +20,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const queryClient = new QueryClient({
     defaultOptions: {
       dehydrate: {
-        shouldDehydrateQuery: (query) =>
-          defaultShouldDehydrateQuery(query) ||
-          query.state.status === 'pending'
+        shouldDehydrateQuery: (query) => 
+          query.state.status === 'pending' ||
+          defaultShouldDehydrateQuery(query),
       },
     },
   });
