@@ -38,8 +38,8 @@ function PortfolioList({
           className='relative aspect-square'
         >
           <Image
-            fetchPriority={idx < 6 ? 'high' : 'auto'}
-            loading={idx < 6 ? 'eager' : 'lazy'}
+            fetchPriority={idx === 0 ? 'high' : 'auto'}
+            loading={idx === 0 ? 'eager' : 'lazy'}
             src={portfolio.imageUrl ?? productPlaceholder}
             fill
             alt={`portfolio ${portfolio.id}`}
