@@ -1,18 +1,13 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useGetProductList } from '@/app/(with-layout)/explore/api';
 import { useInfiniteScroll } from '@/app/(with-layout)/explore/hooks/use-infinite-scroll';
-import { ProductListSkeleton } from '@/ui';
+import { ProductList, ProductListSkeleton } from '@/ui';
 import { GetProductCardResponse } from '@/swagger-api/data-contracts';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 import { pickAllowedParams } from '@/app/(with-layout)/explore/utils/query';
-
-const ProductList = dynamic(() => import('@/ui/product-card/product-list/ProductList'), {
-  ssr: false,
-});
 
 export default function ProductListSection() {
   const sp = useSearchParams();
