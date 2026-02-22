@@ -1,6 +1,6 @@
 'use client';
 
-import { ClientNavigation, ClientFooter, getClientFooterConfig } from './components';
+import { ClientNavigation, ClientFooter } from './components';
 import { PaymentDetail, ReservationDetail, ReservationProduct, ReviewDetail } from './_section';
 import { Divider } from '@/ui';
 import { STATE_CODES, type StateCode } from '@/types/stateCode';
@@ -25,24 +25,14 @@ export default function PageClient({ reservationId }: ReservationDetailPageClien
     cancelOpen,
     setCancelOpen,
     canceledPreviousStatus,
-    isPaymentRequestPending,
     handleReservationCancelClick,
     handleReservationCancel,
-    handlePaymentConfirmClick,
-    handleInquiryClick: handleInquiryClickAction,
+    handleInquiryClick,
+    clientFooterConfig,
   } = useReservationActions({
     reservationId,
-  });
-
-  const clientFooterConfig = getClientFooterConfig({
     status,
-    isPaymentRequestPending,
-    handlePaymentConfirmClick,
   });
-
-  // 하단 CTA 버튼 조건
-  const hasBottomCta = clientFooterConfig !== null;
-  const handleInquiryClick = () => handleInquiryClickAction(hasBottomCta);
 
   // 예약 취소 시 결제 상세 노출되는 조건
   const hasCanceledWithPayment =

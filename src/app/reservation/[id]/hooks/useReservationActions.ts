@@ -1,13 +1,60 @@
 import { useState } from 'react';
 import { useToast } from '@/ui/toast/hooks/useToast';
+import { STATE_CODES, type StateCode } from '@/types/stateCode';
 import { useCancelReservation, useRequestPayment } from '../api';
-import { type StateCode } from '@/types/stateCode';
 
 type UseReservationActionsProps = {
   reservationId: number;
+  status: StateCode;
 };
 
-export const useReservationActions = ({ reservationId }: UseReservationActionsProps) => {
+type CreateClientFooterConfigProps = {
+  status: StateCode;
+  isPaymentRequestPending: boolean;
+  handlePaymentConfirmClick: () => void;
+};
+
+const createClientFooterConfig = ({
+  status,
+  isPaymentRequestPending,
+  handlePaymentConfirmClick,
+}: CreateClientFooterConfigProps) => {
+  if (status === STATE_CODES.PAYMENT_REQUESTED) {
+    return {
+      label: '결제하고 예약 확정받기',
+      color: 'primary' as const,
+      disabled: isPaymentRequestPending,
+      onClick: handlePaymentConfirmClick,
+    };
+  }
+
+  if (status === STATE_CODES.PAYMENT_COMPLETED) {
+    return {
+      label: '결제 확인중',
+      disabled: true,
+    };
+  }
+
+  if (status === STATE_CODES.RESERVATION_CANCELED) {
+    return {
+      label: '예약 취소 완료',
+      color: 'black' as const,
+      disabled: true,
+    };
+  }
+
+  if (status === STATE_CODES.RESERVATION_REFUSED) {
+    return {
+      label: '작가님의 예약 거절',
+      color: 'black' as const,
+      disabled: true,
+    };
+  }
+
+  return null;
+};
+
+export const useReservationActions = ({ reservationId, status }: UseReservationActionsProps) => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [canceledPreviousStatus, setCanceledPreviousStatus] = useState<StateCode>();
   const toast = useToast();
@@ -48,8 +95,15 @@ export const useReservationActions = ({ reservationId }: UseReservationActionsPr
     });
   };
 
+  const clientFooterConfig = createClientFooterConfig({
+    status,
+    isPaymentRequestPending,
+    handlePaymentConfirmClick,
+  });
+
   // 문의 버튼 클릭
-  const handleInquiryClick = (hasBottomCta: boolean) => {
+  const handleInquiryClick = () => {
+    const hasBottomCta = clientFooterConfig !== null;
     toast.alert(
       '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
       undefined,
@@ -61,10 +115,9 @@ export const useReservationActions = ({ reservationId }: UseReservationActionsPr
     cancelOpen,
     setCancelOpen,
     canceledPreviousStatus,
-    isPaymentRequestPending,
     handleReservationCancelClick,
     handleReservationCancel,
-    handlePaymentConfirmClick,
     handleInquiryClick,
+    clientFooterConfig,
   };
 };
