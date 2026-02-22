@@ -9,11 +9,10 @@ import {
   PortfolioListSection,
   ProductListSection,
 } from './_section/index';
-import Footer from './components/footer/Footer';
+import { Header, Footer } from './components/index';
 import { PHOTOGRAPHER_TAB, PHOTOGRAPHER_TAB_MAP } from './constants/tab';
 import { useGetPhotographerDetail } from './api/index';
 import { ROUTES } from '@/constants/routes/routes';
-import DetailHeader from '@/components/layout/detail/DetailHeader';
 
 type ClientPageProps = {
   id: string;
@@ -34,7 +33,7 @@ export default function ClientPage({ id }: ClientPageProps) {
 
   return (
     <main className='flex flex-col'>
-      <DetailHeader>작가 상세</DetailHeader>
+      <Header />
       {isPending ? (
         <PhotographerSectionSkeleton />
       ) : (

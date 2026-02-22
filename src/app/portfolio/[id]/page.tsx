@@ -6,10 +6,12 @@ import {
   dehydrate,
   defaultShouldDehydrateQuery
 } from '@tanstack/react-query';
+import {
+  Header,
+  PortfolioDetailContent,
+  PortfolioDetailSkeleton
+} from './components/index';
 import { prefetchPortfolioDetail } from './api';
-import DetailHeader from '@/components/layout/detail/DetailHeader';
-import PortfolioDetailContent from './components/portfolio-detail-content/PortfolioDetailContent';
-import PortfolioDetailSkeleton from './components/portfolio-detail-content/PortfolioDetailSkeleton';
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -32,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <main>
-      <DetailHeader>포트폴리오 상세</DetailHeader>
+      <Header />
       <Suspense fallback={<PortfolioDetailSkeleton />}>
         <HydrationBoundary state={dehydrate(queryClient)}>
             <PortfolioDetailContent id={id} isLogIn={isLogIn} />
