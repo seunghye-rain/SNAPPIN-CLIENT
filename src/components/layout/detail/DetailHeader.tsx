@@ -7,23 +7,20 @@ import { ROUTES } from '@/constants/routes/routes';
 
 type HeaderProps = {
   children: React.ReactNode;
-  handleBackClick?: () => void;
-  handleHomeClick?: () => void;
 }
 
-export default function DetailHeader({
-  children,
-  handleBackClick,
-  handleHomeClick
-}: HeaderProps) {
+export default function DetailHeader({ children }: HeaderProps) {
   const router = useRouter();
+  const handleGoBack = () => router.back();
+  const handleGoHome = () => router.push(ROUTES.HOME);
+
   return (
     <Navigation
       left={
         <IconButton
           className='h-[2.4rem] w-[2.4rem]'
           aria-label='이전 페이지로 이동'
-          onClick={handleBackClick || (() => router.back())}
+          onClick={handleGoBack}
         >
           <IconArrowBack />
         </IconButton>
@@ -33,7 +30,7 @@ export default function DetailHeader({
         <IconButton
           className='h-[2.4rem] w-[2.4rem]'
           aria-label='홈으로 이동'
-          onClick={handleHomeClick || (() => router.push(ROUTES.HOME))}
+          onClick={handleGoHome}
         >
           <IconHome />
         </IconButton>
