@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IconArrowForward } from '@/assets';
@@ -20,19 +23,21 @@ export default function PhotographerSection({
   locations,
   imageUrl,
 }: PhotographerSectionProps) {
+  const [imgSrc, setImgSrc] = useState(imageUrl || '/imgs/default-profile.png');
+
   return (
     <Link
       href={ROUTES.PHOTOGRAPHER(id)}
       aria-label={`${name} 작가 상세 페이지로 이동`}
       className='bg-black-1 flex w-full items-center gap-[1.2rem] p-[2rem]'
     >
-      <div className='h-[64px] w-[64px] shrink-0 overflow-hidden rounded-full'>
+      <div className='h-[6.4rem] w-[6.4rem] shrink-0 overflow-hidden rounded-full'>
         <Image
-          src={imageUrl || '/imgs/default-profile.png'}
+          src={imgSrc}
           alt='프로필 이미지'
-          width={64}
-          height={64}
+          fill
           className='rounded-full'
+          onError={() => setImgSrc('/imgs/default-profile.png')}
         />
       </div>
       <div className='flex flex-1 items-center justify-between gap-[1.2rem]'>
