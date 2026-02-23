@@ -1,8 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-
-const EXPLORE_FROM_DETAIL_BACK = 'explore_from_detail_back_v1';
+import { EXPLORE_FROM_DETAIL_BACK } from '@/app/(with-layout)/explore/constants/storage-key';
 
 type ExploreDetailBackBoundaryProps = {
   children: ReactNode;

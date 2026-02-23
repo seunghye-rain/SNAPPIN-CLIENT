@@ -8,10 +8,11 @@ import { ExploreFilterPanel } from '@/app/(with-layout)/explore/components';
 import { GetMoodFilterResponse } from '@/swagger-api/data-contracts';
 import { useMoodFilters } from '@/app/(with-layout)/explore/api';
 import { ROUTES } from '@/constants/routes/routes';
-
-const EXPLORE_NO_AUTO_APPLY = 'explore_no_auto_apply_v1';
-const EXPLORE_FROM_DETAIL_BACK = 'explore_from_detail_back_v1';
-const EXPLORE_DETAIL_BACK_HANDLED = 'explore_detail_back_handled_v1';
+import {
+  EXPLORE_DETAIL_BACK_HANDLED,
+  EXPLORE_FROM_DETAIL_BACK,
+  EXPLORE_NO_AUTO_APPLY,
+} from '@/app/(with-layout)/explore/constants/storage-key';
 
 const parseMoodIds = (params: URLSearchParams): number[] => {
   const rawMoodIds = params.get('moodIds');
@@ -94,11 +95,12 @@ export default function ExploreFilter() {
     const justHandledDetailBack = sessionStorage.getItem(EXPLORE_DETAIL_BACK_HANDLED) === '1';
     if (justHandledDetailBack) {
       sessionStorage.removeItem(EXPLORE_DETAIL_BACK_HANDLED);
-      return;
     }
 
     // 상세 복귀가 아니면 이전 잠금은 stale로 보고 해제.
-    sessionStorage.removeItem(EXPLORE_NO_AUTO_APPLY);
+    if (isReturningFromDetail) {
+      sessionStorage.removeItem(EXPLORE_NO_AUTO_APPLY);
+    }
   }, []);
 
   useEffect(() => {
@@ -177,7 +179,7 @@ export default function ExploreFilter() {
             key={moodIds.join(',')}
             moodList={data?.moods}
             selectedMoodIds={moodIds}
-            handlePanelClose={() => setOpen(false)}
+            handlePanelCloseAction={() => setOpen(false)}
           />
         </div>
       )}

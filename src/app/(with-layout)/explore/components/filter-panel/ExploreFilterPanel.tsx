@@ -5,20 +5,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button, FilterChip } from '@/ui';
 import { MoodCategoryLabel, MoodCode } from '@/types/moodCode';
 import { GetMoodFilterResponse } from '@/swagger-api/data-contracts';
+import { EXPLORE_NO_AUTO_APPLY } from '@/app/(with-layout)/explore/constants/storage-key';
 
 type ExploreFilterPanelProps = {
   moodList?: GetMoodFilterResponse[];
   selectedMoodIds: number[];
-  handlePanelClose: () => void;
+  handlePanelCloseAction: () => void;
 };
 
 const CATEGORIES: MoodCategoryLabel[] = ['분위기', '스타일', '장면구성'];
-const EXPLORE_NO_AUTO_APPLY = 'explore_no_auto_apply_v1';
 
 export default function ExploreFilterPanel({
   moodList,
   selectedMoodIds,
-  handlePanelClose,
+  handlePanelCloseAction,
 }: ExploreFilterPanelProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -45,7 +45,7 @@ export default function ExploreFilterPanel({
     }
 
     router.replace(params.toString() ? `${pathname}?${params.toString()}` : pathname);
-    handlePanelClose();
+    handlePanelCloseAction();
   };
 
   return (
