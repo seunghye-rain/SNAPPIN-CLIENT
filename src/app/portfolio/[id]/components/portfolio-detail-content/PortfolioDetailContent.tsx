@@ -1,12 +1,13 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { Divider } from '@/ui';
 import { MoodCode } from '@/types/moodCode';
 import PortfolioDetailSkeleton from './PortfolioDetailSkeleton';
 import { PhotographerSection, PortfolioSection, ProductSection } from '../../_section/index';
 import { useGetPortfolioDetail } from '../../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
+import { ROUTES } from '@/constants/routes/routes';
 
 export default function PortfolioDetailContent({ id, isLogIn }: { id: number, isLogIn: boolean }) {
   const { data, isPending } = useGetPortfolioDetail(id, isLogIn);
@@ -20,8 +21,8 @@ export default function PortfolioDetailContent({ id, isLogIn }: { id: number, is
   };
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = `portfolio/${id}:scroll`;
-  useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
+  const scrollKey = useMemo(() => `${ROUTES.PORTFOLIO(id).replace(/^\//, '')}:scroll`, [id]);
+  useScrollRestoreOnParent(anchorRef, scrollKey, [data], { enabled: !!data });
 
   if (isPending) {
     return <PortfolioDetailSkeleton />;

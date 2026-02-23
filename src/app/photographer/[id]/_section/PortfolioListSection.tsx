@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useSearchParams } from 'next/navigation';
 import { PortfolioList, PortfolioListSkeleton } from '@/ui';
 import { useGetPortfolioList } from '../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
+import { ROUTES } from '@/constants/routes/routes';
 
 type PortfolioListSectionProps = {
   id: string;
@@ -20,14 +20,13 @@ export default function PortfolioListSection({ id }: PortfolioListSectionProps) 
   }, [data?.pages]);
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const searchParams = useSearchParams();
   const scrollKey = useMemo(() => {
-    const sp = new URLSearchParams(searchParams.toString());
-    sp.set('tab', 'PORTFOLIO');
-    return `photographer/${id}:scroll?${sp.toString()}`;
-  }, [searchParams, id]);
+    return ROUTES.PHOTOGRAPHER(id, { tab: 'PORTFOLIO' })
+      .replace(/^\//, '')
+      .replace('?', ':scroll?');
+  }, [id]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [portfolioList.length, dataUpdatedAt], {
-    enabled: true,
+    enabled: !!data,
     resetOnKeyChange: true,
   });
 
