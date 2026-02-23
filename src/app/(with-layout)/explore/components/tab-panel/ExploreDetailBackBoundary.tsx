@@ -16,7 +16,7 @@ export default function ExploreDetailBackBoundary({
     <main
       className={className}
       onClickCapture={(e) => {
-        const target = e.target as HTMLElement | null;
+        const target = e.target as HTMLElement;
         const anchor = target?.closest('a[href]');
         const href = anchor?.getAttribute('href');
 

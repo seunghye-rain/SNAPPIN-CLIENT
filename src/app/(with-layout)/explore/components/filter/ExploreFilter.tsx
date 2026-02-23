@@ -30,6 +30,7 @@ export default function ExploreFilter() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const searchParamsString = searchParams.toString();
 
   const moodIds = useMemo(() => parseMoodIds(searchParams), [searchParams]);
 
@@ -45,7 +46,7 @@ export default function ExploreFilter() {
 
   const replaceMoodIds = useCallback(
     (nextIds: number[]) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParamsString);
 
       if (nextIds.length === 0) params.delete('moodIds');
       else params.set('moodIds', nextIds.join(','));
@@ -53,7 +54,7 @@ export default function ExploreFilter() {
       const next = params.toString() ? `${pathname}?${params.toString()}` : pathname;
       router.replace(next);
     },
-    [pathname, router, searchParams],
+    [pathname, router, searchParamsString],
   );
 
   const moodById = useMemo(() => {
