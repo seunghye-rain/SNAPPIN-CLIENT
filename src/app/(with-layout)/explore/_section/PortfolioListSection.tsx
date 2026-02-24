@@ -1,16 +1,24 @@
-import dynamic from 'next/dynamic';
+'use client';
+
 import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { PortfolioListSkeleton } from '@/ui';
+import { PortfolioList, PortfolioListSkeleton } from '@/ui';
 import { useGetPortfolioList } from '@/app/(with-layout)/explore/api';
 import { useInfiniteScroll } from '@/app/(with-layout)/explore/hooks/use-infinite-scroll';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
-import { pickAllowedParams } from '@/app/(with-layout)/explore/utils/query';
-
-const PortfolioList = dynamic(() => import('@/ui/portfolio-list/PortfolioList'), { ssr: false });
+import { toExploreSearchParams } from '@/app/(with-layout)/explore/utils/query';
 
 export default function PortfolioListSection() {
   const sp = useSearchParams();
+  const scrollKey = useMemo(() => {
+    const allowed = toExploreSearchParams(new URLSearchParams(sp.toString()));
+    // 키 순서를 완전히 고정해 같은 조건이면 항상 동일한 storage key를 만든다.
+    allowed.delete('tab');
+    const normalized = new URLSearchParams();
+    normalized.set('tab', 'PORTFOLIO');
+    allowed.forEach((value, key) => normalized.append(key, value));
+    return `explore:portfolio:scroll?${normalized.toString()}`;
+  }, [sp]);
   const query = useGetPortfolioList(new URLSearchParams(sp.toString()));
 
   const portfolios = useMemo(() => {
@@ -24,11 +32,6 @@ export default function PortfolioListSection() {
     onLoadMore: query.fetchNextPage,
   });
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = useMemo(() => {
-    const allowed = pickAllowedParams(new URLSearchParams(sp.toString()));
-    allowed.set('tab', 'PORTFOLIO'); // 혹시라도
-    return `explore:portfolio:scroll?${allowed.toString()}`;
-  }, [sp]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [portfolios.length, query.dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,
@@ -48,10 +51,9 @@ export default function PortfolioListSection() {
     <section className='px-[1rem] py-[1rem]'>
       <div ref={anchorRef} />
       <PortfolioList portfolioList={portfolios} />
-      {/* 다음 페이지 로딩 트리거 */}
+
       <div ref={sentinelRef} className='h-[1px]' />
 
-      {/* 다음 페이지 로딩 중 표시(선택) */}
       {query.isFetchingNextPage ? <PortfolioListSkeleton length={3} /> : null}
     </section>
   );
