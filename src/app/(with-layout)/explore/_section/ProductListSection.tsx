@@ -1,15 +1,13 @@
-import dynamic from 'next/dynamic';
+'use client';
+
 import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useGetProductList } from '@/app/(with-layout)/explore/api';
 import { useInfiniteScroll } from '@/app/(with-layout)/explore/hooks/use-infinite-scroll';
-import { ProductListSkeleton } from '@/ui';
+import { ProductList, ProductListSkeleton } from '@/ui';
 import { GetProductCardResponse } from '@/swagger-api/data-contracts';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
-
-const ProductList = dynamic(() => import('@/ui/product-card/product-list/ProductList'), {
-  ssr: false,
-});
+import { toExploreSearchParams } from '@/app/(with-layout)/explore/utils/query';
 
 export default function ProductListSection() {
   const sp = useSearchParams();
@@ -41,8 +39,17 @@ export default function ProductListSection() {
     isFetchingNextPage,
     onLoadMore: () => fetchNextPage(),
   });
+
+  const scrollKey = useMemo(() => {
+    const allowed = toExploreSearchParams(new URLSearchParams(sp.toString()));
+    allowed.delete('tab');
+    const normalized = new URLSearchParams();
+    normalized.set('tab', 'PRODUCT');
+    allowed.forEach((value, key) => normalized.append(key, value));
+    return `explore:product:scroll?${normalized.toString()}`;
+  }, [sp]);
+
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = useMemo(() => `explore:product:scroll?${sp.toString()}`, [sp]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [products.length, dataUpdatedAt], {
     enabled: true,
     resetOnKeyChange: true,

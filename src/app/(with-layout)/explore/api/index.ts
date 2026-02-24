@@ -32,9 +32,9 @@ export const useSearchPlaces = (keyword: string) => {
   const trimmedKeyword = keyword.trim();
 
   return useQuery<GetPlaceResponse[]>({
-    queryKey: USER_QUERY_KEY.PLACES_SEARCH(keyword),
+    queryKey: USER_QUERY_KEY.PLACES_SEARCH(trimmedKeyword),
     queryFn: async ({ signal }) => {
-      if (keyword === '') return [];
+      if (trimmedKeyword === '') return [];
       const url = `${PLACE_FULL_URL}?keyword=${encodeURIComponent(trimmedKeyword)}`;
 
       const response = await fetch(url, {
@@ -86,8 +86,11 @@ export const useGetCategories = () => {
 
 export const useMoodFilters = () => {
   const { isLogIn } = useAuth();
+  const authResolved = isLogIn !== null;
+
   return useQuery<GetMoodFilterListResponse>({
     queryKey: USER_QUERY_KEY.MOODS_FILTER(isLogIn ? 'user' : 'guest'),
+    enabled: authResolved,
     queryFn: async () => {
       // 로그인 상태
       if (isLogIn) {
@@ -154,6 +157,11 @@ export const useGetPortfolioList = (sp: URLSearchParams) => {
 
   return useSuspenseInfiniteQuery<ApiResponseBodyGetPortfolioListResponseGetPortfolioMetaResponse>({
     queryKey: USER_QUERY_KEY.PORTFOLIO_LIST(baseQuery.toString()),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(PORTFOLIO_FULL_URL);
@@ -182,6 +190,11 @@ export const useGetProductList = (sq: URLSearchParams) => {
 
   return useSuspenseInfiniteQuery<GetProductListData>({
     queryKey: USER_QUERY_KEY.PRODUCT_LIST(baseQuery.toString()),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(PRODUCT_FULL_URL);
