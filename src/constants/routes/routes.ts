@@ -7,15 +7,15 @@ export const ROUTES = {
   AI_CURATION_STEP: (step: number) => `/ai-curation/${step}`,
   AI_CURATION_RESULT: '/ai-curation/result',
 
-  EXPLORE: (params?: Params) => `/explore${params && getQueryParams(params)}`,
+  EXPLORE: (params?: Params) => `/explore${params ? getQueryParams(params) : ''}`,
   LIKE: '/like',
   PROFILE: '/profile',
   RESERVATIONS: '/reservations',
   PHOTOGRAPHER: (id: number, params?: Params) =>
-    `/photographer/${id}${params && getQueryParams(params)}`,
+    `/photographer/${id}${params && getQueryParams(params) || ''}`,
   PORTFOLIO: (id: number) => `/portfolio/${id}`,
   PRODUCT: (productId: number, params?: Params) =>
-    `/product/${productId}${params && getQueryParams(params)}`,
+    `/product/${productId}${params && getQueryParams(params) || ''}`,
   PRODUCT_REVIEW: (productId: number, reviewId: number) =>
     `/product/${productId}/review/${reviewId}`,
   RESERVATION: (id: number) => `/reservation/${id}`,

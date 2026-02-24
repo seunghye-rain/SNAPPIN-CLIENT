@@ -138,7 +138,8 @@ export const useScrollRestoreOnParent = (
         document.removeEventListener('visibilitychange', save);
       }
     };
-  }, [anchorRef, enabled, key, saveThrottleFrame, saveThrottleMs, saveOnPageHide]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anchorRef, enabled, key, saveThrottleFrame, saveThrottleMs, saveOnPageHide, ...restoreDeps]);
 
   useLayoutEffect(() => {
     if (!enabled) return;
