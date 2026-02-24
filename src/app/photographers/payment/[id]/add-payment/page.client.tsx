@@ -4,9 +4,11 @@ import { useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { BottomCTAButton, Navigation, TextField } from '@/ui';
 import { IconArrowBack, IconHome } from '@/assets';
-import { MAX_NAME_LENGTH, useAddPaymentForm } from './hooks/useAddPaymentForm';
-import { useExtraPrices } from '../hooks/useExtraPrices';
+import { ROUTES } from '@/constants/routes/routes';
 import CancelModal from '../@modal/(.)cancel-modal/CancelModal';
+import { useExtraPrices } from '../hooks/useExtraPrices';
+import { ADD_PAYMENT_TEXT, ADD_PAYMENT_LIMITS } from './hooks/payment.schema';
+import { useAddPaymentForm } from './hooks/useAddPaymentForm';
 
 export default function AddPaymentPage() {
   const router = useRouter();
@@ -37,7 +39,10 @@ export default function AddPaymentPage() {
     if (isDirty) return openCancelModal(() => router.back());
     router.back();
   };
-
+  const handleClickHome = () => {
+    if (isDirty) return openCancelModal(() => router.push(ROUTES.HOME));
+    router.push(ROUTES.HOME);
+  };
   const handleSubmit = () => {
     handleSubmitForm(() => {
       addExtraPrice({
@@ -54,31 +59,31 @@ export default function AddPaymentPage() {
         isFixed
         left={<IconArrowBack onClick={handleClickBack} />}
         center={<p className='caption-14-bd text-black-10'>결제 요청</p>}
-        right={<IconHome />}
+        right={<IconHome onClick={handleClickHome} />}
         className='border-b-black-5 border-b-1'
       />
 
       <div className='flex flex-1 flex-col gap-[1.2rem] px-[2rem] py-[2rem]'>
         <TextField
           id='name'
-          label='비용명'
-          placeholder='비용명을 입력해주세요.'
+          label={ADD_PAYMENT_TEXT.NAME_LABEL}
+          placeholder={ADD_PAYMENT_TEXT.NAME_REQUIRED}
           value={compatibleFormData.name}
           onChange={(e) => updateName(e.target.value)}
           hasError={!!compatibleErrors.name}
-          maxLength={MAX_NAME_LENGTH}
-          helpText={compatibleErrors.name ?? '공백 포함 20자까지 입력 가능해요.'}
+          maxLength={ADD_PAYMENT_LIMITS.MAX_NAME_LENGTH}
+          helpText={compatibleErrors.name ?? ADD_PAYMENT_TEXT.NAME_HELP}
           showMaxLength={true}
         />
         <TextField
           id='amount'
-          label='금액(원)'
-          placeholder='금액을 입력해주세요.'
+          label={ADD_PAYMENT_TEXT.AMOUNT_LABEL}
+          placeholder={ADD_PAYMENT_TEXT.AMOUNT_REQUIRED}
           value={compatibleFormData.amount}
           inputMode='numeric'
           onChange={(e) => updateAmount(e.target.value)}
           hasError={!!compatibleErrors.amount}
-          helpText={compatibleErrors.amount ?? '10,000,000원 미만까지 입력 가능해요.'}
+          helpText={compatibleErrors.amount ?? ADD_PAYMENT_TEXT.AMOUNT_HELP}
         />
       </div>
 

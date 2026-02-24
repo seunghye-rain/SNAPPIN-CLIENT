@@ -4,24 +4,22 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formatPrice } from '@/utils/formatPrice';
-
-export const MAX_AMOUNT = 99_999_999;
-export const MAX_NAME_LENGTH = 20;
+import { ADD_PAYMENT_LIMITS, ADD_PAYMENT_TEXT } from './payment.schema';
 
 export const addPaymentSchema = z.object({
   name: z
     .string()
-    .min(1, '비용명을 입력해주세요.')
-    .max(MAX_NAME_LENGTH, `비용명은 ${MAX_NAME_LENGTH}자 이하이어야 합니다.`),
+    .min(1, ADD_PAYMENT_TEXT.NAME_REQUIRED)
+    .max(ADD_PAYMENT_LIMITS.MAX_NAME_LENGTH, ADD_PAYMENT_TEXT.NAME_MAX_ERROR),
 
   amount: z
     .string()
     .trim()
-    .min(1, '금액을 입력해주세요.')
-    .refine((v) => /^\d+$/.test(v), { message: '숫자만 입력해주세요.' })
-    .refine((v) => Number(v) >= 1, { message: '금액은 1원 이상이어야 합니다.' })
-    .refine((v) => Number(v) <= MAX_AMOUNT, {
-      message: `금액은 ${formatPrice(MAX_AMOUNT)}원 이하이어야 합니다.`,
+    .min(1, ADD_PAYMENT_TEXT.AMOUNT_REQUIRED)
+    .refine((v) => /^\d+$/.test(v), { message: ADD_PAYMENT_TEXT.AMOUNT_ONLY_NUMBER_ERROR })
+    .refine((v) => Number(v) >= 1, { message: ADD_PAYMENT_TEXT.AMOUNT_MIN_ERROR })
+    .refine((v) => Number(v) <= ADD_PAYMENT_LIMITS.MAX_AMOUNT, {
+      message: ADD_PAYMENT_TEXT.AMOUNT_MAX_ERROR,
     }),
 });
 
@@ -45,8 +43,8 @@ export const useAddPaymentForm = () => {
   const formData = watch();
 
   const updateName = (value: string) => {
-    if (value.length > MAX_NAME_LENGTH) {
-      setError('name', { message: `비용명은 ${MAX_NAME_LENGTH}자 이하이어야 합니다.` });
+    if (value.length > ADD_PAYMENT_LIMITS.MAX_NAME_LENGTH) {
+      setError('name', { message: ADD_PAYMENT_TEXT.NAME_MAX_ERROR });
       return;
     }
 
@@ -56,8 +54,8 @@ export const useAddPaymentForm = () => {
   const updateAmount = (value: string) => {
     const raw = value.replace(/[^\d]/g, '');
 
-    if (Number(raw) > MAX_AMOUNT) {
-      setError('amount', { message: `금액은 ${formatPrice(MAX_AMOUNT)}원 이하이어야 합니다.` });
+    if (Number(raw) > ADD_PAYMENT_LIMITS.MAX_AMOUNT) {
+      setError('amount', { message: ADD_PAYMENT_TEXT.AMOUNT_MAX_ERROR });
       return;
     }
 
