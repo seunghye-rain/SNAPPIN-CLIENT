@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  isServer,
-  QueryClient,
-  QueryClientProvider,
-  defaultShouldDehydrateQuery,
-} from '@tanstack/react-query';
+import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { OverlayProvider } from 'overlay-kit';
 import dynamic from 'next/dynamic';
@@ -23,10 +18,6 @@ function makeQueryClient() {
         refetchOnMount: true,
         refetchOnReconnect: true,
         retry: 1,
-      },
-      dehydrate: {
-        shouldDehydrateQuery: (query) =>
-          query.state.status === 'pending' || defaultShouldDehydrateQuery(query),
       },
     },
   });

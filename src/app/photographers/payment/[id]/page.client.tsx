@@ -65,7 +65,7 @@ export default function PageClient({ id }: PageClientProps) {
   return (
     <>
       <Navigation
-        isFixed={true}
+        isFixed
         left={<IconArrowBack onClick={handleBackClick} />}
         center={<p className='font-16-bd'>결제 요청</p>}
         right={<IconHome />}

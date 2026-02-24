@@ -1,5 +1,10 @@
 import { notFound } from 'next/navigation';
-import { dehydrate, QueryClient, HydrationBoundary } from '@tanstack/react-query';
+import {
+  dehydrate,
+  QueryClient,
+  HydrationBoundary,
+  defaultShouldDehydrateQuery,
+} from '@tanstack/react-query';
 import NavigationClient from './components/navigation-client/Navigation.client';
 import PageClient from './page.client';
 import { useGetReservationDetailPrefetch } from './api';
@@ -15,7 +20,15 @@ export default async function Page({ params }: ReservationDetailPageProps) {
     return notFound();
   }
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      dehydrate: {
+        shouldDehydrateQuery: (query) =>
+          query.state.status === 'pending' || defaultShouldDehydrateQuery(query),
+      },
+    },
+  });
+
   useGetReservationDetailPrefetch(queryClient, Number(id));
 
   return (
