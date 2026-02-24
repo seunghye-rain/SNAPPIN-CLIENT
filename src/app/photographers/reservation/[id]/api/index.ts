@@ -12,35 +12,35 @@ import {
   ReservationDetailResponse,
 } from '@/swagger-api/data-contracts';
 
+const getReservationDetail = async (reservationId: number) => {
+  const res = await apiRequest<GetReservationDetailData>({
+    endPoint: `/api/v1/reservations/${reservationId}`,
+    method: 'GET',
+  });
+
+  if (!res.success) {
+    throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}`);
+  }
+
+  return res.data!;
+};
+
 export const useGetReservationDetail = (reservationId: number) => {
   return useQuery<ReservationDetailResponse>({
     queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
     enabled: !!reservationId,
-    queryFn: async () => {
-      const res = await apiRequest<GetReservationDetailData>({
-        endPoint: `/api/v1/reservations/${reservationId}`,
-        method: 'GET',
-      });
-
-      if (!res.success) {
-        throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}`);
-      }
-
-      return res.data!;
-    },
+    queryFn: () => getReservationDetail(reservationId),
   });
 };
 
-export const useGetReservationDetailPrefetch = (
+export const prefetchReservationDetail = (
   queryClient: QueryClient,
   reservationId: number,
 ) => {
-  return () => {
-    queryClient.prefetchQuery({
-      queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
-      queryFn: () => useGetReservationDetail(reservationId),
-    });
-  };
+  return queryClient.prefetchQuery({
+    queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+    queryFn: () => getReservationDetail(reservationId),
+  });
 };
 
 export const useRefuseReservation = () => {

@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query';
 import NavigationClient from './components/navigation-client/Navigation.client';
 import PageClient from './page.client';
-import { useGetReservationDetailPrefetch } from './api';
+import { prefetchReservationDetail } from './api';
 
 type ReservationDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -29,7 +29,7 @@ export default async function Page({ params }: ReservationDetailPageProps) {
     },
   });
 
-  useGetReservationDetailPrefetch(queryClient, Number(id));
+  await prefetchReservationDetail(queryClient, Number(id));
 
   return (
     <div className='bg-black-3 flex flex-col'>
