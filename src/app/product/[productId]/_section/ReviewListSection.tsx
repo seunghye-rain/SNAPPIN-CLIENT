@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -7,7 +9,7 @@ import { formatShortDate } from '@/utils/formatDate';
 import { useGetProductReviewList } from '../api';
 
 type ReviewListSectionProps = {
-  productId: string;
+  productId: number;
   averageRate: number;
 };
 
@@ -21,9 +23,7 @@ type ReviewProps = {
 };
 
 export default function ReviewListSection({ productId, averageRate }: ReviewListSectionProps) {
-  const { data, isFetching, fetchNextPage, hasNextPage } = useGetProductReviewList(
-    Number(productId),
-  );
+  const { data, fetchNextPage, hasNextPage } = useGetProductReviewList(productId);
   const { ref, inView } = useInView();
 
   const reviewList = data?.pages.flatMap((page) => page.data?.reviews ?? []) ?? [];
@@ -34,14 +34,6 @@ export default function ReviewListSection({ productId, averageRate }: ReviewList
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
-
-  if (isFetching) {
-    return (
-      <section>
-        <ReviewListSectionSkeleton />
-      </section>
-    );
-  }
 
   if (isEmpty) {
     return (
@@ -118,7 +110,7 @@ function Review({ id, rate, createdAt, reviewer, images, content }: ReviewProps)
   );
 }
 
-const ReviewListSectionSkeleton = () => {
+export const ReviewListSectionSkeleton = () => {
   return (
     <section>
       <div className='flex justify-start gap-[0.8rem] p-[2rem]'>

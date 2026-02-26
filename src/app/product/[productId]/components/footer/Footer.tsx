@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, BottomCTAButton, ResultModal } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
@@ -9,7 +11,7 @@ import { ReservationDraft } from '@/app/product/[productId]/types/reservation';
 import { ROUTES } from '@/constants/routes/routes';
 
 type FooterProps = {
-  productId: string;
+  productId: number;
   amount: number;
 };
 
@@ -71,7 +73,7 @@ export default function Footer({ productId, amount }: FooterProps) {
       {isOpen && (
         <ReservationBottomDrawer
           isOpen={isOpen}
-          productId={productId}
+          productId={String(productId)}
           amount={amount}
           draft={draft}
           setDraftAction={setDraft}

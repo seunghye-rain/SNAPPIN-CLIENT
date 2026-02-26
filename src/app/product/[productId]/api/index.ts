@@ -1,9 +1,9 @@
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
   useSuspenseQuery,
+  useSuspenseInfiniteQuery
 } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { useAuth } from '@/auth/hooks/useAuth';
@@ -209,7 +209,7 @@ export const useWishProduct = () => {
 
 // 포폴 목록 조회 API
 export const useGetPortfolioList = (id: number) => {
-  return useInfiniteQuery<GetPortfolioListData>({
+  return useSuspenseInfiniteQuery<GetPortfolioListData>({
     queryKey: USER_QUERY_KEY.PRODUCT_PORTFOLIOS(id),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
@@ -230,13 +230,12 @@ export const useGetPortfolioList = (id: number) => {
     getNextPageParam: (lastPage) => {
       return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
     },
-    enabled: !Number.isNaN(id),
   });
 };
 
 // 상품 리뷰 목록 조회 API
 export const useGetProductReviewList = (id: number) => {
-  return useInfiniteQuery<GetProductReviewsData>({
+  return useSuspenseInfiniteQuery<GetProductReviewsData>({
     queryKey: USER_QUERY_KEY.PRODUCT_REVIEWS(id),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
@@ -256,6 +255,5 @@ export const useGetProductReviewList = (id: number) => {
     getNextPageParam: (lastPage) => {
       return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
     },
-    enabled: !Number.isNaN(id),
   });
 };
