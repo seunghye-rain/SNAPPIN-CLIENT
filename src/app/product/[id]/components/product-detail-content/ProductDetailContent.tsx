@@ -22,9 +22,11 @@ type ProductDetailContentProps = {
 }
 
 export default function ProductDetailContent({ productId, tab }: ProductDetailContentProps) {
-  const selectedTab = tab ?? PRODUCT_TAB.PRODUCT_DETAIL;
+  const selectedTab = PRODUCT_TABS.some(({ value }) => value === tab)
+    ? tab
+    : PRODUCT_TAB.PRODUCT_DETAIL;
 
-  const { data } = useGetProductDetail(Number(productId));
+  const { data } = useGetProductDetail(productId);
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const scrollKey = useMemo(() => `${ROUTES.PRODUCT(productId).replace(/^\//, '')}:scroll`, [productId]);

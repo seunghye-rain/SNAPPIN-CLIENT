@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { PRODUCT_TAB } from './constants/tab';
 import { Header, ProductDetailContent, ProductDetailSkeleton } from './components/index';
 import { prefetchProductDetail, prefetchPortfolioList, prefetchProductReviewList } from './api/server';
@@ -20,6 +21,10 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { tab } = await searchParams;
   const productId = Number(id);
 
+  if (Number.isNaN(productId) || productId <= 0) {
+    notFound();
+  }
+
   const promises = [];
   const cookieStore = await cookies();
   const isLogIn = cookieStore.has('AccessToken');
@@ -33,14 +38,12 @@ export default async function Page({ params, searchParams }: PageProps) {
     }
   });
 
-  if (!Number.isNaN(productId)) {
-    promises.push(prefetchProductDetail(queryClient, productId, isLogIn));
-    if (tab === 'PORTFOLIO') {
-      promises.push(prefetchPortfolioList(queryClient, productId));
-    }
-    if (tab === 'REVIEW') {
-      promises.push(prefetchProductReviewList(queryClient, productId));
-    }
+  promises.push(prefetchProductDetail(queryClient, productId, isLogIn));
+  if (tab === PRODUCT_TAB.PORTFOLIO) {
+    promises.push(prefetchPortfolioList(queryClient, productId));
+  }
+  if (tab === PRODUCT_TAB.REVIEW) {
+    promises.push(prefetchProductReviewList(queryClient, productId));
   }
   Promise.all(promises);
 

@@ -9,8 +9,12 @@ type PhotographerSectionProps = {
 };
 
 export default function PhotographerSection({ photographerInfo }: PhotographerSectionProps) {
+  if (!photographerInfo?.id) {
+    return null;
+  }
+  
   const data = {
-    id: photographerInfo?.id ?? 0,
+    id: photographerInfo?.id,
     name: photographerInfo?.name ?? '',
     imageUrl: photographerInfo?.profileImageUrl ?? '',
     bio: photographerInfo?.bio ?? '',

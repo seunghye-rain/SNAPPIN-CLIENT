@@ -27,7 +27,7 @@ export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkel
         <div className='border-black-4 rounded-[0.6rem] border-1 p-[2rem] pt-[2.2rem] pb-[2.1rem]'>
           <div className='flex items-center gap-[1.2rem]'>
             <div className='bg-black-3 relative h-[6.4rem] w-[6.4rem] rounded-full shrink-0' />
-            <div className='flex flex-1 flex-col gap-[0.8rem] shrink-1'>
+            <div className='flex flex-1 flex-col gap-[0.8rem] shrink'>
               <div className='flex flex-col gap-[0.4rem]'>
                 <div className='bg-black-3 h-[1.7rem] w-[3.7rem] rounded-[0.2rem]' />
                 <div className='bg-black-3 h-[1.2rem] w-[9rem] rounded-[0.2rem]' />
