@@ -6,10 +6,11 @@ import { ImageCarousel, ReviewStar } from '@/ui/';
 import { formatShortDate } from '@/utils/formatDate';
 import Skeleton from './components/skeleton/Skeleton';
 import { useGetReviewDetail } from './api';
+import { UserType } from '@/auth/constant/userType';
 
 type PageClientProps = {
   reviewId: number;
-  userType: string;
+  userType: UserType;
 };
 
 export default function PageClient({ reviewId, userType }: PageClientProps) {

@@ -44,5 +44,6 @@ export const useGetReviewDetail = (reviewId: number, userType: string) => {
       ? PHOTOGRAPHER_QUERY_KEY.REVIEW_DETAIL(reviewId)
       : USER_QUERY_KEY.REVIEW_DETAIL(reviewId),
     queryFn: () => getReviewDetail(reviewId, !!isLogIn),
+    enabled: isLogIn !== null,
   });
 };
