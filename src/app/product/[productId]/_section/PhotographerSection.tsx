@@ -1,28 +1,32 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { IconArrowForward } from '@/assets';
+import { GetProductPhotographerInfoResponse } from '@/swagger-api/data-contracts';
+import { ROUTES } from '@/constants/routes/routes';
 
 type PhotographerSectionProps = {
-  photographerInfo: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    bio: string;
-    specialties: string[];
-    locations: string[];
-  };
+  photographerInfo: GetProductPhotographerInfoResponse | undefined;
 };
 
 export default function PhotographerSection({ photographerInfo }: PhotographerSectionProps) {
+  const data = {
+    id: photographerInfo?.id ?? 0,
+    name: photographerInfo?.name ?? '',
+    imageUrl: photographerInfo?.profileImageUrl ?? '',
+    bio: photographerInfo?.bio ?? '',
+    specialties: photographerInfo?.specialties ?? [],
+    locations: photographerInfo?.locations ?? [],
+  };
+  
   return (
-    <section className='px-[2rem] pb-[2rem]'>
-      <Link href={`/photographer/${photographerInfo.id}`}>
+    <section className='px-[2rem] pb-[2rem] bg-black-1'>
+      <Link href={ROUTES.PHOTOGRAPHER(data.id)}>
         <div className='border-black-4 rounded-[0.6rem] border-1 p-[1.2rem]'>
           <div className='flex items-center gap-[1.2rem]'>
             {/* 프로필 이미지 */}
             <div className='relative h-[6.4rem] w-[6.4rem] overflow-hidden rounded-full'>
               <Image
-                src={photographerInfo.imageUrl || '/imgs/default-profile.png'}
+                src={data.imageUrl || '/imgs/default-profile.png'}
                 alt='프로필'
                 fill
                 className='object-cover rounded-full'
@@ -31,12 +35,12 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
             {/* 작가명, 한줄 소개, 촬영 상품, 활동 지역 */}
             <div className='flex flex-1 flex-col gap-[0.8rem]'>
               <div className='flex flex-col'>
-                <span className='caption-14-bd text-black-10'>{photographerInfo.name}</span>
-                <span className='caption-14-rg text-black-7'>{photographerInfo.bio}</span>
+                <span className='caption-14-bd text-black-10'>{data.name}</span>
+                <span className='caption-14-rg text-black-7'>{data.bio}</span>
               </div>
               <div className='flex flex-col gap-[0.4rem]'>
-                <DetailRow label='촬영 상품' content={photographerInfo.specialties.join(', ')} />
-                <DetailRow label='활동 지역' content={photographerInfo.locations.join(', ')} />
+                <DetailRow label='촬영 상품' content={data.specialties.join(', ')} />
+                <DetailRow label='활동 지역' content={data.locations.join(', ')} />
               </div>
             </div>
             {/* 우측 버튼 */}
