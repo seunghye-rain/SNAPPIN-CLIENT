@@ -11,13 +11,12 @@ import { Header, ProductDetailContent, ProductDetailSkeleton } from './component
 import { prefetchProductDetail, prefetchPortfolioList, prefetchProductReviewList } from './api/server';
 
 type PageProps = {
-  params: Promise<{ productId: string }>;
+  params: Promise<{ id: string }>;
   searchParams: Promise<{ tab: string }>;
 }
 
-// TODO: 폴더명 productId -> id
 export default async function Page({ params, searchParams }: PageProps) {
-  const { productId: id } = await params;
+  const { id } = await params;
   const { tab } = await searchParams;
   const productId = Number(id);
 

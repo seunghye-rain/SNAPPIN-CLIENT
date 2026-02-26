@@ -15,14 +15,14 @@ import {
 } from '@/ui';
 import { formatPrice } from '@/utils/formatPrice';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { ReservationDraft } from '@/app/product/[productId]/types/reservation';
+import { ReservationDraft } from '@/app/product/[id]/types/reservation';
 import {
   useAvailablePeopleRange,
   useAvailableTime,
   useClosedDates,
   useReservation,
-} from '@/app/product/[productId]/api';
-import AvailableTimeSection from '@/app/product/[productId]/components/time-picker/AvailableTimePicker';
+} from '@/app/product/[id]/api';
+import AvailableTimeSection from '@/app/product/[id]/components/time-picker/AvailableTimePicker';
 import { ProductReservationRequest } from '@/swagger-api/data-contracts';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { getErrorMessage } from '@/utils/error';

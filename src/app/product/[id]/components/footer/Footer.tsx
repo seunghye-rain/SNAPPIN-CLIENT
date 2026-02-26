@@ -4,10 +4,10 @@ import { Button, BottomCTAButton, ResultModal } from '@/ui';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { overlay } from 'overlay-kit';
-import ReservationBottomDrawer from '@/app/product/[productId]/components/reservation-bottom-drawer/ReservationBottomDrawer';
+import ReservationBottomDrawer from '@/app/product/[id]/components/reservation-bottom-drawer/ReservationBottomDrawer';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ReservationDraft } from '@/app/product/[productId]/types/reservation';
+import { ReservationDraft } from '@/app/product/[id]/types/reservation';
 import { ROUTES } from '@/constants/routes/routes';
 
 type FooterProps = {
