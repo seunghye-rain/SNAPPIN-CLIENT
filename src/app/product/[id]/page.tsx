@@ -22,7 +22,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const productId = Number(id);
 
   if (Number.isNaN(productId) || productId <= 0) {
-    notFound();
+    return notFound();
   }
 
   const promises = [];

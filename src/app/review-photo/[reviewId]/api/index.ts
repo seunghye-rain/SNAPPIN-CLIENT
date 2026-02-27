@@ -7,6 +7,7 @@ import { apiRequest } from '@/api/apiRequest';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetReviewDetailData, GetReviewDetailResponse } from '@/swagger-api/data-contracts';
 import { useAuth } from '@/auth/hooks/useAuth';
+import { USER_TYPE, UserType } from '@/auth/constant/userType';
 
 export const getReviewDetail = async (
   reviewId: number,
@@ -18,10 +19,10 @@ export const getReviewDetail = async (
       method: 'GET',
     });
 
-    if (!res.data) {
-      throw new Error(`/api/v1/reviews/${reviewId} 응답에 데이터가 존재하지 않습니다.`);
+    if (!res.success) {
+      throw new Error(`Failed to fetch /api/v1/reviews/${reviewId}`);
     }
-    return res.data;
+    return res.data!;
   }
 
   const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/reviews/${reviewId}`, { 
@@ -31,16 +32,15 @@ export const getReviewDetail = async (
   if (!res.ok) {
     throw new Error('리뷰 상세 정보를 불러오는 데 실패했습니다.');
   }
-  
   const data = await res.json();
   return data.data;
 };
 
-export const useGetReviewDetail = (reviewId: number, userType: string) => {
+export const useGetReviewDetail = (reviewId: number, userType: UserType) => {
   const { isLogIn } = useAuth();
 
   return useQuery<GetReviewDetailResponse>({
-    queryKey: userType === 'PHOTOGRAPHER'
+    queryKey: userType === USER_TYPE.PHOTOGRAPHER
       ? PHOTOGRAPHER_QUERY_KEY.REVIEW_DETAIL(reviewId)
       : USER_QUERY_KEY.REVIEW_DETAIL(reviewId),
     queryFn: () => getReviewDetail(reviewId, !!isLogIn),

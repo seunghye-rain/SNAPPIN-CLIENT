@@ -42,13 +42,17 @@ export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkel
         </div>
       </div>
       <Tabs>
-        <Tabs.List activeValue={selectedTab} tabs={PRODUCT_TABS}>
+        <Tabs.List
+          activeValue={selectedTab}
+          tabs={PRODUCT_TABS}
+          className='pointer-events-none'
+        >
           {PRODUCT_TABS.map(({ value, label }) => (
             <Tabs.Item
               key={value}
               value={value}
               activeValue={selectedTab}
-              href="#" 
+              href='#'
             >
               {label}
               {value === PRODUCT_TAB.REVIEW && ' (0)'}
