@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { USER_QUERY_KEY } from '@/query-key/user';
 import {
@@ -9,7 +9,7 @@ import {
 
 // 작가 상세 조회 API
 export const useGetPhotographerDetail = (id: number) => {
-  return useQuery<GetPhotographerProfileResponse>({
+  return useSuspenseQuery<GetPhotographerProfileResponse>({
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_DETAIL(id),
     queryFn: async () => {
       const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, { method: 'GET' });
@@ -20,13 +20,12 @@ export const useGetPhotographerDetail = (id: number) => {
       const data = await res.json();
       return data.data;
     },
-    enabled: !Number.isNaN(id),
   })
 }
 
 // 포폴 목록 조회 API
 export const useGetPortfolioList = (id: number) => {
-  return useInfiniteQuery<GetPortfolioListData>({
+  return useSuspenseInfiniteQuery<GetPortfolioListData>({
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_PORTFOLIOS(id),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
@@ -47,13 +46,12 @@ export const useGetPortfolioList = (id: number) => {
     getNextPageParam: (lastPage) => {
       return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
     },
-    enabled: !Number.isNaN(id),
   });
 }
 
 // 상품 목록 조회 API
 export const useGetProductList = (id: number) => {
-  return useInfiniteQuery<GetProductListData>({
+  return useSuspenseInfiniteQuery<GetProductListData>({
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_PRODUCTS(id),
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
@@ -74,6 +72,5 @@ export const useGetProductList = (id: number) => {
     getNextPageParam: (lastPage) => {
       return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
     },
-    enabled: !Number.isNaN(id),
   });
 }
