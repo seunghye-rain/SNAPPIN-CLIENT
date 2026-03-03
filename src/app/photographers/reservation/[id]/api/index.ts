@@ -1,5 +1,5 @@
 import { PHOTOGRAPHER_QUERY_KEY } from '@/query-key/photographer';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import {
   ApiResponseBodyCompleteReservationResponseVoid,
@@ -12,22 +12,32 @@ import {
   ReservationDetailResponse,
 } from '@/swagger-api/data-contracts';
 
+const getReservationDetail = async (reservationId: number) => {
+  const res = await apiRequest<GetReservationDetailData>({
+    endPoint: `/api/v1/reservations/${reservationId}`,
+    method: 'GET',
+  });
+
+  if (!res.success) {
+    throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}`);
+  }
+
+  return res.data!;
+};
+
 export const useGetReservationDetail = (reservationId: number) => {
   return useQuery<ReservationDetailResponse>({
     queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
     enabled: !!reservationId,
-    queryFn: async () => {
-      const res = await apiRequest<GetReservationDetailData>({
-        endPoint: `/api/v1/reservations/${reservationId}`,
-        method: 'GET',
-      });
+    queryFn: () => getReservationDetail(reservationId),
+  });
+};
 
-      if (!res.success) {
-        throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}`);
-      }
-
-      return res.data!;
-    },
+export const prefetchReservationDetail = (queryClient: QueryClient, reservationId: number) => {
+  return queryClient.prefetchQuery({
+    queryKey: PHOTOGRAPHER_QUERY_KEY.RESERVATION_DETAIL(reservationId),
+    queryFn: () => getReservationDetail(reservationId),
+    staleTime: 10 * 1000,
   });
 };
 
