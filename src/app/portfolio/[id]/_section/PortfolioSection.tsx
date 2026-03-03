@@ -9,7 +9,7 @@ import { useWishPortfolio } from '../api';
 type PortfolioSectionProps = {
   id: number;
   description: string;
-  images: { src: string; alt: string }[];
+  images: string[];
   isLiked: boolean;
   likeCount: number;
   snapCategory: string;
@@ -46,10 +46,15 @@ export default function PortfolioSection({
     }
   };
 
+  const portfolioImages = images.map((image) => ({
+    src: image,
+    alt: description,
+  }));
+
   return (
     <section className='bg-black-1'>
       {/* 포트폴리오 캐러셀 */}
-      <ImageCarousel variant='dots' images={images} />
+      <ImageCarousel variant='dots' images={portfolioImages} />
       {/* 한줄 설명, 좋아요 */}
       <div className='flex items-center justify-between px-[2rem] py-[1.6rem]'>
         <h1 className='font-18-bd text-black-10'>{description}</h1>
