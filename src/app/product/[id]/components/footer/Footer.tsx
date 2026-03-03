@@ -1,14 +1,14 @@
 'use client';
 
-import { Button, BottomCTAButton, ResultModal } from '@/ui';
-import { useToast } from '@/ui/toast/hooks/useToast';
-import { useAuth } from '@/auth/hooks/useAuth';
-import { overlay } from 'overlay-kit';
-import ReservationBottomDrawer from '@/app/product/[id]/components/reservation-bottom-drawer/ReservationBottomDrawer';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ReservationDraft } from '@/app/product/[id]/types/reservation';
+import { overlay } from 'overlay-kit';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { ROUTES } from '@/constants/routes/routes';
+import { useToast } from '@/ui/toast/hooks/useToast';
+import { Button, BottomCTAButton, ResultModal } from '@/ui';
+import { ReservationDraft } from '@/app/product/[id]/types/reservation';
+import ReservationBottomDrawer from '@/app/product/[id]/components/reservation-bottom-drawer/ReservationBottomDrawer';
 
 type FooterProps = {
   productId: number;

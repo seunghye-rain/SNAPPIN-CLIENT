@@ -13,15 +13,16 @@ import { prefetchProductDetail, prefetchPortfolioList, prefetchProductReviewList
 
 type PageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tab: string }>;
+  searchParams: Promise<{ tab: string | string[] | undefined }>;
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params;
-  const { tab } = await searchParams;
+  const { tab: rawTab } = await searchParams;
   const productId = Number(id);
+  const tab = (Array.isArray(rawTab) ? rawTab[0] : rawTab) || PRODUCT_TAB.PRODUCT_DETAIL;
 
-  if (Number.isNaN(productId) || productId <= 0) {
+  if (Number.isNaN(productId)) {
     return notFound();
   }
 
