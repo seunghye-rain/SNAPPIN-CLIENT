@@ -6,13 +6,13 @@ type SwitchControl = {
 };
 
 export const useMinDurationLoading = (minDuration: number) => {
-  const [loading, setLoading] = useState(false);
+  const [isSwitching, setIsSwitching] = useState(false);
   const ctrlRef = useRef<SwitchControl>({ startTime: null, timeoutId: null });
 
   const start = useCallback(() => {
     const ctrl = ctrlRef.current;
     ctrl.startTime = Date.now();
-    setLoading(true);
+    setIsSwitching(true);
   }, []);
 
   const end = useCallback(() => {
@@ -24,7 +24,7 @@ export const useMinDurationLoading = (minDuration: number) => {
     if (ctrl.timeoutId) clearTimeout(ctrl.timeoutId);
 
     ctrl.timeoutId = setTimeout(() => {
-      setLoading(false);
+      setIsSwitching(false);
       ctrl.startTime = null;
       ctrl.timeoutId = null;
     }, remaining);
@@ -39,5 +39,5 @@ export const useMinDurationLoading = (minDuration: number) => {
     };
   }, []);
 
-  return { loading, start, end };
+  return { isSwitching, start, end };
 };

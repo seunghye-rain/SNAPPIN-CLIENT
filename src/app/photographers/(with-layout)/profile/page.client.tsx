@@ -1,40 +1,23 @@
 'use client';
 
 import Lottie from 'lottie-react';
-import { useCallback, useEffect, useState } from 'react';
 import { isValidUserType, type UserType } from '@/auth/constant/userType';
-import { getUserType } from '@/auth/userType';
 import { useSwitchUserProfile } from '@/auth/apis';
 import loadingAnimation from '@/assets/lotties/loading.json';
-import ProfileLayout from '@/components/layout/profile/ProfileLayout';
 import SwitchProfile from './components/switch-profile/SwitchProfile';
 import { useMinDurationLoading } from './hooks/useMinDurationLoading';
 
 const MIN_DURATION = 1600;
 
-export default function PageClient() {
-  const [userType, setUserTypeState] = useState<UserType | null>(null);
+type PageClientProps = {
+  initialUserType: UserType;
+};
 
-  const { loading: isSwitching, start, end } = useMinDurationLoading(MIN_DURATION);
+export default function PageClient({ initialUserType }: PageClientProps) {
+  const { isSwitching, start, end } = useMinDurationLoading(MIN_DURATION);
   const { mutateAsync, isPending } = useSwitchUserProfile();
 
-  useEffect(() => {
-    let mounted = true;
-
-    (async () => {
-      const type = await getUserType();
-      if (!mounted) return;
-      if (type && isValidUserType(type)) setUserTypeState(type);
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const handleSwitchClick = useCallback(async () => {
-    if (!userType) return;
-
+  const handleSwitchClick = async () => {
     start();
 
     try {
@@ -42,19 +25,15 @@ export default function PageClient() {
 
       const nextRole = data?.role;
       if (!nextRole || !isValidUserType(nextRole)) return;
-
-      setUserTypeState(nextRole);
     } finally {
       end();
     }
-  }, [userType, mutateAsync, start, end]);
-
-  if (!userType) return null;
+  };
 
   return (
-    <ProfileLayout userType={userType}>
+    <>
       <SwitchProfile
-        userType={userType}
+        userType={initialUserType}
         onClick={handleSwitchClick}
         disabled={isPending || isSwitching}
       />
@@ -64,6 +43,6 @@ export default function PageClient() {
           <span className='title-20-bd text-neon-black'>계정 전환 중...</span>
         </div>
       )}
-    </ProfileLayout>
+    </>
   );
 }

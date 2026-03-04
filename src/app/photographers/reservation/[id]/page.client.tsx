@@ -1,5 +1,9 @@
 'use client';
 
+import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { Divider } from '@/ui';
+import { useGetReservationDetail } from './api';
+import SectionSkeleton from '@/components/layout/reservation/SectionSkeleton';
 import {
   ProductStatus,
   ReservationDetail,
@@ -7,10 +11,6 @@ import {
   ReviewDetail,
   DetailPageFooter,
 } from './_section';
-import { STATE_CODES, StateCode } from '@/types/stateCode';
-import { Divider } from '@/ui';
-import { useGetReservationDetail } from './api';
-import SectionSkeleton from '@/components/layout/reservation/SectionSkeleton';
 
 type PageClientProps = {
   id: string;

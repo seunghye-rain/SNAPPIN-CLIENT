@@ -57,6 +57,7 @@ export default function ProductStatus({
   return (
     <Section title='예약 요청 상품'>
       <ProductCard
+        preload
         image={{ src: imageUrl, alt: title }}
         name={title}
         rate={rate}
