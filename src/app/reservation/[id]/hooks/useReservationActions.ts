@@ -9,51 +9,6 @@ type UseReservationActionsProps = {
   status: StateCode;
 };
 
-type CreateClientFooterConfigProps = {
-  status: StateCode;
-  isPaymentRequestPending: boolean;
-  handlePaymentConfirmClick: () => void;
-};
-
-const createClientFooterConfig = ({
-  status,
-  isPaymentRequestPending,
-  handlePaymentConfirmClick,
-}: CreateClientFooterConfigProps): ClientFooterConfig | null => {
-  switch (status) {
-    case STATE_CODES.PAYMENT_REQUESTED:
-      return {
-        label: '결제하고 예약 확정받기',
-        color: 'primary' as const,
-        disabled: isPaymentRequestPending,
-        onClick: handlePaymentConfirmClick,
-      };
-
-    case STATE_CODES.PAYMENT_COMPLETED:
-      return {
-        label: '결제 확인중',
-        disabled: true,
-      };
-
-    case STATE_CODES.RESERVATION_CANCELED:
-      return {
-        label: '예약 취소 완료',
-        color: 'black' as const,
-        disabled: true,
-      };
-
-    case STATE_CODES.RESERVATION_REFUSED:
-      return {
-        label: '작가님의 예약 거절',
-        color: 'black' as const,
-        disabled: true,
-      };
-
-    default:
-      return null;
-  }
-};
-
 export const useReservationActions = ({ reservationId, status }: UseReservationActionsProps) => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [canceledPreviousStatus, setCanceledPreviousStatus] = useState<StateCode>();
@@ -85,6 +40,7 @@ export const useReservationActions = ({ reservationId, status }: UseReservationA
   // 결제 요청 버튼 클릭
   const handlePaymentConfirmClick = () => {
     if (isPaymentRequestPending) return;
+
     requestPaymentMutation(reservationId, {
       onError: () =>
         toast.error(
@@ -95,15 +51,45 @@ export const useReservationActions = ({ reservationId, status }: UseReservationA
     });
   };
 
-  const clientFooterConfig = createClientFooterConfig({
-    status,
-    isPaymentRequestPending,
-    handlePaymentConfirmClick,
-  });
+  const clientFooterConfig: ClientFooterConfig | null = (() => {
+    switch (status) {
+      case STATE_CODES.PAYMENT_REQUESTED:
+        return {
+          label: '결제하고 예약 확정받기',
+          color: 'primary',
+          disabled: isPaymentRequestPending,
+          onClick: handlePaymentConfirmClick,
+        };
+
+      case STATE_CODES.PAYMENT_COMPLETED:
+        return {
+          label: '결제 확인중',
+          disabled: true,
+        };
+
+      case STATE_CODES.RESERVATION_CANCELED:
+        return {
+          label: '예약 취소 완료',
+          color: 'black',
+          disabled: true,
+        };
+
+      case STATE_CODES.RESERVATION_REFUSED:
+        return {
+          label: '작가님의 예약 거절',
+          color: 'black',
+          disabled: true,
+        };
+
+      default:
+        return null;
+    }
+  })();
 
   // 문의 버튼 클릭
   const handleInquiryClick = () => {
     const hasBottomCta = clientFooterConfig !== null;
+
     toast.alert(
       '메시지 기능은 준비 중이에요. 조금만 기다려주세요!',
       undefined,
