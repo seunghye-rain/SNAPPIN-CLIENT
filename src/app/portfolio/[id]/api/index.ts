@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
+import { useSuspenseQuery, useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { USER_QUERY_KEY } from '@/query-key/user';
@@ -49,10 +49,9 @@ export const prefetchPortfolioDetail = (queryClient: QueryClient, id: number, is
 
 // 포트폴리오 상세 조회 API
 export const useGetPortfolioDetail = (id: number, isLogIn: boolean) => {
-  return useQuery<GetPortfolioDetailResponse>({
+  return useSuspenseQuery<GetPortfolioDetailResponse>({
     queryKey: USER_QUERY_KEY.PORTFOLIO_DETAIL(id, !!isLogIn),
     queryFn: () => getPortfolioDetail(id, !!isLogIn),
-    enabled: !Number.isNaN(id) && isLogIn !== null,
   });
 }
 

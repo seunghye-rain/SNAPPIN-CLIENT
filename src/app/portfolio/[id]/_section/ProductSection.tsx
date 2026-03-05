@@ -4,7 +4,7 @@ import { ROUTES } from '@/constants/routes/routes';
 
 type ProductSectionProps = {
   id: number;
-  image: { src: string; alt: string };
+  imageUrl: string;
   name: string;
   rate: number;
   reviewCount: number;
@@ -15,7 +15,7 @@ type ProductSectionProps = {
 
 export default function ProductSection({
   id,
-  image,
+  imageUrl,
   name,
   rate,
   reviewCount,
@@ -32,7 +32,7 @@ export default function ProductSection({
         className='bg-black-1 border-black-4 flex flex-col items-start justify-center gap-[1rem] self-stretch rounded-[0.6rem] border-1 p-[1.2rem]'
       >
         <ProductCard
-          image={image}
+          image={{ src: imageUrl, alt: name }}
           name={name}
           rate={rate}
           reviewCount={reviewCount}

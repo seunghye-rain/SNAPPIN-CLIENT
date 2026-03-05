@@ -1,15 +1,17 @@
-import { Button, BottomCTAButton, ResultModal } from '@/ui';
-import { useToast } from '@/ui/toast/hooks/useToast';
-import { useAuth } from '@/auth/hooks/useAuth';
-import { overlay } from 'overlay-kit';
-import ReservationBottomDrawer from '@/app/product/[productId]/components/reservation-bottom-drawer/ReservationBottomDrawer';
-import { useRouter } from 'next/navigation';
+'use client';
+
 import { useState } from 'react';
-import { ReservationDraft } from '@/app/product/[productId]/types/reservation';
+import { overlay } from 'overlay-kit';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { ROUTES } from '@/constants/routes/routes';
+import { useToast } from '@/ui/toast/hooks/useToast';
+import { Button, BottomCTAButton, ResultModal } from '@/ui';
+import { ReservationDraft } from '@/app/product/[id]/types/reservation';
+import ReservationBottomDrawer from '@/app/product/[id]/components/reservation-bottom-drawer/ReservationBottomDrawer';
 
 type FooterProps = {
-  productId: string;
+  productId: number;
   amount: number;
 };
 
@@ -71,7 +73,7 @@ export default function Footer({ productId, amount }: FooterProps) {
       {isOpen && (
         <ReservationBottomDrawer
           isOpen={isOpen}
-          productId={productId}
+          productId={String(productId)}
           amount={amount}
           draft={draft}
           setDraftAction={setDraft}

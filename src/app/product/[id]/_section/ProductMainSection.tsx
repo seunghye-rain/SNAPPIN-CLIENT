@@ -47,7 +47,7 @@ export default function ProductMainSection({
   };
 
   return (
-    <section>
+    <section className='bg-black-1'>
       <ImageCarousel variant='dots' images={productImages} />
       <div className='flex flex-col gap-[0.8rem] px-[2rem] py-[1.6rem]'>
         <div className='flex flex-col'>

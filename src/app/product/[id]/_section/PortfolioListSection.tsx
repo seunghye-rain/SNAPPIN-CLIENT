@@ -1,14 +1,16 @@
+'use client';
+
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { PortfolioList, PortfolioListSkeleton } from '@/ui';
+import { PortfolioList } from '@/ui';
 import { useGetPortfolioList } from '../api';
 
 type PortfolioListSectionProps = {
-  productId: string;
+  productId: number;
 }
 
 export default function PortfolioListSection({ productId }: PortfolioListSectionProps) {
-  const { data, isPending, fetchNextPage, hasNextPage } = useGetPortfolioList(Number(productId));
+  const { data, fetchNextPage, hasNextPage } = useGetPortfolioList(productId);
   const { ref, inView } = useInView();
 
   const portfolioList = data?.pages.flatMap(page => page.data?.portfolios ?? []) ?? [];
@@ -18,14 +20,6 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
-
-  if (isPending) {
-    return (
-      <section>
-        <PortfolioListSkeleton />
-      </section>
-    );
-  };
 
   if (portfolioList.length === 0) {
     return (

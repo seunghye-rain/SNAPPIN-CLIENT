@@ -1,4 +1,4 @@
-import { useAvailableTimes } from '@/app/product/[productId]/api';
+import { useAvailableTimes } from '@/app/product/[id]/api';
 import { BottomDrawer, TimePicker } from '@/ui';
 
 type AvailableTimeSectionProps = {
