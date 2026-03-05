@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 import {
   QueryClient,
   HydrationBoundary,
@@ -21,9 +22,12 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const portfolioId = Number(id);
 
+  if (Number.isNaN(portfolioId)) {
+    return notFound();
+  }
+
   const cookieStore = await cookies();
   const isLogIn = cookieStore.has('AccessToken');
-  
   const queryClient = new QueryClient({
     defaultOptions: {
       dehydrate: {
@@ -33,18 +37,17 @@ export default async function Page({ params }: PageProps) {
       },
     },
   });
-  if (!Number.isNaN(portfolioId)) {
-    prefetchPortfolioDetail(queryClient, portfolioId, isLogIn);
-  }
+
+  prefetchPortfolioDetail(queryClient, portfolioId, isLogIn);
 
   return (
     <main>
       <Header />
-      <Suspense fallback={<PortfolioDetailSkeleton />}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<PortfolioDetailSkeleton />}>
           <PortfolioDetailContent id={portfolioId} isLogIn={isLogIn} />
-        </HydrationBoundary>
-      </Suspense>
+        </Suspense>
+      </HydrationBoundary>
     </main>
   );
 }

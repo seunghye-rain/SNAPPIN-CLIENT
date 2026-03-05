@@ -6,14 +6,16 @@ import { ImageCarousel, ReviewStar } from '@/ui/';
 import { formatShortDate } from '@/utils/formatDate';
 import Skeleton from './components/skeleton/Skeleton';
 import { useGetReviewDetail } from './api';
+import { UserType } from '@/auth/constant/userType';
 
 type PageClientProps = {
   reviewId: number;
+  userType: UserType;
 };
 
-export default function PageClient({ reviewId }: PageClientProps) {
+export default function PageClient({ reviewId, userType }: PageClientProps) {
   const searchParams = useSearchParams();
-  const { data, isPending } = useGetReviewDetail(reviewId);
+  const { data, isPending } = useGetReviewDetail(reviewId, userType);
 
   const initialIndex = useMemo(() => {
     const imageParam = searchParams.get('image');
