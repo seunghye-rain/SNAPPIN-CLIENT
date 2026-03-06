@@ -1,0 +1,23 @@
+{
+  "extends": "@snappin/typescript-config/nextjs",
+  "compilerOptions": {
+    "allowJs": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@snappin/design-system": ["../../packages/design-system/src/index.ts"],
+      "@snappin/design-system/*": ["../../packages/design-system/src/*"],
+      "@snappin/api-types": ["../../packages/api-types/src/index.ts"],
+      "@snappin/api-types/*": ["../../packages/api-types/src/*"]
+    },
+    "types": ["node", "jest"]
+  },
+  "include": [
+    "./next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules", "**/*.stories.tsx"]
+}

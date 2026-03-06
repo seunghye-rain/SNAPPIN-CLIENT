@@ -1,0 +1,25 @@
+﻿'use client';
+
+import ImageAnimation from '../image-animation/ImageAnimation';
+import type { GetQuestionResponse } from '@snappin/api-types';
+import type { GetPhotoResponse } from '@snappin/api-types';
+import { formatNumber } from '@/utils/formatNumber';
+
+type StepLayoutProps = {
+  question: GetQuestionResponse;
+  photos: GetPhotoResponse[];
+};
+
+export default function StepLayout({ question, photos }: StepLayoutProps) {
+  return (
+    <div className='flex flex-col gap-[4.2rem]'>
+      <div className='flex flex-col gap-[0.9rem] pt-[2rem]'>
+        <h1 className='title-20-bd text-neon-black'>
+          {question?.step ? formatNumber(question.step) : ''}
+        </h1>
+        <p className='title-20-bd text-black-1'>{question?.contents}</p>
+      </div>
+      <ImageAnimation images={photos ?? []} />
+    </div>
+  );
+}
