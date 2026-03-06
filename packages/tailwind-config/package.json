@@ -1,0 +1,12 @@
+{
+  "name": "@snappin/tailwind-config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./postcss": "./postcss.config.mjs",
+    "./tokens/color.css": "./tokens/color.css",
+    "./tokens/typography.css": "./tokens/typography.css",
+    "./tokens/animation.css": "./tokens/animation.css"
+  }
+}
