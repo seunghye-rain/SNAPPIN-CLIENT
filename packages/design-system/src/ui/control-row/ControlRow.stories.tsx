@@ -1,6 +1,7 @@
-import { Stepper } from '@/ui';
+
 import ControlRow from './ControlRow';
 import { useState } from 'react';
+import { Stepper } from '../stepper';
 
 const meta = {
   title: 'layout/ControlRow',
@@ -27,7 +28,7 @@ function ControlRowExample() {
   return (
     <div className='w-[320px] border p-4'>
       <ControlRow
-        leftLabel={<span className='caption-14-md'>ÃÔ¿µ ÀÎ¿ø</span>}
+        leftLabel={<span className='caption-14-md'>ï¿½Ô¿ï¿½ ï¿½Î¿ï¿½</span>}
         rightControl={
           <Stepper
             value={value}

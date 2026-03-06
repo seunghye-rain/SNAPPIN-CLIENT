@@ -1,4 +1,4 @@
-import { StateCode } from '../../../../types/stateCode';
+import { StateCode } from '@/types/stateCode';
 
 export const STATE_LABEL: Record<StateCode, string> = {
   RESERVATION_REQUESTED: '예약 요청',

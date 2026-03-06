@@ -4,6 +4,7 @@ import * as path from 'node:path';
 const PROJECT_ROOT = process.cwd();
 const UI_DIR = path.join(PROJECT_ROOT, 'src', 'ui');
 const ROOT_INDEX_PATH = path.join(PROJECT_ROOT, 'src', 'index.ts');
+const UI_INDEX_PATH = path.join(UI_DIR, 'index.ts');
 const INDEX_FILENAME = 'index.ts';
 
 const IGNORE_DIR_NAMES = new Set([
@@ -26,7 +27,8 @@ function generateUiRootIndex() {
 
   const entries = fs.readdirSync(UI_DIR, { withFileTypes: true });
 
-  const exportLines: string[] = [];
+  const rootExportLines: string[] = [];
+  const uiExportLines: string[] = [];
 
   for (const ent of entries) {
     if (!ent.isDirectory()) continue;
@@ -37,24 +39,35 @@ function generateUiRootIndex() {
 
     if (!fs.existsSync(subIndex)) continue;
 
-    exportLines.push(`export * from './ui/${ent.name}/index';`);
+    rootExportLines.push(`export * from './ui/${ent.name}/index';`);
+    uiExportLines.push(`export * from './${ent.name}/index';`);
   }
 
-  if (exportLines.length === 0) {
+  if (rootExportLines.length === 0) {
     console.log('No ui submodules with index.ts found.');
     return;
   }
 
-  const content =
+  const rootContent =
     `// This file is auto-generated. Do not edit manually.\n` +
-    exportLines.sort().join('\n') +
+    rootExportLines.sort().join('\n') +
     '\n';
 
-  const prev = fs.existsSync(ROOT_INDEX_PATH) ? fs.readFileSync(ROOT_INDEX_PATH, 'utf8') : '';
+  const uiContent =
+    `// This file is auto-generated. Do not edit manually.\n` +
+    uiExportLines.sort().join('\n') +
+    '\n';
 
-  if (prev !== content) {
-    fs.writeFileSync(ROOT_INDEX_PATH, content, 'utf8');
+  const prevRoot = fs.existsSync(ROOT_INDEX_PATH) ? fs.readFileSync(ROOT_INDEX_PATH, 'utf8') : '';
+  if (prevRoot !== rootContent) {
+    fs.writeFileSync(ROOT_INDEX_PATH, rootContent, 'utf8');
     console.log('src/index.ts generated/updated');
+  }
+
+  const prevUi = fs.existsSync(UI_INDEX_PATH) ? fs.readFileSync(UI_INDEX_PATH, 'utf8') : '';
+  if (prevUi !== uiContent) {
+    fs.writeFileSync(UI_INDEX_PATH, uiContent, 'utf8');
+    console.log('src/ui/index.ts generated/updated');
   }
 }
 

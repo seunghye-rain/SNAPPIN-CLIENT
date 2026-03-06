@@ -1,7 +1,7 @@
 ﻿import { cn } from '@snappin/design-system/lib/cn';
 import { IconButton } from '../../button';
 import { IconClose } from '../../../assets';
-import { MoodCode } from '../../../types/moodCode';
+import { MoodCode } from '@/types/moodCode';
 import { FilterChipVariant } from './types/filterChipVariant';
 import { FILTER_CHIP_THEME } from './constants/filterChipTheme';
 
