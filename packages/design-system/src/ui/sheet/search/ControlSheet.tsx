@@ -1,4 +1,4 @@
-﻿import { Sheet, SheetContent } from '@/ui';
+import { Sheet, SheetContent } from '@snappin/design-system/ui/sheet/Sheet';
 import { cn } from '@snappin/design-system/lib/cn';
 import { HTMLAttributes } from 'react';
 

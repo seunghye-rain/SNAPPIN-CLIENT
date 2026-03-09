@@ -1,7 +1,7 @@
 ﻿import { cn } from '@snappin/design-system/lib/cn';
 import { IconButton } from '../../button';
 import { IconClose } from '../../../assets';
-import { MoodCode } from '@/types/moodCode';
+import { MoodCode } from '@snappin/design-system/types/moodCode';
 import { FilterChipVariant } from './types/filterChipVariant';
 import { FILTER_CHIP_THEME } from './constants/filterChipTheme';
 
@@ -30,7 +30,7 @@ export default function FilterChip({
   ...props
 }: FilterChipProps) {
   if (!isSelected && onRemove) {
-    console.error('FilterChip??寃쎌슦 onRemove??isSelected媛 true???뚮쭔 ?ъ슜?????덉뒿?덈떎.');
+    console.error('FilterChip의 onRemove는 isSelected가 true일 때만 사용할 수 있습니다.');
     return null;
   }
 
@@ -47,7 +47,7 @@ export default function FilterChip({
     >
       <button
         type='button'
-        aria-label={`${label} ?꾪꽣`}
+        aria-label={`${label} 필터`}
         aria-pressed={isSelected}
         onClick={onClick ? () => onClick(label) : undefined}
       >
@@ -68,4 +68,3 @@ export default function FilterChip({
     </div>
   );
 }
-

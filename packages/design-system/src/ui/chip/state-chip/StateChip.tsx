@@ -1,8 +1,8 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
+import { cn } from '@snappin/design-system/lib/cn';
 import Chip from '../base/Chip';
-import { StateCode } from '@/types/stateCode';
 import { STATE_LABEL } from './constants/stateLabel';
 import { STATE_CHIP_THEME_BY_LABEL } from './constants/stateChipTheme';
+import { StateCode } from '@snappin/design-system/types/stateCode';
 
 type StateChipProps = {
   label: StateCode;

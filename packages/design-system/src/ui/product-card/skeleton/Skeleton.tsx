@@ -1,6 +1,6 @@
-﻿import Divider from '@snappin/design-system/ui/divider/Divider';
+import Divider from '@snappin/design-system/ui/divider/Divider';
 import { cn } from '@snappin/design-system/lib/cn';
-import { DividerSize } from '@/ui/divider/type/variant';
+import { DividerSize } from '@snappin/design-system/ui/divider/type/variant';
 
 type ProductListSkeletonProps = {
   length?: number;
