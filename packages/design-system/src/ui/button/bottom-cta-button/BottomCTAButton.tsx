@@ -67,4 +67,3 @@ const BottomCTAButton: BottomCTAButtonComponent = Object.assign(BottomCTAButtonR
 });
 
 export default BottomCTAButton;
-

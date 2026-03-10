@@ -87,4 +87,3 @@ function TabItem({ value, activeValue, href, children, className }: TabItemProps
 const Tabs = Object.assign(Tab, { List: TabsList, Item: TabItem });
 
 export default Tabs;
-

@@ -43,15 +43,23 @@ export default function ResultModal({
       handleOpenChange={handleOpenChange}
       showCloseButton={showCloseButton}
       className={cn(
-        'flex flex-col justify-center w-[28.1rem] bg-black-1 border-0 rounded-[0.6rem]',
+        'bg-black-1 flex w-[28.1rem] flex-col justify-center rounded-[0.6rem] border-0',
         contentTheme,
-        layoutClassName
+        layoutClassName,
       )}
     >
       <Modal.Header className={cn('flex flex-col items-center', headerTheme, headerClassName)}>
         {type === 'success' ? <GraphicSuccess /> : <GraphicError />}
-        <div className={cn('flex flex-col items-center', description && 'gap-[0.4rem]', containerClassName)}>
-          <Modal.Title className={cn('font-16-md text-black-10 whitespace-pre-line', titleClassName)}>
+        <div
+          className={cn(
+            'flex flex-col items-center',
+            description && 'gap-[0.4rem]',
+            containerClassName,
+          )}
+        >
+          <Modal.Title
+            className={cn('font-16-md text-black-10 whitespace-pre-line', titleClassName)}
+          >
             {title}
           </Modal.Title>
           {description && (

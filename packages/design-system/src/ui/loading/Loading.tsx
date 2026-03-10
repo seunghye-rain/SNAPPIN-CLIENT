@@ -9,4 +9,3 @@ type LoadingProps = {
 export default function Loading({ className }: LoadingProps) {
   return <Lottie animationData={loadingAnimation} className={cn('h-[7rem] w-[7rem]', className)} />;
 }
-

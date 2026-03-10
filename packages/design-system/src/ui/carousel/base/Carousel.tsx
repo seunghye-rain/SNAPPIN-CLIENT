@@ -5,7 +5,6 @@ import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-reac
 import { cn } from '@snappin/design-system/lib/cn';
 import { IconArrowBack, IconArrowForward } from '../../../assets';
 
-
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
@@ -213,4 +212,3 @@ export {
   CarouselPrevious,
   CarouselNext,
 };
-

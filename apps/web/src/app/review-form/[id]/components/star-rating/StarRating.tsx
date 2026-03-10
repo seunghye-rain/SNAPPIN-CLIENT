@@ -67,7 +67,9 @@ export default function StarRating({ maxLength, value, onChange }: StarRatingPro
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {}
+    } catch {
+      return;
+    }
 
     isPointerDownRef.current = false;
     startXRef.current = null;

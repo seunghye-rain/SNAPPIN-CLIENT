@@ -2,10 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { BottomCTAButton } from '@snappin/design-system';
-import type { AiCurationStep } from '../../constants/steps';
+import { AiCurationStep, TOTAL_STEP_COUNT } from '../../constants/steps';
 import { useAiCuration } from '../../../hooks/useAiCuration';
 import { useToast } from '@/ui';
-import { TOTAL_STEP_COUNT } from '../../constants/steps';
 import { usePostAiCuration } from '../../api';
 import { ROUTES } from '@/constants/routes/routes';
 

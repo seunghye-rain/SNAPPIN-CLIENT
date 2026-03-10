@@ -6,7 +6,7 @@ import type { ModalButtonProps } from '../base/Modal';
 const meta: Meta<typeof ConfirmModal> = {
   title: 'Modal/ConfirmModal',
   component: ConfirmModal,
-    tags: ['autodocs'],
+  tags: ['autodocs'],
   args: {
     open: true,
     showCloseButton: false,
@@ -15,7 +15,7 @@ const meta: Meta<typeof ConfirmModal> = {
     buttons: [
       { label: '왼쪽 버튼', size: 'medium', color: 'disabled', onClick: () => alert('버튼 클릭') },
       { label: '오른쪽 버튼', size: 'medium', color: 'black', onClick: () => alert('버튼 클릭') },
-    ]
+    ],
   },
   parameters: {
     docs: {
@@ -31,22 +31,17 @@ type Story = StoryObj<typeof ConfirmModal>;
 
 export const Default: Story = {};
 
-function ModalWrapper(props: Omit<React.ComponentProps<typeof ConfirmModal>, 'open' | 'handleOpenChange'>) {
+function ModalWrapper(
+  props: Omit<React.ComponentProps<typeof ConfirmModal>, 'open' | 'handleOpenChange'>,
+) {
   const [open, setOpen] = useState(true);
 
-  const buttons: ModalButtonProps[] = (props.buttons ?? []).map(button => ({
+  const buttons: ModalButtonProps[] = (props.buttons ?? []).map((button) => ({
     ...button,
     onClick: () => setOpen(false),
   }));
 
-  return (
-    <ConfirmModal
-      {...props}
-      open={open}
-      handleOpenChange={setOpen}
-      buttons={buttons}
-    />
-  );
+  return <ConfirmModal {...props} open={open} handleOpenChange={setOpen} buttons={buttons} />;
 }
 
 export const Canceled: Story = {

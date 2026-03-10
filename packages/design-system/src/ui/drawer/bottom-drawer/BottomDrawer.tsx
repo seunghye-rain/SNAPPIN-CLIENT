@@ -75,4 +75,3 @@ const BottomDrawer: BottomDrawerComponent = Object.assign(BottomDrawerRoot, {
 });
 
 export default BottomDrawer;
-

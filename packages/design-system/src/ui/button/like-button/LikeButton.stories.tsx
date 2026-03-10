@@ -3,14 +3,14 @@ import { Meta, StoryObj } from '@storybook/nextjs-vite';
 import LikeButton from './LikeButton';
 
 const renderLikeButton = (args: ComponentProps<typeof LikeButton>) => {
-    const Wrapper = () => {
-      const [liked, setLiked] = useState(args.isLiked);
+  const Wrapper = () => {
+    const [liked, setLiked] = useState(args.isLiked);
 
-      return <LikeButton {...args} isLiked={liked} handleClick={() => setLiked((prev) => !prev)} />;
-    };
+    return <LikeButton {...args} isLiked={liked} handleClick={() => setLiked((prev) => !prev)} />;
+  };
 
-    return <Wrapper />;
-  }
+  return <Wrapper />;
+};
 
 const meta: Meta<typeof LikeButton> = {
   title: 'Button/LikeButton',

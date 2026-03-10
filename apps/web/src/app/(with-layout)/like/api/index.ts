@@ -1,10 +1,11 @@
-import { WishedPortfoliosResponse, WishedProductsResponse } from '@snappin/api-types';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { apiRequest } from '../../../../api/apiRequest';
 import {
   ApiResponseBodyWishedPortfoliosResponseVoid,
   ApiResponseBodyWishedProductsResponseVoid,
+  WishedPortfoliosResponse,
+  WishedProductsResponse,
 } from '@snappin/api-types';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { apiRequest } from '../../../../api/apiRequest';
 import { USER_QUERY_KEY } from '../../../../query-key/user';
 
 export const useGetLikePortfolios = () => {

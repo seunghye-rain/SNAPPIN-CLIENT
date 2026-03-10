@@ -1,8 +1,7 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import type { AiCurationStep } from '../[step]/constants/steps';
-import { TOTAL_STEP_COUNT } from '../[step]/constants/steps';
+import { AiCurationStep, TOTAL_STEP_COUNT } from '../[step]/constants/steps';
 
 type AiCurationState = {
   selectedByStep: Record<AiCurationStep, number | null>;

@@ -1,7 +1,17 @@
 ﻿'use client';
 
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
-
+import {
+  useId,
+  useState,
+  useMemo,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+  HTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from 'react';
 import { cn } from '@snappin/design-system/lib/cn';
 import {
   SectionTabsContext,
@@ -9,7 +19,6 @@ import {
   type SectionTabsIndicatorStyle,
 } from './contexts/sectionTabsContext';
 import { useSectionTabsQuerySync } from './hooks/useSectionTabsQuerySync';
-import { useId, useState, useMemo, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
 
 const makeId = (baseId: string, value: string, suffix: string) => {
   const normalizedValue = value.replace(/\s+/g, '-');
@@ -104,9 +113,9 @@ type SectionTabContentsProps = HTMLAttributes<HTMLDivElement> & {
 const SectionTabContents = ({ value, className, children, ...props }: SectionTabContentsProps) => {
   const { value: selectedValue, baseId } = useSectionTabsContext('SectionTabs.Contents');
   const isSelected = value === selectedValue;
-  
+
   if (!isSelected) return null;
-  
+
   const tabId = makeId(baseId, value, 'tab');
   const panelId = makeId(baseId, value, 'panel');
 
@@ -220,4 +229,3 @@ const SectionTabs: SectionTabsComponent = Object.assign(SectionTabsRoot, {
 });
 
 export default SectionTabs;
-

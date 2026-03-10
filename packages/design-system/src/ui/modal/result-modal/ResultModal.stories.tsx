@@ -6,7 +6,7 @@ import type { ModalButtonProps } from '../base/Modal';
 const meta: Meta<typeof ResultModal> = {
   title: 'Modal/ResultModal',
   component: ResultModal,
-    tags: ['autodocs'],
+  tags: ['autodocs'],
   args: {
     open: true,
     showCloseButton: false,
@@ -16,7 +16,7 @@ const meta: Meta<typeof ResultModal> = {
     buttons: [
       { label: '왼쪽 버튼', size: 'medium', color: 'disabled', onClick: () => alert('버튼 클릭') },
       { label: '오른쪽 버튼', size: 'medium', color: 'black', onClick: () => alert('버튼 클릭') },
-    ]
+    ],
   },
   parameters: {
     docs: {
@@ -32,22 +32,17 @@ type Story = StoryObj<typeof ResultModal>;
 
 export const Default: Story = {};
 
-function ModalWrapper(props: Omit<React.ComponentProps<typeof ResultModal>, 'open' | 'handleOpenChange'>) {
+function ModalWrapper(
+  props: Omit<React.ComponentProps<typeof ResultModal>, 'open' | 'handleOpenChange'>,
+) {
   const [open, setOpen] = useState(true);
 
-  const buttons: ModalButtonProps[] = (props.buttons ?? []).map(button => ({
+  const buttons: ModalButtonProps[] = (props.buttons ?? []).map((button) => ({
     ...button,
     onClick: () => setOpen(false),
   }));
 
-  return (
-    <ResultModal
-      {...props}
-      open={open}
-      handleOpenChange={setOpen}
-      buttons={buttons}
-    />
-  );
+  return <ResultModal {...props} open={open} handleOpenChange={setOpen} buttons={buttons} />;
 }
 
 export const Success: Story = {

@@ -16,4 +16,3 @@ export default function IconButton({ children, className, disabled, ...props }: 
     </button>
   );
 }
-

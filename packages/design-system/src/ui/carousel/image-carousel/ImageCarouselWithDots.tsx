@@ -3,12 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@snappin/design-system/lib/cn';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from '../base/Carousel';
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '../base/Carousel';
 import { IconEllipse } from '../../../assets';
 import type { ImageCarouselProps } from './ImageCarousel';
 
@@ -20,12 +15,13 @@ export default function ImageCarouselWithDots({
 }: ImageCarouselProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(initialIndex ?? 0);
-  const [imageMetaMap, setImageMetaMap] = useState<Record<string, { isLandscape: boolean; }>>({});
+  const [imageMetaMap, setImageMetaMap] = useState<Record<string, { isLandscape: boolean }>>({});
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>, src: string) => {
     const target = e.target as HTMLImageElement;
 
-    target.decode()
+    target
+      .decode()
       .then(() => {
         const isLandscape = target.naturalWidth > target.naturalHeight;
         setImageMetaMap((prev) => ({ ...prev, [src]: { isLandscape } }));
@@ -56,18 +52,19 @@ export default function ImageCarouselWithDots({
         <CarouselContent>
           {images.map((img, idx) => (
             <CarouselItem key={`${img.src}-${idx}`}>
-              <div className={cn(
-                'relative w-full aspect-[3/4] overflow-hidden',
-                imageMetaMap[img.src]?.isLandscape ? 'bg-black' : 'bg-black-3'
-              )}
-                >
+              <div
+                className={cn(
+                  'relative aspect-[3/4] w-full overflow-hidden',
+                  imageMetaMap[img.src]?.isLandscape ? 'bg-black' : 'bg-black-3',
+                )}
+              >
                 <Image
                   src={img.src}
                   alt={img.alt ?? `image-${img.src}`}
                   fill
                   className={cn(
                     imageMetaMap[img.src] ? 'opacity-100' : 'opacity-0',
-                    imageMetaMap[img.src]?.isLandscape ? 'object-contain' : 'object-cover'
+                    imageMetaMap[img.src]?.isLandscape ? 'object-contain' : 'object-cover',
                   )}
                   onLoad={(e) => handleImageLoad(e, img.src)}
                 />
@@ -94,4 +91,3 @@ export default function ImageCarouselWithDots({
     </div>
   );
 }
-

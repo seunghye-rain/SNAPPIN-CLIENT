@@ -18,4 +18,3 @@ export function PortfolioListSkeleton({ length = 15, className }: PortfolioSkele
     </div>
   );
 }
-

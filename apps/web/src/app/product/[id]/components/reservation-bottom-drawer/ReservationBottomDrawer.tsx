@@ -13,7 +13,6 @@ import {
   Stepper,
   TextareaField,
 } from '@snappin/design-system';
-import { formatPrice } from '@/utils/formatPrice';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { ReservationDraft } from '../../types/reservation';
 import {
@@ -25,8 +24,9 @@ import {
 import AvailableTimeSection from '../time-picker/AvailableTimePicker';
 import { ProductReservationRequest } from '@snappin/api-types';
 import { useToast } from '@/ui';
-import { getErrorMessage } from '@/utils/error';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
+import { getErrorMessage } from '@/utils/error';
+import { formatPrice } from '@/utils/formatPrice';
 
 type ReservationBottomDrawerProps = {
   isOpen: boolean;
@@ -68,7 +68,7 @@ export default function ReservationBottomDrawer({
     value: place ?? '',
     onValueChange: (next) => patch({ place: next }),
     selectedId: placeId?.toString() ?? null,
-    setSelectedId: (next) => patch({ placeId: Number(next) ?? null }),
+    setSelectedId: (next) => patch({ placeId: next == null ? null : Number(next) }),
     initialValue: place ?? '',
     debounceMs: 300,
     clearOnBlurWhenNoId: true,

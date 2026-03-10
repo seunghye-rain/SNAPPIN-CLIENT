@@ -35,11 +35,7 @@ export default function ImagePreview({
   const imagePreviewStyle = { ...style, width: imageWidthRem, height: imageHeightRem };
 
   return (
-    <div
-      className={cn('relative overflow-hidden', className)}
-      style={imagePreviewStyle}
-      {...props}
-    >
+    <div className={cn('relative overflow-hidden', className)} style={imagePreviewStyle} {...props}>
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -67,4 +63,3 @@ export default function ImagePreview({
     </div>
   );
 }
-

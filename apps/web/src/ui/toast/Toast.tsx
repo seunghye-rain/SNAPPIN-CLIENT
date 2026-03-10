@@ -1,10 +1,9 @@
 ﻿'use client';
 
 import { useEffect, useState } from 'react';
-import type { ToastProps } from '@/ui';
+import { RemoveToastAtom, ToastProps } from '@/ui';
 import { cn } from '@snappin/design-system/lib/cn';
 import { useSetAtom } from 'jotai';
-import { RemoveToastAtom } from '@/ui';
 import Lottie from 'lottie-react';
 import successAnimation from '@snappin/design-system/assets/lotties/success.json';
 import errorAnimation from '@snappin/design-system/assets/lotties/error.json';
@@ -59,4 +58,3 @@ export default function Toast({ type, message, duration = 3000, className }: Toa
     </div>
   );
 }
-

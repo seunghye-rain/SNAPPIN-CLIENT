@@ -1,8 +1,7 @@
 ﻿'use client';
 
 import ImageAnimation from '../image-animation/ImageAnimation';
-import type { GetQuestionResponse } from '@snappin/api-types';
-import type { GetPhotoResponse } from '@snappin/api-types';
+import type { GetPhotoResponse, GetQuestionResponse } from '@snappin/api-types';
 import { formatNumber } from '@/utils/formatNumber';
 
 type StepLayoutProps = {

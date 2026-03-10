@@ -47,4 +47,3 @@ function ProductList({
 }
 
 export default memo(ProductList);
-

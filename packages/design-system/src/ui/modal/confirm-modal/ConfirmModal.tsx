@@ -36,13 +36,21 @@ export default function ConfirmModal({
       handleOpenChange={handleOpenChange}
       showCloseButton={showCloseButton}
       className={cn(
-        'flex flex-col justify-center gap-[1.5rem] w-[28.1rem] p-[1.5rem] bg-black-1 border-0 rounded-[0.6rem]',
-        layoutClassName
+        'bg-black-1 flex w-[28.1rem] flex-col justify-center gap-[1.5rem] rounded-[0.6rem] border-0 p-[1.5rem]',
+        layoutClassName,
       )}
     >
       <Modal.Header className={cn('flex flex-col items-center gap-[1.4rem]', headerClassName)}>
-        <div className={cn('flex flex-col items-center', description && 'gap-[0.4rem]', containerClassName)}>
-          <Modal.Title className={cn('pt-[1rem] font-16-md text-black-10 whitespace-pre-line', titleClassName)}>
+        <div
+          className={cn(
+            'flex flex-col items-center',
+            description && 'gap-[0.4rem]',
+            containerClassName,
+          )}
+        >
+          <Modal.Title
+            className={cn('font-16-md text-black-10 pt-[1rem] whitespace-pre-line', titleClassName)}
+          >
             {title}
           </Modal.Title>
           {description && (
@@ -58,4 +66,3 @@ export default function ConfirmModal({
     </Modal>
   );
 }
-

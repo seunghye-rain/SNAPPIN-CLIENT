@@ -54,4 +54,3 @@ function PortfolioList({
 }
 
 export default memo(PortfolioList);
-

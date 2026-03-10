@@ -12,14 +12,14 @@ import {
   Stepper,
 } from '@snappin/design-system';
 import { IconClose } from '@snappin/design-system/assets';
-import { useSearchReducer } from '../../hooks/use-search-reducer';
-import { SearchField } from '../../types/search';
-import { parseInitialDraft } from '../../utils/query';
+import { useSearchReducer } from '@/app/(with-layout)/explore/hooks/use-search-reducer';
+import { SearchField } from '@/app/(with-layout)/explore/types/search';
+import { parseInitialDraft } from '@/app/(with-layout)/explore/utils/query';
 import { SNAP_CATEGORY } from '@/constants/categories/snap-category';
-import { SearchFooter, SnapCategory } from '../index';
+import { SearchFooter, SnapCategory } from '@/app/(with-layout)/explore/components';
 import { useQueryParams } from '@/hooks/useSearchQuery';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
-import { ALLOWED_KEYS } from '../../constants/query';
+import { ALLOWED_KEYS } from '@/app/(with-layout)/explore/constants/query';
 import { ROUTES } from '@/constants/routes/routes';
 
 type SearchSheetProps = {

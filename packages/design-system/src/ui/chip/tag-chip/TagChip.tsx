@@ -20,4 +20,3 @@ export default function TagChip({ variant, label, ...props }: TagChipProps) {
     />
   );
 }
-

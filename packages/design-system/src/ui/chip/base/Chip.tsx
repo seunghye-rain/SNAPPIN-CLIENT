@@ -6,24 +6,16 @@ type ChipProps = {
   labelClassName: string;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
 
-export default function Chip({
-  label,
-  chipClassName,
-  labelClassName,
-  ...props
-}: ChipProps) {
+export default function Chip({ label, chipClassName, labelClassName, ...props }: ChipProps) {
   return (
     <div
       className={cn(
-        'inline-flex shrink-0 justify-center items-center rounded-[0.3rem]',
-        chipClassName
+        'inline-flex shrink-0 items-center justify-center rounded-[0.3rem]',
+        chipClassName,
       )}
       {...props}
     >
-      <span className={cn('caption-12-md', labelClassName)}>
-        {label}
-      </span>
+      <span className={cn('caption-12-md', labelClassName)}>{label}</span>
     </div>
   );
 }
-

@@ -15,4 +15,3 @@ export default function Divider({
 }: DividerProps) {
   return <div className={cn(DIVIDER_COLOR[color], DIVIDER_THICKNESS[thickness], className)} />;
 }
-
