@@ -1,1 +1,1 @@
-export { default } from "@snappin/tailwind-config/postcss";
+export { default } from '@snappin/tailwind-config/postcss';
