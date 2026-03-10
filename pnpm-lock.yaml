@@ -26,6 +26,9 @@ importers:
       '@snappin/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@snappin/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@tanstack/react-query':
         specifier: ^5.90.14
         version: 5.90.16(react@19.2.3)
@@ -198,6 +201,9 @@ importers:
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@snappin/shared':
+        specifier: workspace:*
+        version: link:../shared
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -333,6 +339,8 @@ importers:
         version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
 
   packages/prettier-config: {}
+
+  packages/shared: {}
 
   packages/tailwind-config: {}
 
