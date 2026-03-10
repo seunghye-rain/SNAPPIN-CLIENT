@@ -64,7 +64,7 @@ import {
   UpdateWishProductData,
   WishPortfolioRequest,
   WishProductRequest,
-} from "@snappin/api-types";
+} from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Api<
