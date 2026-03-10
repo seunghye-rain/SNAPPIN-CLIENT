@@ -13,5 +13,12 @@
     "./tokens/color.css": "./tokens/color.css",
     "./tokens/typography.css": "./tokens/typography.css",
     "./tokens/animation.css": "./tokens/animation.css"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "typescript": "^5.9.3"
   }
 }
