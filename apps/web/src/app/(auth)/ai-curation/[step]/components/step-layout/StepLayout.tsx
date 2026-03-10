@@ -2,7 +2,7 @@
 
 import ImageAnimation from '../image-animation/ImageAnimation';
 import type { GetPhotoResponse, GetQuestionResponse } from '@snappin/api-types';
-import { formatNumber } from '@/utils/formatNumber';
+import { formatNumber } from '@snappin/shared';
 
 type StepLayoutProps = {
   question: GetQuestionResponse;

@@ -1,4 +1,4 @@
-import { StateCode } from '@/types/stateCode';
+import { StateCode } from '@snappin/shared/types/stateCode';
 import { formatReservationDateTime } from '@/utils/formatDate';
 import { Divider, StateChip } from '@snappin/design-system';
 import { Section } from '@/components/layout/reservation/SectionLayout';

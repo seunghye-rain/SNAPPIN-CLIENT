@@ -1,6 +1,6 @@
 'use client';
 
-import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { STATE_CODES, StateCode } from '@snappin/shared/types/stateCode';
 import { Divider } from '@snappin/design-system';
 import { useGetReservationDetail } from './api';
 import SectionSkeleton from '../../../../components/layout/reservation/SectionSkeleton';

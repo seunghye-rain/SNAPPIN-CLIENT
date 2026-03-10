@@ -1,5 +1,5 @@
-import { CalendarCell } from '../types/calendar';
-import { formatNumber } from '@snappin/design-system/lib/formatNumber';
+﻿import { CalendarCell } from '../types/calendar';
+import { formatNumber } from '@snappin/shared/lib/formatNumber';
 
 /**
  * 날짜를 ISO 형식(YYYY-MM-DD)으로 변환합니다.

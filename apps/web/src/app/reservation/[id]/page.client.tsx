@@ -3,7 +3,7 @@
 import { ClientNavigation, ClientFooter } from './components';
 import { PaymentDetail, ReservationDetail, ReservationProduct, ReviewDetail } from './_section';
 import { Divider } from '@snappin/design-system';
-import { STATE_CODES, type StateCode } from '@/types/stateCode';
+import { STATE_CODES, type StateCode } from '@snappin/shared/types/stateCode';
 import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import { useGetReservationDetail } from './api';
 import SectionSkeleton from '../../../components/layout/reservation/SectionSkeleton';

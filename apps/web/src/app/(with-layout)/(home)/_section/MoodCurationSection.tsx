@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Chip } from '@snappin/design-system';
-import { MoodCode } from '@/types/moodCode';
+import { MoodCode } from '@snappin/shared/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { SectionHeader, CarouselCuration } from '../components';
 

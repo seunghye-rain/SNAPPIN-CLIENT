@@ -1,5 +1,5 @@
-import { ChipTheme } from '../../types/chipTheme';
-import { StateCode } from '@snappin/design-system/types/stateCode';
+﻿import { ChipTheme } from '../../types/chipTheme';
+import { StateCode } from '@snappin/shared/types/stateCode';
 
 export const STATE_CHIP_THEME_BY_LABEL: Record<StateCode, ChipTheme> = {
   RESERVATION_REQUESTED: { chipClassName: 'bg-yellow', labelClassName: 'text-yellow-text' },

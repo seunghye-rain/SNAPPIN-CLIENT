@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   BottomCTAButton,
@@ -25,8 +25,8 @@ import AvailableTimeSection from '../time-picker/AvailableTimePicker';
 import { ProductReservationRequest } from '@snappin/api-types';
 import { useToast } from '@/ui';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
+import { formatPrice } from '@snappin/shared/lib/formatPrice';
 import { getErrorMessage } from '@/utils/error';
-import { formatPrice } from '@/utils/formatPrice';
 
 type ReservationBottomDrawerProps = {
   isOpen: boolean;

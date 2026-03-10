@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { StateCode } from '@/types/stateCode';
+import { StateCode } from '@snappin/shared/types/stateCode';
 import { Divider, Tabs } from '@snappin/design-system';
 import { RESERVATION_TABS, TAB, getSelectedTab } from '../../constants/tabs';
 import { ReservationCard, ReservationCardSkeleton, EmptyView } from '../index';

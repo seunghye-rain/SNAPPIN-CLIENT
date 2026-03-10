@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Divider from '@snappin/design-system/ui/divider/Divider';
 import IconButton from '@snappin/design-system/ui/button/icon-button/IconButton';
@@ -15,7 +15,7 @@ import {
   toISO,
 } from './utils/date';
 import { WEEKDAY_LABELS } from './constants/date';
-import { formatNumber } from '@snappin/design-system/lib/formatNumber';
+import { formatNumber } from '@snappin/shared/lib/formatNumber';
 
 const MAX_RESERVATION_MONTHS = 6;
 

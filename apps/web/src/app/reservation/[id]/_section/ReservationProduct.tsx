@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Button, ProductCard } from '@snappin/design-system';
-import { STATE_CODES, type StateCode } from '@/types/stateCode';
+import { STATE_CODES, type StateCode } from '@snappin/shared/types/stateCode';
 import { useToast } from '@/ui';
 import { Section } from '@/components/layout/reservation/SectionLayout';
 import { ROUTES } from '@/constants/routes/routes';

@@ -15,7 +15,7 @@ import {
   CHIP_POSES,
   Phase,
 } from './phaseAnimation';
-import { MoodCode } from '@/types/moodCode';
+import { MoodCode } from '@snappin/shared/types/moodCode';
 import type { CreateMoodCurationResponse } from '@snappin/api-types';
 import { ROUTES } from '@/constants/routes/routes';
 

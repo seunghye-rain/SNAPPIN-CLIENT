@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { PHOTOGRAPHERS_ROUTES } from '@/constants/routes/routes';
-import { STATE_CODES } from '@/types/stateCode';
+import { STATE_CODES } from '@snappin/shared/types/stateCode';
 import DetailPageBottomCTA from '../_section/DetailPageBottomCTA';
 
 const pushMock = jest.fn();

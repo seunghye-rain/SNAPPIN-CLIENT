@@ -12,7 +12,7 @@
   IconChip디지털,
   IconChipY2k,
 } from '@snappin/design-system/assets';
-import { MOOD_CODE, MOOD_CODE_INDEX, MoodCode } from '@/types/moodCode';
+import { MOOD_CODE, MOOD_CODE_INDEX, MoodCode } from '@snappin/shared/types/moodCode';
 
 type MoodChipProps = {
   mood: MoodCode;

@@ -1,4 +1,4 @@
-﻿import { StateCode } from '@snappin/design-system/types/stateCode';
+﻿import { StateCode } from '@snappin/shared/types/stateCode';
 
 export const STATE_LABEL: Record<StateCode, string> = {
   RESERVATION_REQUESTED: '예약 요청',

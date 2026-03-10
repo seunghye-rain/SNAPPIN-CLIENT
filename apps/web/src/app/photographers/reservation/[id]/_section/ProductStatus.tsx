@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { STATE_CODES, StateCode } from '@/types/stateCode';
+import { STATE_CODES, StateCode } from '@snappin/shared/types/stateCode';
 import { Button, ProductCard } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { useRefuseReservation } from '../api';

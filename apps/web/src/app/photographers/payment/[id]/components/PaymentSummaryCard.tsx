@@ -1,6 +1,6 @@
 import { IconAdd } from '@snappin/design-system/assets';
 import { Button, Divider } from '@snappin/design-system';
-import { formatPrice } from '@/utils/formatPrice';
+import { formatPrice } from '@snappin/shared/lib/formatPrice';
 import { type ExtraPrice } from '../hooks/paymentExtraPrice.atom';
 
 type PaymentSummaryCardProps = {

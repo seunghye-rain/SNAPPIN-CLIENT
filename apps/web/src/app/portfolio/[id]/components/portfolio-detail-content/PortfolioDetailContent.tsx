@@ -2,7 +2,7 @@
 
 import { useRef, useMemo } from 'react';
 import { Divider } from '@snappin/design-system';
-import { MoodCode } from '@/types/moodCode';
+import { MoodCode } from '@snappin/shared/types/moodCode';
 import { PhotographerSection, PortfolioSection, ProductSection } from '../../_section';
 import { useGetPortfolioDetail } from '../../api';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';

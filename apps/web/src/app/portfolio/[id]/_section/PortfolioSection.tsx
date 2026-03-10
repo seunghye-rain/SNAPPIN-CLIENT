@@ -1,7 +1,7 @@
 'use client';
 
 import { TagChip, ImageCarousel, LikeButton } from '@snappin/design-system';
-import { MoodCode } from '@/types/moodCode';
+import { MoodCode } from '@snappin/shared/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui';
 import { useWishPortfolio } from '../api';

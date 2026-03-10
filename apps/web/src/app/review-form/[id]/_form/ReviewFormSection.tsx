@@ -7,7 +7,7 @@ import ImageUploadButton from '@snappin/design-system/ui/button/upload/ImageUplo
 import { cn } from '@snappin/design-system/lib/cn';
 import ClientFooter from '../components/client-footer/ClientFooter';
 import { MAX_RATING, REVIEW_CONTENT_MAX_LENGTH, useReviewWrite } from '../hooks/useReviewWrite';
-import { IMAGE_ACCEPT } from '@/constants/image-type/imageAccept';
+import { IMAGE_ACCEPT } from '@snappin/shared/constants/imageAccept';
 import { StarRating } from '../components';
 import { useSubmitReview } from '../api';
 import { useReviewImages } from '../hooks/useReviewImages';

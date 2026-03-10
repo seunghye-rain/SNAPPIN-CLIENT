@@ -1,6 +1,6 @@
 ﻿import Image from 'next/image';
 import { cn } from '@snappin/design-system/lib/cn';
-import { formatPrice } from '@snappin/design-system/lib/formatPrice';
+import { formatPrice } from '@snappin/shared/lib/formatPrice';
 import TagChip from '@snappin/design-system/ui/chip/tag-chip/TagChip';
 import { IconStar } from '../../assets';
 
