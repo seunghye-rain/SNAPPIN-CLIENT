@@ -5,18 +5,14 @@ import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
-  defaultShouldDehydrateQuery
+  defaultShouldDehydrateQuery,
 } from '@tanstack/react-query';
-import {
-  Header,
-  PortfolioDetailContent,
-  PortfolioDetailSkeleton
-} from './components';
+import { Header, PortfolioDetailContent, PortfolioDetailSkeleton } from './components';
 import { prefetchPortfolioDetail } from './api';
 
 type PageProps = {
   params: Promise<{ id: string }>;
-}
+};
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
@@ -31,9 +27,8 @@ export default async function Page({ params }: PageProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       dehydrate: {
-        shouldDehydrateQuery: (query) => 
-          query.state.status === 'pending' ||
-          defaultShouldDehydrateQuery(query),
+        shouldDehydrateQuery: (query) =>
+          query.state.status === 'pending' || defaultShouldDehydrateQuery(query),
       },
     },
   });

@@ -19,7 +19,7 @@ import { ReviewListSectionSkeleton } from '../../_section/ReviewListSection';
 type ProductDetailContentProps = {
   productId: number;
   tab: string;
-}
+};
 
 export default function ProductDetailContent({ productId, tab }: ProductDetailContentProps) {
   const selectedTab = PRODUCT_TABS.some(({ value }) => value === tab)
@@ -29,7 +29,10 @@ export default function ProductDetailContent({ productId, tab }: ProductDetailCo
   const { data } = useGetProductDetail(productId);
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = useMemo(() => `${ROUTES.PRODUCT(productId).replace(/^\//, '')}:scroll`, [productId]);
+  const scrollKey = useMemo(
+    () => `${ROUTES.PRODUCT(productId).replace(/^\//, '')}:scroll`,
+    [productId],
+  );
   useScrollRestoreOnParent(anchorRef, scrollKey, [data]);
 
   return (

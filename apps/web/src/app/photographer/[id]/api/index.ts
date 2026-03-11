@@ -4,7 +4,7 @@ import { USER_QUERY_KEY } from '../../../../query-key/user';
 import {
   GetPhotographerProfileResponse,
   GetPortfolioListData,
-  GetProductListData
+  GetProductListData,
 } from '@/swagger-api';
 
 // 작가 상세 조회 API
@@ -12,7 +12,9 @@ export const useGetPhotographerDetail = (id: number) => {
   return useQuery<GetPhotographerProfileResponse>({
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_DETAIL(id),
     queryFn: async () => {
-      const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, { method: 'GET' });
+      const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, {
+        method: 'GET',
+      });
 
       if (!res.ok) {
         throw new Error('작가 상세 정보를 불러오는 데 실패했습니다.');
@@ -21,8 +23,8 @@ export const useGetPhotographerDetail = (id: number) => {
       return data.data;
     },
     enabled: !Number.isNaN(id),
-  })
-}
+  });
+};
 
 // 포폴 목록 조회 API
 export const useGetPortfolioList = (id: number) => {
@@ -49,7 +51,7 @@ export const useGetPortfolioList = (id: number) => {
     },
     enabled: !Number.isNaN(id),
   });
-}
+};
 
 // 상품 목록 조회 API
 export const useGetProductList = (id: number) => {
@@ -66,7 +68,7 @@ export const useGetProductList = (id: number) => {
       const res = await fetch(url.toString(), { method: 'GET' });
 
       if (!res.ok) {
-        throw new Error('/api/v1/products 응답에 데이터가 존재하지 않습니다.')
+        throw new Error('/api/v1/products 응답에 데이터가 존재하지 않습니다.');
       }
       const data = await res.json();
       return data;
@@ -76,4 +78,4 @@ export const useGetProductList = (id: number) => {
     },
     enabled: !Number.isNaN(id),
   });
-}
+};

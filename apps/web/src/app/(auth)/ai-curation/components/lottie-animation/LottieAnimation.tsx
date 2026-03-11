@@ -6,13 +6,9 @@ import curationCoverAnimation from '@snappin/design-system/assets/lotties/curati
 
 export default function LottieAnimation() {
   return (
-    <div className='relative h-[38.7rem] w-full flex items-center'>
-      <Lottie
-        animationData={curationCoverAnimation}
-        className='absolute top-0 left-0 z-50'
-      />
+    <div className='relative flex h-[38.7rem] w-full items-center'>
+      <Lottie animationData={curationCoverAnimation} className='absolute top-0 left-0 z-50' />
       <ImageSlide />
     </div>
   );
 }
-

@@ -11,7 +11,7 @@ import { USER_TYPE, UserType } from '@/auth/constant/userType';
 
 export const getReviewDetail = async (
   reviewId: number,
-  isLogIn: boolean
+  isLogIn: boolean,
 ): Promise<GetReviewDetailResponse> => {
   if (isLogIn) {
     const res = await apiRequest<GetReviewDetailData>({
@@ -25,8 +25,8 @@ export const getReviewDetail = async (
     return res.data!;
   }
 
-  const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/reviews/${reviewId}`, { 
-    method: 'GET' 
+  const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/reviews/${reviewId}`, {
+    method: 'GET',
   });
 
   if (!res.ok) {
@@ -40,9 +40,10 @@ export const useGetReviewDetail = (reviewId: number, userType: UserType) => {
   const { isLogIn } = useAuth();
 
   return useQuery<GetReviewDetailResponse>({
-    queryKey: userType === USER_TYPE.PHOTOGRAPHER
-      ? PHOTOGRAPHER_QUERY_KEY.REVIEW_DETAIL(reviewId)
-      : USER_QUERY_KEY.REVIEW_DETAIL(reviewId),
+    queryKey:
+      userType === USER_TYPE.PHOTOGRAPHER
+        ? PHOTOGRAPHER_QUERY_KEY.REVIEW_DETAIL(reviewId)
+        : USER_QUERY_KEY.REVIEW_DETAIL(reviewId),
     queryFn: () => getReviewDetail(reviewId, !!isLogIn),
     enabled: isLogIn !== null,
   });

@@ -4,7 +4,7 @@ import { PRODUCT_TAB, PRODUCT_TABS } from '../../constants/tab';
 
 type ProductDetailSkeletonProps = {
   selectedTab: string;
-}
+};
 
 export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkeletonProps) {
   return (
@@ -26,8 +26,8 @@ export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkel
       <div className='px-[2rem] pb-[2rem]'>
         <div className='border-black-4 rounded-[0.6rem] border-1 p-[2rem] pt-[2.2rem] pb-[2.1rem]'>
           <div className='flex items-center gap-[1.2rem]'>
-            <div className='bg-black-3 relative h-[6.4rem] w-[6.4rem] rounded-full shrink-0' />
-            <div className='flex flex-1 flex-col gap-[0.8rem] shrink'>
+            <div className='bg-black-3 relative h-[6.4rem] w-[6.4rem] shrink-0 rounded-full' />
+            <div className='flex flex-1 shrink flex-col gap-[0.8rem]'>
               <div className='flex flex-col gap-[0.4rem]'>
                 <div className='bg-black-3 h-[1.7rem] w-[3.7rem] rounded-[0.2rem]' />
                 <div className='bg-black-3 h-[1.2rem] w-[9rem] rounded-[0.2rem]' />
@@ -42,18 +42,9 @@ export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkel
         </div>
       </div>
       <Tabs>
-        <Tabs.List
-          activeValue={selectedTab}
-          tabs={PRODUCT_TABS}
-          className='pointer-events-none'
-        >
+        <Tabs.List activeValue={selectedTab} tabs={PRODUCT_TABS} className='pointer-events-none'>
           {PRODUCT_TABS.map(({ value, label }) => (
-            <Tabs.Item
-              key={value}
-              value={value}
-              activeValue={selectedTab}
-              href='#'
-            >
+            <Tabs.Item key={value} value={value} activeValue={selectedTab} href='#'>
               {label}
               {value === PRODUCT_TAB.REVIEW && ' (0)'}
             </Tabs.Item>
@@ -69,5 +60,4 @@ export default function ProductDetailSkeleton({ selectedTab }: ProductDetailSkel
       </Tabs>
     </div>
   );
-};
-
+}

@@ -2,7 +2,11 @@ import { QueryClient } from '@tanstack/react-query';
 import { productDetailOptions, productPortfoliosOptions, productReviewsOptions } from './options';
 
 // 상품 상세 정보 및 상품 안내 조회 prefetch
-export const prefetchProductDetail = async (queryClient: QueryClient, id: number, isLogIn: boolean) => {
+export const prefetchProductDetail = async (
+  queryClient: QueryClient,
+  id: number,
+  isLogIn: boolean,
+) => {
   return queryClient.prefetchQuery(productDetailOptions(id, isLogIn));
 };
 

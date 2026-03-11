@@ -2,19 +2,23 @@ import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
-  defaultShouldDehydrateQuery
+  defaultShouldDehydrateQuery,
 } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { PRODUCT_TAB } from './constants/tab';
 import { Header, ProductDetailContent, ProductDetailSkeleton } from './components';
-import { prefetchProductDetail, prefetchPortfolioList, prefetchProductReviewList } from './api/server';
+import {
+  prefetchProductDetail,
+  prefetchPortfolioList,
+  prefetchProductReviewList,
+} from './api/server';
 
 type PageProps = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ tab: string | string[] | undefined }>;
-}
+};
 
 export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params;
@@ -33,10 +37,9 @@ export default async function Page({ params, searchParams }: PageProps) {
     defaultOptions: {
       dehydrate: {
         shouldDehydrateQuery: (query) =>
-          defaultShouldDehydrateQuery(query) ||
-          query.state.status === 'pending',
-      }
-    }
+          defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
+      },
+    },
   });
 
   promises.push(prefetchProductDetail(queryClient, productId, isLogIn));

@@ -9,31 +9,30 @@ import { ROUTES } from '../../../../constants/routes/routes';
 
 type ProductListSectionProps = {
   id: number;
-}
+};
 
 export default function ProductListSection({ id }: ProductListSectionProps) {
   const { data, isPending, fetchNextPage, hasNextPage, dataUpdatedAt } = useGetProductList(id);
   const { ref, inView } = useInView();
 
-  const productList = data?.pages
-    .flatMap(page => page.data?.products ?? [])
-    .map(p => ({
-      id: p.id ?? 0,
-      photographer: p.photographer ?? '',
-      moods: p.moods ?? [],
-      rate: p.rate ?? 0,
-      reviewCount: p.reviewCount ?? 0,
-      price: p.price ?? 0,
-      title: p.title ?? '',
-      imageUrl: p.imageUrl ?? '',
-    })) ?? [];
+  const productList =
+    data?.pages
+      .flatMap((page) => page.data?.products ?? [])
+      .map((p) => ({
+        id: p.id ?? 0,
+        photographer: p.photographer ?? '',
+        moods: p.moods ?? [],
+        rate: p.rate ?? 0,
+        reviewCount: p.reviewCount ?? 0,
+        price: p.price ?? 0,
+        title: p.title ?? '',
+        imageUrl: p.imageUrl ?? '',
+      })) ?? [];
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const scrollKey = useMemo(() => {
-    return ROUTES.PHOTOGRAPHER(id, { tab: 'PRODUCT' })
-      .replace(/^\//, '')
-      .replace('?', ':scroll?');
-}, [id]);
+    return ROUTES.PHOTOGRAPHER(id, { tab: 'PRODUCT' }).replace(/^\//, '').replace('?', ':scroll?');
+  }, [id]);
   useScrollRestoreOnParent(anchorRef, scrollKey, [productList.length, dataUpdatedAt], {
     enabled: !!data,
     resetOnKeyChange: true,
@@ -51,20 +50,22 @@ export default function ProductListSection({ id }: ProductListSectionProps) {
         <ProductListSkeleton />
       </section>
     );
-  };
+  }
 
   if (productList.length === 0) {
     return (
       <section>
-        <div className='flex justify-center items-center min-h-[calc(100dvh-7.5rem-7.2rem)]'>
+        <div className='flex min-h-[calc(100dvh-7.5rem-7.2rem)] items-center justify-center'>
           <span className='caption-14-rg text-black-6 text-center'>
-            아직 작가님이<br/>상품을 등록하지 않았어요
+            아직 작가님이
+            <br />
+            상품을 등록하지 않았어요
           </span>
         </div>
       </section>
     );
-  };
-  
+  }
+
   return (
     <section className='mt-[17.1rem]'>
       <div ref={anchorRef} />

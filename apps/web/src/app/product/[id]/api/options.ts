@@ -14,26 +14,26 @@ export const productDetailOptions = (id: number, isLogIn: boolean) =>
           endPoint: `/api/v1/products/${id}`,
           method: 'GET',
         });
-    
+
         if (!res.data) throw new Error('/api/v1/products/{id} 응답에 데이터가 존재하지 않습니다.');
         return res.data;
       }
-    
+
       const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/products/${id}`, { method: 'GET' });
-    
+
       if (!res.ok) {
         throw new Error('상품 상세 정보 및 상품 안내 정보를 불러오는 데 실패했습니다.');
       }
       const data = await res.json();
       return data.data;
-    }
+    },
   });
 
 // 포폴 목록 조회 옵션
-export const productPortfoliosOptions = (id: number) => 
+export const productPortfoliosOptions = (id: number) =>
   infiniteQueryOptions({
     queryKey: USER_QUERY_KEY.PRODUCT_PORTFOLIOS(id),
-    initialPageParam: undefined, 
+    initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(`${SERVER_API_BASE_URL}/api/v1/portfolios`);
       url.searchParams.append('productId', String(id));
@@ -49,8 +49,7 @@ export const productPortfoliosOptions = (id: number) =>
 
       return await res.json();
     },
-    getNextPageParam: (lastPage) => 
-      lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined,
+    getNextPageParam: (lastPage) => (lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined),
   });
 
 // 상품 리뷰 목록 조회 옵션
@@ -72,6 +71,5 @@ export const productReviewsOptions = (id: number) =>
 
       return await res.json();
     },
-    getNextPageParam: (lastPage) => 
-      lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined,
+    getNextPageParam: (lastPage) => (lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined),
   });

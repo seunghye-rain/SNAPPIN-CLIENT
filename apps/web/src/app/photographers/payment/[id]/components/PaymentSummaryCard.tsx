@@ -66,4 +66,3 @@ function PaymentDetailRow({ label, price }: PaymentDetailRowProps) {
     </div>
   );
 }
-

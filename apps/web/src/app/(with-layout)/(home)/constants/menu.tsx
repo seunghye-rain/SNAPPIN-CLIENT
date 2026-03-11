@@ -58,4 +58,3 @@ export const MENU: MenuItem[] = [
     href: ROUTES.EXPLORE({ snapCategory: 'DAILY' }),
   },
 ];
-

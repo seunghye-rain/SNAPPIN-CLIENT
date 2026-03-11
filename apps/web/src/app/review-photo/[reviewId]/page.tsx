@@ -12,7 +12,8 @@ export default async function Page({ params }: ReservationDetailPageProps) {
   const { reviewId } = await params;
   const reviewIdNumber = Number(reviewId);
   const rawUserType = await getUserType();
-  const userType = rawUserType === USER_TYPE.PHOTOGRAPHER ? USER_TYPE.PHOTOGRAPHER : USER_TYPE.CLIENT;
+  const userType =
+    rawUserType === USER_TYPE.PHOTOGRAPHER ? USER_TYPE.PHOTOGRAPHER : USER_TYPE.CLIENT;
 
   if (!reviewIdNumber) {
     return notFound();

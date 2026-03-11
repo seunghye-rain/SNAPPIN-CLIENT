@@ -3,8 +3,7 @@ import { NavigationClient } from './components';
 import ReservationCardSkeleton from './components/reservation-card/ReservationCardSkeleton';
 
 const ReservationContent = dynamic(
-  () =>
-    import('./components/reservation-content/ReservationContent'),
+  () => import('./components/reservation-content/ReservationContent'),
   {
     loading: () => <ReservationCardSkeleton />,
   },

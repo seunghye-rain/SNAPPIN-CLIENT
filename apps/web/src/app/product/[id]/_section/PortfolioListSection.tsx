@@ -7,13 +7,13 @@ import { useGetPortfolioList } from '../api';
 
 type PortfolioListSectionProps = {
   productId: number;
-}
+};
 
 export default function PortfolioListSection({ productId }: PortfolioListSectionProps) {
   const { data, fetchNextPage, hasNextPage } = useGetPortfolioList(productId);
   const { ref, inView } = useInView();
 
-  const portfolioList = data?.pages.flatMap(page => page.data?.portfolios ?? []) ?? [];
+  const portfolioList = data?.pages.flatMap((page) => page.data?.portfolios ?? []) ?? [];
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -24,14 +24,16 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
   if (portfolioList.length === 0) {
     return (
       <section>
-        <div className='flex justify-center items-center pt-[8rem] pb-[15.8rem]'>
+        <div className='flex items-center justify-center pt-[8rem] pb-[15.8rem]'>
           <span className='caption-14-rg text-black-6 text-center'>
-            아직 작가님이<br/>포트폴리오를 등록하지 않았어요
+            아직 작가님이
+            <br />
+            포트폴리오를 등록하지 않았어요
           </span>
         </div>
       </section>
     );
-  };
+  }
 
   return (
     <section>

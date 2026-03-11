@@ -2,7 +2,7 @@ import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
-  useSuspenseInfiniteQuery
+  useSuspenseInfiniteQuery,
 } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { useAuth } from '@/auth/hooks/useAuth';

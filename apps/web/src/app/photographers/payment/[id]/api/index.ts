@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PHOTOGRAPHER_QUERY_KEY } from '@/query-key/photographer';
 import { apiRequest } from '@/api/apiRequest';
 import {
@@ -13,14 +13,11 @@ export const useGetPaymentPrice = (reservationId: number) => {
     queryFn: async () => {
       const res = await apiRequest<ApiResponseBodyReservationPriceResponseVoid>({
         endPoint: `/api/v1/reservations/${reservationId}/price`,
-        method: "GET",
-
+        method: 'GET',
       });
 
       if (!res.data) {
-        throw new Error(
-          `Failed to fetch /api/v1/reservations/${reservationId}/price`
-        );
+        throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}/price`);
       }
 
       return res.data;
@@ -32,17 +29,14 @@ export const useRequestPayment = (reservationId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (payment: RequestPaymentReservationRequest) => {
-      const res =
-        await apiRequest({
-          endPoint: `/api/v1/reservations/${reservationId}/request-payment`, 
-          method: "PATCH",
-          data: payment,     
-        },);
+      const res = await apiRequest({
+        endPoint: `/api/v1/reservations/${reservationId}/request-payment`,
+        method: 'PATCH',
+        data: payment,
+      });
 
       if (!res) {
-        throw new Error(
-          `Failed to fetch /api/v1/reservations/${reservationId}/request-payment`
-        );
+        throw new Error(`Failed to fetch /api/v1/reservations/${reservationId}/request-payment`);
       }
 
       return res;

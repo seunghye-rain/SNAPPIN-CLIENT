@@ -1,7 +1,7 @@
 ﻿'use client';
 
-import { Navigation } from '@snappin/design-system'
-import { IconClose } from '@snappin/design-system/assets'
+import { Navigation } from '@snappin/design-system';
+import { IconClose } from '@snappin/design-system/assets';
 import { useRouter } from 'next/navigation';
 
 export default function ClientHeader() {
@@ -17,6 +17,5 @@ export default function ClientHeader() {
       isFixed
       className='bg-black-10'
     />
-  )
+  );
 }
-

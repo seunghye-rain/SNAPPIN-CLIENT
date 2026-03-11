@@ -47,4 +47,3 @@ const DetailRow = ({ label, value, className, valueClassName }: DetailRowProps) 
 };
 
 export { DetailLayout, DetailRow };
-

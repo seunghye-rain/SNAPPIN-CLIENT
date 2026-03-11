@@ -6,19 +6,9 @@
       "persistent": true
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "!.next/**",
-        "!.turbo/**",
-        "!dist/**"
-      ],
-      "outputs": [
-        ".next/**",
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!.next/**", "!.turbo/**", "!dist/**"],
+      "outputs": [".next/**", "dist/**"]
     },
     "lint": {
       "outputs": []

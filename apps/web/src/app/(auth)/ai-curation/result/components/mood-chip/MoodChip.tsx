@@ -59,4 +59,3 @@ export default function MoodChip({ mood }: MoodChipProps) {
     </div>
   );
 }
-

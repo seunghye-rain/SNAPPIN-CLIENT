@@ -15,7 +15,7 @@ type WishPortfolioContext = {
 
 const getPortfolioDetail = async (
   id: number,
-  isLogIn: boolean
+  isLogIn: boolean,
 ): Promise<GetPortfolioDetailResponse> => {
   // 로그인 시 apiRequest 사용
   if (isLogIn) {
@@ -38,7 +38,7 @@ const getPortfolioDetail = async (
   }
   const data = await res.json();
   return data.data;
-}
+};
 
 export const prefetchPortfolioDetail = (queryClient: QueryClient, id: number, isLogIn: boolean) => {
   return queryClient.prefetchQuery({
@@ -53,7 +53,7 @@ export const useGetPortfolioDetail = (id: number, isLogIn: boolean) => {
     queryKey: USER_QUERY_KEY.PORTFOLIO_DETAIL(id, !!isLogIn),
     queryFn: () => getPortfolioDetail(id, !!isLogIn),
   });
-}
+};
 
 // 포폴 좋아요/취소 (위시) API
 export const useWishPortfolio = () => {
@@ -80,22 +80,17 @@ export const useWishPortfolio = () => {
 
       const previousData = queryClient.getQueryData<GetPortfolioDetailResponse>(authKey);
 
-      queryClient.setQueryData<GetPortfolioDetailResponse>(
-        authKey,
-        (old) => {
-          if (!old || old.likeCount === undefined || old.likeCount === null) return old;
+      queryClient.setQueryData<GetPortfolioDetailResponse>(authKey, (old) => {
+        if (!old || old.likeCount === undefined || old.likeCount === null) return old;
 
-          const willBeLiked = !old.isLiked;
+        const willBeLiked = !old.isLiked;
 
-          return {
-            ...old,
-            isLiked: willBeLiked,
-            likeCount: willBeLiked
-              ? old.likeCount + 1
-              : old.likeCount - 1,
-          };
-        }
-      );
+        return {
+          ...old,
+          isLiked: willBeLiked,
+          likeCount: willBeLiked ? old.likeCount + 1 : old.likeCount - 1,
+        };
+      });
 
       return { previousData };
     },
@@ -103,10 +98,7 @@ export const useWishPortfolio = () => {
     onError: (_error, id, context) => {
       if (!context?.previousData) return;
 
-      queryClient.setQueryData(
-        USER_QUERY_KEY.PORTFOLIO_DETAIL(id, true),
-        context.previousData
-      );
+      queryClient.setQueryData(USER_QUERY_KEY.PORTFOLIO_DETAIL(id, true), context.previousData);
     },
   });
-}
+};

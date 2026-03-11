@@ -1,14 +1,8 @@
 import ExploreHeader from './components/header/ExploreHeader';
 import ExploreTabPanels from './components/tab-panel/ExploreTabPanels';
 import { EXPLORE_TAB } from './constants/tab';
-import {
-  parseInitialDraft,
-  toExploreSearchParams,
-} from './utils/query';
-import {
-  getExploreSearchBarText,
-  resolveExploreTab,
-} from './utils/view-model';
+import { parseInitialDraft, toExploreSearchParams } from './utils/query';
+import { getExploreSearchBarText, resolveExploreTab } from './utils/view-model';
 import { SEARCH_SHEET_KEY } from './constants/storage-key';
 
 type ExplorePageProps = {

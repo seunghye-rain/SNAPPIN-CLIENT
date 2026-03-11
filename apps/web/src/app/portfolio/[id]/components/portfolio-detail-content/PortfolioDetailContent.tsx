@@ -11,7 +11,7 @@ import { ROUTES } from '@/constants/routes/routes';
 type PortfolioDetailContentProps = {
   id: number;
   isLogIn: boolean;
-}
+};
 
 export default function PortfolioDetailContent({ id, isLogIn }: PortfolioDetailContentProps) {
   const { data } = useGetPortfolioDetail(id, isLogIn);

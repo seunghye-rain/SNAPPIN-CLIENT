@@ -84,4 +84,3 @@ export const Section = Object.assign(Frame, {
   Row,
   Footer,
 });
-

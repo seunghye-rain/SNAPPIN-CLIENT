@@ -12,9 +12,9 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
   if (!photographerInfo?.id) {
     return null;
   }
-  
+
   return (
-    <section className='px-[2rem] pb-[2rem] bg-black-1'>
+    <section className='bg-black-1 px-[2rem] pb-[2rem]'>
       <Link href={ROUTES.PHOTOGRAPHER(photographerInfo.id)}>
         <div className='border-black-4 rounded-[0.6rem] border-1 p-[1.2rem]'>
           <div className='flex items-center gap-[1.2rem]'>
@@ -24,7 +24,7 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
                 src={photographerInfo.profileImageUrl || '/imgs/default-profile.png'}
                 alt='프로필'
                 fill
-                className='object-cover rounded-full'
+                className='rounded-full object-cover'
               />
             </div>
             {/* 작가명, 한줄 소개, 촬영 상품, 활동 지역 */}
@@ -34,8 +34,14 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
                 <span className='caption-14-rg text-black-7'>{photographerInfo.bio}</span>
               </div>
               <div className='flex flex-col gap-[0.4rem]'>
-                <DetailRow label='촬영 상품' content={photographerInfo.specialties?.join(', ') ?? ''} />
-                <DetailRow label='활동 지역' content={photographerInfo.locations?.join(', ') ?? ''} />
+                <DetailRow
+                  label='촬영 상품'
+                  content={photographerInfo.specialties?.join(', ') ?? ''}
+                />
+                <DetailRow
+                  label='활동 지역'
+                  content={photographerInfo.locations?.join(', ') ?? ''}
+                />
               </div>
             </div>
             {/* 우측 버튼 */}
@@ -55,4 +61,3 @@ function DetailRow({ label, content }: { label: string; content: string }) {
     </div>
   );
 }
-

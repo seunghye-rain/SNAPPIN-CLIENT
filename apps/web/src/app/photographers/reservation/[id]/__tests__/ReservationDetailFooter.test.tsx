@@ -29,11 +29,7 @@ jest.mock('@snappin/design-system', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
 
-  const BottomCTAButton = function BottomCTAButton({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
+  const BottomCTAButton = function BottomCTAButton({ children }: { children: React.ReactNode }) {
     return React.createElement('div', null, children);
   };
 

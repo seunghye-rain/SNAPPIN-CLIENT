@@ -5,7 +5,7 @@ type ProductDetailSectionProps = {
   productInfo: GetProductInfoResponse | undefined;
 };
 
-function removeEmptyDetail(items: { label: string, content?: string }[]) {
+function removeEmptyDetail(items: { label: string; content?: string }[]) {
   return items.filter((item): item is { label: string; content: string } => item.content !== null);
 }
 
@@ -72,7 +72,7 @@ export default function ProductDetailSection({ productInfo }: ProductDetailSecti
   );
 }
 
-function DetailLayout({ detailList }: { detailList: { label: string, content?: string }[] }) {
+function DetailLayout({ detailList }: { detailList: { label: string; content?: string }[] }) {
   return (
     <div className='flex flex-col gap-[0.8rem]'>
       {detailList.map((detail) => (

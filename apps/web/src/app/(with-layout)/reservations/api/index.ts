@@ -7,7 +7,7 @@ import { RESERVATION_TAB, type ReservationTab } from '../constants/tabs';
 export const useGetReservationList = (
   // 초기 값은 CLIENT_OVERVIEW로 설정
   tab: ReservationTab = RESERVATION_TAB.CLIENT_OVERVIEW,
-  isEnabled : boolean,
+  isEnabled: boolean,
 ) => {
   return useQuery<ReservationListResponse>({
     queryKey: USER_QUERY_KEY.RESERVATION_LIST(tab),
