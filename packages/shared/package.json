@@ -7,7 +7,6 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
   },
-  "prettier": "@snappin/prettier-config",
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
@@ -17,7 +16,6 @@
   },
   "devDependencies": {
     "@snappin/eslint-config": "workspace:*",
-    "@snappin/prettier-config": "workspace:*",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "prettier": "^3.7.4"
