@@ -10,9 +10,12 @@ permissions:
   contents: read
 
 jobs:
-  web-ci:
+  apps-ci:
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [web]
 
     steps:
       - name: Checkout repository
@@ -30,14 +33,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run lint (web + deps)
-        run: pnpm turbo run lint --filter=web...
+      - name: Run lint (${{ matrix.app }})
+        run: pnpm turbo run lint --filter=${{ matrix.app }}
 
-      - name: Run build (web + deps)
-        run: pnpm turbo run build --filter=web...
+      - name: Run build (${{ matrix.app }})
+        run: pnpm turbo run build --filter=${{ matrix.app }}
 
-      - name: Run tests (web + deps)
-        run: pnpm turbo run test --filter=web...
+      - name: Run tests (${{ matrix.app }})
+        run: pnpm turbo run test --filter=${{ matrix.app }}
 
   packages-ci:
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
