@@ -7,12 +7,7 @@
   "exports": {
     ".": "./styles.css",
     "./postcss": "./postcss.config.mjs",
-    "./styles.css": "./styles.css",
-    "./styles/reset.css": "./styles/reset.css",
-    "./styles/layout.css": "./styles/layout.css",
-    "./tokens/color.css": "./tokens/color.css",
-    "./tokens/typography.css": "./tokens/typography.css",
-    "./tokens/animation.css": "./tokens/animation.css"
+    "./styles.css": "./styles.css"
   },
   "dependencies": {
     "tailwindcss": "^4.1.16"
