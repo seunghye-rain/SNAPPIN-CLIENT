@@ -1,7 +1,8 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - apps/*
+  - packages/*
 
 ignoredBuiltDependencies:
+  - core-js-pure
   - sharp
   - unrs-resolver
