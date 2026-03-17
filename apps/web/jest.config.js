@@ -10,7 +10,9 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@/app/(.*)$': '<rootDir>/app/$1',
+    '^@snappin/design-system$': '<rootDir>/../../packages/design-system/src/ui/index.ts',
+    '^@snappin/design-system/(.*)$': '<rootDir>/../../packages/design-system/src/$1',
+    '^@snappin/shared/(.*)$': '<rootDir>/../../packages/shared/src/$1',
   },
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jsdom',
