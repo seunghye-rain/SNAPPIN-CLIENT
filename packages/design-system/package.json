@@ -49,6 +49,7 @@
     "@svgr/plugin-svgo": "8.1.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@turbo/gen": "^2.0.0",
+    "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
@@ -57,6 +58,7 @@
     "storybook": "^10.2.15",
     "tailwindcss": "^4.1.16",
     "turbo": "^2.0.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^8.0.0"
   }
 }
