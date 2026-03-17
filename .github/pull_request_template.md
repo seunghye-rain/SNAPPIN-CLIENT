@@ -6,11 +6,16 @@
 
 ## ✅ 체크 리스트
 
-- [ ] PR 제목의 형식을 잘 작성했나요? e.g. [Feat/#이슈번호] PR 템플릿 작성
+- [ ] PR 제목의 형식을 잘 작성했나요? e.g. [Feat(작업범위) : #이슈번호] PR 템플릿 작성
 - [ ] 빌드가 성공했나요? (pnpm build)
 - [ ] 컨벤션을 지켰나요?
 - [ ] 이슈는 등록했나요?
 - [ ] 리뷰어와 라벨을 지정했나요?
+
+## 📌 Scope of work
+
+<!-- 이번 이슈에서 다룰 범위를 작성해주세요 -->
+<!-- EX) @snappin-client/design-system, @snappin-client/apps/web -->
 
 ## 📄 Tasks
 
