@@ -1,4 +1,3 @@
-export * from '@snappin/design-system';
 export * from './footer/index';
 export * from './section-tabs/index';
 export * from './time-picker/index';
