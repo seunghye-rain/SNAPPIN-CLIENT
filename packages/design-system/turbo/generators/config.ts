@@ -6,7 +6,6 @@ import type { PlopTypes } from '@turbo/gen';
 const designSystemRoot = process.cwd();
 const templatesDir = resolve(designSystemRoot, 'turbo', 'generators', 'templates');
 const uiDir = resolve(designSystemRoot, 'src', 'ui');
-const rootIndexPath = resolve(designSystemRoot, 'src', 'index.ts');
 const uiIndexPath = resolve(uiDir, 'index.ts');
 type GeneratorAnswers = {
   name?: string;
@@ -59,7 +58,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         path: resolve(uiDir, '{{kebabCase name}}', 'index.ts'),
         templateFile: resolve(templatesDir, 'index.hbs'),
       },
-      createAppendIndexAction(plop, rootIndexPath, (name) => `export * from './ui/${name}/index';`),
       createAppendIndexAction(plop, uiIndexPath, (name) => `export * from './${name}/index';`),
     ],
   });
