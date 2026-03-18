@@ -1,18 +1,8 @@
 {
   "extends": "../typescript-config/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@ds/*": ["./src/*"],
-      "@ds/ui": ["./src/ui/index.ts"],
-      "@ds/ui/*": ["./src/ui/*"],
-      "@ds/lib": ["./src/lib/index.ts"],
-      "@ds/lib/*": ["./src/lib/*"],
-      "@ds/assets": ["./src/assets/index.ts"],
-      "@ds/assets/*": ["./src/assets/*"]
-    },
     "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts", "turbo/**/*.ts"],
-  "exclude": ["node_modules", "dist", ".storybook", "src/**/*.stories.tsx"]
+  "exclude": ["node_modules", "dist", ".storybook"]
 }
