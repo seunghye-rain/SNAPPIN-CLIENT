@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { cn } from '@snappin/design-system/lib/cn';
+import { cn } from '@ds/lib/cn';
 
 type NavigationProps = React.HTMLAttributes<HTMLElement> & {
   left?: React.ReactNode;

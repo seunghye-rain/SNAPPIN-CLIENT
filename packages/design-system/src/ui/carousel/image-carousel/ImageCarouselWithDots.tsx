@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { cn } from '@snappin/design-system/lib/cn';
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '../base/Carousel';
-import { IconEllipse } from '../../../assets';
-import type { ImageCarouselProps } from './ImageCarousel';
+import { ImageCarouselProps } from '@ds/ui/carousel/image-carousel/ImageCarousel';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@ds/ui';
+import { cn } from '@ds/lib/cn';
+import { IconEllipse } from '@ds/assets';
 
 export default function ImageCarouselWithDots({
   images,

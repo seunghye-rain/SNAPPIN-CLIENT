@@ -1,8 +1,8 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import { GraphicSuccess, GraphicError } from '../../../assets';
-import { Modal, ModalButtonProps } from '../base/Modal';
-import { ResultModalType } from './types/type';
-import { THEME } from './constants/theme';
+﻿import { ResultModalType } from '@ds/ui/modal/result-modal/types/type';
+import { Modal, ModalButtonProps } from '@ds/ui/modal/base/Modal';
+import { THEME } from '@ds/ui/modal/result-modal/constants/theme';
+import { cn } from '@ds/lib/cn';
+import { GraphicError, GraphicSuccess } from '@ds/assets';
 
 type ResultModalProps = {
   open: boolean;

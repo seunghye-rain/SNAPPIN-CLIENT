@@ -7,8 +7,3 @@ export type CalendarCell =
       iso: string;
       isDisabled: boolean;
     };
-
-export type DayAvailability = {
-  date: string;
-  isDisabled: boolean;
-};

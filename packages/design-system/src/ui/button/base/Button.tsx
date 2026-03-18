@@ -1,13 +1,13 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import { ButtonColor, ButtonDisplay, ButtonSize } from './types/variant';
+﻿import { ButtonHTMLAttributes } from 'react';
+import { cn } from '@ds/lib/cn';
+import { ButtonColor, ButtonDisplay, ButtonSize } from '@ds/ui/button/base/types/variant';
 import {
   BUTTON_BASE,
   BUTTON_COLOR,
   BUTTON_DISABLED,
   BUTTON_DISPLAY,
   BUTTON_SIZE,
-} from './constants/theme';
-import { ButtonHTMLAttributes } from 'react';
+} from '@ds/ui/button/base/constants/theme';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;

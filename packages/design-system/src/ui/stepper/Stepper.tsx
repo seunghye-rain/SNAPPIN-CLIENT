@@ -1,8 +1,8 @@
 ﻿'use client';
 
-import IconButton from '@snappin/design-system/ui/button/icon-button/IconButton';
-import { cn } from '@snappin/design-system/lib/cn';
-import { IconAdd, IconRemove } from '../../assets';
+import { cn } from '@ds/lib/cn';
+import { IconButton } from '@ds/ui';
+import { IconAdd, IconRemove } from '@ds/assets';
 
 type ButtonAddMinusProps = {
   value: string | number;

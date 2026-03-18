@@ -1,5 +1,5 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import Image from 'next/image';
+﻿import Image from 'next/image';
+import { cn } from '@ds/lib/cn';
 
 type FieldMessageProps = {
   id: string;

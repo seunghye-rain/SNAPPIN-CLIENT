@@ -1,8 +1,8 @@
 ﻿'use client';
 
-import { cn } from '@snappin/design-system/lib/cn';
-import IconButton from '@snappin/design-system/ui/button/icon-button/IconButton';
-import { IconHeart, IconHeartFill } from '../../../assets';
+import { IconButton } from '@ds/ui';
+import { IconHeart, IconHeartFill } from '@ds/assets';
+import { cn } from '@ds/lib/cn';
 
 type LikeButtonProps = {
   isLiked: boolean;

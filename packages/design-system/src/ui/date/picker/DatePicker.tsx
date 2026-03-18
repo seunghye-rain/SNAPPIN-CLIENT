@@ -1,11 +1,6 @@
 ﻿'use client';
 
-import Divider from '@snappin/design-system/ui/divider/Divider';
-import IconButton from '@snappin/design-system/ui/button/icon-button/IconButton';
-import { IconKeyboardArrowLeft, IconKeyboardArrowRight } from '../../../assets';
 import { useMemo, useState } from 'react';
-import DateCell from '../cell/DateCell';
-import { CalendarCell } from './types/calendar';
 import {
   addMonths,
   buildPrefixCells,
@@ -13,9 +8,13 @@ import {
   daysInMonth,
   startOfMonth,
   toISO,
-} from './utils/date';
-import { WEEKDAY_LABELS } from './constants/date';
-import { formatNumber } from '@snappin/shared/lib/formatNumber';
+} from '@ds/ui/date/picker/utils/date';
+import { formatNumber } from '@snappin/shared/lib';
+import { CalendarCell } from '@ds/ui/date/picker/types/calendar';
+import { Divider, IconButton } from '@ds/ui';
+import { IconKeyboardArrowLeft, IconKeyboardArrowRight } from '@ds/assets';
+import { WEEKDAY_LABELS } from '@ds/ui/date/picker/constants/date';
+import DateCell from '@ds/ui/date/cell/DateCell';
 
 const MAX_RESERVATION_MONTHS = 6;
 

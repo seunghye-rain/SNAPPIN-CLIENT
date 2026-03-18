@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { TextField } from '@/ui';
+import { TextField } from '@ds/ui';
 
 const meta: Meta<typeof TextField> = {
   title: 'input/TextField',

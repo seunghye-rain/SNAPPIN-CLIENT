@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/ui/index.js",
+  "types": "./dist/ui/index.d.ts",
   "scripts": {
+    "build": "pnpm run build:icons && tsc -p tsconfig.build.json && node scripts/rewrite-dist-imports.mjs && node scripts/copy-static-assets.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "generate:component": "turbo gen --config ./turbo/generators/config.ts react-component",
@@ -14,11 +17,32 @@
     "typecheck:storybook": "tsc -p tsconfig.storybook.json --noEmit"
   },
   "exports": {
-    ".": "./src/ui/index.ts",
-    "./ui/*": "./src/ui/*",
-    "./assets": "./src/assets/index.ts",
-    "./assets/*": "./src/assets/*",
-    "./lib/*": "./src/lib/*"
+    ".": {
+      "types": "./dist/ui/index.d.ts",
+      "default": "./dist/ui/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "default": "./dist/ui/index.js"
+    },
+    "./ui/*": {
+      "types": "./dist/ui/*.d.ts",
+      "default": "./dist/ui/*.js"
+    },
+    "./assets": {
+      "types": "./dist/assets/index.d.ts",
+      "default": "./dist/assets/index.js"
+    },
+    "./assets/*": "./dist/assets/*",
+    "./lib": {
+      "types": "./dist/lib/index.d.ts",
+      "default": "./dist/lib/index.js"
+    },
+    "./lib/*": {
+      "types": "./dist/lib/*.d.ts",
+      "default": "./dist/lib/*.js"
+    },
+    "./styles.css": "./styles.css"
   },
   "peerDependencies": {
     "next": "^16.1.1",

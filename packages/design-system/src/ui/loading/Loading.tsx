@@ -1,6 +1,6 @@
 ﻿import Lottie from 'lottie-react';
 import loadingAnimation from '../../assets/lotties/loading.json';
-import { cn } from '@snappin/design-system/lib/cn';
+import { cn } from '@ds/lib/cn';
 
 type LoadingProps = {
   className?: string;

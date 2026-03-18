@@ -1,9 +1,15 @@
 ﻿'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Command, CommandList, CommandEmpty, CommandGroup, CommandItem } from './base/command';
-import { cn } from '@snappin/design-system/lib/cn';
-import Input from '@snappin/design-system/ui/input/base/Input';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from '@ds/ui/combo-box/base/command';
+import { Input } from '@ds/ui';
+import { cn } from '@ds/lib/cn';
 
 type ComboBoxProps = {
   options: string[];

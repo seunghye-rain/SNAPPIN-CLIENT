@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import ResultModal from './ResultModal';
-import type { ModalButtonProps } from '../base/Modal';
+import { ResultModal } from '@ds/ui';
+import { ModalButtonProps } from '@ds/ui/modal/base/Modal';
 
 const meta: Meta<typeof ResultModal> = {
   title: 'Modal/ResultModal',

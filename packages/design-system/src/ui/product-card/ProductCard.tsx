@@ -1,22 +1,11 @@
 ﻿import Image from 'next/image';
-import { cn } from '@snappin/design-system/lib/cn';
-import { formatPrice } from '@snappin/shared/lib/formatPrice';
-import TagChip from '@snappin/design-system/ui/chip/tag-chip/TagChip';
-import { IconStar } from '../../assets';
+import { ProductCardProps } from '@snappin/shared/types';
+import { cn } from '@ds/lib/cn';
+import { IconStar } from '@ds/assets';
+import { formatPrice } from '@snappin/shared/lib';
+import { TagChip } from '@ds/ui';
 
 const PRODUCT_PLACEHOLDER = '/imgs/image-default.png';
-
-export type ProductCardProps = {
-  preload?: boolean;
-  image: { src: string; alt?: string };
-  name: string;
-  rate: number;
-  reviewCount: number;
-  photographer: string;
-  price: number;
-  moods: string[];
-  className?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
 
 export default function ProductCard({
   preload = false,

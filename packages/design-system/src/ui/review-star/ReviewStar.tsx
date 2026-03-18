@@ -1,5 +1,5 @@
-﻿import { IconStar, IconStarHalf } from '../../assets';
-import { cn } from '@snappin/design-system/lib/cn';
+﻿import { cn } from '@ds/lib/cn';
+import { IconStar, IconStarHalf } from '@ds/assets';
 
 type ReviewStarProps = {
   //4.5

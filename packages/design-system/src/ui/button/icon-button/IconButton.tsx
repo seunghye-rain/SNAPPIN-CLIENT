@@ -1,5 +1,5 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import { ButtonHTMLAttributes } from 'react';
+﻿import { ButtonHTMLAttributes } from 'react';
+import { cn } from '@ds/lib/cn';
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 

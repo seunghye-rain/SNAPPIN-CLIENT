@@ -1,9 +1,9 @@
 ﻿'use client';
 
-import Button from '@snappin/design-system/ui/button/base/Button';
-import { IconAddPhotoAlternate } from '../../../assets';
 import { useRef } from 'react';
-import { IMAGE_ACCEPT } from '@snappin/shared/constants/imageAccept';
+import { IMAGE_ACCEPT } from '@snappin/shared/constants';
+import { Button } from '@ds/ui';
+import { IconAddPhotoAlternate } from '@ds/assets';
 
 type ImageUploadButtonProps = {
   handleUploadAction: (files: FileList) => void;

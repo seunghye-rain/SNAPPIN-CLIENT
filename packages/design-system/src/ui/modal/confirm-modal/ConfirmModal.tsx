@@ -1,5 +1,5 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import { Modal, ModalButtonProps } from '../base/Modal';
+﻿import { Modal, ModalButtonProps } from '@ds/ui/modal/base/Modal';
+import { cn } from '@ds/lib/cn';
 
 type ConfirmModalProps = {
   open: boolean;

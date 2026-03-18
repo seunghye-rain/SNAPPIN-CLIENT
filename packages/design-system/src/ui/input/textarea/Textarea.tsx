@@ -1,4 +1,4 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
+﻿import { cn } from '@ds/lib/cn';
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   hasError?: boolean;

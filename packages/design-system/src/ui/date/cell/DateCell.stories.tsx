@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import DateCell from './DateCell';
+import DateCell from '@ds/ui/date/cell/DateCell';
 
 const meta: Meta<typeof DateCell> = {
   title: 'date/DateCell',

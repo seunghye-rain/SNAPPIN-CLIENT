@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { FieldMessage } from '@/ui';
+import { FieldMessage } from '@ds/ui';
 
 const meta: Meta<typeof FieldMessage> = {
   title: 'input/FieldMessage',

@@ -1,6 +1,6 @@
-﻿import { DividerColor, DividerSize } from './type/variant';
-import { DIVIDER_COLOR, DIVIDER_THICKNESS } from './constants/theme';
-import { cn } from '@snappin/design-system/lib/cn';
+﻿import { DividerColor, DividerSize } from '@ds/ui/divider/type/variant';
+import { cn } from '@ds/lib/cn';
+import { DIVIDER_COLOR, DIVIDER_THICKNESS } from '@ds/ui/divider/constants/theme';
 
 type DividerProps = {
   thickness?: DividerSize;

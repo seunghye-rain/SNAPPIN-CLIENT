@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
-import { Stepper } from '@/ui';
+import { Stepper } from '@ds/ui';
 
 const meta: Meta<typeof Stepper> = {
   title: 'stepper/Stepper',

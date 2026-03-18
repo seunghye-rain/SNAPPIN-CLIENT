@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import DatePicker from './DatePicker';
 import { useState } from 'react';
-import { toISO } from './utils/date';
+import { DatePicker } from '@ds/ui';
+import { toISO } from '@ds/ui/date/picker/utils/date';
 
 const meta: Meta<typeof DatePicker> = {
   title: 'date/DatePicker',

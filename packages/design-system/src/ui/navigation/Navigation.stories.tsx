@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import Navigation from './Navigation';
-import { IconArrowBack, IconSearch, IconAdd } from '../../assets';
+import { Navigation } from '@ds/ui';
+import { IconAdd, IconArrowBack, IconSearch } from '@ds/assets';
 
 const meta: Meta<typeof Navigation> = {
   title: 'UI/Navigation',

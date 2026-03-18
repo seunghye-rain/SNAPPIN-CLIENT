@@ -1,6 +1,5 @@
-import ControlRow from './ControlRow';
 import { useState } from 'react';
-import { Stepper } from '../stepper';
+import { ControlRow, Stepper } from '@ds/ui';
 
 const meta = {
   title: 'layout/ControlRow',

@@ -1,6 +1,6 @@
-import { Sheet, SheetContent } from '@snappin/design-system/ui/sheet/Sheet';
-import { cn } from '@snappin/design-system/lib/cn';
 import { HTMLAttributes } from 'react';
+import { Sheet, SheetContent } from '@ds/ui';
+import { cn } from '@ds/lib/cn';
 
 type ControlSheetProps = {
   open: boolean;

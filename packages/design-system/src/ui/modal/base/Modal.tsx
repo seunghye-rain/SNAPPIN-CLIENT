@@ -1,4 +1,3 @@
-import { Button } from '../../button';
 import {
   Dialog,
   DialogClose,
@@ -10,6 +9,7 @@ import {
   DialogPortal,
   DialogTitle,
 } from './Dialog';
+import { Button } from '@ds/ui';
 
 type ModalProps = {
   open: boolean;

@@ -1,4 +1,4 @@
-import Textarea from '@snappin/design-system/ui/input/textarea/Textarea';
+import { Textarea } from '@ds/ui';
 
 type TextareaFieldProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   id: string;

@@ -1,6 +1,5 @@
-﻿import Input from '@snappin/design-system/ui/input/base/Input';
-import FieldMessage from '@snappin/design-system/ui/input/message/FieldMessage';
-import { cn } from '@snappin/design-system/lib/cn';
+﻿import { cn } from '@ds/lib/cn';
+import { FieldMessage, Input } from '@ds/ui';
 
 type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   id: string;

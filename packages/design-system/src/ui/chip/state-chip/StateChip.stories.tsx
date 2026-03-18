@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import StateChip from './StateChip';
+import { StateChip } from '@ds/ui';
 
 const meta: Meta<typeof StateChip> = {
   title: 'Chip/StateChip',

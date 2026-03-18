@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
-import ImageUploadButton from './ImageUploadButton';
+import { ImageUploadButton } from '@ds/ui';
 
 const meta: Meta<typeof ImageUploadButton> = {
   title: 'button/ImageUploadButton',

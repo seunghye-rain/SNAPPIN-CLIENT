@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import ImagePreview from './ImagePreview';
+import { ImagePreview } from '@ds/ui';
 
 const handleRemove = () => {};
 const handleClickImage = () => {};

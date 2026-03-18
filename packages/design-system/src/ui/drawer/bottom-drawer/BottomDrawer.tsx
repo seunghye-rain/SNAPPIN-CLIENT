@@ -1,5 +1,5 @@
-﻿import { cn } from '@snappin/design-system/lib/cn';
-import { Drawer, DrawerContent } from '@snappin/design-system/ui/drawer/base/Drawer';
+﻿import { Drawer, DrawerContent } from '@ds/ui';
+import { cn } from '@ds/lib/cn';
 
 type BottomDrawerCommonProps = {
   children?: React.ReactNode;

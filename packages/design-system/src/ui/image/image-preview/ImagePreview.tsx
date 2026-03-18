@@ -1,7 +1,7 @@
 ﻿import Image from 'next/image';
-import IconButton from '@snappin/design-system/ui/button/icon-button/IconButton';
-import { cn } from '@snappin/design-system/lib/cn';
-import { IconClose } from '../../../assets';
+import { cn } from '@ds/lib/cn';
+import { IconButton } from '@ds/ui';
+import { IconClose } from '@ds/assets';
 
 type ImagePreviewProps = React.ComponentProps<'div'> & {
   imageSrc: string;
@@ -54,7 +54,7 @@ export default function ImagePreview({
       {canRemove ? (
         <IconButton
           onClick={handleRemoveClick}
-          aria-label='?대?吏 ??젣'
+          aria-label='이미지 제거'
           className='bg-black-1 absolute top-[0.7rem] right-[0.7rem] z-20 flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full'
         >
           <IconClose className='text-black-10 h-[2.4rem] w-[2.4rem]' />

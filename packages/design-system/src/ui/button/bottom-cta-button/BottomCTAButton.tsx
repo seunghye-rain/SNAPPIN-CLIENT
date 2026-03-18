@@ -1,5 +1,5 @@
-﻿import Button from '@snappin/design-system/ui/button/base/Button';
-import { cn } from '@snappin/design-system/lib/cn';
+﻿import { Button } from '@ds/ui';
+import { cn } from '@ds/lib/cn';
 
 type BottomCTAButtonRootProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
@@ -9,7 +9,6 @@ type BottomCTAButtonRootProps = React.HTMLAttributes<HTMLDivElement> & {
   hasPadding?: boolean;
 };
 
-// ?섎떒 踰꾪듉 ?덉씠?꾩썐 而댄룷?뚰듃
 function BottomCTAButtonRoot({
   children,
   fixed = false,
@@ -35,7 +34,6 @@ function BottomCTAButtonRoot({
 
 type SingleBottomCTAButtonProps = React.ComponentProps<typeof Button>;
 
-// ?덉씠?꾩썐 ?섎떒???⑥씪 踰꾪듉??諛곗튂?????ъ슜?⑸땲??
 function SingleBottomCTAButton({ children, ...props }: SingleBottomCTAButtonProps) {
   return <Button {...props}>{children}</Button>;
 }
@@ -46,7 +44,6 @@ type DoubleBottomCTAButtonProps = {
   className?: string;
 };
 
-// ?덉씠?꾩썐 ?섎떒???댁쨷 踰꾪듉??諛곗튂?????ъ슜?⑸땲??
 function DoubleBottomCTAButton({ leftButton, rightButton, className }: DoubleBottomCTAButtonProps) {
   return (
     <div className={cn('flex gap-[0.6rem]', className)}>
