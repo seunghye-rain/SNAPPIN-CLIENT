@@ -1,10 +1,9 @@
 ﻿'use client';
 
 import { ProductCard, IconButton, StateChip } from '@snappin/design-system';
-import { StateCode } from '@snappin/shared/types/stateCode';
+import { ProductCardProps, StateCode } from '@snappin/shared/types';
 import { IconKeyboardArrowRight } from '@snappin/design-system/assets';
 import { useRouter } from 'next/navigation';
-import { ProductCardProps } from '@snappin/design-system/ui/product-card/ProductCard';
 import { formatCreatedAt } from '@/utils/formatDate';
 import { PHOTOGRAPHERS_ROUTES } from '@/constants/routes/routes';
 

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { STATE_CODES, StateCode } from '@snappin/shared/types/stateCode';
 import { Button, ProductCard } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { useRefuseReservation } from '../api';
 import RefuseModal from '../@modal/(.)refuse-modal/RefuseModal';
 import { Section } from '@/components/layout/reservation/SectionLayout';
+import { STATE_CODES, StateCode } from '@snappin/shared/types';
 
 type ProductStatusProps = {
   reservationId: number;

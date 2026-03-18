@@ -3,7 +3,7 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { Divider } from '@snappin/design-system';
 import { EmptyView, ReservationCard, ReservationCardSkeleton } from '../components';
-import { StateCode } from '@snappin/shared/types/stateCode';
+import { StateCode } from '@snappin/shared/types';
 import { useToast } from '@/ui';
 import { useGetReservationList } from '../api';
 import { RESERVATION_TAB } from '../constants/tabs';

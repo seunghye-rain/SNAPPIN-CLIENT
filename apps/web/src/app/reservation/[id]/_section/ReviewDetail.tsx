@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatShortDate } from '@/utils/formatDate';
-import { ReviewStar } from '@snappin/design-system/ui/review-star';
 import { Section } from '@/components/layout/reservation/SectionLayout';
+import { ReviewStar } from '@snappin/design-system';
 
 type ReviewDetailProps = {
   id: number;

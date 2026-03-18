@@ -10,7 +10,7 @@ import { useKakaoLogin } from '@/auth/apis';
 import { Loading } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { PHOTOGRAPHERS_ROUTES, ROUTES } from '@/constants/routes/routes';
-import { isValidUserType, USER_TYPE, UserType } from '@snappin/shared/types/userType';
+import { isValidUserType, USER_TYPE, UserType } from '@snappin/shared/types';
 
 const CLIENT_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL;
 const KAKAO_LOGIN_URL =

@@ -5,7 +5,7 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui';
 import { getMenuItems } from './constants/menu';
 import { ROUTES } from '@/constants/routes/routes';
-import { UserType } from '@snappin/shared/types/userType';
+import { UserType } from '@snappin/shared/types';
 
 type FooterClientProps = {
   initialUserType: UserType | null;

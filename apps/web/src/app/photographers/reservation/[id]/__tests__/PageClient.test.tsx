@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import { STATE_CODES } from '@snappin/shared/types/stateCode';
 import PageClient from '../page.client';
+import { STATE_CODES } from '@snappin/shared/types';
 
 const useGetReservationDetailMock = jest.fn();
 

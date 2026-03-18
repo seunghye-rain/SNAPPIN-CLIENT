@@ -5,8 +5,8 @@ import {
   WishedProductsResponse,
 } from '@/swagger-api';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { apiRequest } from '../../../../api/apiRequest';
-import { USER_QUERY_KEY } from '../../../../query-key/user';
+import { apiRequest } from '@/api/apiRequest';
+import { USER_QUERY_KEY } from '@/query-key/user';
 
 export const useGetLikePortfolios = () => {
   return useSuspenseQuery<WishedPortfoliosResponse>({

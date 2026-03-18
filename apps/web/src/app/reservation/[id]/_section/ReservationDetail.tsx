@@ -1,7 +1,7 @@
-import type { StateCode } from '@snappin/shared/types/stateCode';
 import { formatReservationDateTime } from '@/utils/formatDate';
 import { Section } from '@/components/layout/reservation/SectionLayout';
-import { StateChip } from '@snappin/design-system/ui/chip';
+import { StateChip } from '@snappin/design-system';
+import { StateCode } from '@snappin/shared/types';
 
 type ReservationDetailProps = {
   status: StateCode;

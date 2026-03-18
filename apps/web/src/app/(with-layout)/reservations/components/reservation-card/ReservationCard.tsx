@@ -1,11 +1,10 @@
 ﻿'use client';
 
-import type { ProductCardProps } from '@snappin/design-system/ui/product-card/ProductCard';
 import { useRouter } from 'next/navigation';
 import { IconKeyboardArrowRight } from '@snappin/design-system/assets';
 import { StateChip, Button, ProductCard } from '@snappin/design-system';
-import { STATE_CODES, type StateCode } from '@snappin/shared/types/stateCode';
 import { ROUTES } from '@/constants/routes/routes';
+import { ProductCardProps, STATE_CODES, StateCode } from '@snappin/shared/types';
 
 export type ReservationCardProps = {
   reservationId: number;

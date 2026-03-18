@@ -1,10 +1,10 @@
 'use client';
 
 import { TagChip, ImageCarousel, LikeButton } from '@snappin/design-system';
-import { MoodCode } from '@snappin/shared/types/moodCode';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui';
 import { useWishPortfolio } from '../api';
+import { MoodCode } from '@snappin/shared/types';
 
 type PortfolioSectionProps = {
   id: number;

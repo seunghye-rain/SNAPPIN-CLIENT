@@ -2,17 +2,21 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FieldMessage, ImagePreview, TextareaField } from '@snappin/design-system';
-import ImageUploadButton from '@snappin/design-system/ui/button/upload/ImageUploadButton';
+import {
+  FieldMessage,
+  ImagePreview,
+  ImageUploadButton,
+  TextareaField,
+} from '@snappin/design-system';
 import { cn } from '@snappin/design-system/lib/cn';
 import ClientFooter from '../components/client-footer/ClientFooter';
 import { MAX_RATING, REVIEW_CONTENT_MAX_LENGTH, useReviewWrite } from '../hooks/useReviewWrite';
-import { IMAGE_ACCEPT } from '@snappin/shared/constants/imageAccept';
 import { StarRating } from '../components';
 import { useSubmitReview } from '../api';
 import { useReviewImages } from '../hooks/useReviewImages';
 import { useToast } from '@/ui';
 import { ROUTES } from '@/constants/routes/routes';
+import { IMAGE_ACCEPT } from '@snappin/shared/constants';
 
 type ReviewFormSectionProps = {
   reservationId: number;

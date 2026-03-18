@@ -1,7 +1,7 @@
 'use client';
 
 import { BottomCTAButton } from '@snappin/design-system';
-import { useToast } from '../../../../../ui/toast/hooks/useToast';
+import { useToast } from '@/ui';
 
 export default function Footer() {
   const { alert } = useToast();

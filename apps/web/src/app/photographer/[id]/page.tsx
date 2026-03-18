@@ -16,7 +16,7 @@ import {
   prefetchProductList,
 } from './api/server';
 import { PHOTOGRAPHER_TAB, PHOTOGRAPHER_TABS } from '@/app/photographer/[id]/constants/tab';
-import { PortfolioListSkeleton, ProductListSkeleton, Tabs } from '@snappin/design-system/ui';
+import { PortfolioListSkeleton, ProductListSkeleton, Tabs } from '@snappin/design-system';
 
 type PageProps = {
   params: Promise<{ id: string }>;

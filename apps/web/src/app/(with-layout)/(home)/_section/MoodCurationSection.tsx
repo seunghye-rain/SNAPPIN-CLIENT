@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { Chip } from '@snappin/design-system';
-import { MoodCode } from '@snappin/shared/types/moodCode';
+import { MoodCode } from '@snappin/shared/types';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { SectionHeader, CarouselCuration } from '../components';
-
 import { useGetUserInfo } from '@/auth/apis';
 import { GetPortfolioResponse } from '@/swagger-api';
 import { useGetPopularPortfoliosRecommendation, useGetPortfoliosRecommendation } from '../api';

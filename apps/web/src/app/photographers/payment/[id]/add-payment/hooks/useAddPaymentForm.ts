@@ -3,8 +3,8 @@
 import { z } from 'zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formatPrice } from '@snappin/shared/lib/formatPrice';
 import { ADD_PAYMENT_LIMITS, ADD_PAYMENT_TEXT } from './payment.schema';
+import { formatPrice } from '@snappin/shared/lib';
 
 export const addPaymentSchema = z.object({
   name: z

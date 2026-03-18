@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/ui';
-import { STATE_CODES, type StateCode } from '@snappin/shared/types/stateCode';
+import { STATE_CODES, type StateCode } from '@snappin/shared/types';
 import { useCancelReservation, useRequestPayment } from '../api';
 import { type ClientFooterConfig } from '@/app/reservation/[id]/components';
 

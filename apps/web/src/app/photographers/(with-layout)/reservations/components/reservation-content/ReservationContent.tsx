@@ -1,12 +1,12 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { StateCode } from '@snappin/shared/types/stateCode';
 import { Divider, Tabs } from '@snappin/design-system';
 import { RESERVATION_TABS, TAB, getSelectedTab } from '../../constants/tabs';
 import { ReservationCard, ReservationCardSkeleton, EmptyView } from '../index';
 import { useGetReservationList } from '../../api';
 import { PHOTOGRAPHERS_ROUTES } from '@/constants/routes/routes';
+import { StateCode } from '@snappin/shared/types';
 
 const getEmptyText = (tab: string): string => {
   if (tab === TAB.PHOTOGRAPHER_REQUESTED) {

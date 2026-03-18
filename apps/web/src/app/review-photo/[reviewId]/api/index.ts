@@ -7,7 +7,7 @@ import { apiRequest } from '@/api/apiRequest';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetReviewDetailData, GetReviewDetailResponse } from '@/swagger-api';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { USER_TYPE, UserType } from '@snappin/shared/types/userType';
+import { USER_TYPE, UserType } from '@snappin/shared/types';
 
 export const getReviewDetail = async (
   reviewId: number,

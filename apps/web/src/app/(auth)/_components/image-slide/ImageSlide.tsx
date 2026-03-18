@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TagChip, ImageWithShadow } from '@snappin/design-system';
 import { IMAGE_SLIDE_MOCK } from './ImageSlide.mock';
-import { MoodCode } from '@snappin/shared/types/moodCode';
+import { MoodCode } from '@snappin/shared/types';
 
 const SIDE_OFFSET = 110;
 

@@ -1,4 +1,4 @@
-import { formatNumber } from '@snappin/shared/lib/formatNumber';
+import { formatNumber } from '@snappin/shared/lib';
 
 /**
  * 날짜를 년.월.일 형식으로 포맷팅하는 함수

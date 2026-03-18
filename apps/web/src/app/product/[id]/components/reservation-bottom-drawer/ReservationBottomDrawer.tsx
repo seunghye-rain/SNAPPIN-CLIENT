@@ -25,7 +25,7 @@ import AvailableTimeSection from '../time-picker/AvailableTimePicker';
 import { ProductReservationRequest } from '@/swagger-api';
 import { useToast } from '@/ui';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
-import { formatPrice } from '@snappin/shared/lib/formatPrice';
+import { formatPrice } from '@snappin/shared/lib';
 import { getErrorMessage } from '@/utils/error';
 
 type ReservationBottomDrawerProps = {

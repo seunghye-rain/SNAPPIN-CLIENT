@@ -1,6 +1,7 @@
-import { StateChip } from '@snappin/design-system/ui/chip';
+
 import { cn } from '@snappin/design-system/lib/cn';
-import { StateCode } from '@snappin/shared/types/stateCode';
+import { StateCode } from '@snappin/shared/types';
+import { StateChip } from '@snappin/design-system';
 
 type DetailLayoutProps = {
   title: string;

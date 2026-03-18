@@ -13,7 +13,7 @@ import { setAccessToken, getAccessToken, deleteAccessToken } from '../token';
 import { deleteAuthUser, setAuthUser } from '../userType';
 import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
-import { isValidUserType } from '@snappin/shared/types/userType';
+import { isValidUserType } from '@snappin/shared/types';
 
 // 카카오 로그인 API
 type KakaoCodePayload = { code: string };

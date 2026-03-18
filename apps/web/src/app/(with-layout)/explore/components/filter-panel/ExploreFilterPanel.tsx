@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button, FilterChip } from '@snappin/design-system';
-import { MoodCategoryLabel, MoodCode } from '@snappin/shared/types/moodCode';
+import { MoodCategoryLabel, MoodCode } from '@snappin/shared/types';
 import { GetMoodFilterResponse } from '@/swagger-api';
 import { EXPLORE_NO_AUTO_APPLY } from '../../constants/storage-key';
 

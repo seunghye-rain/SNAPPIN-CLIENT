@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { HAS_PHOTOGRAPHER_PROFILE_COOKIE_NAME, USER_TYPE_COOKIE_NAME } from './constant/cookie';
-import { AuthUser } from '@snappin/shared/types/userType';
+import { AuthUser } from '@snappin/shared/types';
 
 async function setAuthUser(value: AuthUser) {
   const cookieStore = await cookies();

@@ -1,6 +1,5 @@
 'use client';
 
-import { STATE_CODES, StateCode } from '@snappin/shared/types/stateCode';
 import { Divider } from '@snappin/design-system';
 import { useGetReservationDetail } from './api';
 import SectionSkeleton from '../../../../components/layout/reservation/SectionSkeleton';
@@ -11,6 +10,7 @@ import {
   ReviewDetail,
   DetailPageFooter,
 } from './_section';
+import { STATE_CODES, StateCode } from '@snappin/shared/types';
 
 type PageClientProps = {
   id: string;

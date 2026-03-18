@@ -5,7 +5,7 @@ import { useSwitchUserProfile } from '@/auth/apis';
 import loadingAnimation from '@snappin/design-system/assets/lotties/loading.json';
 import SwitchProfile from './components/switch-profile/SwitchProfile';
 import { useMinDurationLoading } from './hooks/useMinDurationLoading';
-import { isValidUserType, UserType } from '@snappin/shared/types/userType';
+import { isValidUserType, UserType } from '@snappin/shared/types';
 
 const MIN_DURATION = 1600;
 

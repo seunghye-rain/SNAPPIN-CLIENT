@@ -1,4 +1,4 @@
-import { formatPrice } from '@snappin/shared/lib/formatPrice';
+import { formatPrice } from '@snappin/shared/lib';
 
 export const ADD_PAYMENT_LIMITS = {
   MAX_AMOUNT: 99_999_999,

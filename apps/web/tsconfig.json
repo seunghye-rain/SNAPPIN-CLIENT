@@ -5,9 +5,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@snappin/design-system": ["../../packages/design-system/src/ui/index.ts"],
-      "@snappin/design-system/*": ["../../packages/design-system/src/*"],
-      "@snappin/shared/*": ["../../packages/shared/src/*"]
     },
     "types": ["node", "jest"]
   },

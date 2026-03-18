@@ -1,6 +1,6 @@
 import { Divider } from '@snappin/design-system';
 import { ClientHeader, ProfileCard, Menus } from './components';
-import { UserType } from '@snappin/shared/types/userType';
+import { UserType } from '@snappin/shared/types';
 
 type ProfileLayoutProps = {
   userType: UserType | null;

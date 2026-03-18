@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getUserType } from '@/auth/userType';
 import NavigationClient from './components/navigation-client/Navigation.client';
 import PageClient from './page.client';
-import { USER_TYPE } from '@snappin/shared/types/userType';
+import { USER_TYPE } from '@snappin/shared/types';
 
 type ReservationDetailPageProps = {
   params: Promise<{ id: string; reviewId: string }>;

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Navigation, IconButton } from '@snappin/design-system';
 import { IconArrowBack, IconHome } from '@snappin/design-system/assets';
-import { ROUTES } from '../../../../../constants/routes/routes';
+import { ROUTES } from '@/constants/routes/routes';
 
 export default function Header() {
   const router = useRouter();

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useGetUserInfo } from '@/auth/apis';
 import type { GetClientInfoResponse, GetPhotographerProfileResponse } from '@/swagger-api';
-import { USER_TYPE, UserType } from '@snappin/shared/types/userType';
+import { USER_TYPE, UserType } from '@snappin/shared/types';
 
 type ProfileCardProps = {
   userType: UserType | null;

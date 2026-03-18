@@ -1,7 +1,8 @@
-﻿import { formatPrice } from '@snappin/shared/lib/formatPrice';
+﻿
 import { ExtraPriceResponse } from '@/swagger-api';
 import { Section } from '@/components/layout/reservation/SectionLayout';
 import { Divider } from '@snappin/design-system';
+import { formatPrice } from '@snappin/shared/lib';
 
 type ReceiptProps = {
   basePrice: number;

@@ -1,8 +1,8 @@
 ﻿'use client';
 
 import Lottie from 'lottie-react';
-import ImageSlide from '../../../_components/image-slide/ImageSlide';
 import curationCoverAnimation from '@snappin/design-system/assets/lotties/curationCover.json';
+import ImageSlide from '@/app/(auth)/_components/image-slide/ImageSlide';
 
 export default function LottieAnimation() {
   return (

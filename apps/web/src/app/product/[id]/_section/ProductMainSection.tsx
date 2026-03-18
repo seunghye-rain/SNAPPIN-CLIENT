@@ -4,8 +4,8 @@ import { ImageCarousel, LikeButton } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { IconStar } from '@snappin/design-system/assets';
-import { formatPrice } from '@snappin/shared/lib/formatPrice';
 import { useWishProduct } from '../api';
+import { formatPrice } from '@snappin/shared/lib';
 
 type ProductMainSectionProps = {
   id: number;
