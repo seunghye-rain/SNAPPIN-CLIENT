@@ -17,31 +17,13 @@
     "typecheck:storybook": "tsc -p tsconfig.storybook.json --noEmit"
   },
   "exports": {
-    ".": {
-      "types": "./dist/ui/index.d.ts",
-      "default": "./dist/ui/index.js"
-    },
-    "./ui": {
-      "types": "./dist/ui/index.d.ts",
-      "default": "./dist/ui/index.js"
-    },
-    "./ui/*": {
-      "types": "./dist/ui/*.d.ts",
-      "default": "./dist/ui/*.js"
-    },
-    "./assets": {
-      "types": "./dist/assets/index.d.ts",
-      "default": "./dist/assets/index.js"
-    },
+    ".": "./dist/ui/index.js",
+    "./ui": "./dist/ui/index.js",
+    "./ui/*": "./dist/ui/*.js",
+    "./assets": "./dist/assets/index.js",
     "./assets/*": "./dist/assets/*",
-    "./lib": {
-      "types": "./dist/lib/index.d.ts",
-      "default": "./dist/lib/index.js"
-    },
-    "./lib/*": {
-      "types": "./dist/lib/*.d.ts",
-      "default": "./dist/lib/*.js"
-    },
+    "./lib": "./dist/lib/index.js",
+    "./lib/*": "./dist/lib/*.js",
     "./styles.css": "./styles.css"
   },
   "peerDependencies": {
