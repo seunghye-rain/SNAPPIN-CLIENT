@@ -32,15 +32,15 @@ export const Default: StorySlider = {
   },
   render: (args: StorySlider['args']) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<[number, number]>(args?.value!);
+    const [value, setValue] = useState<[number, number]>(args?.value ?? [5000, 20000]);
     
     return (
       <div className="flex flex-col gap-[2rem] items-center w-[42rem]">
         <div className='font-16-md text-black-10'>{value[0]} ~ {value[1]}</div>
         <Slider 
-          min={args?.min!}
-          max={args?.max!}
-          step={args?.step!}
+          min={args?.min ?? 10000}
+          max={args?.max! ?? 400000}
+          step={args?.step ?? 10000}
           value={value} 
           onChange={(val) => {
             setValue(val);
@@ -64,7 +64,7 @@ export const PriceSlider: StorySlider = {
   },
   render: (args: StorySlider['args']) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<[number, number]>(args?.value!);
+    const [value, setValue] = useState<[number, number]>(args?.value ?? [5000, 20000]);
     
     return (
       <div className='flex flex-col gap-[2.4rem] w-[42rem] p-[1.5rem] bg-black-1'>
@@ -73,9 +73,9 @@ export const PriceSlider: StorySlider = {
           <div>{value[0] / 10000}만원 ~ {value[1] / 10000}만원</div>
         </div>
         <Slider 
-          min={args?.min!}
-          max={args?.max!}
-          step={args?.step!}
+          min={args?.min ?? 10000}
+          max={args?.max ?? 400000}
+          step={args?.step ?? 10000}
           value={value} 
           onChange={(val) => {
             setValue(val);
