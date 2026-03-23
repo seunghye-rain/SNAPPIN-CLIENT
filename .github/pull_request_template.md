@@ -7,7 +7,7 @@
 ## 🗯️ 체크 리스트
 
 - [ ] PR 제목을 규칙에 맞게 작성했나요?  
-       EX: 🎀 Feat (design-system) : #이슈번호 pr 내용
+       EX: 🎀 Feat (design-system) : #이슈번호 PR 내용
 - [ ] 빌드가 성공했나요? (`pnpm build`)
 
 ## 🛠️ Tasks

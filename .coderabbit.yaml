@@ -59,7 +59,7 @@ reviews:
     - '!packages/**/dist/**'
     - '!packages/**/node_modules/**'
     - '!packages/**/.turbo/**'
-    - '!packages/**/.storybook-static/**'
+    - '!packages/**/storybook-static/**'
     - '!dist/**'
     - '!storybook-static/**'
     - '!build/**'
