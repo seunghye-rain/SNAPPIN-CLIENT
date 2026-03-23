@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 type SliderProps = {
   min: number;
@@ -38,7 +38,6 @@ export default function Slider({
   value,
   onChange
 }: SliderProps) {
-  const isInitialMount = useRef(true);
   // min < max 보장
   const min = initialMin;
   const max = initialMax <= min ? min + step : initialMax;
@@ -61,10 +60,6 @@ export default function Slider({
   };
 
   useEffect(() => {
-    // 최초 마운트 시 value[0], value[1] 보정, 이후로는 슬라이더 이동으로 조절
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    }
     if (value[0] !== startValue || value[1] !== endValue) {
       onChange([startValue, endValue]);
     }
