@@ -66,7 +66,7 @@ export default function Slider({
         value={startValue}
         className={inputStyle}
         onChange={handleStartChange}
-        aria-label='최소값'
+        aria-label='최솟값'
       />
       <input
         type='range'
