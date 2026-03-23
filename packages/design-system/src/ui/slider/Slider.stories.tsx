@@ -32,7 +32,7 @@ export const Default: StorySlider = {
   },
   render: (args: StorySlider['args']) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<[number, number]>(args?.value ?? [5000, 20000]);
+    const [value, setValue] = useState<[number, number]>(args?.value ?? [50000, 150000]);
     
     return (
       <div className="flex flex-col gap-[2rem] items-center w-[42rem]">
@@ -54,7 +54,7 @@ export const Default: StorySlider = {
     min: 10000,
     max: 400000,
     step: 10000,
-    value: [10000, 400000],
+    value: [50000, 150000],
   },
 };
 
@@ -64,7 +64,7 @@ export const PriceSlider: StorySlider = {
   },
   render: (args: StorySlider['args']) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<[number, number]>(args?.value ?? [5000, 20000]);
+    const [value, setValue] = useState<[number, number]>(args?.value ?? [50000, 150000]);
     
     return (
       <div className='flex flex-col gap-[2.4rem] w-[42rem] p-[1.5rem] bg-black-1'>
@@ -89,6 +89,6 @@ export const PriceSlider: StorySlider = {
     min: 10000,
     max: 400000,
     step: 10000,
-    value: [10000, 400000],
+    value: [50000, 150000],
   },
 };

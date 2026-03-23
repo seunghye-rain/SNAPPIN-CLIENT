@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from "react";
+
 type SliderProps = {
   min: number;
   max: number;
@@ -8,7 +10,7 @@ type SliderProps = {
   onChange: (value: [number, number]) => void;
 };
 
-const inputStyle = `
+const INPUT_STYLE = `
   absolute top-1/2 -translate-y-1/2 z-20 w-full
   appearance-none pointer-events-none bg-transparent
   [&::-webkit-slider-thumb]:appearance-none
@@ -30,24 +32,38 @@ const inputStyle = `
 `;
 
 export default function Slider({
-  min,
-  max,
+  min: initialMin,
+  max: initialMax,
   step,
   value,
   onChange
 }: SliderProps) {
-  const [startValue, endValue] = value;
+  // min < max 보장
+  const min = initialMin;
+  const max = initialMax <= min ? min + step : initialMax;
+  // min <= value[0], value[1] <= max 보장
+  const clampedStart = Math.min(Math.max(value[0], min), max);
+  const clampedEnd = Math.min(Math.max(value[1], min), max);
+  // value[0] <= value[1] 보장
+  const startValue = clampedStart;
+  const endValue = Math.max(clampedEnd, clampedStart);
   const startPercent = (startValue - min) / (max - min) * 100;
   const endPercent = (endValue - min) / (max - min) * 100;
 
   const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
-    onChange?.([Math.min(newValue, endValue), endValue]);
+    onChange([Math.min(newValue, endValue), endValue]);
   };
   const handleEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
-    onChange?.([startValue, Math.max(newValue, startValue)]);
+    onChange([startValue, Math.max(newValue, startValue)]);
   };
+
+  useEffect(() => {
+    if (value[0] !== startValue || value[1] !== endValue) {
+      onChange([startValue, endValue]);
+    }
+  }, [value, startValue, endValue, onChange]);
 
   return (
     <div className='relative w-full h-[2rem]'>
@@ -64,7 +80,7 @@ export default function Slider({
         max={max}
         step={step}
         value={startValue}
-        className={inputStyle}
+        className={INPUT_STYLE}
         onChange={handleStartChange}
         aria-label='최솟값'
       />
@@ -74,7 +90,7 @@ export default function Slider({
         max={max}
         step={step}
         value={endValue}
-        className={inputStyle}
+        className={INPUT_STYLE}
         onChange={handleEndChange}
         aria-label='최댓값'
       />
