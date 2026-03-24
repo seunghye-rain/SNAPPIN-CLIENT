@@ -62,7 +62,7 @@ export default function FooterClient({ initialUserType }: FooterClientProps) {
           >
             {isCenterRaised ? (
               <>
-                <span className='pointer-events-none absolute top-0 left-1/2 z-[2] flex h-[4.8rem] w-[4.8rem] -translate-x-1/2 -translate-y-[2.4rem] items-center justify-center'>
+                <span className='absolute top-0 left-1/2 z-[2] flex h-[4.8rem] w-[4.8rem] -translate-x-1/2 -translate-y-[2.4rem] items-center justify-center'>
                   {Icon}
                 </span>
                 <span className='h-[2.4rem] w-[2.4rem]' aria-hidden='true' />
