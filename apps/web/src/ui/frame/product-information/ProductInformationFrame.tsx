@@ -51,7 +51,7 @@ export default function ProductInformationFrame({
             isLiked={isLiked}
             handleClick={handleClickLike}
             aria-label={isLiked ? '좋아요 취소' : '좋아요'}
-            className={cn('h-[2.4rem] w-[2.4rem]', isLiked ? 'text-neon-black' : 'text-black-1')}
+            className={cn('h-[1.4rem] w-[1.4rem]', isLiked ? 'text-neon-black' : 'text-black-1')}
           />
         </div>
       </div>
