@@ -6,8 +6,6 @@ import { cn } from '@snappin/design-system/lib';
 import { IconStar } from '@snappin/design-system/assets';
 import { formatPrice } from '@snappin/shared/lib';
 
-import homeBackground1 from '../../../public/imgs/image-main1.png';
-
 type ProductCardRootProps = ProductCardProps & HTMLAttributes<HTMLDivElement>;
 
 export default function ProductCard({
@@ -26,7 +24,7 @@ export default function ProductCard({
     <div className={cn('flex w-full gap-[1.2rem]', className)} {...props}>
       <div className='relative h-[10.2rem] w-[10.2rem] shrink-0'>
         <Image
-          src={image.src === '' ? homeBackground1 : image.src}
+          src={image.src === '' ? './imgs/default-image.png' : image.src}
           alt={image.alt ?? `${name} 상품 이미지`}
           fill
           className='rounded-[0.4rem] object-cover'
