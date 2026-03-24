@@ -1,5 +1,5 @@
 {
-  "extends": "../typescript-config/base.json",
+  "extends": "@snappin/typescript-config/nextjs",
   "compilerOptions": {
     "jsx": "react-jsx"
   },
