@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
 import Footer from './Footer';
-import { USER_TYPE } from '@snappin/shared/types/userType';
+import { USER_TYPE } from '@snappin/shared/types';
 
 const meta: Meta<typeof Footer> = {
   title: 'UI/Footer',
