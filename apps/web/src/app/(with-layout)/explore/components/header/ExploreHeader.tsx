@@ -2,6 +2,7 @@ import { Tabs } from '@snappin/design-system';
 import ExploreFilter from '../filter/ExploreFilter';
 import { EXPLORE_TAB, EXPLORE_TAB_MAP, ExploreTab } from '../../constants/tab';
 import ExploreSearchButton from './ExploreSearchButton';
+import { ExploreResultToolbar } from '@/app/(with-layout)/explore/components';
 
 const TABS = [{ value: EXPLORE_TAB.PORTFOLIO }, { value: EXPLORE_TAB.PRODUCT }];
 
@@ -43,6 +44,7 @@ export default function ExploreHeader({
       </Tabs.List>
 
       <ExploreFilter />
+      <ExploreResultToolbar />
     </header>
   );
 }
