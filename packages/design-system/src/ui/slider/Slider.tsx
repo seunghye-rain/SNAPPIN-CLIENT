@@ -52,11 +52,11 @@ export default function Slider({
 
   const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
-    onChange([Math.min(newValue, endValue), endValue]);
+    onChange([Math.min(newValue, endValue - step), endValue]);
   };
   const handleEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
-    onChange([startValue, Math.max(newValue, startValue)]);
+    onChange([startValue, Math.max(newValue, startValue + step)]);
   };
 
   useEffect(() => {
