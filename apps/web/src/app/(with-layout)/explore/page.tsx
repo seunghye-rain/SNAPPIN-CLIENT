@@ -34,7 +34,6 @@ export default async function Explore({ searchParams }: ExplorePageProps) {
         portfolioTabHref={getTabHref(EXPLORE_TAB.PORTFOLIO)}
         productTabHref={getTabHref(EXPLORE_TAB.PRODUCT)}
       />
-
       <ExploreTabPanels currentTab={initialTab} />
     </div>
   );

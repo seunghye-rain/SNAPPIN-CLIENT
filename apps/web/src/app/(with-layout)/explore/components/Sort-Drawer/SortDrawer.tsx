@@ -25,13 +25,26 @@ export default function SortDrawer({
       <BottomDrawer.Section className='flex h-[29rem] flex-col gap-[0.6rem]'>
         <BottomDrawer.Title className='py-[2rem] text-center'>포트폴리오 정렬</BottomDrawer.Title>
         {['추천순', '인기순', '최신순'].map((option) => (
-          <SortOption key={option}>{option}</SortOption>
+          <SortOption key={option} label={option} close={handleOpenChangeAction} />
         ))}
       </BottomDrawer.Section>
     </BottomDrawer>
   );
 }
 
-const SortOption = ({ children }: { children: React.ReactNode }) => {
-  return <div className='text-black-9 font-16-md py-[2rem] text-center'>{children}</div>;
+const SortOption = ({ label, close }: { label: string; close: () => void }) => {
+  const handleClick = () => {
+    close();
+  };
+
+  return (
+    <button
+      type='button'
+      aria-label={label}
+      onClick={handleClick}
+      className='text-black-9 font-16-md py-[2rem] text-center'
+    >
+      {label}
+    </button>
+  );
 };

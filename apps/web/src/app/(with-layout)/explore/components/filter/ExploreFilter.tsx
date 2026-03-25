@@ -121,7 +121,7 @@ export default function ExploreFilter() {
   };
 
   return (
-    <div className='relative flex h-[5.5rem] items-center'>
+    <div className='flex h-[5.5rem] items-center'>
       {!isLoading && (
         <div className='scrollbar-hide flex w-full gap-[0.4rem] overflow-x-auto px-[2rem]'>
           {data?.moods?.map((mood) => (
