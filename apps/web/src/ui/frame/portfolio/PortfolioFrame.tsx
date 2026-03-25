@@ -1,10 +1,9 @@
 'use client';
 
+import { LikeButton } from '@snappin/design-system';
 import { cn } from '@snappin/design-system/lib';
 import ImageWithShadow from '../image-with-shadow/ImageWithShadow';
-import { IconHeart, IconHeartFill } from '@snappin/design-system/assets';
 import { RemUnit } from '../types/remUnit';
-import { IconButton, LikeButton } from '@snappin/design-system';
 
 type PortfolioFrameProps = {
   imageUrl: string;

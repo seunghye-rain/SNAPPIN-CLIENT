@@ -32,10 +32,9 @@ export default function ProductInformationFrame({
       <ImageWithShadow src={imageUrl} alt={alt} imageHeight={height} imageWidth={width} />
       <div className='absolute right-0 bottom-0 flex w-full flex-col items-center gap-[0.8rem] p-[1.2rem]'>
         <div className='text-black-1 flex w-full flex-col'>
-          <p className='caption-11-md'>{name}</p>
+          <p className='caption-11-md truncate'>{name}</p>
           <span className='caption-14-bd'>{price}원~</span>
         </div>
-
         <div className='text-black-4 flex w-full min-w-0 items-center gap-[0.8rem]'>
           <div className='flex min-w-0 flex-1 items-center gap-[0.8rem]'>
             <span className='caption-9-rg block min-w-0 truncate'>{photographer}</span>
@@ -44,7 +43,7 @@ export default function ProductInformationFrame({
                 <IconStar className='h-[0.8rem] w-[0.8rem]' />
                 <span className='caption-9-rg'>{rate}</span>
               </div>
-              <span className='caption-9-rg'>({reviewCount})</span>
+              <span className='caption-9-rg'>리뷰({reviewCount})</span>
             </div>
           </div>
           <LikeButton
