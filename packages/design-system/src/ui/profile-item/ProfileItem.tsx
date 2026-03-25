@@ -132,10 +132,7 @@ function ProfileItemRoot({ size = 'md', className, children, ...props }: Profile
   const hasTrailing = hasChildOfType(children, ProfileItemTrailing);
 
   return (
-    <div
-      className={cn(PROFILE_ITEM_BASE, PROFILE_ITEM_SIZE_THEME[size].root, className)}
-      {...props}
-    >
+    <div className={cn(PROFILE_ITEM_BASE, className)} {...props}>
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) return child;
 
