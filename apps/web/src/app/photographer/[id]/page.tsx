@@ -17,8 +17,7 @@ import {
 } from './api/server';
 import { PHOTOGRAPHER_TAB, PHOTOGRAPHER_TABS } from '@/app/photographer/[id]/constants/tab';
 import { Tabs } from '@snappin/design-system';
-import { PortfolioListSkeleton } from '@/ui/portfolio-list';
-import { ProductListSkeleton } from '@/ui/product-card';
+import { PortfolioListSkeleton, ProductListSkeleton } from '@/ui';
 
 type PageProps = {
   params: Promise<{ id: string }>;

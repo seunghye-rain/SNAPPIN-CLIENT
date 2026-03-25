@@ -6,3 +6,5 @@ export * from './toast/hooks/useToast';
 export * from './toast/toast.atom';
 export * from './toast/types/toast';
 export * from './frame/index';
+export * from './portfolio-list/index';
+export * from './product-card/index';

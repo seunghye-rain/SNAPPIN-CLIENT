@@ -1,8 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import { PortfolioListSkeleton } from '@/ui/portfolio-list';
-import { ProductListSkeleton } from '@/ui/product-card';
+import { PortfolioListSkeleton, ProductListSkeleton } from '@/ui';
 import PortfolioListSection from '../../_section/PortfolioListSection';
 import ProductListSection from '../../_section/ProductListSection';
 import { EXPLORE_TAB, ExploreTab } from '../../constants/tab';
