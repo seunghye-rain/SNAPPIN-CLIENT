@@ -1,10 +1,15 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { overlay } from 'overlay-kit';
 import SortDrawer from '@/app/(with-layout)/explore/components/Sort-Drawer/SortDrawer';
+import { EXPLORE_SORT_LABEL } from '../../constants/sort';
+import { resolveExploreSort } from '../../utils/query';
 
 export default function ExploreResultToolbar() {
   const count = 100;
+  const searchParams = useSearchParams();
+  const currentSort = resolveExploreSort(searchParams.get('sort'));
 
   return (
     <div className='flex flex-row items-center justify-between px-[2rem] py-[1.25rem]'>
@@ -19,7 +24,9 @@ export default function ExploreResultToolbar() {
           ))
         }
       >
-        <span className='caption-10-md text-black-8 w-[6.1rem]'>추천순</span>
+        <span className='caption-10-md text-black-8 w-[6.1rem]'>
+          {EXPLORE_SORT_LABEL[currentSort]}
+        </span>
       </button>
     </div>
   );

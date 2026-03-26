@@ -1,5 +1,6 @@
 import { SnapCategory } from '@/constants/categories/snap-category';
 import { ALLOWED_KEYS } from '../constants/query';
+import { EXPLORE_SORT, ExploreSort } from '../constants/sort';
 
 export const parseInitialDraft = (sp: URLSearchParams) => {
   const snapCategory = sp.get('snapCategory') as SnapCategory;
@@ -14,6 +15,16 @@ export const parseInitialDraft = (sp: URLSearchParams) => {
       : null;
 
   return { snapCategory, placeId, date, peopleCount, placeName };
+};
+
+export const resolveExploreSort = (
+  value: string | null | undefined,
+  fallback: ExploreSort = EXPLORE_SORT.RECOMMENDED,
+): ExploreSort => {
+  if (value === EXPLORE_SORT.RECOMMENDED) return value;
+  if (value === EXPLORE_SORT.POPULAR) return value;
+  if (value === EXPLORE_SORT.LATEST) return value;
+  return fallback;
 };
 
 type QueryParamRecord = Record<string, string | string[] | undefined>;
