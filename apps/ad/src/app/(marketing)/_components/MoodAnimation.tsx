@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { IconChips } from '@/src/assets';
+import { IconChips } from '@snappin/design-system/assets';
 
 type EscalatorChipsProps = {
   duration?: number;
