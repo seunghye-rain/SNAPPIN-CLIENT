@@ -10,7 +10,6 @@ const SIDE_OFFSET = 110;
 const CARD_VARIANTS = {
   left: {
     x: `-${SIDE_OFFSET}%`,
-    y: '-50%',
     scale: 0.92,
     opacity: 0.8,
     zIndex: 0,
@@ -18,7 +17,6 @@ const CARD_VARIANTS = {
   },
   center: {
     x: '0%',
-    y: '-50%',
     scale: 1,
     opacity: 1,
     zIndex: 10,
@@ -26,7 +24,6 @@ const CARD_VARIANTS = {
   },
   right: {
     x: `${SIDE_OFFSET}%`,
-    y: '-50%',
     scale: 0.92,
     opacity: 0.8,
     zIndex: 0,
@@ -65,36 +62,39 @@ export default function ImageSlide() {
   return (
     <div className='relative w-full overflow-hidden'>
       <div className='relative mx-auto flex h-[35.7rem] items-center justify-center'>
-          {visible.map(({ pos, item }) => (
-            <motion.div
-              key={item.photographerName}
-              className='absolute top-1/2'
-              variants={CARD_VARIANTS}
-              animate={pos}
-              initial={pos}
-              //애니메이션 속도 조절 : 키울 수록 느리게 이동
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              style={{ willChange: 'transform' }}
-            >
-              <ImageCarousel
-                src={item.imageUrl}
-                alt={item.photographerName}
-                imageWidth={pos === 'center' ? '24.2rem' : '20.2rem'}
-                imageHeight={pos === 'center' ? '35.7rem' : '29.7rem'}
-                className='rounded-[0.6rem]'
-              />
+        {visible.map(({ pos, index, item }) => (
+          <motion.div
+            key={index + item.imageUrl.toString() + item.photographerName}
+            className='absolute top-1/2 -translate-y-1/2'
+            variants={CARD_VARIANTS}
+            animate={pos}
+            initial={false}
+            //애니메이션 속도 조절 : 키울 수록 느리게 이동
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              willChange: 'transform',
+              transform: 'translateZ(0)',
+            }}
+          >
+            <ImageCarousel
+              src={item.imageUrl}
+              alt={item.photographerName}
+              imageWidth={pos === 'center' ? '24.2rem' : '20.2rem'}
+              imageHeight={pos === 'center' ? '35.7rem' : '29.7rem'}
+              className='rounded-[0.6rem]'
+            />
 
-              {/* 오버레이 */}
-              <div className='pointer-events-none absolute bottom-[1.3rem] left-[1.2rem] z-40 flex flex-col gap-[0.8rem]'>
-                <div className='flex gap-[0.6rem]'>
-                  {center.moods.map((mood) => (
-                    <TagChip key={mood} mood={mood} />
-                  ))}
-                </div>
-                <p className='caption-12-md text-black-1'>{item.photographerName}</p>
+            {/* 오버레이 */}
+            <div className='pointer-events-none absolute bottom-[1.3rem] left-[1.2rem] z-40 flex flex-col gap-[0.8rem]'>
+              <div className='flex gap-[0.6rem]'>
+                {center.moods.map((mood) => (
+                  <TagChip key={mood} mood={mood} />
+                ))}
               </div>
-            </motion.div>
-          ))}
+              <p className='caption-12-md text-black-1'>{item.photographerName}</p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   );
