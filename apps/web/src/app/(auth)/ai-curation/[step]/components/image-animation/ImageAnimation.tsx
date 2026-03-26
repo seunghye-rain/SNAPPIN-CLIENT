@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useState, startTransition } from 'react';
 import { cn } from '@snappin/design-system/lib/cn';
-import type { GetPhotoResponse } from '@/swagger-api';
 import { useToast } from '@/ui';
 import { useGetAiCurationAll } from '../../api';
 import { type STEP } from '../../constants/steps';
