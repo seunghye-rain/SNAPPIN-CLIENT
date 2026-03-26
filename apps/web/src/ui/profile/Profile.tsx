@@ -206,9 +206,11 @@ function ProfileRoot({ size = 'md', className, children, ...props }: ProfileProp
         const element = child as React.ReactElement<{ className?: string }>;
 
         if (element.type === ProfileAvatar) {
-          return React.cloneElement(element, {
+          const avatarElement = element as React.ReactElement<ProfileItemAvatarProps>;
+
+          return React.cloneElement(avatarElement, {
             className: cn(hasTrailing ? 'mr-[1.95rem]' : 'mr-[1.2rem]', element.props.className),
-            size: element.props.size ?? size,
+            size: avatarElement.props.size ?? size,
           });
         }
 
