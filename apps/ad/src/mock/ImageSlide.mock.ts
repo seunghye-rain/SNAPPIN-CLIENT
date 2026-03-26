@@ -1,6 +1,6 @@
-import ImageBanner1 from "@/public/imgs/image-banner1.png"
-import ImageBanner2 from "@/public/imgs/image-banner2.png"
-import ImageBanner3 from "@/public/imgs/image-banner3.png"
+import ImageBanner1 from "@/public/imgs/image-banner1.png";
+import ImageBanner2 from "@/public/imgs/image-banner2.png";
+import ImageBanner3 from "@/public/imgs/image-banner3.png";
 
 export const IMAGE_SLIDE_MOCK = {
   portfolios: [

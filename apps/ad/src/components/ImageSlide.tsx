@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import ImageCarousel from '@/src/components/ImageCarousel'
+import { useEffect, useMemo, useState } from 'react';
+import ImageCarousel from '@/src/components/ImageCarousel';
 import { IMAGE_SLIDE_MOCK } from '../mock/ImageSlide.mock';
 
 const SIDE_OFFSET = 110;

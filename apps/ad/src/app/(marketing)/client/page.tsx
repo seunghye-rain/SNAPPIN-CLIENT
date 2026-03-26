@@ -1,7 +1,7 @@
+import Image from "next/image";
 import ImageClientMoodTest from "@/public/imgs/image-client-mood.png";
 import ImageClientProduct from "@/public/imgs/image-client-product.png";
 import ImageClientReserve from "@/public/imgs/image-client-reserve.png";
-import Image from "next/image";
 import MoodAnimation from "../_components/MoodAnimation";
 import ClientButton from "./components/ClientButton";
 

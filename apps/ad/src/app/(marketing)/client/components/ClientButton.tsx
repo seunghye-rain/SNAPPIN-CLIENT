@@ -1,6 +1,7 @@
-'use client'
-import Button from '@/src/components/Button'
+'use client';
+
 import { useRouter } from 'next/navigation';
+import Button from '@/src/components/Button';
 
 type ClientButtonProps = {
   buttonText: string;
