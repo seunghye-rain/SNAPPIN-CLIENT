@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
+import { cn } from '@snappin/design-system/lib';
+import { IconKeyboardArrowRight } from '@snappin/design-system/assets';
 import {
   PROFILE_BASE,
   PROFILE_DESCRIPTION_TYPOGRAPHY_MAP,
@@ -9,8 +11,6 @@ import {
   PROFILE_TITLE_TYPOGRAPHY_MAP,
 } from './constants/theme';
 import { ProfileContentLines, ProfileSize } from './types/variant';
-import { cn } from '@snappin/design-system/lib';
-import { IconKeyboardArrowRight } from '@snappin/design-system/assets';
 
 type ProfileProps = React.HTMLAttributes<HTMLElement> & {
   children?: React.ReactNode;
@@ -207,11 +207,8 @@ function ProfileRoot({ size = 'md', className, children, ...props }: ProfileProp
 
         if (element.type === ProfileAvatar) {
           return React.cloneElement(element, {
-            className: cn(
-              hasTrailing ? 'mr-[1.95rem]' : 'mr-[1.2rem]',
-              element.props.className,
-              PROFILE_SIZE_THEME[size].avatar,
-            ),
+            className: cn(hasTrailing ? 'mr-[1.95rem]' : 'mr-[1.2rem]', element.props.className),
+            size: element.props.size ?? size,
           });
         }
 
