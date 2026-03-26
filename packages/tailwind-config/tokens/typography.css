@@ -27,6 +27,13 @@
     letter-spacing: -0.3px;
   }
 
+  .title-20-sb {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+  }
+
   .title-20-bd {
     font-size: 2rem;
     font-weight: 600;
