@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { cn } from '@/src/utils/cn';
+import { cn } from '@snappin/design-system/lib';
 
 type RemUnit = `${number}rem`;
 

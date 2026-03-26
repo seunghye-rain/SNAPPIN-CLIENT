@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import { IconArrows } from '@/src/assets';
-import { cn } from '@/src/utils/cn';
+import { cn } from '@snappin/design-system/lib';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   buttonText: string;
