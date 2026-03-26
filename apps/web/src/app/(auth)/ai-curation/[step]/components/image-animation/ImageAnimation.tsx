@@ -2,46 +2,13 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useState, startTransition } from 'react';
-import { motion } from 'framer-motion';
+import { cn } from '@snappin/design-system/lib/cn';
 import type { GetPhotoResponse } from '@/swagger-api';
 import { useToast } from '@/ui';
-import { cn } from '@snappin/design-system/lib/cn';
 import { useAiCuration } from '../../../hooks/useAiCuration';
 
 type ImageAnimationProps = {
   images: GetPhotoResponse[];
-};
-
-type Pose = {
-  left?: string;
-  top?: string;
-  right?: string;
-  bottom?: string;
-  rotate: number;
-};
-
-type PoseSet = { default: Pose; animation: Pose };
-
-const POSE_KEYS = ['leftTop', 'rightTop', 'leftBottom', 'rightBottom'] as const;
-type PoseKeys = (typeof POSE_KEYS)[number];
-
-const POSES_ANIMATION: Record<PoseKeys, PoseSet> = {
-  leftTop: {
-    default: { left: '8%', top: '6%', rotate: -12 },
-    animation: { left: '8%', top: '6%', rotate: -10 },
-  },
-  rightTop: {
-    default: { right: '8%', top: '10%', rotate: 9.6 },
-    animation: { right: '8%', top: '10%', rotate: 4.6 },
-  },
-  leftBottom: {
-    default: { left: '8%', top: '56%', rotate: -6 },
-    animation: { left: '8%', top: '56%', rotate: -2 },
-  },
-  rightBottom: {
-    default: { right: '8%', top: '60%', rotate: 17 },
-    animation: { right: '8%', top: '60%', rotate: 14 },
-  },
 };
 
 export default function ImageAnimation({ images }: ImageAnimationProps) {
@@ -51,7 +18,6 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
     [images],
   );
 
-  const [isAnimating, setIsAnimating] = useState(false);
   const [loadingImages, setLoadingImages] = useState<Set<number>>(new Set());
   const { selectedByStep, currentStep, toggleImageId } = useAiCuration();
 
@@ -69,7 +35,6 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
       return;
     }
     toggleImageId(id);
-    setIsAnimating((prev) => !prev);
   };
 
   const handleImageLoad = (id: number) => {
@@ -81,28 +46,24 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
   };
 
   return (
-    <div className='relative flex h-[41.5rem] w-full justify-center'>
-      <div className='relative h-[41.5rem] w-full'>
-        {sorted.map((img, idx) => {
-          const poseKey = POSE_KEYS[idx % POSE_KEYS.length];
-          const pose = POSES_ANIMATION[poseKey];
+    <div className='flex w-full justify-center'>
+      <div className='grid w-full grid-cols-2 gap-[0.4rem]'>
+        {sorted.map((img) => {
           const imageId = img.id ?? 0;
           const isLoading = loadingImages.has(imageId);
 
           return (
-            <motion.button
+            <button
               key={img.id}
               type='button'
               className={cn(
-                'absolute h-[19.3rem] w-[14.5rem] overflow-hidden rounded-[0.6rem]',
-                selectedByStep[currentStep] === img.id && 'border-neon-black z-10 border-[3px]',
+                'relative aspect-[3/4] w-full overflow-hidden rounded-[0.4rem] border-[3px] border-transparent',
+                selectedByStep[currentStep] === img.id && 'border-neon-black z-10',
                 selectedByStep[currentStep] &&
                   selectedByStep[currentStep] !== img.id &&
                   'opacity-80 brightness-[0.6]',
               )}
               onClick={() => handleSelect(img.id ?? 0, isLoading)}
-              initial={false}
-              animate={isAnimating ? pose.animation : pose.default}
             >
               {isLoading && <div className='bg-black-8 absolute inset-0 animate-pulse' />}
               <Image
@@ -119,7 +80,7 @@ export default function ImageAnimation({ images }: ImageAnimationProps) {
                 onLoadingComplete={() => handleImageLoad(imageId)}
                 onError={() => handleImageLoad(imageId)}
               />
-            </motion.button>
+            </button>
           );
         })}
       </div>

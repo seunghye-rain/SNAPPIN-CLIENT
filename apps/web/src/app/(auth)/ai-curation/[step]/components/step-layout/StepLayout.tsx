@@ -8,7 +8,7 @@ type StepLayoutProps = {
   question: GetQuestionResponse;
   photos: GetPhotoResponse[];
 };
-
+//TODO: 질문 프론트에서 저장되도록 수정
 export default function StepLayout({ question, photos }: StepLayoutProps) {
   return (
     <div className='flex flex-col gap-[4.2rem]'>
