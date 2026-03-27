@@ -5,6 +5,7 @@ import { overlay } from 'overlay-kit';
 import SortDrawer from '@/app/(with-layout)/explore/components/Sort-Drawer/SortDrawer';
 import { EXPLORE_SORT_LABEL } from '../../constants/sort';
 import { resolveExploreSort } from '../../utils/query';
+import { IconSortArrowDown } from '@snappin/design-system/assets';
 
 export default function ExploreResultToolbar() {
   const count = 100;
@@ -17,16 +18,15 @@ export default function ExploreResultToolbar() {
       <button
         type='button'
         aria-label='정렬 버튼'
-        className='bg-black-1 border-black-4 rounded-[0.4rem] border-[0.1rem] px-[1rem] py-[0.6rem]'
+        className='bg-black-1 border-black-4 flex w-[6.1rem] flex-row items-center gap-[0.4rem] rounded-[0.4rem] border-[0.1rem] px-[1rem] py-[0.6rem]'
         onClick={() =>
           overlay.open(({ isOpen, close }) => (
             <SortDrawer isOpen={isOpen} handleOpenChangeAction={close} />
           ))
         }
       >
-        <span className='caption-10-md text-black-8 w-[6.1rem]'>
-          {EXPLORE_SORT_LABEL[currentSort]}
-        </span>
+        <span className='caption-10-md text-black-8'>{EXPLORE_SORT_LABEL[currentSort]}</span>
+        <IconSortArrowDown className='text-black-8' />
       </button>
     </div>
   );

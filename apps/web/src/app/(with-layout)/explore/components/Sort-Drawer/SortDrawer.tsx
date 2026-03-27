@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BottomDrawer, DrawerDescription, DrawerTitle } from '@snappin/design-system';
+import { IconCheck } from '@snappin/design-system/assets';
 import { EXPLORE_SORT_LABEL, EXPLORE_SORT_OPTIONS, ExploreSort } from '../../constants/sort';
 import { resolveExploreSort } from '../../utils/query';
 
@@ -29,11 +30,7 @@ export default function SortDrawer({
   };
 
   return (
-    <BottomDrawer
-      isOpen={isOpen}
-      handleOpenChange={handleOpenChangeAction}
-      className='max-h-[42dvh]!'
-    >
+    <BottomDrawer isOpen={isOpen} handleOpenChange={handleOpenChangeAction}>
       <DrawerTitle className='sr-only'>정렬 옵션 선택</DrawerTitle>
       <DrawerDescription className='sr-only'>
         정렬 옵션을 선택하는 드로어입니다. 원하는 정렬을 선택하면 바로 적용됩니다.
@@ -68,9 +65,17 @@ const SortOption = ({
       aria-label={label}
       aria-pressed={isSelected}
       onClick={onClick}
-      className='text-black-9 font-16-md py-[2rem] text-center'
+      className='text-black-9 font-16-md relative h-[6.1rem] w-full py-[2rem] text-center'
     >
-      {label}
+      <span className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap'>
+        {isSelected && (
+          <IconCheck
+            aria-hidden='true'
+            className='text-black-10 absolute top-1/2 right-[calc(100%+2.4rem)] h-[1.1rem] w-[1.5rem] -translate-y-1/2'
+          />
+        )}
+        {label}
+      </span>
     </button>
   );
 };
