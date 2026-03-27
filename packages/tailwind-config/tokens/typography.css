@@ -20,6 +20,13 @@
     letter-spacing: -0.3px;
   }
 
+  .title-24-md {
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+  }
+
   .title-23-eb {
     font-size: 2.3rem;
     font-weight: 700;
