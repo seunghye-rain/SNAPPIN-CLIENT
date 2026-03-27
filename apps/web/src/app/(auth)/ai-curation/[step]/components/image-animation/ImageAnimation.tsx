@@ -67,6 +67,8 @@ export default function ImageAnimation({ step }: ImageAnimationProps) {
                   selectedByStep[step] !== img.id &&
                   'opacity-80 brightness-[0.6]',
               )}
+              aria-label={`질문 ${step} 선택지 ${img.order ?? imageId}`}
+              aria-pressed={selectedByStep[step] === img.id}
               onClick={() => handleSelect(img.id ?? 0, isLoading)}
             >
               {isLoading && (
