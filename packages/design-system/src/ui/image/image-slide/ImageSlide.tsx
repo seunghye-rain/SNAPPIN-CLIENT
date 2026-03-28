@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { MoodCode } from '@snappin/shared/types';
 import { TagChip, ImageWithShadow } from '@snappin/design-system';
 import { TagChipVariant } from '../../chip/tag-chip/types/tagChipVariant';
+import { i } from 'framer-motion/m';
 
 type Image = {
   imageUrl: string;
@@ -44,8 +45,9 @@ const CARD_VARIANTS = {
 } as const;
 
 export default function ImageSlide({ data, tagChipVariant = 'transparent' }: ImageSlideProps) {
+  if (data.length === 0) return null;
+  
   const [activeIndex, setActiveIndex] = useState(0);
-
   const len = data.length;
 
   useEffect(() => {
