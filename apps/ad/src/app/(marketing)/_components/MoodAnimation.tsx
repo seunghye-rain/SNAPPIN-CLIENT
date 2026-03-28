@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { IconChips } from '@snappin/design-system/assets';
 
-type EscalatorChipsProps = {
+type MoodAnimationProps = {
   duration?: number;
   tiltDeg?: number;
 };
@@ -11,7 +11,7 @@ type EscalatorChipsProps = {
 export default function MoodAnimation({
   duration = 25,
   tiltDeg = -8,
-}: EscalatorChipsProps) {
+}: MoodAnimationProps) {
   return (
     <div className="relative w-full mt-[3rem]">
       {/* 위 띠: 왼 → 오 */}

@@ -12,7 +12,7 @@ export default function Page() {
       <ImageSlide />
 
       <div className="flex flex-col items-center gap-[2.1rem] absolute bottom-[2rem]">
-        <h1 className="title-20-bd">26.01.24 오픈 예정</h1>
+        <h2 className="title-20-bd">26.01.24 오픈 예정</h2>
         <ClientFooter />
       </div>
     </div>

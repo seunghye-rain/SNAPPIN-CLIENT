@@ -14,9 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='ko'>
       <body>
       {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
-					<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
-				) : null}
-        <Providers>{children}</Providers>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
+      <Providers>{children}</Providers>
       </body>
     </html>
   );
