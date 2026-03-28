@@ -6,7 +6,7 @@ import ClientFooter from "./components/ClientFooter";
 
 export default function Page() {
   return (
-    <div className="flex flex-col px-[2rem] w-full items-center">
+    <main className="flex flex-col px-[2rem] w-full items-center">
       <div className="flex flex-col gap-[4.2rem] w-full">
         <div className="flex flex-col gap-[0.7rem] text-center">
           <h2 className="text-black-1  title-23-eb">
@@ -37,6 +37,6 @@ export default function Page() {
         <Image src={ImagePhotographerRegister} alt="작가 포트폴리오 이미지" />
       </div>
       <ClientFooter />
-    </div>
+    </main>
   );
 }
