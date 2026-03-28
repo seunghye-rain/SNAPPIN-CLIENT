@@ -17,6 +17,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           className="object-cover"
         />
 
+        {/* 하단 그라디언트 */}
+        <div className="absolute bottom-0 left-0 right-0 h-[3rem] bg-linear-to-t from-black-10 to-transparent" />
+
         {/* 이미지 위 오버레이 */}
         <div className="absolute inset-0 flex flex-col items-center justify-between">
           <Logo className="text-neon-black w-[27rem] h-[5.6rem] mt-[6.1rem]" />
