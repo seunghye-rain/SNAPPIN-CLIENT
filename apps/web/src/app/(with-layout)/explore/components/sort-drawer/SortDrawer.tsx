@@ -5,10 +5,12 @@ import { BottomDrawer, DrawerDescription, DrawerTitle } from '@snappin/design-sy
 import { IconCheck } from '@snappin/design-system/assets';
 import { EXPLORE_SORT_LABEL, EXPLORE_SORT_OPTIONS, ExploreSort } from '../../constants/sort';
 import { resolveExploreSort } from '../../utils/query';
+import { EXPLORE_TAB_MAP, ExploreTab } from '@/app/(with-layout)/explore/constants/tab';
 
 type SortDrawerProps = {
   isOpen: boolean;
   handleOpenChangeAction: () => void;
+  currentTab: ExploreTab;
 };
 
 const SortOption = ({
@@ -23,8 +25,9 @@ const SortOption = ({
   return (
     <button
       type='button'
+      role='menuitemradio'
       aria-label={label}
-      aria-pressed={isSelected}
+      aria-checked={isSelected}
       onClick={onClick}
       className='text-black-9 font-16-md relative h-[6.1rem] w-full py-[2rem] text-center'
     >
@@ -41,7 +44,11 @@ const SortOption = ({
   );
 };
 
-export default function SortDrawer({ isOpen, handleOpenChangeAction }: SortDrawerProps) {
+export default function SortDrawer({
+  isOpen,
+  handleOpenChangeAction,
+  currentTab,
+}: SortDrawerProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -63,7 +70,7 @@ export default function SortDrawer({ isOpen, handleOpenChangeAction }: SortDrawe
         정렬 옵션을 선택하는 드로어입니다. 원하는 정렬을 선택하면 바로 적용됩니다.
       </DrawerDescription>
       <BottomDrawer.Section className='flex h-[29rem] flex-col gap-[0.6rem]'>
-        <BottomDrawer.Title className='py-[2rem] text-center'>포트폴리오 정렬</BottomDrawer.Title>
+        <BottomDrawer.Title className='py-[2rem] text-center'>{`${EXPLORE_TAB_MAP[currentTab]} 정렬`}</BottomDrawer.Title>
         {EXPLORE_SORT_OPTIONS.map((option) => (
           <SortOption
             key={option}
