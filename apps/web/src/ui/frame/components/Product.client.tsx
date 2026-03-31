@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@snappin/design-system/lib';
 import { LikeButton } from '@snappin/design-system';
 

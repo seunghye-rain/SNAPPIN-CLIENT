@@ -1,12 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProductInformationFrame from './ProductInformationFrame';
+
+const queryClient = new QueryClient();
 
 const meta: Meta<typeof ProductInformationFrame> = {
   title: 'UI/Frame/ProductInformationFrame',
   component: ProductInformationFrame,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component:
@@ -14,7 +17,18 @@ const meta: Meta<typeof ProductInformationFrame> = {
       },
     },
   },
+  render: (args) => (
+    <QueryClientProvider client={queryClient}>
+      <div style={{ width: '18.65rem' }}>
+        <ProductInformationFrame {...args} />
+      </div>
+    </QueryClientProvider>
+  ),
   argTypes: {
+    id: {
+      control: { type: 'number', min: 0 },
+      description: '상품 식별자',
+    },
     name: {
       control: 'text',
       description: '상품명',
@@ -39,24 +53,20 @@ const meta: Meta<typeof ProductInformationFrame> = {
       control: 'boolean',
       description: '좋아요 여부',
     },
-    handleClickLike: {
-      action: 'clicked',
-      description: '좋아요 버튼 클릭 핸들러',
-    },
     width: {
       control: 'text',
-      description: '이미지 너비',
+      description: '카드 너비 (예: 18.65rem, 100%)',
     },
     height: {
       control: 'text',
-      description: '이미지 높이',
+      description: '이미지 높이 (예: 26.6rem)',
     },
     moods: {
       table: {
         disable: true,
       },
     },
-    className: {
+    imageClassName: {
       table: {
         disable: true,
       },
@@ -68,6 +78,7 @@ const meta: Meta<typeof ProductInformationFrame> = {
     },
   },
   args: {
+    id: 1,
     image: {
       src: '/imgs/default-image.png',
       alt: '임시 이미지',
