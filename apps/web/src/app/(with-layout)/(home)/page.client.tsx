@@ -1,15 +1,16 @@
 'use client';
 
-import { useNavVisibility } from '@/hooks/useNavVisibility';
-import { ClientHeader } from './components';
 import { MOOD_CODE } from '@snappin/shared/types';
 import { FilterChip } from '@snappin/design-system';
-import ProductList from '@/ui/frame/product/ProductList';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
+import { useSelectedMoodCode } from '@/hooks/useSelectedMoodCode';
+import { ProductInformationFrameList } from '@/ui';
+import { ClientHeader, AiCurationButton } from './components';
 import { MOCK } from './mock/mock';
-import AiCurationButton from './components/ai-curation-button/AiCurationButton';
 
 export default function PageClient() {
   const { isVisible } = useNavVisibility();
+  const { isSelectedMoodCode, toggleMoodCode } = useSelectedMoodCode();
 
   return (
     <div className='relative flex w-full flex-col'>
@@ -23,12 +24,17 @@ export default function PageClient() {
             <div className='scrollbar-hide w-full overflow-x-auto'>
               <div className='flex gap-[0.4rem] px-[2rem] py-[1.2rem]'>
                 {MOOD_CODE.map((mood) => (
-                  <FilterChip isSelected={true} key={mood} label={mood} />
+                  <FilterChip
+                    key={mood}
+                    label={mood}
+                    isSelected={isSelectedMoodCode(mood)}
+                    onClick={toggleMoodCode}
+                  />
                 ))}
                 <div className='w-[2rem] shrink-0' />
               </div>
             </div>
-            <ProductList products={MOCK} />
+            <ProductInformationFrameList products={MOCK} />
           </div>
         </section>
         {/*  무드 큐레이션 영역 */}
