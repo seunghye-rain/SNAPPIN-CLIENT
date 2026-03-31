@@ -1,4 +1,6 @@
-﻿import { Button } from '@snappin/design-system';
+﻿'use client';
+
+import { Button } from '@snappin/design-system';
 import { cn } from '@snappin/design-system/lib/cn';
 import type { SnapCategory } from '@/constants/categories/snap-category';
 import { useGetCategories } from '@/app/(with-layout)/explore/api';
