@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProductInformationFrame from './ProductInformationFrame';
-
-const queryClient = new QueryClient();
 
 const meta: Meta<typeof ProductInformationFrame> = {
   title: 'UI/Frame/ProductInformationFrame',
@@ -18,11 +15,9 @@ const meta: Meta<typeof ProductInformationFrame> = {
     },
   },
   render: (args) => (
-    <QueryClientProvider client={queryClient}>
-      <div style={{ width: '18.65rem' }}>
-        <ProductInformationFrame {...args} />
-      </div>
-    </QueryClientProvider>
+    <div style={{ width: '18.65rem' }}>
+      <ProductInformationFrame {...args} />
+    </div>
   ),
   argTypes: {
     id: {

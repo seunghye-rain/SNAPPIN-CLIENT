@@ -9,7 +9,7 @@ const meta: Meta<typeof PortfolioFrame> = {
     layout: 'padded',
   },
   render: (args) => (
-    <div style={{ width: '18.65rem' }}>
+    <div style={{ width: args.width ?? '18.65rem' }}>
       <PortfolioFrame {...args} />
     </div>
   ),
@@ -56,5 +56,12 @@ export const Liked: Story = {
   args: {
     isLiked: true,
     likesCount: 256,
+  },
+};
+
+export const CustomSize: Story = {
+  args: {
+    width: '24rem',
+    height: '30rem',
   },
 };
