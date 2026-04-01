@@ -25,32 +25,33 @@ export default function PriceSlider({
   onChange,
 }: PriceSliderProps) {
   return (
-    <div className='py-[1.5rem]'>
-      <div className='flex flex-col gap-[2.4rem] px-[1.5rem] py-[1.5rem]'>
-        <span className='font-16-md text-black-10'>촬영 가격</span>
-        <div className='font-16-md text-black-10 flex justify-center gap-[0.4rem]'>
-          <div>
-            {to만원(value[0])}만원 ~ {to만원(value[1])}만원
-          </div>
+    <div className='flex flex-col gap-[2.4rem] px-[0.75rem]'>
+      <span className='font-16-md text-black-10'>촬영 가격</span>
+      <div className='font-16-md text-black-10 flex justify-center gap-[0.4rem]'>
+        <div>
+          {to만원(value[0])}만원 ~ {to만원(value[1])}만원
         </div>
-        <Slider min={min} max={max} step={step} value={value} onChange={onChange} />
-        <div className='flex flex-row justify-between gap-[0.6rem]'>
-          <FilterChip
-            label={`${to만원(QUICK_MIN_PRICE)}만 원 미만`}
-            isSelected={false}
-            onClick={() => onChange([0, QUICK_MIN_PRICE])}
-          />
-          <FilterChip
-            label={`${to만원(QUICK_MIN_PRICE)} ~ ${to만원(QUICK_MAX_PRICE)}만 원`}
-            isSelected={false}
-            onClick={() => onChange([QUICK_MIN_PRICE, QUICK_MAX_PRICE])}
-          />
-          <FilterChip
-            label={`${to만원(QUICK_MAX_PRICE)}만 원 이상`}
-            isSelected={false}
-            onClick={() => onChange([QUICK_MAX_PRICE, MAX_PRICE])}
-          />
-        </div>
+      </div>
+      <Slider min={min} max={max} step={step} value={value} onChange={onChange} />
+      <div className='flex flex-row justify-between gap-[0.6rem] py-[0.75rem]'>
+        <FilterChip
+          label={`${to만원(QUICK_MIN_PRICE)}만 원 미만`}
+          isSelected={false}
+          onClick={() => onChange([0, QUICK_MIN_PRICE])}
+          className='w-full'
+        />
+        <FilterChip
+          label={`${to만원(QUICK_MIN_PRICE)} ~ ${to만원(QUICK_MAX_PRICE)}만 원`}
+          isSelected={false}
+          onClick={() => onChange([QUICK_MIN_PRICE, QUICK_MAX_PRICE])}
+          className='w-full'
+        />
+        <FilterChip
+          label={`${to만원(QUICK_MAX_PRICE)}만 원 이상`}
+          isSelected={false}
+          onClick={() => onChange([QUICK_MAX_PRICE, MAX_PRICE])}
+          className='w-full'
+        />
       </div>
     </div>
   );

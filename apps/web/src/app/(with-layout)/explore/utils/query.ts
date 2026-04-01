@@ -1,7 +1,7 @@
 import { SnapCategory } from '@/constants/categories/snap-category';
 import { EXPLORE_SORT, ExploreSort } from '@/app/(with-layout)/explore/constants/sort';
 import { ALLOWED_KEYS } from '@/app/(with-layout)/explore/constants/query';
-import { MAX_PRICE, MIN_PRICE } from '@/app/(with-layout)/explore/constants/price';
+import { INITIAL_MAX_PRICE, INITIAL_MIN_PRICE } from '@/app/(with-layout)/explore/constants/price';
 
 const parseNumberParam = (value: string | null) => {
   if (value === null || value === '') return null;
@@ -21,10 +21,10 @@ export const parseMoodIds = (sp: URLSearchParams) => {
 };
 
 export const parsePriceRange = (sp: URLSearchParams): [number, number] => {
-  const minPrice = parseNumberParam(sp.get('minPrice')) ?? MIN_PRICE;
-  const maxPrice = parseNumberParam(sp.get('maxPrice')) ?? MAX_PRICE;
+  const minPrice = parseNumberParam(sp.get('minPrice')) ?? INITIAL_MIN_PRICE;
+  const maxPrice = parseNumberParam(sp.get('maxPrice')) ?? INITIAL_MAX_PRICE;
 
-  if (minPrice > maxPrice) return [MIN_PRICE, MAX_PRICE];
+  if (minPrice > maxPrice) return [INITIAL_MIN_PRICE, INITIAL_MAX_PRICE];
 
   return [minPrice, maxPrice];
 };
