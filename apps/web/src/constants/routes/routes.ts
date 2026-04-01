@@ -6,7 +6,7 @@ export const ROUTES = {
   AI_CURATION: '/ai-curation',
   AI_CURATION_STEP: (step: number) => `/ai-curation/${step}`,
   AI_CURATION_RESULT: '/ai-curation/result',
-
+  ON_BOARDING: (step: number) => `/on-boarding/${step}`,
   EXPLORE: (params?: Params) => `/explore${params ? getQueryParams(params) : ''}`,
   LIKE: '/like',
   PROFILE: '/profile',
