@@ -32,7 +32,7 @@ export default function ProductFrame({
   return (
     <Link
       href={`/product/${id}`}
-      className='flex w-full flex-col overflow-hidden'
+      className='flex flex-col overflow-hidden'
       style={{ width: width }}
     >
       <div className='relative overflow-hidden'>

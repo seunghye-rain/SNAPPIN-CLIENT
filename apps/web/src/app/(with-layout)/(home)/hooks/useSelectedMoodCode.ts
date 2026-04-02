@@ -22,15 +22,8 @@ export function useSelectedMoodCode(initialMoodCodes: MoodCode[] = []) {
     return selectedMoodCodes.includes(moodCode);
   };
 
-  const resetSelectedMoodCodes = () => {
-    setSelectedMoodCodes([]);
-  };
-
   return {
-    selectedMoodCodes,
     toggleMoodCode,
     isSelectedMoodCode,
-    resetSelectedMoodCodes,
-    setSelectedMoodCodes,
   };
 }
