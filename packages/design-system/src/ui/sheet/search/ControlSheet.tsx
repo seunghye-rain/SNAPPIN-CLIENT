@@ -41,7 +41,7 @@ const ControlSheetField = ({
   return (
     <div
       className={cn(
-        'flex w-full flex-col border-solid border-transparent',
+        'flex w-full flex-col',
         variant === 'default' && 'bg-black-3 p-[1.5rem]',
         variant === 'default' && active && 'bg-black-1 gap-[1rem]',
         variant === 'plain' && active && 'gap-[1rem]',
