@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { PortfolioList } from '@/ui/portfolio-list';
-import { useGetPortfolioList } from '../api';
+import { useGetPortfolioList } from '@/app/product/[id]/api';
 
 type PortfolioListSectionProps = {
   productId: number;

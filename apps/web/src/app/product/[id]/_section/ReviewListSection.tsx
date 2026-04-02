@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Button, Divider, ReviewStar } from '@snappin/design-system';
-import { formatShortDate } from '@/utils/formatDate';
 import { useAuth } from '@/auth/hooks/useAuth';
-import { useGetProductReviewList } from '../api';
+import { formatShortDate } from '@/utils/formatDate';
+import { useGetProductReviewList } from '@/app/product/[id]/api';
 
 type ReviewListSectionProps = {
   productId: number;

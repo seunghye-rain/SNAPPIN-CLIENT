@@ -7,8 +7,8 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { ROUTES } from '@/constants/routes/routes';
 import { useToast } from '@/ui';
 import { Button, BottomCTAButton, ResultModal } from '@snappin/design-system';
-import { ReservationDraft } from '../../types/reservation';
-import ReservationBottomDrawer from '../reservation-bottom-drawer/ReservationBottomDrawer';
+import { ReservationDraft } from '@/app/product/[id]/types/reservation';
+import ReservationBottomDrawer from '@/app/product/[id]/components/reservation-bottom-drawer/ReservationBottomDrawer';
 
 type FooterProps = {
   productId: number;

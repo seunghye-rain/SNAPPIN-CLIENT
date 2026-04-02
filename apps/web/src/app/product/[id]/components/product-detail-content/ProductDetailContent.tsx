@@ -13,12 +13,12 @@ import {
   ProductDetailSection,
   ProductMainSection,
   ReviewListSection,
-} from '../../_section';
-import Footer from '../footer/Footer';
-// import { useGetProductDetail } from '../../api';
-import { PRODUCT_TAB, PRODUCT_TABS } from '../../constants/tab';
-import { ReviewListSectionSkeleton } from '../../_section/ReviewListSection';
-import { MOCK } from '../../mocks/mock';
+} from '@/app/product/[id]/_section';
+import { Footer } from '@/app/product/[id]/components';
+// import { useGetProductDetail } from '@/app/product/[id]/api';
+import { PRODUCT_TAB, PRODUCT_TABS } from '@/app/product/[id]/constants/tab';
+import { ReviewListSectionSkeleton } from '@/app/product/[id]/_section/ReviewListSection';
+import { MOCK } from '@/app/product/[id]/mocks/mock';
 
 type ProductDetailContentProps = {
   productId: number;

@@ -6,7 +6,7 @@ import { formatPrice } from '@snappin/shared/lib';
 import { MoodCode } from '@snappin/shared/types';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useToast } from '@/ui';
-import { useWishProduct } from '../api';
+import { useWishProduct } from '@/app/product/[id]/api';
 
 type ProductMainSectionProps = {
   id: number;
