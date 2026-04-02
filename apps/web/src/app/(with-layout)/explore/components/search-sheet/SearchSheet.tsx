@@ -174,7 +174,11 @@ function SearchSheetContent({
         className='px-[2rem] py-[1.3rem]'
       />
       <div className='mt-[2.1rem] flex flex-col gap-[3.5rem]'>
-        <ControlSheet.Field label='촬영 장소' active={true} className='border-none px-[2.5rem]'>
+        <ControlSheet.Field
+          label='촬영 장소'
+          active={true}
+          className='gap-[0.3rem] border-none px-[2.5rem]'
+        >
           <ComboBox
             key={placeFieldKey}
             placeholder='장소 이름을 검색해 주세요'
@@ -194,7 +198,12 @@ function SearchSheetContent({
 
         <Divider color='bg-black-4' />
 
-        <ControlSheet.Field label='촬영 가격' active={true} variant='plain' className='px-[2.5rem]'>
+        <ControlSheet.Field
+          label='촬영 가격'
+          active={true}
+          variant='plain'
+          className='gap-[2.4rem] px-[2.5rem]'
+        >
           <PriceSlider value={prices} onChange={setPrices} />
         </ControlSheet.Field>
       </div>

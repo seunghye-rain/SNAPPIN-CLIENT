@@ -26,11 +26,9 @@ export default function PriceSlider({
 }: PriceSliderProps) {
   return (
     <div className='flex flex-col gap-[2.4rem] px-[0.75rem]'>
-      <div className='font-16-md text-black-10 flex justify-center gap-[0.4rem]'>
-        <div>
-          {toManwon(value[0])}만원 ~ {toManwon(value[1])}만원
-        </div>
-      </div>
+      <span className='font-16-md text-black-10 gap-[0.4rem] text-center'>
+        {toManwon(value[0])}만원 ~ {toManwon(value[1])}만원
+      </span>
       <Slider min={min} max={max} step={step} value={value} onChange={onChange} />
       <div className='flex flex-row justify-between gap-[0.6rem] py-[0.75rem]'>
         <FilterChip

@@ -24,7 +24,6 @@ type ControlSheetFieldProps = HTMLAttributes<HTMLDivElement> & {
   selectedValue?: string | null;
   children?: React.ReactNode;
   active?: boolean;
-  wrapperClassName?: string;
   variant?: 'default' | 'plain';
 };
 
@@ -33,7 +32,6 @@ const ControlSheetField = ({
   selectedValue,
   children,
   active,
-  wrapperClassName,
   className,
   variant = 'default',
   ...props
@@ -47,7 +45,6 @@ const ControlSheetField = ({
         variant === 'default' && 'bg-black-3 p-[1.5rem]',
         variant === 'default' && active && 'bg-black-1 gap-[1rem]',
         variant === 'plain' && active && 'gap-[1rem]',
-        wrapperClassName,
         className,
       )}
       {...props}
