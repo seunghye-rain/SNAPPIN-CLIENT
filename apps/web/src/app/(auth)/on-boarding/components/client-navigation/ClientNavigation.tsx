@@ -13,7 +13,14 @@ export default function ClientNavigation() {
   const noShowBack = params.step === '1' || pathname === ROUTES.ON_BOARDING_FINAL;
 
   const handleBackClick = () => {
-    router.back();
+    const currentStep = Number(params.step);
+
+    if (!Number.isFinite(currentStep) || currentStep <= 1) {
+      router.push(ROUTES.ON_BOARDING(1));
+      return;
+    }
+
+    router.push(ROUTES.ON_BOARDING(currentStep - 1));
   };
 
   return (

@@ -7,7 +7,7 @@ import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoa
 const INFO_STEP_TITLE = '서비스 이용을 위해\n정보를 입력해 주세요.';
 const INFO_STEP_DESCRIPTION = '스냅 사진 예약 시 필요한 정보예요.';
 
-export const ON_BOARDING_STEPS: OnBoardingStep[] = [
+export const ON_BOARDING_STEPS = [
   {
     step: 1,
     title: INFO_STEP_TITLE,
@@ -84,7 +84,7 @@ export const ON_BOARDING_STEPS: OnBoardingStep[] = [
       },
     ],
   },
-] as const;
+] as const satisfies readonly OnBoardingStep[];
 
 export const TOTAL_STEP_COUNT = ON_BOARDING_STEPS.length;
 

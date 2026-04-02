@@ -79,11 +79,9 @@ export const CheckboxField = <T extends string>({
     <Layout label={label} error={error} errorText={errorText}>
       <div className='flex flex-col gap-[2.5rem] pt-[1.2rem]'>
         {options.map((option) => {
-          const checked = value.includes(option);
-
           return (
             <label key={option} className='flex items-center gap-[1rem]'>
-              <CheckBox isChecked={checked} onClick={() => onChange(option)} />
+              <CheckBox isChecked={value.includes(option)} onClick={() => onChange(option)} />
               <span className='font-16-md'>{labels[option]}</span>
             </label>
           );

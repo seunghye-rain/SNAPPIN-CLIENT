@@ -4,12 +4,15 @@ import {
   CheckboxField,
   SelectField,
 } from '@/app/(auth)/on-boarding/[step]/components/on-boarding-fields/OnBoardingFieldControls';
-import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/[step]/hooks/useOnBoardingFormContext';
+import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/hooks/useOnBoardingFormContext';
 import {
   GENDER_LABELS,
   INTEREST_LABELS,
 } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
-import type { OnBoardingField } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
+import type {
+  OnBoardingField,
+  OnBoardingTextField,
+} from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
 import { TextField } from '@snappin/design-system';
 
 type Props = {
@@ -28,6 +31,13 @@ export default function OnBoardingFields({ fields }: Props) {
     updateInterest,
   } = useOnBoardingFormContext();
 
+  const handlers: Record<OnBoardingTextField['name'], (value: string) => void> = {
+    name: updateName,
+    nickname: updateNickname,
+    phoneNumber: updatePhoneNumber,
+    email: updateEmail,
+  };
+
   return (
     <div className='flex flex-col gap-[3.2rem]'>
       {fields.map((field) => {
@@ -43,23 +53,7 @@ export default function OnBoardingFields({ fields }: Props) {
               value={compatibleFormData[field.name]}
               onChange={(event) => {
                 const nextValue = event.target.value;
-
-                if (field.name === 'name') {
-                  updateName(nextValue);
-                  return;
-                }
-
-                if (field.name === 'nickname') {
-                  updateNickname(nextValue);
-                  return;
-                }
-
-                if (field.name === 'phoneNumber') {
-                  updatePhoneNumber(nextValue);
-                  return;
-                }
-
-                updateEmail(nextValue);
+                handlers[field.name](nextValue);
               }}
               hasError={Boolean(errorText)}
               helpText={errorText}

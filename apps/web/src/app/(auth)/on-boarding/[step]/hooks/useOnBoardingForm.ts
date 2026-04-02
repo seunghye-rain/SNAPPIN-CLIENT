@@ -128,15 +128,14 @@ export const useOnBoardingForm = () => {
 
   const handleSubmitForm = async (onSuccess: () => void | Promise<void>) => {
     const isValid = await trigger();
+    if (!isValid) return;
 
-    if (isValid) {
-      handleSubmit(async () => {
-        await onSuccess();
+    handleSubmit(async () => {
+      await onSuccess();
 
-        sessionStorage.removeItem(ON_BOARDING_FORM_STORAGE_KEY);
-        reset();
-      })();
-    }
+      sessionStorage.removeItem(ON_BOARDING_FORM_STORAGE_KEY);
+      reset();
+    })();
   };
   return {
     isValid,
