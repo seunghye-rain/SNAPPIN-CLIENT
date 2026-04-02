@@ -19,7 +19,8 @@ export const ROUTES = {
   PRODUCT_REVIEW: (productId: number, reviewId: number) =>
     `/product/${productId}/review/${reviewId}`,
   RESERVATION: (id: number) => `/reservation/${id}`,
-  RESERVATION_FORM: (id: number) => `/reservation-form/${id}`,
+  RESERVATION_FORM: (productId: number, params?: Params) =>
+    `/product/${productId}/reservation-form${params ? getQueryParams(params) : ''}`,
   REVIEW_FORM: (id: number) => `/review-form/${id}`,
 } as const;
 
