@@ -16,7 +16,7 @@ export default function ReservationInfoSection() {
   ];
 
   return (
-    <div>
+    <section>
       <span className='text-black-10 font-16-sb'>
         예약자 정보 <span className='text-red-error'>*</span>
       </span>
@@ -25,10 +25,10 @@ export default function ReservationInfoSection() {
         {reservationInfoItems.map(({ id, label, value }) => (
           <div key={id} className='flex items-center gap-[1.2rem]'>
             <dt className='text-black-7 caption-14-rg w-[5rem]'>{label}</dt>
-            <dd className='caption-14-md text-black-10'>{value || '-'}</dd>
+            <dd className='caption-14-md text-black-10'>{value}</dd>
           </div>
         ))}
       </dl>
-    </div>
+    </section>
   );
 }
