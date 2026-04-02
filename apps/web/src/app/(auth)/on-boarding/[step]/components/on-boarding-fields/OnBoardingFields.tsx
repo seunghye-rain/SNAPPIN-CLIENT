@@ -1,9 +1,9 @@
 'use client';
 
-import { CheckboxField, SelectField } from './OnBoardingFieldControls';
-import { useOnBoardingFormContext } from '../../hooks/useOnBoardingFormContext';
-import { GENDER_LABELS, INTEREST_LABELS } from '../../constants/onBoardingForm.schema';
-import type { OnBoardingField } from '../../types/onBoardingStep';
+import { CheckboxField, SelectField } from '@/app/(auth)/on-boarding/[step]/components/on-boarding-fields/OnBoardingFieldControls';
+import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/[step]/hooks/useOnBoardingFormContext';
+import { GENDER_LABELS, INTEREST_LABELS } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
+import type { OnBoardingField } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
 import { TextField } from '@snappin/design-system';
 
 type Props = {

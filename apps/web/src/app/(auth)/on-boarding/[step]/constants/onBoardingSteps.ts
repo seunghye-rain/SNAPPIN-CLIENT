@@ -1,5 +1,5 @@
-import { GENDER_VALUES, INTEREST_VALUES } from './onBoardingForm.schema';
-import type { OnBoardingStep } from '../types/onBoardingStep';
+import { GENDER_VALUES, INTEREST_VALUES } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
+import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
 
 const INFO_STEP_TITLE = '서비스 이용을 위해\n정보를 입력해 주세요.';
 const INFO_STEP_DESCRIPTION = '스냅 사진 예약 시 필요한 정보예요.';

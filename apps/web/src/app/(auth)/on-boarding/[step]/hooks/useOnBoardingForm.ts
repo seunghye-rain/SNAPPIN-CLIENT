@@ -10,7 +10,7 @@ import {
   OnBoardingInput,
   SCHEMA,
   onBoardingSchema,
-} from '../constants/onBoardingForm.schema';
+} from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 
 const ON_BOARDING_FORM_STORAGE_KEY = 'on-boarding-form';
 

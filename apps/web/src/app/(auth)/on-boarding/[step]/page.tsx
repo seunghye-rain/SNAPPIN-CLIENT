@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getOnBoardingStep } from './constants/onBoardingSteps';
-import { ClientFooter, OnBoardingFields } from './components';
+import { getOnBoardingStep } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingSteps';
+import { ClientFooter, OnBoardingFields } from '@/app/(auth)/on-boarding/[step]/components';
 
 type PageProps = {
   params: Promise<{

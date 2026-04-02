@@ -1,5 +1,5 @@
 import { GraphicSuccess } from '@snappin/design-system/assets';
-import ClientFooter from './components/client-footer/ClientFooter';
+import ClientFooter from '@/app/(auth)/on-boarding/final/components/client-footer/ClientFooter';
 
 export default function Page() {
   return (

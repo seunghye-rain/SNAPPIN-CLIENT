@@ -1,4 +1,8 @@
-import type { onBoardingSchema, GenderValue, InterestValue } from '../constants/onBoardingForm.schema';
+import type {
+  onBoardingSchema,
+  GenderValue,
+  InterestValue,
+} from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 
 type OnBoardingFieldName = keyof typeof onBoardingSchema.shape;
 

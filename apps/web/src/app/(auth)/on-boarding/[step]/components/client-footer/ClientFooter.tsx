@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { BottomCTAButton } from '@snappin/design-system';
 import { ROUTES } from '@/constants/routes/routes';
-import { TOTAL_STEP_COUNT } from '../../constants/onBoardingSteps';
-import type { OnBoardingStep } from '../../types/onBoardingStep';
-import { useOnBoardingFormContext } from '../../hooks/useOnBoardingFormContext';
+import { TOTAL_STEP_COUNT } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingSteps';
+import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
+import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/[step]/hooks/useOnBoardingFormContext';
 
 type ClientFooterProps = {
   step: number;

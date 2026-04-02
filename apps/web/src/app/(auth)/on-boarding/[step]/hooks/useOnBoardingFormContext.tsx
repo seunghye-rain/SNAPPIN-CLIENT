@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, type ReactNode } from 'react';
-import { useOnBoardingForm } from './useOnBoardingForm';
+import { useOnBoardingForm } from '@/app/(auth)/on-boarding/[step]/hooks/useOnBoardingForm';
 
 type OnBoardingFormContextValue = ReturnType<typeof useOnBoardingForm>;
 
