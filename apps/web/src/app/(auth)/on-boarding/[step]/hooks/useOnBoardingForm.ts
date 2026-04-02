@@ -9,7 +9,7 @@ import {
   InterestValue,
   OnBoardingInput,
   SCHEMA,
-  onBoardingSchema,
+  ON_BOARDING_SCHEMA,
 } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 
 const ON_BOARDING_FORM_STORAGE_KEY = 'on-boarding-form';
@@ -25,7 +25,7 @@ export const useOnBoardingForm = () => {
     formState: { errors, isValid },
     control,
   } = useForm<OnBoardingInput>({
-    resolver: zodResolver(onBoardingSchema),
+    resolver: zodResolver(ON_BOARDING_SCHEMA),
     defaultValues: {
       name: '',
       gender: undefined,
@@ -40,10 +40,14 @@ export const useOnBoardingForm = () => {
   const formData = useWatch({ control });
 
   useEffect(() => {
-    const savedFormData = sessionStorage.getItem(ON_BOARDING_FORM_STORAGE_KEY);
+    try {
+      const savedFormData = sessionStorage.getItem(ON_BOARDING_FORM_STORAGE_KEY);
 
-    if (savedFormData) {
-      reset(JSON.parse(savedFormData) as OnBoardingInput);
+      if (savedFormData) {
+        reset(JSON.parse(savedFormData) as OnBoardingInput);
+      }
+    } catch {
+      sessionStorage.removeItem(ON_BOARDING_FORM_STORAGE_KEY);
     }
 
     isHydratedRef.current = true;
@@ -122,13 +126,14 @@ export const useOnBoardingForm = () => {
     interests: errors.interests?.message,
   };
 
-  const handleSubmitForm = async (onSuccess: () => void) => {
+  const handleSubmitForm = async (onSuccess: () => void | Promise<void>) => {
     const isValid = await trigger();
 
     if (isValid) {
-      handleSubmit(() => {
+      handleSubmit(async () => {
+        await onSuccess();
+
         sessionStorage.removeItem(ON_BOARDING_FORM_STORAGE_KEY);
-        onSuccess();
         reset();
       })();
     }

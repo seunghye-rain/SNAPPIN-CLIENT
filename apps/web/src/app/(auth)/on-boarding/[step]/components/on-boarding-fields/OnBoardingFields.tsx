@@ -1,8 +1,14 @@
 'use client';
 
-import { CheckboxField, SelectField } from '@/app/(auth)/on-boarding/[step]/components/on-boarding-fields/OnBoardingFieldControls';
+import {
+  CheckboxField,
+  SelectField,
+} from '@/app/(auth)/on-boarding/[step]/components/on-boarding-fields/OnBoardingFieldControls';
 import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/[step]/hooks/useOnBoardingFormContext';
-import { GENDER_LABELS, INTEREST_LABELS } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
+import {
+  GENDER_LABELS,
+  INTEREST_LABELS,
+} from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 import type { OnBoardingField } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
 import { TextField } from '@snappin/design-system';
 
@@ -71,7 +77,7 @@ export default function OnBoardingFields({ fields }: Props) {
               options={field.options}
               labels={GENDER_LABELS}
               error={Boolean(errorText)}
-              errorText={errorText ?? ' '}
+              errorText={errorText}
             />
           );
         }
@@ -85,7 +91,7 @@ export default function OnBoardingFields({ fields }: Props) {
             options={field.options}
             labels={INTEREST_LABELS}
             error={Boolean(errorText)}
-            errorText={errorText ?? ' '}
+            errorText={errorText}
           />
         );
       })}

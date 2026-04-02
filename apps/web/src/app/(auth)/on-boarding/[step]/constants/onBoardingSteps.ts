@@ -1,4 +1,7 @@
-import { GENDER_VALUES, INTEREST_VALUES } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
+import {
+  GENDER_VALUES,
+  INTEREST_VALUES,
+} from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
 
 const INFO_STEP_TITLE = '서비스 이용을 위해\n정보를 입력해 주세요.';
@@ -70,7 +73,7 @@ export const ON_BOARDING_STEPS: OnBoardingStep[] = [
   {
     step: 5,
     title: '관심 있는 스냅 촬영을\n모두 선택해 주세요.',
-    description: '',
+    description: undefined,
     triggerFields: ['interests'],
     fields: [
       {

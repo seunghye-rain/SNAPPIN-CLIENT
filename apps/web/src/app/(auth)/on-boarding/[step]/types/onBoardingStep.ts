@@ -1,10 +1,10 @@
 import type {
-  onBoardingSchema,
+  ON_BOARDING_SCHEMA,
   GenderValue,
   InterestValue,
 } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
 
-type OnBoardingFieldName = keyof typeof onBoardingSchema.shape;
+type OnBoardingFieldName = keyof typeof ON_BOARDING_SCHEMA.shape;
 
 export type OnBoardingTextField = {
   name: Extract<OnBoardingFieldName, 'name' | 'nickname' | 'phoneNumber' | 'email'>;

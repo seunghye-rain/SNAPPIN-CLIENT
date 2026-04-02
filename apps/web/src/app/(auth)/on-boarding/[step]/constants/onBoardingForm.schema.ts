@@ -42,7 +42,7 @@ const NAME_REGEX = /^[가-힣]+$/;
 const NICKNAME_TEXT_REGEX = /^[가-힣a-zA-Z0-9]+$/;
 const NICKNAME_WHITESPACE_REGEX = /\s/;
 
-export const onBoardingSchema = z.object({
+export const ON_BOARDING_SCHEMA = z.object({
   name: z
     .string()
     .min(1, ERROR_MESSAGES.NAME_REQUIRED)
@@ -78,4 +78,4 @@ export const onBoardingSchema = z.object({
   interests: z.array(z.enum(INTEREST_VALUES)).min(1, ERROR_MESSAGES.INTERESTS_REQUIRED),
 });
 
-export type OnBoardingInput = z.infer<typeof onBoardingSchema>;
+export type OnBoardingInput = z.infer<typeof ON_BOARDING_SCHEMA>;
