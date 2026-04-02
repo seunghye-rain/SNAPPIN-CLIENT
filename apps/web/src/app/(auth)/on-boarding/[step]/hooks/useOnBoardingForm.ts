@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -11,7 +12,10 @@ import {
   onBoardingSchema,
 } from '../constants/onBoardingForm.schema';
 
+const ON_BOARDING_FORM_STORAGE_KEY = 'on-boarding-form';
+
 export const useOnBoardingForm = () => {
+  const isHydratedRef = useRef(false);
   const {
     handleSubmit,
     setValue,
@@ -34,6 +38,22 @@ export const useOnBoardingForm = () => {
   });
 
   const formData = useWatch({ control });
+
+  useEffect(() => {
+    const savedFormData = sessionStorage.getItem(ON_BOARDING_FORM_STORAGE_KEY);
+
+    if (savedFormData) {
+      reset(JSON.parse(savedFormData) as OnBoardingInput);
+    }
+
+    isHydratedRef.current = true;
+  }, [reset]);
+
+  useEffect(() => {
+    if (!isHydratedRef.current || !formData) return;
+
+    sessionStorage.setItem(ON_BOARDING_FORM_STORAGE_KEY, JSON.stringify(formData));
+  }, [formData]);
 
   const updateName = (value: string) => {
     if (value.length > SCHEMA.NAME_MAX) {
@@ -107,6 +127,7 @@ export const useOnBoardingForm = () => {
 
     if (isValid) {
       handleSubmit(() => {
+        sessionStorage.removeItem(ON_BOARDING_FORM_STORAGE_KEY);
         onSuccess();
         reset();
       })();
