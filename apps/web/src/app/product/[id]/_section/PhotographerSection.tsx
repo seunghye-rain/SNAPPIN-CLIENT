@@ -15,8 +15,8 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
   return (
     <section className='bg-black-1 px-[2rem] pt-[1rem] pb-[2rem]'>
       <Link href={ROUTES.PHOTOGRAPHER(photographerInfo.id)}>
-        <Profile size='sm' className='border-1 border-black-4 rounded-[0.6rem]'>
-          <Profile.Avatar src={photographerInfo.profileImageUrl} />
+        <Profile className='border-1 border-black-4 rounded-[0.6rem]'>
+          <Profile.Avatar size='sm' src={photographerInfo.profileImageUrl} />
           <Profile.Content lines={2}>
             <Profile.Item>
               <Profile.Title>{photographerInfo.name}</Profile.Title>
