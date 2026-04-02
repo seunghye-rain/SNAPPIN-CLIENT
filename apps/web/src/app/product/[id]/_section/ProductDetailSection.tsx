@@ -5,6 +5,7 @@ import { TagChip, Divider } from '@snappin/design-system';
 
 type ProductDetailSectionProps = {
   // productInfo: GetProductInfoResponse | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   productInfo: any;
 };
 
