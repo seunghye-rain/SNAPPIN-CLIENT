@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ClientNavigation } from './[step]/components/index';
+import ClientNavigation from './components/client-navigation/ClientNavigation';
 import { OnBoardingFormProvider } from './[step]/hooks/useOnBoardingFormContext';
 
 export default function Layout({ children }: { children: ReactNode }) {

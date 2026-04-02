@@ -1,13 +1,15 @@
 ﻿'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { IconArrowBack } from '@snappin/design-system/assets';
 import { Navigation } from '@snappin/design-system';
 
 export default function ClientNavigation() {
   const router = useRouter();
-  const params = useParams<{ step: string }>();
-  const isFirstStep = params.step === '1';
+  const pathname = usePathname();
+  const params = useParams<{ step?: string }>();
+
+  const noShowBack = params.step === '1' || pathname === '/on-boarding/final';
 
   const handleBackClick = () => {
     router.back();
@@ -16,7 +18,7 @@ export default function ClientNavigation() {
   return (
     <Navigation
       isFixed={true}
-      left={isFirstStep ? undefined : <IconArrowBack onClick={handleBackClick} />}
+      left={noShowBack ? undefined : <IconArrowBack onClick={handleBackClick} />}
     />
   );
 }
