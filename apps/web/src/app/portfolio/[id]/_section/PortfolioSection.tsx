@@ -12,9 +12,7 @@ type PortfolioSectionProps = {
   images: string[];
   isLiked: boolean;
   likeCount: number;
-  snapCategory: string;
   place: string;
-  startsAt: string;
   moods: MoodCode[];
 };
 

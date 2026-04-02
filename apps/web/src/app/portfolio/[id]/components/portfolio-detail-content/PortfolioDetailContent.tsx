@@ -29,9 +29,7 @@ export default function PortfolioDetailContent({ id, isLogIn }: PortfolioDetailC
         images={data?.images ?? []}
         isLiked={data?.isLiked ?? false}
         likeCount={data?.likeCount ?? 0}
-        snapCategory={data?.snapCategory ?? ''}
         place={data?.place ?? ''}
-        startsAt={data?.startsAt ?? ''}
         moods={data?.moods as MoodCode[]}
       />
       <PhotographerSection

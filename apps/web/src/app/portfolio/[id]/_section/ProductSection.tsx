@@ -41,6 +41,7 @@ export default function ProductSection({
               fill
               alt={`${name}`}
               src={imageUrl}
+              sizes='9rem'
               className='object-cover'
             />
           </div>
