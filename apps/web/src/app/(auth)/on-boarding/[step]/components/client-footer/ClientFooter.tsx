@@ -23,9 +23,11 @@ export default function ClientFooter({ step, triggerFields }: ClientFooterProps)
 
     if (!isValid) return;
 
-    if (!isLast) {
+    if (isLast) {
+      router.push(ROUTES.ON_BOARDING_FINAL);
+      //TODO: API 연동
+    } else {
       router.push(ROUTES.ON_BOARDING(step + 1));
-      return;
     }
   };
 

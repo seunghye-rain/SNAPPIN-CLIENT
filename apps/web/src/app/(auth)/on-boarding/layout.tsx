@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { ClientNavigation } from './components/index';
-import { OnBoardingFormProvider } from './hooks/useOnBoardingFormContext';
+import { ClientNavigation } from './[step]/components/index';
+import { OnBoardingFormProvider } from './[step]/hooks/useOnBoardingFormContext';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
