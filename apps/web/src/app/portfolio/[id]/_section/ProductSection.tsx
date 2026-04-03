@@ -40,7 +40,7 @@ export default function ProductSection({
             <Image
               fill
               alt={`${name}`}
-              src={imageUrl}
+              src={imageUrl || '/imgs/default-image.png'}
               sizes='9rem'
               className='object-cover'
             />
