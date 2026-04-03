@@ -2,7 +2,8 @@
 
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { PortfolioList } from '@/ui/portfolio-list';
+import PortfolioList from '@/ui/frame/portfolio/PortfolioList';
+import { PORTFOLIO_MOCK } from '@/app/product/[id]//mocks/mock';
 import { useGetPortfolioList } from '@/app/product/[id]/api';
 
 type PortfolioListSectionProps = {
@@ -13,7 +14,12 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
   const { data, fetchNextPage, hasNextPage } = useGetPortfolioList(productId);
   const { ref, inView } = useInView();
 
-  const portfolioList = data?.pages.flatMap((page) => page.data?.portfolios ?? []) ?? [];
+  // TODO: API 구현 완료되면 주석 풀기
+  // const portfolioList = data?.pages.flatMap((page) => page.data?.portfolios ?? []) ?? [];
+  const portfolioList = PORTFOLIO_MOCK.portfolios.map(({ imageUrl, ...rest }) => ({
+    ...rest,
+    image: { src: imageUrl, alt: '' }
+  }));
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -35,10 +41,9 @@ export default function PortfolioListSection({ productId }: PortfolioListSection
     );
   }
 
-  // TODO: PortfolioFrameList로 교체
   return (
     <section>
-      <PortfolioList portfolioList={portfolioList} />
+      <PortfolioList portfolios={portfolioList} />
       <div ref={ref} className='h-[0.1rem]' />
     </section>
   );

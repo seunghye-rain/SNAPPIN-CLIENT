@@ -18,7 +18,7 @@ import { Footer } from '@/app/product/[id]/components';
 // import { useGetProductDetail } from '@/app/product/[id]/api';
 import { PRODUCT_TAB, PRODUCT_TABS } from '@/app/product/[id]/constants/tab';
 import { ReviewListSectionSkeleton } from '@/app/product/[id]/_section/ReviewListSection';
-import { MOCK } from '@/app/product/[id]/mocks/mock';
+import { PRODUCT_MOCK } from '@/app/product/[id]/mocks/mock';
 
 type ProductDetailContentProps = {
   productId: number;
@@ -31,7 +31,7 @@ export default function ProductDetailContent({ productId, tab }: ProductDetailCo
     : PRODUCT_TAB.PRODUCT_DETAIL;
 
   // const { data } = useGetProductDetail(productId);
-  const data = MOCK;
+  const data = PRODUCT_MOCK;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const scrollKey = useMemo(
