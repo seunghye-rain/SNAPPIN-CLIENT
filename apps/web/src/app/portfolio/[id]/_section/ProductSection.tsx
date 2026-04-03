@@ -28,7 +28,7 @@ export default function ProductSection({
 }: ProductSectionProps) {
   return (
     <section className='bg-black-1 flex flex-col gap-[1.6rem] px-[1.8rem] py-[1.4rem]'>
-      <h2 className='font-14-bd text-black-10'>이 작가님의 상품 살펴보기</h2>
+      <h2 className='caption-14-bd text-black-10'>이 작가님의 상품 살펴보기</h2>
       <Link
         href={ROUTES.PRODUCT(id)}
         aria-label={`${name} 상품 상세 페이지로 이동`}
