@@ -11,6 +11,7 @@ type PortfolioListSectionProps = {
 };
 
 export default function PortfolioListSection({ productId }: PortfolioListSectionProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, fetchNextPage, hasNextPage } = useGetPortfolioList(productId);
   const { ref, inView } = useInView();
 

@@ -34,7 +34,11 @@ export default function Footer({ productId, contact, amount }: FooterProps) {
   });
 
   const close = () => setIsOpen(false);
-  const handleContact = () => window.open(contact, '_blank', 'noopener,noreferrer');
+  const handleContact = () => {
+    if (contact) {
+      window.open(contact, '_blank', 'noopener,noreferrer');
+    }
+  };
   const handleOpenDrawer = () => {
     if (isLogIn === false) {
       login('예약 기능은 로그인 후에 사용할 수 있어요.', undefined, TOAST_STYLE);
