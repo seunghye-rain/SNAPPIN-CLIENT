@@ -16,7 +16,6 @@ import { ALLOWED_KEYS } from '@/app/(with-layout)/explore/constants/query';
 import {
   INITIAL_MAX_PRICE,
   INITIAL_MIN_PRICE,
-  MAX_PRICE,
   MIN_PRICE,
 } from '@/app/(with-layout)/explore/constants/price';
 import { useSearchReducer } from '@/app/(with-layout)/explore/hooks/use-search-reducer';
