@@ -112,7 +112,7 @@ function SearchSheetContent({
     const nextParams = patch({
       moodIds: selectedMoodIds.length > 0 ? selectedMoodIds.join(',') : null,
       minPrice: prices[0] === MIN_PRICE ? null : prices[0],
-      maxPrice: prices[1] === MAX_PRICE ? null : prices[1],
+      maxPrice: prices[1],
       snapCategory: searchDraft.snapCategory ?? null,
       placeId: searchDraft.placeId || null,
       placeName: searchDraft.placeId ? placeKeyword : null,
