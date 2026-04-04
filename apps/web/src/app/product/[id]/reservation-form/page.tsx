@@ -1,8 +1,5 @@
-import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { notFound } from 'next/navigation';
-import type { GetProductDetailData } from '@/swagger-api';
-import { ReservationFormSection } from './_form';
-import { ClientHeader } from './components';
+import PageClient from './page.client';
 
 type ReservationFormPageProps = {
   params: Promise<{ id: string }>;
@@ -13,40 +10,15 @@ export default async function Page({ params, searchParams }: ReservationFormPage
   const { id } = await params;
   const { photographerId: photographerIdParam } = await searchParams;
   const productId = Number(id);
-  const photographerIdFromQuery = Number(photographerIdParam);
+  const photographerId = Number(photographerIdParam);
 
   if (Number.isNaN(productId)) {
     return notFound();
   }
 
-  if (!Number.isNaN(photographerIdFromQuery) && photographerIdFromQuery > 0) {
-    return (
-      <>
-        <ClientHeader />
-        <ReservationFormSection photographerId={photographerIdFromQuery} />
-      </>
-    );
-  }
-
-  const response = await fetch(`${SERVER_API_BASE_URL}/api/v1/products/${productId}`, {
-    method: 'GET',
-  });
-
-  if (!response.ok) {
+  if (Number.isNaN(photographerId) || photographerId <= 0) {
     return notFound();
   }
 
-  const productDetail = (await response.json()) as GetProductDetailData;
-  const photographerId = productDetail.data?.photographerInfo?.id;
-
-  if (!photographerId) {
-    return notFound();
-  }
-
-  return (
-    <>
-      <ClientHeader />
-      <ReservationFormSection photographerId={photographerId} />
-    </>
-  );
+  return <PageClient photographerId={photographerId} />;
 }
