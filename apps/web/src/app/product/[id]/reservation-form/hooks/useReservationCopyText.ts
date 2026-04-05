@@ -11,6 +11,7 @@ type CreateReservationCopyTextProps = {
   reservationCopyFormValue: ReservationCopyFormInput;
 };
 
+// 텍스트 복사 시, form의 각 항목 노출 방식 정의
 const createReservationCopyText = ({
   applicant,
   reservationCopyFormValue: {
@@ -22,6 +23,7 @@ const createReservationCopyText = ({
     requestContent,
   },
 }: CreateReservationCopyTextProps) => {
+  // 완료된 일정만 복사 텍스트에 포함
   const scheduleLines = SCHEDULE_CHOICES.filter(({ key }) => {
     return checkHasCompletedSchedule(schedules[key]);
   }).map(({ key, label }) => {

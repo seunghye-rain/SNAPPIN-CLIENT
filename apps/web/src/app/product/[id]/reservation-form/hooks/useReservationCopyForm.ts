@@ -22,6 +22,7 @@ import {
   type UploadConsentStatus,
 } from './reservationCopyFormShared';
 
+// 일정 picker 관련
 type UseReservationCopyFormProps = {
   applicant: ReservationApplicant;
   minimumDurationHours?: number;
@@ -45,6 +46,7 @@ const getFieldErrorMessage = (errorMessage: unknown) => {
   return typeof errorMessage === 'string' ? errorMessage : '';
 };
 
+// 일정 picker 바텀시트 상태 관리
 const useSchedulePicker = ({ handleScheduleChange }: UseSchedulePickerProps) => {
   const [activeSchedulePicker, setActiveSchedulePicker] = useState<ActiveSchedulePicker | null>(
     null,
@@ -64,6 +66,7 @@ const useSchedulePicker = ({ handleScheduleChange }: UseSchedulePickerProps) => 
     setActiveSchedulePicker(null);
   };
 
+  // 바텀시트 닫기
   const handleScheduleSelection = (
     scheduleSelectionChangeField: keyof ScheduleSelectionValue,
     scheduleSelectionValue: string,
@@ -104,6 +107,7 @@ const useSchedulePicker = ({ handleScheduleChange }: UseSchedulePickerProps) => 
   };
 };
 
+// 예약 신청 양식 복사 훅
 const useReservationCopyForm = ({
   applicant,
   minimumDurationHours = 1,
@@ -143,6 +147,7 @@ const useReservationCopyForm = ({
     mode: 'onChange',
   });
 
+  // form 값이 변경될 때마다 최신 값을 가져옴
   const watchedReservationCopyFormValue = (useWatch({ control }) ??
     defaultReservationCopyFormValue) as ReservationCopyFormInput;
   const {
@@ -250,6 +255,7 @@ const useReservationCopyForm = ({
     }
   };
 
+  // schedules 에러를 한줄 메시지로
   const scheduleErrorMessage =
     SCHEDULE_CHOICE_KEYS.flatMap((scheduleChoiceKey) => {
       const scheduleFieldError = formErrors.schedules?.[scheduleChoiceKey];

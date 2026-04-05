@@ -35,12 +35,14 @@ export type ReservationCopyFormInput = {
   requestContent: string;
 };
 
+// 1~3지망 정의
 const SCHEDULE_CHOICE_LABELS: Record<ScheduleChoiceKey, string> = {
   firstChoice: '1지망',
   secondChoice: '2지망',
   thirdChoice: '3지망',
 };
 
+// 렌더링에 사용할 일정 선택 옵션 목록
 export const SCHEDULE_CHOICES: ReadonlyArray<{
   key: ScheduleChoiceKey;
   label: string;
@@ -49,6 +51,7 @@ export const SCHEDULE_CHOICES: ReadonlyArray<{
   label: SCHEDULE_CHOICE_LABELS[scheduleChoiceKey],
 }));
 
+// 날짜와 시간이 모두 선택 되었는지 검증
 export const checkHasCompletedSchedule = (scheduleSelection: ScheduleSelectionValue) => {
   return scheduleSelection.date.length > 0 && scheduleSelection.time.length > 0;
 };

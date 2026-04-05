@@ -15,6 +15,7 @@ type CreateReservationCopyFormSchemaProps = {
   maxPeople: number;
 };
 
+// 예약 폼 검증 스키마
 const createReservationCopyFormSchema = ({
   minimumDurationHours,
   maximumDurationHours,
@@ -39,6 +40,7 @@ const createReservationCopyFormSchema = ({
       }
     });
 
+  // 1~3지망 전체 일정 검증
   const scheduleSelectionSchemaShape = Object.fromEntries(
     SCHEDULE_CHOICE_KEYS.map((scheduleChoiceKey) => {
       return [scheduleChoiceKey, scheduleSelectionSchema];
