@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
@@ -128,12 +128,16 @@ const useReservationCopyForm = ({
     requestContent: '',
   };
 
-  const reservationCopyFormSchema = createReservationCopyFormSchema({
-    minimumDurationHours,
-    maximumDurationHours,
-    minPeople: minimumPeopleCount,
-    maxPeople,
-  });
+  const reservationCopyFormSchema = useMemo(
+    () =>
+      createReservationCopyFormSchema({
+        minimumDurationHours,
+        maximumDurationHours,
+        minPeople: minimumPeopleCount,
+        maxPeople,
+      }),
+    [minimumDurationHours, maximumDurationHours, minimumPeopleCount, maxPeople],
+  );
 
   const {
     control,
