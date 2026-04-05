@@ -271,6 +271,7 @@ const useReservationCopyForm = ({
       ];
     }).find((fieldErrorMessage) => fieldErrorMessage.length > 0) ?? '';
 
+  // 뷰에 필요한 값과 에러 메시지, 뷰 상태, 폼 입력값 제한 조건
   const values = {
     placeKeyword,
     durationHours,
@@ -280,6 +281,7 @@ const useReservationCopyForm = ({
     requestContent,
   };
 
+  // 각 에러 메시지
   const errors = {
     place:
       getFieldErrorMessage(formErrors.placeId?.message) ||
@@ -289,12 +291,14 @@ const useReservationCopyForm = ({
     requestContent: getFieldErrorMessage(formErrors.requestContent?.message),
   };
 
+  // 장소 옵션, 일정 picker 바텀시트 상태, 복사 중 상태
   const viewState = {
     placeOptions,
     ...schedulePicker.viewState,
     isCopyPending,
   };
 
+  // 폼 입력값 제한 조건
   const limits = {
     minimumDurationHours,
     maximumDurationHours,
@@ -303,6 +307,7 @@ const useReservationCopyForm = ({
     requestContentMaxLength: REQUEST_CONTENT_MAX_LENGTH,
   };
 
+  // 뷰에서 사용할 액션
   const actions = {
     handlePlaceKeywordChange,
     handlePlaceBlur,
