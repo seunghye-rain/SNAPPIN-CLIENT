@@ -1,4 +1,4 @@
-import { cn } from '@snappin/design-system/lib/cn';
+import { cn } from '@snappin/design-system/lib';
 
 type DateButtonProps = {
   value: string;
