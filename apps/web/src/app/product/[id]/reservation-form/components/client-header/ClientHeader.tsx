@@ -17,10 +17,9 @@ export default function ClientHeader({ handleClickBack }: ClientHeaderProps) {
       }
       center={
         <span className='font-16-bd text-black-10 block max-w-[20rem] truncate'>
-          예약 신청 양식 작성하기
+          예약 문의 양식 작성하기
         </span>
       }
-      className='border-black-5 border-b'
       isFixed
     />
   );
