@@ -1,7 +1,7 @@
 import { formatShortDate } from '@/utils/formatDate';
 import {
   SCHEDULE_CHOICES,
-  checkHasCompletedSchedule,
+  hasCompletedSchedule,
   type ReservationApplicant,
   type ReservationCopyFormInput,
 } from './reservationCopyFormShared';
@@ -25,7 +25,7 @@ const createReservationCopyText = ({
 }: CreateReservationCopyTextProps) => {
   // 완료된 일정만 복사 텍스트에 포함
   const scheduleLines = SCHEDULE_CHOICES.filter(({ key }) => {
-    return checkHasCompletedSchedule(schedules[key]);
+    return hasCompletedSchedule(schedules[key]);
   }).map(({ key, label }) => {
     const scheduleSelection = schedules[key];
     const formattedScheduleDate = formatShortDate(scheduleSelection.date).replaceAll('.', '/');

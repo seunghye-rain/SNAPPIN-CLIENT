@@ -1,18 +1,20 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
-import createReservationCopyFormSchema from './useReservationCopySchema';
+import reservationCopyFormSchema from './useReservationCopySchema';
 import createReservationCopyText from './useReservationCopyText';
 import {
   DURATION_STEP_HOURS,
+  MAXIMUM_DURATION_HOURS,
+  MAXIMUM_PEOPLE_COUNT,
+  MINIMUM_DURATION_HOURS,
   MINIMUM_PEOPLE_COUNT,
   PEOPLE_COUNT_STEP,
-  REQUEST_CONTENT_MAX_LENGTH,
   SCHEDULE_CHOICE_KEYS,
-  createInitialScheduleSelections,
+  createDefaultReservationCopyFormValue,
   type ReservationApplicant,
   type ReservationCopyFormInput,
   type ScheduleChoiceKey,
@@ -24,8 +26,6 @@ import {
 // 일정 picker 관련
 type UseReservationCopyFormProps = {
   applicant: ReservationApplicant;
-  minimumDurationHours?: number;
-  maxPeople?: number;
 };
 
 type ActiveSchedulePicker = {
@@ -107,36 +107,11 @@ const useSchedulePicker = ({ handleScheduleChange }: UseSchedulePickerProps) => 
 };
 
 // 예약 신청 양식 복사 훅
-const useReservationCopyForm = ({
-  applicant,
-  minimumDurationHours = 1,
-  maxPeople = 15,
-}: UseReservationCopyFormProps) => {
-  const maximumDurationHours = minimumDurationHours + 1;
-  const minimumPeopleCount = MINIMUM_PEOPLE_COUNT;
-  const initialScheduleSelections = createInitialScheduleSelections();
+const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
   const [isCopyPending, setIsCopyPending] = useState(false);
 
-  const defaultReservationCopyFormValue: ReservationCopyFormInput = {
-    placeId: '',
-    placeKeyword: '',
-    durationHours: minimumDurationHours,
-    peopleCount: minimumPeopleCount,
-    schedules: initialScheduleSelections,
-    uploadConsentStatus: '',
-    requestContent: '',
-  };
-
-  const reservationCopyFormSchema = useMemo(
-    () =>
-      createReservationCopyFormSchema({
-        minimumDurationHours,
-        maximumDurationHours,
-        minPeople: minimumPeopleCount,
-        maxPeople,
-      }),
-    [minimumDurationHours, maximumDurationHours, minimumPeopleCount, maxPeople],
-  );
+  const defaultReservationCopyFormValue: ReservationCopyFormInput =
+    createDefaultReservationCopyFormValue();
 
   const {
     control,
@@ -197,8 +172,8 @@ const useReservationCopyForm = ({
       const currentDurationHours = getValues('durationHours');
       const nextDurationHours = Number(
         Math.min(
-          maximumDurationHours,
-          Math.max(minimumDurationHours, currentDurationHours - DURATION_STEP_HOURS),
+          MAXIMUM_DURATION_HOURS,
+          Math.max(MINIMUM_DURATION_HOURS, currentDurationHours - DURATION_STEP_HOURS),
         ).toFixed(1),
       );
 
@@ -208,8 +183,8 @@ const useReservationCopyForm = ({
       const currentDurationHours = getValues('durationHours');
       const nextDurationHours = Number(
         Math.min(
-          maximumDurationHours,
-          Math.max(minimumDurationHours, currentDurationHours + DURATION_STEP_HOURS),
+          MAXIMUM_DURATION_HOURS,
+          Math.max(MINIMUM_DURATION_HOURS, currentDurationHours + DURATION_STEP_HOURS),
         ).toFixed(1),
       );
 
@@ -222,8 +197,8 @@ const useReservationCopyForm = ({
     decrease: () => {
       const currentPeopleCount = getValues('peopleCount');
       const nextPeopleCount = Math.min(
-        maxPeople,
-        Math.max(minimumPeopleCount, currentPeopleCount - PEOPLE_COUNT_STEP),
+        MAXIMUM_PEOPLE_COUNT,
+        Math.max(MINIMUM_PEOPLE_COUNT, currentPeopleCount - PEOPLE_COUNT_STEP),
       );
 
       setValue('peopleCount', nextPeopleCount, { shouldValidate: true });
@@ -231,8 +206,8 @@ const useReservationCopyForm = ({
     increase: () => {
       const currentPeopleCount = getValues('peopleCount');
       const nextPeopleCount = Math.min(
-        maxPeople,
-        Math.max(minimumPeopleCount, currentPeopleCount + PEOPLE_COUNT_STEP),
+        MAXIMUM_PEOPLE_COUNT,
+        Math.max(MINIMUM_PEOPLE_COUNT, currentPeopleCount + PEOPLE_COUNT_STEP),
       );
 
       setValue('peopleCount', nextPeopleCount, { shouldValidate: true });
@@ -289,7 +264,7 @@ const useReservationCopyForm = ({
       ];
     }).find((fieldErrorMessage) => fieldErrorMessage.length > 0) ?? '';
 
-  // 뷰에 필요한 값과 에러 메시지, 뷰 상태, 폼 입력값 제한 조건
+  // 뷰에 필요한 값과 에러 메시지, 뷰 상태
   const values = {
     placeKeyword,
     durationHours,
@@ -316,15 +291,6 @@ const useReservationCopyForm = ({
     isCopyPending,
   };
 
-  // 폼 입력값 제한 조건
-  const limits = {
-    minimumDurationHours,
-    maximumDurationHours,
-    minimumPeopleCount,
-    maxPeople,
-    requestContentMaxLength: REQUEST_CONTENT_MAX_LENGTH,
-  };
-
   // 뷰에서 사용할 액션
   const actions = {
     handlePlaceKeywordChange,
@@ -341,7 +307,6 @@ const useReservationCopyForm = ({
     values,
     errors,
     viewState,
-    limits,
     actions,
   };
 };

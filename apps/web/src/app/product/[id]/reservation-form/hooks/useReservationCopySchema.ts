@@ -1,84 +1,81 @@
 import { z } from 'zod';
 import {
+  MAXIMUM_DURATION_HOURS,
+  MAXIMUM_PEOPLE_COUNT,
+  MINIMUM_DURATION_HOURS,
+  MINIMUM_PEOPLE_COUNT,
   PRIMARY_SCHEDULE_CHOICE_KEY,
-  REQUEST_CONTENT_ERROR_MESSAGE,
   REQUEST_CONTENT_MAX_LENGTH,
+  RESERVATION_COPY_FORM_ERROR_MESSAGE,
   SCHEDULE_CHOICE_KEYS,
-  checkHasCompletedSchedule,
+  hasCompletedSchedule,
+  hasValidUploadConsentStatus,
   type ScheduleChoiceKey,
 } from './reservationCopyFormShared';
 
-type CreateReservationCopyFormSchemaProps = {
-  minimumDurationHours: number;
-  maximumDurationHours: number;
-  minPeople: number;
-  maxPeople: number;
-};
+// 각 일정 선택이 날짜와 시간 모두 선택되었는지 검증
+const reservationScheduleSelectionSchema = z
+  .object({
+    date: z.string(),
+    time: z.string(),
+  })
+  .superRefine((scheduleSelectionValue, context) => {
+    const hasAnySelectedScheduleValue =
+      scheduleSelectionValue.date.length > 0 || scheduleSelectionValue.time.length > 0;
+    const hasCompletedScheduleSelection = hasCompletedSchedule(scheduleSelectionValue);
 
-// 예약 폼 검증 스키마
-const createReservationCopyFormSchema = ({
-  minimumDurationHours,
-  maximumDurationHours,
-  minPeople,
-  maxPeople,
-}: CreateReservationCopyFormSchemaProps) => {
-  const scheduleSelectionSchema = z
-    .object({
-      date: z.string(),
-      time: z.string(),
-    })
-    .superRefine((scheduleSelectionValue, context) => {
-      const hasAnySelectedScheduleValue =
-        scheduleSelectionValue.date.length > 0 || scheduleSelectionValue.time.length > 0;
-      const hasCompletedSchedule = checkHasCompletedSchedule(scheduleSelectionValue);
+    if (!hasAnySelectedScheduleValue || hasCompletedScheduleSelection) {
+      return;
+    }
 
-      if (hasAnySelectedScheduleValue && !hasCompletedSchedule) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: '날짜와 시간을 함께 선택해 주세요.',
-        });
-      }
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['date'],
+      message: RESERVATION_COPY_FORM_ERROR_MESSAGE.SCHEDULE_PAIR_REQUIRED,
+    });
+  });
+
+// 1~3지망 각각의 일정 선택
+const reservationSchedulesSchemaShape = Object.fromEntries(
+  SCHEDULE_CHOICE_KEYS.map((scheduleChoiceKey) => {
+    return [scheduleChoiceKey, reservationScheduleSelectionSchema];
+  }),
+) as Record<ScheduleChoiceKey, typeof reservationScheduleSelectionSchema>;
+
+// 1~3지망 중 하나라도 완료된 일정이 있는지 검증
+const reservationSchedulesSchema = z
+  .object(reservationSchedulesSchemaShape)
+  .superRefine((scheduleSelections, context) => {
+    const hasAnyCompletedSchedule = SCHEDULE_CHOICE_KEYS.some((scheduleChoiceKey) => {
+      return hasCompletedSchedule(scheduleSelections[scheduleChoiceKey]);
     });
 
-  // 1~3지망 전체 일정 검증
-  const scheduleSelectionSchemaShape = Object.fromEntries(
-    SCHEDULE_CHOICE_KEYS.map((scheduleChoiceKey) => {
-      return [scheduleChoiceKey, scheduleSelectionSchema];
-    }),
-  ) as Record<ScheduleChoiceKey, typeof scheduleSelectionSchema>;
+    if (hasAnyCompletedSchedule) {
+      return;
+    }
 
-  return z
-    .object({
-      placeId: z.string().min(1, '촬영 장소를 선택해 주세요.'),
-      placeKeyword: z.string().min(1, '촬영 장소를 입력해 주세요.'),
-      durationHours: z.number().min(minimumDurationHours).max(maximumDurationHours),
-      peopleCount: z.number().min(minPeople).max(maxPeople),
-      schedules: z.object(scheduleSelectionSchemaShape),
-      uploadConsentStatus: z.union([z.literal('agree'), z.literal('disagree'), z.literal('')]),
-      requestContent: z.string().max(REQUEST_CONTENT_MAX_LENGTH, REQUEST_CONTENT_ERROR_MESSAGE),
-    })
-    .superRefine((reservationCopyFormValue, context) => {
-      const hasSelectedUploadConsent = reservationCopyFormValue.uploadConsentStatus.length > 0;
-      const hasAnySelectedSchedule = SCHEDULE_CHOICE_KEYS.some((scheduleChoiceKey) => {
-        return checkHasCompletedSchedule(reservationCopyFormValue.schedules[scheduleChoiceKey]);
-      });
-
-      if (!hasSelectedUploadConsent) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['uploadConsentStatus'],
-          message: '업로드 동의 여부를 선택해 주세요.',
-        });
-      }
-
-      if (!hasAnySelectedSchedule) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['schedules', PRIMARY_SCHEDULE_CHOICE_KEY, 'date'],
-          message: '1~3지망 중 최소 1개 일정을 선택해 주세요.',
-        });
-      }
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: [PRIMARY_SCHEDULE_CHOICE_KEY, 'date'],
+      message: RESERVATION_COPY_FORM_ERROR_MESSAGE.SCHEDULE_REQUIRED,
     });
-};
+  });
 
-export default createReservationCopyFormSchema;
+const uploadConsentStatusSchema = z.string().refine(hasValidUploadConsentStatus, {
+  message: RESERVATION_COPY_FORM_ERROR_MESSAGE.UPLOAD_CONSENT_REQUIRED,
+});
+
+// 예약 폼 전체 스키마
+const reservationCopyFormSchema = z.object({
+  placeId: z.string().min(1, RESERVATION_COPY_FORM_ERROR_MESSAGE.PLACE_ID_REQUIRED),
+  placeKeyword: z.string().min(1, RESERVATION_COPY_FORM_ERROR_MESSAGE.PLACE_KEYWORD_REQUIRED),
+  durationHours: z.number().min(MINIMUM_DURATION_HOURS).max(MAXIMUM_DURATION_HOURS),
+  peopleCount: z.number().min(MINIMUM_PEOPLE_COUNT).max(MAXIMUM_PEOPLE_COUNT),
+  schedules: reservationSchedulesSchema,
+  uploadConsentStatus: uploadConsentStatusSchema,
+  requestContent: z
+    .string()
+    .max(REQUEST_CONTENT_MAX_LENGTH, RESERVATION_COPY_FORM_ERROR_MESSAGE.REQUEST_CONTENT_MAX),
+});
+
+export default reservationCopyFormSchema;

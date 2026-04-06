@@ -1,7 +1,14 @@
 import { type ReactNode } from 'react';
 import { Button, ComboBox, ControlRow, Stepper } from '@snappin/design-system';
 import { DateButton } from '../components';
-import { SCHEDULE_CHOICES, type ReservationCopyFormModel } from '../hooks';
+import {
+  MAXIMUM_DURATION_HOURS,
+  MAXIMUM_PEOPLE_COUNT,
+  MINIMUM_DURATION_HOURS,
+  MINIMUM_PEOPLE_COUNT,
+  SCHEDULE_CHOICES,
+  type ReservationCopyFormModel,
+} from '../hooks';
 import RESERVATION_FORM_INFORMATION_MOCK from '../mock/reservationFormInformation.mock';
 import {
   createDurationLabel,
@@ -10,10 +17,7 @@ import {
 } from '../utils/reservationFormFormatter';
 
 type ReservationDetailsSectionProps = {
-  reservationCopyFormModel: Pick<
-    ReservationCopyFormModel,
-    'values' | 'viewState' | 'limits' | 'actions'
-  >;
+  reservationCopyFormModel: Pick<ReservationCopyFormModel, 'values' | 'viewState' | 'actions'>;
 };
 
 type RequiredLabelProps = {
@@ -34,7 +38,6 @@ export default function ReservationDetailsSection({
   const {
     values: { placeKeyword, durationHours, peopleCount, scheduleSelections, uploadConsentStatus },
     viewState: { placeOptions },
-    limits: { minimumDurationHours, maximumDurationHours, minimumPeopleCount, maxPeople },
     actions: {
       handlePlaceKeywordChange,
       handlePlaceBlur,
@@ -78,8 +81,8 @@ export default function ReservationDetailsSection({
             value={createDurationLabel(durationHours)}
             handleClickMinus={handleDurationHoursStep.decrease}
             handleClickAdd={handleDurationHoursStep.increase}
-            isDisabledMinus={durationHours <= minimumDurationHours}
-            isDisabledAdd={durationHours >= maximumDurationHours}
+            isDisabledMinus={durationHours <= MINIMUM_DURATION_HOURS}
+            isDisabledAdd={durationHours >= MAXIMUM_DURATION_HOURS}
           />
         }
       />
@@ -92,8 +95,8 @@ export default function ReservationDetailsSection({
             value={`${peopleCount}명`}
             handleClickMinus={handlePeopleCountStep.decrease}
             handleClickAdd={handlePeopleCountStep.increase}
-            isDisabledMinus={peopleCount <= minimumPeopleCount}
-            isDisabledAdd={peopleCount >= maxPeople}
+            isDisabledMinus={peopleCount <= MINIMUM_PEOPLE_COUNT}
+            isDisabledAdd={peopleCount >= MAXIMUM_PEOPLE_COUNT}
           />
         }
       />

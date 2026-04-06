@@ -1,13 +1,10 @@
 import { type ChangeEvent } from 'react';
 import { FieldMessage, TextareaField } from '@snappin/design-system';
-import { type ReservationCopyFormModel } from '../hooks';
+import { REQUEST_CONTENT_MAX_LENGTH, type ReservationCopyFormModel } from '../hooks';
 import RESERVATION_FORM_INFORMATION_MOCK from '../mock/reservationFormInformation.mock';
 
 type AdditionalRequestSectionProps = {
-  reservationCopyFormModel: Pick<
-    ReservationCopyFormModel,
-    'values' | 'errors' | 'limits' | 'actions'
-  >;
+  reservationCopyFormModel: Pick<ReservationCopyFormModel, 'values' | 'errors' | 'actions'>;
 };
 
 export default function AdditionalRequestSection({
@@ -16,7 +13,6 @@ export default function AdditionalRequestSection({
   const {
     values: { requestContent },
     errors: { requestContent: requestContentErrorMessage },
-    limits: { requestContentMaxLength },
     actions: { handleRequestContentChange },
   } = reservationCopyFormModel;
 
@@ -68,7 +64,7 @@ export default function AdditionalRequestSection({
               />
               <FieldMessage
                 id='reservation-request-content-help'
-                message={`(${requestContent.length}/${requestContentMaxLength})`}
+                message={`(${requestContent.length}/${REQUEST_CONTENT_MAX_LENGTH})`}
                 variant={requestContentErrorMessage ? 'error' : 'help'}
               />
             </div>
