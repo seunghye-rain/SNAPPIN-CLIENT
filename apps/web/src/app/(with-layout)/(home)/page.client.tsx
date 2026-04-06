@@ -1,12 +1,13 @@
 'use client';
 
 import { FilterChip } from '@snappin/design-system';
-import { useNavVisibility } from '@/hooks/useNavVisibility';
-import { useSelectedMoodCode } from '@/app/(with-layout)/(home)/hooks/useSelectedMoodCode';
-import { ProductInformationFrameList, ProductInformationFrameListSkeleton } from '@/ui';
-import { ClientHeader, AiCurationButton } from './components';
-import { useGetMoodIdList, useGetPopularProducts } from './api';
 import { MOOD_CODE, MOOD_CODE_INDEX } from '@snappin/shared/types';
+import { useNavVisibility } from '@/hooks/useNavVisibility';
+import { ProductInformationFrameList, ProductInformationFrameListSkeleton } from '@/ui';
+import { useGetMoodIdList } from '@/queries/mood';
+import { useSelectedMoodCode } from '@/app/(with-layout)/(home)/hooks/useSelectedMoodCode';
+import { ClientHeader, AiCurationButton } from '@/app/(with-layout)/(home)/components';
+import { useGetPopularProducts } from '@/app/(with-layout)/(home)/api';
 
 export default function PageClient() {
   const { isVisible } = useNavVisibility();
