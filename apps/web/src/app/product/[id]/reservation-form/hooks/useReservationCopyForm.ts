@@ -136,6 +136,8 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     uploadConsentStatus,
     requestContent,
   } = watchedReservationCopyFormValue;
+  const isCopyDisabled = !reservationCopyFormSchema.safeParse(watchedReservationCopyFormValue)
+    .success;
 
   // 장소 자동완성
   const {
@@ -289,6 +291,7 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     placeOptions,
     ...schedulePicker.viewState,
     isCopyPending,
+    isCopyDisabled,
   };
 
   // 뷰에서 사용할 액션

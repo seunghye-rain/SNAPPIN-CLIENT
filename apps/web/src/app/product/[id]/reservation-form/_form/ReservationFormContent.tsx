@@ -20,7 +20,7 @@ export default function ReservationFormContent({
   });
 
   const {
-    viewState: { isCopyPending },
+    viewState: { isCopyPending, isCopyDisabled },
     actions: { handleCopyReservationForm },
   } = reservationCopyFormModel;
 
@@ -40,7 +40,7 @@ export default function ReservationFormContent({
 
       {/* 하단 버튼 */}
       <ClientFooter
-        disabled={isCopyPending}
+        disabled={isCopyPending || isCopyDisabled}
         handleClick={handleCopyReservationForm}
         handleCopySuccess={handleCopySuccess}
       />
