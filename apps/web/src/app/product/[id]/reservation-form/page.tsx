@@ -1,22 +1,28 @@
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { productDetailOptions } from '@/app/product/[id]/api/options';
+import { getQueryClient } from '@/utils/getQueryClient';
 import PageClient from './page.client';
 
 type ReservationFormPageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ photographerId?: string }>;
 };
 
-export default async function Page({ params, searchParams }: ReservationFormPageProps) {
+export default async function Page({ params }: ReservationFormPageProps) {
   const { id } = await params;
-  const { photographerId: photographerIdParam } = await searchParams;
   const productId = Number(id);
-  const photographerId = Number(photographerIdParam);
 
   if (Number.isNaN(productId)) {
     return notFound();
   }
 
-  if (Number.isNaN(photographerId) || photographerId <= 0) {
+  const cookieStore = await cookies();
+  const isLogIn = cookieStore.has('AccessToken');
+  const queryClient = getQueryClient();
+  const productDetail = await queryClient.fetchQuery(productDetailOptions(productId, isLogIn));
+  const photographerId = productDetail.photographerInfo?.id;
+
+  if (!photographerId) {
     return notFound();
   }
 
