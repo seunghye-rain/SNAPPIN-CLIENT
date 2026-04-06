@@ -1026,9 +1026,10 @@ export class Api<
     query: {
       /**
        * 무드 태그 아이디
+       * @format int64
        * @example 1
        */
-      moodId: string;
+      moodId: number;
     },
     params: RequestParams = {},
   ) =>

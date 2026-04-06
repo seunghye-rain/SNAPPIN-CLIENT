@@ -2300,6 +2300,8 @@ export interface GetPopularMoodProductItemResponse {
    * @format int32
    */
   price?: number;
+  /** 좋아요 여부 (비로그인 시 항상 false) */
+  isLiked?: boolean;
 }
 
 /** 인기 무드 상품 목록 응답 DTO */
