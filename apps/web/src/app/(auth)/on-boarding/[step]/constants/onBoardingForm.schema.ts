@@ -7,7 +7,7 @@ export const SCHEMA = {
   PHONE_NUMBER_LENGTH: 11,
 } as const;
 
-export const GENDER_VALUES = ['girl', 'boy'] as const;
+export const GENDER_VALUES = ['boy', 'girl'] as const;
 export const INTEREST_VALUES = ['graduation', 'friendship', 'couple', 'life'] as const;
 export type GenderValue = (typeof GENDER_VALUES)[number];
 export type InterestValue = (typeof INTEREST_VALUES)[number];

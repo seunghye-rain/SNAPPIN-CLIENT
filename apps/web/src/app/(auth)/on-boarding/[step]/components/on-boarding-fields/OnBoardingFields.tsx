@@ -31,7 +31,7 @@ export default function OnBoardingFields({ fields }: Props) {
     updateInterest,
   } = useOnBoardingFormContext();
 
-  const handlers: Record<OnBoardingTextField['name'], (value: string) => void> = {
+  const TEXT_FIELD_HANDLERS: Record<OnBoardingTextField['name'], (value: string) => void> = {
     name: updateName,
     nickname: updateNickname,
     phoneNumber: updatePhoneNumber,
@@ -53,7 +53,7 @@ export default function OnBoardingFields({ fields }: Props) {
               value={compatibleFormData[field.name]}
               onChange={(event) => {
                 const nextValue = event.target.value;
-                handlers[field.name](nextValue);
+                TEXT_FIELD_HANDLERS[field.name](nextValue);
               }}
               hasError={Boolean(errorText)}
               helpText={errorText}

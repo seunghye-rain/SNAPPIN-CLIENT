@@ -10,7 +10,7 @@ export default function ClientNavigation() {
   const pathname = usePathname();
   const params = useParams<{ step?: string }>();
 
-  const noShowBack = params.step === '1' || pathname === ROUTES.ON_BOARDING_FINAL;
+  const isBackHidden = params.step === '1' || pathname === ROUTES.ON_BOARDING_FINAL;
 
   const handleBackClick = () => {
     const currentStep = Number(params.step);
@@ -26,7 +26,7 @@ export default function ClientNavigation() {
   return (
     <Navigation
       isFixed={true}
-      left={noShowBack ? undefined : <IconArrowBack onClick={handleBackClick} />}
+      left={isBackHidden ? undefined : <IconArrowBack onClick={handleBackClick} />}
     />
   );
 }

@@ -47,6 +47,7 @@ export const SelectField = <T extends string>({
             key={option}
             onClick={() => onChange(option)}
             color={value === option ? 'black' : 'white'}
+            className='caption-12-rg'
           >
             {labels[option]}
           </Button>
@@ -56,10 +57,7 @@ export const SelectField = <T extends string>({
   );
 };
 
-export type CheckboxFieldProps<T extends string> = {
-  label: string;
-  error?: boolean;
-  errorText?: string;
+export type CheckboxFieldProps<T extends string> = BaseFieldProps & {
   value: string[];
   options: readonly T[];
   labels: Record<T, string>;
