@@ -22,7 +22,7 @@ export default function DateButton({
         hasValue ? 'text-black-10' : 'text-black-6',
         disabled && 'text-black-6 border-black-4',
       )}
-      onClick={disabled ? undefined : handleClick}
+      onClick={handleClick}
     >
       {value}
     </button>
