@@ -8,8 +8,8 @@ import {
   REQUEST_CONTENT_MAX_LENGTH,
   RESERVATION_COPY_FORM_ERROR_MESSAGE,
   SCHEDULE_CHOICE_KEYS,
+  UPLOAD_CONSENT_STATUS_VALUES,
   hasCompletedSchedule,
-  hasValidUploadConsentStatus,
   type ScheduleChoiceKey,
 } from './reservationCopyFormShared';
 
@@ -61,9 +61,10 @@ const reservationSchedulesSchema = z
     });
   });
 
-const uploadConsentStatusSchema = z.string().refine(hasValidUploadConsentStatus, {
-  message: RESERVATION_COPY_FORM_ERROR_MESSAGE.UPLOAD_CONSENT_REQUIRED,
-});
+const uploadConsentStatusSchema = z.union([
+  z.enum(UPLOAD_CONSENT_STATUS_VALUES),
+  z.literal(''),
+]);
 
 // 예약 폼 전체 스키마
 const reservationCopyFormSchema = z.object({

@@ -15,6 +15,7 @@ import {
   PEOPLE_COUNT_STEP,
   SCHEDULE_CHOICE_KEYS,
   createDefaultReservationCopyFormValue,
+  hasSelectableScheduleChoice,
   type ReservationApplicant,
   type ReservationCopyFormInput,
   type ScheduleChoiceKey,
@@ -168,6 +169,18 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     },
   });
 
+  // 일정 선택 바텀시트 오픈
+  const handleSchedulePickerOpen = (
+    scheduleChoiceKey: ScheduleChoiceKey,
+    schedulePickerType: SchedulePickerType,
+  ) => {
+    if (!hasSelectableScheduleChoice(scheduleChoiceKey, scheduleSelections)) {
+      return;
+    }
+
+    schedulePicker.actions.handleSchedulePickerOpen(scheduleChoiceKey, schedulePickerType);
+  };
+
   // 촬영 시간 증감
   const handleDurationHoursStep = {
     decrease: () => {
@@ -301,7 +314,9 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     handleDurationHoursStep,
     handlePeopleCountStep,
     handleUploadConsentStatusClick,
-    ...schedulePicker.actions,
+    handleSchedulePickerOpen,
+    handleSchedulePickerOpenChange: schedulePicker.actions.handleSchedulePickerOpenChange,
+    handleScheduleSelection: schedulePicker.actions.handleScheduleSelection,
     handleRequestContentChange,
     handleCopyReservationForm,
   };

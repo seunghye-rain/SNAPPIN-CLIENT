@@ -70,6 +70,24 @@ export const hasCompletedSchedule = (scheduleSelection: ScheduleSelectionValue) 
   return scheduleSelection.date.length > 0 && scheduleSelection.time.length > 0;
 };
 
+// 2, 3지망은 이전 지망이 완료되어야 선택 가능
+export const hasSelectableScheduleChoice = (
+  scheduleChoiceKey: ScheduleChoiceKey,
+  scheduleSelections: ScheduleSelections,
+) => {
+  const scheduleChoiceIndex = SCHEDULE_CHOICE_KEYS.findIndex((key) => {
+    return key === scheduleChoiceKey;
+  });
+
+  if (scheduleChoiceIndex <= 0) {
+    return true;
+  }
+
+  return SCHEDULE_CHOICE_KEYS.slice(0, scheduleChoiceIndex).every((previousScheduleChoiceKey) => {
+    return hasCompletedSchedule(scheduleSelections[previousScheduleChoiceKey]);
+  });
+};
+
 export const hasValidUploadConsentStatus = (uploadConsentStatus: string) => {
   return UPLOAD_CONSENT_STATUS_VALUES.some((uploadConsentStatusValue) => {
     return uploadConsentStatusValue === uploadConsentStatus;

@@ -1,11 +1,11 @@
-import {
-  BottomDrawer,
-  DatePicker,
-  DrawerDescription,
-  DrawerTitle,
-} from '@snappin/design-system';
+import { BottomDrawer, DatePicker, DrawerDescription, DrawerTitle } from '@snappin/design-system';
 import { TimePicker } from '@/ui/time-picker';
-import { type ReservationCopyFormModel } from '../../hooks';
+import {
+  PRIMARY_SCHEDULE_CHOICE_KEY,
+  SCHEDULE_CHOICE_KEYS,
+  hasCompletedSchedule,
+  type ReservationCopyFormModel,
+} from '../../hooks';
 import RESERVATION_TIME_PICKER_MOCK from '../../mock/reservationTimePicker.mock';
 
 type SchedulePickerDrawersProps = {
@@ -24,6 +24,63 @@ export default function SchedulePickerDrawers({
     },
     actions: { handleSchedulePickerOpenChange, handleScheduleSelection },
   } = reservationCopyFormModel;
+  const activeScheduleSelection =
+    activeScheduleChoiceKey && scheduleSelections[activeScheduleChoiceKey];
+  const isAdditionalScheduleChoiceActive =
+    activeScheduleChoiceKey !== null && activeScheduleChoiceKey !== PRIMARY_SCHEDULE_CHOICE_KEY;
+  const activeScheduleChoiceIndex = activeScheduleChoiceKey
+    ? SCHEDULE_CHOICE_KEYS.findIndex((scheduleChoiceKey) => {
+        return scheduleChoiceKey === activeScheduleChoiceKey;
+      })
+    : -1;
+
+  // 앞선 지망들 중복
+  const previousScheduleSelections =
+    activeScheduleChoiceIndex > 0
+      ? SCHEDULE_CHOICE_KEYS.slice(0, activeScheduleChoiceIndex)
+          .map((scheduleChoiceKey) => {
+            return scheduleSelections[scheduleChoiceKey];
+          })
+          .filter(hasCompletedSchedule)
+      : [];
+
+  // 동일 날짜 비활성화
+  const shouldBlockPreviousDates =
+    isAdditionalScheduleChoiceActive && Boolean(activeScheduleSelection?.time);
+  const blockedDates = shouldBlockPreviousDates
+    ? previousScheduleSelections
+        .filter((scheduleSelection) => {
+          return scheduleSelection.time === activeScheduleSelection?.time;
+        })
+        .map((scheduleSelection) => {
+          return scheduleSelection.date;
+        })
+    : [];
+
+  // 동일 시간 비활성화
+  const shouldBlockPreviousTimes =
+    isAdditionalScheduleChoiceActive && Boolean(activeScheduleSelection?.date);
+  const blockedTimes = shouldBlockPreviousTimes
+    ? previousScheduleSelections
+        .filter((scheduleSelection) => {
+          return scheduleSelection.date === activeScheduleSelection?.date;
+        })
+        .map((scheduleSelection) => {
+          return scheduleSelection.time;
+        })
+    : [];
+
+  const reservationTimePickerSections = RESERVATION_TIME_PICKER_MOCK.map((section) => {
+    return {
+      ...section,
+      slots: (section.slots ?? []).map((slot) => {
+        return {
+          ...slot,
+          isAvailable: slot.isAvailable && !blockedTimes.includes(slot.time ?? ''),
+        };
+      }),
+    };
+  });
 
   return (
     <>
@@ -46,6 +103,7 @@ export default function SchedulePickerDrawers({
                   ? (scheduleSelections[activeScheduleChoiceKey]?.date ?? '')
                   : ''
               }
+              closedDates={blockedDates}
               handleDateChangeAction={(scheduleDate) =>
                 handleScheduleSelection('date', scheduleDate)
               }
@@ -69,7 +127,7 @@ export default function SchedulePickerDrawers({
             촬영 시작 시간을 선택해 주세요
           </BottomDrawer.Title>
           <TimePicker
-            sections={RESERVATION_TIME_PICKER_MOCK}
+            sections={reservationTimePickerSections}
             value={
               activeScheduleChoiceKey
                 ? (scheduleSelections[activeScheduleChoiceKey]?.time ?? '')

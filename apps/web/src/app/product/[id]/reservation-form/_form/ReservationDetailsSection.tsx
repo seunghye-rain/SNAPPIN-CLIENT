@@ -6,7 +6,9 @@ import {
   MAXIMUM_PEOPLE_COUNT,
   MINIMUM_DURATION_HOURS,
   MINIMUM_PEOPLE_COUNT,
+  PRIMARY_SCHEDULE_CHOICE_KEY,
   SCHEDULE_CHOICES,
+  hasSelectableScheduleChoice,
   type ReservationCopyFormModel,
 } from '../hooks';
 import RESERVATION_FORM_INFORMATION_MOCK from '../mock/reservationFormInformation.mock';
@@ -106,6 +108,9 @@ export default function ReservationDetailsSection({
         {SCHEDULE_CHOICES.map(({ key, label }) => {
           const scheduleDate = scheduleSelections[key]?.date ?? '';
           const scheduleTime = scheduleSelections[key]?.time ?? '';
+          const isAdditionalScheduleChoice = key !== PRIMARY_SCHEDULE_CHOICE_KEY;
+          const isScheduleChoiceDisabled =
+            isAdditionalScheduleChoice && !hasSelectableScheduleChoice(key, scheduleSelections);
 
           return (
             <div key={key} className='flex flex-col gap-[0.8rem]'>
@@ -114,11 +119,13 @@ export default function ReservationDetailsSection({
                 <DateButton
                   value={createScheduleDateLabel(scheduleDate)}
                   hasValue={scheduleDate.length > 0}
+                  disabled={isScheduleChoiceDisabled}
                   handleClick={() => handleSchedulePickerOpen(key, 'date')}
                 />
                 <DateButton
                   value={createScheduleTimeLabel(scheduleTime)}
                   hasValue={scheduleTime.length > 0}
+                  disabled={isScheduleChoiceDisabled}
                   handleClick={() => handleSchedulePickerOpen(key, 'time')}
                 />
               </div>
