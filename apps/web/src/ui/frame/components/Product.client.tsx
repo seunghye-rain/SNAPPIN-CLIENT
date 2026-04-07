@@ -2,6 +2,9 @@
 
 import { cn } from '@snappin/design-system/lib';
 import { LikeButton } from '@snappin/design-system';
+import { useAuth } from '@/auth/hooks/useAuth';
+import { useWishProduct } from '@/queries/product';
+import { useToast } from '@/ui';
 
 type ProductClientProps = {
   id: number;
@@ -9,9 +12,20 @@ type ProductClientProps = {
 };
 
 export default function ProductClient({ id, isLiked }: ProductClientProps) {
-  //TODO: 로그인 여부에 따른 좋아요 기능 구현
-  const handleLike = () => {
-    console.log(`상품 ${id} 좋아요 토글 (현재 상태: ${isLiked})`);
+  const { isLogIn } = useAuth();
+  const { error } = useToast();
+  const { mutate: wishProduct } = useWishProduct();
+
+  const handleLike = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
+    if (!isLogIn) {
+      error('로그인이 필요한 기능입니다.', undefined, 'bottom-[8.4rem]');
+      return;
+    }
+
+    wishProduct(id);
   };
 
   return (
