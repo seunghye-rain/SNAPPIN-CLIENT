@@ -9,7 +9,10 @@ export const photographerDetailOptions = (id: number) =>
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_DETAIL(id),
     queryFn: async () => {
       try {
-        const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, { method: 'GET' });
+        // TODO: 서버 변경 후 v1 -> v2
+        const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, {
+          method: 'GET'
+        });
 
         if (!res.ok) {
           throw new Error('작가 상세 정보를 불러오는 데 실패했습니다.');
@@ -18,12 +21,10 @@ export const photographerDetailOptions = (id: number) =>
         const data = await res.json();
 
         if (!data?.data) {
-          throw new Error('작가 상세 응답 데이터가 비어 있습니다.');
+          throw new Error('/api/v1/photographers 응답에 데이터가 존재하지 않습니다.');
         }
 
-        // TODO: API 구현 완료되면 주석 풀기
-        // return data.data;
-        return PHOTOGRAPHER_MOCK.data;
+        return data.data;
       } catch (error) {
         if (error instanceof Error) throw error;
         throw new Error('알 수 없는 에러가 발생했습니다.');

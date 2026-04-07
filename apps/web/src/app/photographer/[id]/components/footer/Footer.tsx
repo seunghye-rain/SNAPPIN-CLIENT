@@ -10,6 +10,7 @@ type FooterProps = {
 export default function Footer({ id }: FooterProps) {
   const { data } = useGetPhotographerDetail(id);
 
+  // TODO: 서버 변경에 따라 변경 가능
   const handleContactClick = () => {
     if (data.contact) {
       window.open(data.contact, '_blank', 'noopener,noreferrer');
