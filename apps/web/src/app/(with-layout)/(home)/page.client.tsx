@@ -12,16 +12,16 @@ import { useGetPopularProducts } from '@/app/(with-layout)/(home)/api';
 
 import Banner from '../../../../public/imgs/image-home-banner.png';
 
+const MOOD_ID_PENDING = -1;
+
 export default function PageClient() {
   const { isVisible } = useNavVisibility();
   const { data: moods = [] } = useGetMoodIdList();
   const initialMoodId =
-    moods.find((mood) => mood.name === MOOD_CODE[MOOD_CODE_INDEX.따스한])?.id || 0;
+    moods.find((mood) => mood.name === MOOD_CODE[MOOD_CODE_INDEX.따스한])?.id || MOOD_ID_PENDING;
   const { selectedMoodCodeId, toggleMoodCode } = useSelectedMoodCode(initialMoodId);
 
-  const { data, isPending } = useGetPopularProducts(
-    selectedMoodCodeId && selectedMoodCodeId > 0 ? String(selectedMoodCodeId) : undefined,
-  );
+  const { data, isPending } = useGetPopularProducts(selectedMoodCodeId);
 
   return (
     <div className='relative flex w-full flex-col'>
@@ -47,7 +47,7 @@ export default function PageClient() {
                       key={mood.id}
                       label={mood.name || ''}
                       isSelected={selectedMoodCodeId === mood.id}
-                      onClick={() => toggleMoodCode(mood.id)}
+                      onClick={() => toggleMoodCode(mood.id ?? MOOD_ID_PENDING)}
                     />
                   );
                 })}

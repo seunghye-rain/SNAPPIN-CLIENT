@@ -3,22 +3,15 @@
 import { useEffect, useState } from 'react';
 
 export function useSelectedMoodCode(initialMoodId: number) {
-  const [selectedMoodCodeId, setSelectedMoodCodeId] = useState<number | undefined>(initialMoodId);
+  const [selectedMoodCodeId, setSelectedMoodCodeId] = useState<number>(initialMoodId);
 
   useEffect(() => {
     setSelectedMoodCodeId(initialMoodId);
   }, [initialMoodId]);
 
-  const toggleMoodCode = (value: number | undefined) => {
-    if (value === undefined) {
-      setSelectedMoodCodeId(undefined);
-      return;
-    }
-
+  const toggleMoodCode = (value: number) => {
     setSelectedMoodCodeId((prevSelectedMoodCodeId) => {
-      if (prevSelectedMoodCodeId === value) {
-        return undefined;
-      }
+      if (prevSelectedMoodCodeId === value) return prevSelectedMoodCodeId;
       return value;
     });
   };

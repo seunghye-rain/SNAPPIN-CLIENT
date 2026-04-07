@@ -83,7 +83,7 @@ export const USER_QUERY_KEY = {
   PRODUCT_RECOMMENDATION: (moodId?: string) => [
     ...USER_QUERY_KEY.PRODUCT,
     'recommendation',
-    moodId && moodId,
+    moodId,
   ],
 
   // 리뷰

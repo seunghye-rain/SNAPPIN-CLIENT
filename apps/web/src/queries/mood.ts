@@ -11,7 +11,12 @@ export const useGetMoodIdList = () => {
       fetch(`${SERVER_API_BASE_URL}/api/v2/moods`, {
         method: 'GET',
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`Failed to fetch moods: ${res.status}`);
+          }
+          return res.json();
+        })
         .then((data) => {
           return data.data.moods;
         }),
