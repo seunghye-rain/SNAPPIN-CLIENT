@@ -51,7 +51,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   if (selectedTab === PHOTOGRAPHER_TAB.PRODUCT) {
     promises.push(prefetchProductList(queryClient, photographerId, isLogIn));
   }
-  await Promise.all(promises);
+  Promise.all(promises);
 
   return (
     <main className='flex flex-col'>
