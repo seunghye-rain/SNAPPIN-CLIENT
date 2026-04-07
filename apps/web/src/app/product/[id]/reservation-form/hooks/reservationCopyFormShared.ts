@@ -21,11 +21,6 @@ export const SCHEDULE_CHOICE_KEYS = ['firstChoice', 'secondChoice', 'thirdChoice
 export const PRIMARY_SCHEDULE_CHOICE_KEY = SCHEDULE_CHOICE_KEYS[0];
 export const UPLOAD_CONSENT_STATUS_VALUES = ['agree', 'disagree'] as const;
 
-export type ScheduleChoiceKey = (typeof SCHEDULE_CHOICE_KEYS)[number];
-export type SchedulePickerType = 'date' | 'time';
-export type UploadConsentStatusValue = (typeof UPLOAD_CONSENT_STATUS_VALUES)[number];
-export type UploadConsentStatus = UploadConsentStatusValue | '';
-
 export type ReservationApplicant = {
   name: string;
   phoneNumber: string;
@@ -37,7 +32,10 @@ export type ScheduleSelectionValue = {
   time: string;
 };
 
-export type ScheduleSelections = Record<ScheduleChoiceKey, ScheduleSelectionValue>;
+export type ScheduleSelections = Record<
+  (typeof SCHEDULE_CHOICE_KEYS)[number],
+  ScheduleSelectionValue
+>;
 
 export type ReservationCopyFormInput = {
   placeId: string;
@@ -45,12 +43,12 @@ export type ReservationCopyFormInput = {
   durationHours: number;
   peopleCount: number;
   schedules: ScheduleSelections;
-  uploadConsentStatus: UploadConsentStatus;
+  uploadConsentStatus: '' | (typeof UPLOAD_CONSENT_STATUS_VALUES)[number];
   requestContent: string;
 };
 
 // 1~3지망 정의
-const SCHEDULE_CHOICE_LABELS: Record<ScheduleChoiceKey, string> = {
+const SCHEDULE_CHOICE_LABELS: Record<(typeof SCHEDULE_CHOICE_KEYS)[number], string> = {
   firstChoice: '1지망',
   secondChoice: '2지망',
   thirdChoice: '3지망',
@@ -58,7 +56,7 @@ const SCHEDULE_CHOICE_LABELS: Record<ScheduleChoiceKey, string> = {
 
 // 렌더링에 사용할 일정 선택 옵션 목록
 export const SCHEDULE_CHOICES: ReadonlyArray<{
-  key: ScheduleChoiceKey;
+  key: (typeof SCHEDULE_CHOICE_KEYS)[number];
   label: string;
 }> = SCHEDULE_CHOICE_KEYS.map((scheduleChoiceKey) => ({
   key: scheduleChoiceKey,
@@ -72,7 +70,7 @@ export const hasCompletedSchedule = (scheduleSelection: ScheduleSelectionValue) 
 
 // 2, 3지망은 이전 지망이 완료되어야 선택 가능
 export const hasSelectableScheduleChoice = (
-  scheduleChoiceKey: ScheduleChoiceKey,
+  scheduleChoiceKey: (typeof SCHEDULE_CHOICE_KEYS)[number],
   scheduleSelections: ScheduleSelections,
 ) => {
   const scheduleChoiceIndex = SCHEDULE_CHOICE_KEYS.findIndex((key) => {

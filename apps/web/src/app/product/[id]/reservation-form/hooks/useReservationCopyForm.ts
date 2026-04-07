@@ -18,16 +18,16 @@ import {
   hasSelectableScheduleChoice,
   type ReservationApplicant,
   type ReservationCopyFormInput,
-  type ScheduleChoiceKey,
-  type SchedulePickerType,
   type ScheduleSelectionValue,
-  type UploadConsentStatus,
 } from './reservationCopyFormShared';
 
 // 일정 picker 관련
 type UseReservationCopyFormProps = {
   applicant: ReservationApplicant;
 };
+
+type ScheduleChoiceKey = keyof ReservationCopyFormInput['schedules'];
+type SchedulePickerType = 'date' | 'time';
 
 type ActiveSchedulePicker = {
   scheduleChoiceKey: ScheduleChoiceKey;
@@ -231,7 +231,7 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
 
   // 업로드 동의/비동의
   const handleUploadConsentStatusClick = (
-    nextUploadConsentStatus: Exclude<UploadConsentStatus, ''>,
+    nextUploadConsentStatus: Exclude<ReservationCopyFormInput['uploadConsentStatus'], ''>,
   ) => {
     const nextUploadConsentValue =
       uploadConsentStatus === nextUploadConsentStatus ? '' : nextUploadConsentStatus;

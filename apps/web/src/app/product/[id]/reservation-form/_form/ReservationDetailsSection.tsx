@@ -136,7 +136,7 @@ export default function ReservationDetailsSection({
 
       <div className='flex flex-col gap-[1rem]'>
         <RequiredLabel>업로드 동의 여부</RequiredLabel>
-        {uploadConsentNotes.length > 0 ? (
+        {uploadConsentNotes.length > 0 && (
           <div className='bg-black-3 rounded-[0.6rem] p-[1.6rem]'>
             <div className='flex flex-col gap-[1.2rem]'>
               {uploadConsentNotes.map(({ label, note }) => {
@@ -149,7 +149,7 @@ export default function ReservationDetailsSection({
               })}
             </div>
           </div>
-        ) : null}
+        )}
         <div className='flex gap-[1rem]'>
           <Button
             type='button'

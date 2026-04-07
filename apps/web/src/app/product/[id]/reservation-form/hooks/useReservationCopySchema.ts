@@ -10,7 +10,6 @@ import {
   SCHEDULE_CHOICE_KEYS,
   UPLOAD_CONSENT_STATUS_VALUES,
   hasCompletedSchedule,
-  type ScheduleChoiceKey,
 } from './reservationCopyFormShared';
 
 // 각 일정 선택이 날짜와 시간 모두 선택되었는지 검증
@@ -40,7 +39,7 @@ const reservationSchedulesSchemaShape = Object.fromEntries(
   SCHEDULE_CHOICE_KEYS.map((scheduleChoiceKey) => {
     return [scheduleChoiceKey, reservationScheduleSelectionSchema];
   }),
-) as Record<ScheduleChoiceKey, typeof reservationScheduleSelectionSchema>;
+) as Record<(typeof SCHEDULE_CHOICE_KEYS)[number], typeof reservationScheduleSelectionSchema>;
 
 // 1~3지망 중 하나라도 완료된 일정이 있는지 검증
 const reservationSchedulesSchema = z
