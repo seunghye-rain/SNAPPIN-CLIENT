@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import LikeEmpty from '@/app/(with-layout)/like/component/empty/LikeEmpty';
 import { useInfiniteScroll } from '@/app/(with-layout)/explore/hooks/use-infinite-scroll';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 import ProductList from '@/ui/frame/product/ProductList';
+import { LIKE_SCROLL_KEY } from '../constants/scroll';
 import { useGetLikeProducts } from '../api';
 
 export default function ProductListSection() {
@@ -27,7 +28,7 @@ export default function ProductListSection() {
           alt: `Product image ${product.id ?? 0}`,
         },
         isLiked: true,
-      })) ?? [];
+      }));
   const { sentinelRef } = useInfiniteScroll({
     enabled: true,
     hasNextPage,
@@ -36,9 +37,8 @@ export default function ProductListSection() {
   });
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = useMemo(() => 'like:product:scroll', []);
 
-  useScrollRestoreOnParent(anchorRef, scrollKey, [productList.length, dataUpdatedAt], {
+  useScrollRestoreOnParent(anchorRef, LIKE_SCROLL_KEY.PRODUCT, [productList.length, dataUpdatedAt], {
     enabled: !!data,
     resetOnKeyChange: true,
   });

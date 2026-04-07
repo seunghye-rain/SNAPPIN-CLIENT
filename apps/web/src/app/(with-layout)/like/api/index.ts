@@ -19,8 +19,10 @@ export const useGetLikePortfolios = () => {
 
       return res;
     },
-    getNextPageParam: (lastPage: GetWishedPortfoliosData) =>
-      lastPage.meta?.hasNext ? String(lastPage.meta.nextCursor) : undefined,
+    getNextPageParam: (lastPage: GetWishedPortfoliosData) => {
+      const nextCursor = lastPage.meta?.nextCursor;
+      return lastPage.meta?.hasNext && nextCursor != null ? String(nextCursor) : undefined;
+    },
     staleTime: 0,
   });
 };
@@ -41,8 +43,10 @@ export const useGetLikeProducts = () => {
 
       return res;
     },
-    getNextPageParam: (lastPage: GetWishedProductsData) =>
-      lastPage.meta?.hasNext ? String(lastPage.meta.nextCursor) : undefined,
+    getNextPageParam: (lastPage: GetWishedProductsData) => {
+      const nextCursor = lastPage.meta?.nextCursor;
+      return lastPage.meta?.hasNext && nextCursor != null ? String(nextCursor) : undefined;
+    },
     staleTime: 0,
   });
 };

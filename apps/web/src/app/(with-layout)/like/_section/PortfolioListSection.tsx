@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import LikeEmpty from '@/app/(with-layout)/like/component/empty/LikeEmpty';
 import { useInfiniteScroll } from '@/app/(with-layout)/explore/hooks/use-infinite-scroll';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
 import PortfolioList from '@/ui/frame/portfolio/PortfolioList';
 import { type PortfolioFrameProps } from '@/ui/frame/portfolio/PortfolioFrame';
+import { LIKE_SCROLL_KEY } from '../constants/scroll';
 import { useGetLikePortfolios } from '../api';
 
 const toPortfolioFrameProps = (
@@ -36,9 +37,8 @@ export default function PortfolioListSection() {
   });
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
-  const scrollKey = useMemo(() => 'like:portfolio:scroll', []);
 
-  useScrollRestoreOnParent(anchorRef, scrollKey, [portfolioList.length, dataUpdatedAt], {
+  useScrollRestoreOnParent(anchorRef, LIKE_SCROLL_KEY.PORTFOLIO, [portfolioList.length, dataUpdatedAt], {
     enabled: !!data,
     resetOnKeyChange: true,
   });
