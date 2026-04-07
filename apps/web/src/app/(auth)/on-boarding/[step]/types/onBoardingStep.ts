@@ -7,7 +7,7 @@ import type {
 type OnBoardingFieldName = keyof typeof ON_BOARDING_SCHEMA.shape;
 
 export type OnBoardingTextField = {
-  name: Extract<OnBoardingFieldName, 'name' | 'nickname' | 'phone' | 'email'>;
+  name: Extract<OnBoardingFieldName, 'name' | 'nickname' | 'phoneNumber' | 'email'>;
   label: string;
   placeholder: string;
   type: 'text';

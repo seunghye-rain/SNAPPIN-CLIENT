@@ -26,7 +26,7 @@ export default function OnBoardingFields({ fields }: Props) {
     updateName,
     updateGender,
     updateNickname,
-    updatePhone,
+    updatePhoneNumber,
     updateEmail,
     updateSnapCategory,
   } = useOnBoardingFormContext();
@@ -34,7 +34,7 @@ export default function OnBoardingFields({ fields }: Props) {
   const TEXT_FIELD_HANDLERS: Record<OnBoardingTextField['name'], (value: string) => void> = {
     name: updateName,
     nickname: updateNickname,
-    phone: updatePhone,
+    phoneNumber: updatePhoneNumber,
     email: updateEmail,
   };
 

@@ -7,14 +7,14 @@ export const SCHEMA = {
   PHONE_NUMBER_LENGTH: 11,
 } as const;
 
-export const GENDER_VALUES = ['boy', 'girl'] as const;
+export const GENDER_VALUES = ['MALE', 'FEMALE'] as const;
 export const SNAP_CATEGORIES_VALUES = ['GRADUATION', 'FRIENDS', 'COUPLE', 'DAILY'] as const;
 export type GenderValue = (typeof GENDER_VALUES)[number];
 export type SnapCategoryValue = (typeof SNAP_CATEGORIES_VALUES)[number];
 
 export const GENDER_LABELS: Record<GenderValue, string> = {
-  girl: '여자',
-  boy: '남자',
+  FEMALE: '여자',
+  MALE: '남자',
 };
 
 export const SNAP_CATEGORIES_LABELS: Record<SnapCategoryValue, string> = {
@@ -69,7 +69,7 @@ export const ON_BOARDING_SCHEMA = z.object({
       message: ERROR_MESSAGES.NICKNAME_TEXT,
     }),
 
-  phone: z.string().refine((value) => PHONE_NUMBER_REGEX.test(value.replace(/-/g, '')), {
+  phoneNumber: z.string().refine((value) => PHONE_NUMBER_REGEX.test(value.replace(/-/g, '')), {
     message: ERROR_MESSAGES.PHONE_NUMBER,
   }),
 

@@ -30,7 +30,7 @@ export const useOnBoardingForm = () => {
       name: '',
       gender: undefined,
       nickname: '',
-      phone: '',
+      phoneNumber: '',
       email: '',
       snapCategories: [],
     },
@@ -81,7 +81,7 @@ export const useOnBoardingForm = () => {
     setValue('nickname', value, { shouldValidate: true });
   };
 
-  const updatePhone = (value: string) => {
+  const updatePhoneNumber = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 11);
     let sanitizedValue = digits;
 
@@ -93,7 +93,7 @@ export const useOnBoardingForm = () => {
       sanitizedValue = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
     }
 
-    setValue('phone', sanitizedValue, { shouldValidate: true });
+    setValue('phoneNumber', sanitizedValue, { shouldValidate: true });
   };
 
   const updateEmail = (value: string) => {
@@ -113,15 +113,16 @@ export const useOnBoardingForm = () => {
     name: formData?.name ?? '',
     gender: formData?.gender ?? '',
     nickname: formData?.nickname ?? '',
-    phone: formData?.phone ?? '',
+    phoneNumber: formData?.phoneNumber ?? '',
     email: formData?.email ?? '',
     snapCategories: formData?.snapCategories ?? [],
   };
+
   const compatibleErrors = {
     name: errors.name?.message,
     gender: errors.gender?.message,
     nickname: errors.nickname?.message,
-    phone: errors.phone?.message,
+    phoneNumber: errors.phoneNumber?.message,
     email: errors.email?.message,
     snapCategories: errors.snapCategories?.message,
   };
@@ -146,7 +147,7 @@ export const useOnBoardingForm = () => {
     updateName,
     updateGender,
     updateNickname,
-    updatePhone,
+    updatePhoneNumber,
     updateEmail,
     updateSnapCategory,
   };

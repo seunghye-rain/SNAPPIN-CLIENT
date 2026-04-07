@@ -46,10 +46,10 @@ export const ON_BOARDING_STEPS = [
     step: 3,
     title: INFO_STEP_TITLE,
     description: INFO_STEP_DESCRIPTION,
-    triggerFields: ['phone'],
+    triggerFields: ['phoneNumber'],
     fields: [
       {
-        name: 'phone',
+        name: 'phoneNumber',
         label: '전화번호',
         placeholder: "'-' 없이 숫자만 입력해주세요",
         type: 'text',
