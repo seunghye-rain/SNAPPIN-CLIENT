@@ -1,9 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
-import { usePlaceSearchField } from '@/hooks/usePlaceSearchField';
 import {
   DURATION_HOURS,
   PEOPLE_COUNT,
@@ -12,106 +10,22 @@ import {
   type ReservationCopyFormInput,
   type ReservationCopyFormOutput,
 } from '../constants';
-import type {
-  ReservationApplicant,
-  ScheduleChoiceKey,
-  ScheduleSelectionValue,
-} from '../types/copy';
-import {
-  createCopyText,
-  createDefaultReservationCopyFormValue,
-  hasSelectableScheduleChoice,
-} from '../utils';
+import type { ReservationApplicant } from '../types/copy';
+import { createDefaultReservationCopyFormValue } from '../utils';
+import useReservationCopyAction from './useReservationCopyAction';
+import useReservationPlaceField from './useReservationPlaceField';
+import useReservationSchedulePicker from './useReservationSchedulePicker';
 
-// 일정 picker 관련
 type UseReservationCopyFormProps = {
   applicant: ReservationApplicant;
-};
-
-type SchedulePickerType = 'date' | 'time';
-
-type ActiveSchedulePicker = {
-  scheduleChoiceKey: ScheduleChoiceKey;
-  schedulePickerType: SchedulePickerType;
-};
-
-type UseSchedulePickerProps = {
-  handleScheduleChange: (
-    scheduleChoiceKey: ScheduleChoiceKey,
-    scheduleSelectionChangeField: keyof ScheduleSelectionValue,
-    scheduleSelectionValue: string,
-  ) => void;
 };
 
 const getFieldErrorMessage = (errorMessage: unknown) => {
   return typeof errorMessage === 'string' ? errorMessage : '';
 };
 
-// 일정 picker 바텀시트 상태 관리
-const useSchedulePicker = ({ handleScheduleChange }: UseSchedulePickerProps) => {
-  const [activeSchedulePicker, setActiveSchedulePicker] = useState<ActiveSchedulePicker | null>(
-    null,
-  );
-
-  const handleSchedulePickerOpen = (
-    scheduleChoiceKey: ScheduleChoiceKey,
-    schedulePickerType: SchedulePickerType,
-  ) => {
-    setActiveSchedulePicker({
-      scheduleChoiceKey,
-      schedulePickerType,
-    });
-  };
-
-  const handleSchedulePickerClose = () => {
-    setActiveSchedulePicker(null);
-  };
-
-  // 바텀시트 닫기
-  const handleScheduleSelection = (
-    scheduleSelectionChangeField: keyof ScheduleSelectionValue,
-    scheduleSelectionValue: string,
-  ) => {
-    const activeScheduleChoiceKey = activeSchedulePicker?.scheduleChoiceKey;
-
-    if (!activeScheduleChoiceKey) {
-      handleSchedulePickerClose();
-      return;
-    }
-
-    handleScheduleChange(
-      activeScheduleChoiceKey,
-      scheduleSelectionChangeField,
-      scheduleSelectionValue,
-    );
-
-    handleSchedulePickerClose();
-  };
-
-  const handleSchedulePickerOpenChange = (nextOpenStatus: boolean) => {
-    if (!nextOpenStatus) {
-      handleSchedulePickerClose();
-    }
-  };
-
-  return {
-    viewState: {
-      activeScheduleChoiceKey: activeSchedulePicker?.scheduleChoiceKey ?? null,
-      isDatePickerBottomDrawerOpen: activeSchedulePicker?.schedulePickerType === 'date',
-      isTimePickerBottomDrawerOpen: activeSchedulePicker?.schedulePickerType === 'time',
-    },
-    actions: {
-      handleSchedulePickerOpen,
-      handleSchedulePickerOpenChange,
-      handleScheduleSelection,
-    },
-  };
-};
-
-// 예약 신청 양식 복사 훅
+// 예약 신청 양식 폼 훅
 const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
-  const [isCopyPending, setIsCopyPending] = useState(false);
-
   const defaultReservationCopyFormValue: ReservationCopyFormInput =
     createDefaultReservationCopyFormValue();
 
@@ -131,46 +45,21 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
   const values = useWatch({ control }) as ReservationCopyFormInput;
   const isCopyDisabled = !reservationCopyFormSchema.safeParse(values).success;
 
-  // 장소 자동완성
-  const {
-    options: placeOptions,
-    handleChange: handlePlaceKeywordChange,
-    handleBlur: handlePlaceBlur,
-  } = usePlaceSearchField({
-    value: values.placeKeyword,
-    onValueChange: (nextPlaceKeyword) =>
-      setValue('placeKeyword', nextPlaceKeyword, { shouldValidate: true }),
-    selectedId: values.placeId ? values.placeId : null,
-    setSelectedId: (nextPlaceId) =>
-      setValue('placeId', nextPlaceId ?? '', { shouldValidate: true }),
-    clearOnBlurWhenNoId: false,
+  const { placeOptions, handlePlaceKeywordChange, handlePlaceBlur } = useReservationPlaceField({
+    values,
+    setValue,
   });
 
-  const schedulePicker = useSchedulePicker({
-    handleScheduleChange: (
-      scheduleChoiceKey,
-      scheduleSelectionChangeField,
-      scheduleSelectionValue,
-    ) => {
-      setValue(
-        `schedules.${scheduleChoiceKey}.${scheduleSelectionChangeField}`,
-        scheduleSelectionValue,
-        { shouldValidate: true },
-      );
-    },
+  const schedulePicker = useReservationSchedulePicker({
+    values,
+    setValue,
   });
 
-  // 일정 선택 바텀시트 오픈
-  const handleSchedulePickerOpen = (
-    scheduleChoiceKey: ScheduleChoiceKey,
-    schedulePickerType: SchedulePickerType,
-  ) => {
-    if (!hasSelectableScheduleChoice(scheduleChoiceKey, values.schedules)) {
-      return;
-    }
-
-    schedulePicker.actions.handleSchedulePickerOpen(scheduleChoiceKey, schedulePickerType);
-  };
+  const { isCopyPending, handleCopyReservationForm } = useReservationCopyAction({
+    applicant,
+    getValues,
+    trigger,
+  });
 
   // 촬영 시간 증감
   const handleDurationHoursStep = {
@@ -235,29 +124,6 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     setValue('requestContent', nextRequestContent, { shouldValidate: true });
   };
 
-  // 폼 검증 후 예약 신청 양식 텍스트를 클립보드에 복사
-  const handleCopyReservationForm = async () => {
-    const isCurrentFormValid = await trigger();
-
-    if (!isCurrentFormValid) {
-      return false;
-    }
-    const reservationCopyText = createCopyText({
-      applicant,
-      reservationCopyFormValue: getValues(),
-    });
-
-    try {
-      setIsCopyPending(true);
-      await navigator.clipboard.writeText(reservationCopyText);
-      return true;
-    } catch {
-      return false;
-    } finally {
-      setIsCopyPending(false);
-    }
-  };
-
   // schedules 에러를 한줄 메시지로
   const scheduleErrorMessage =
     SCHEDULE_CHOICES.flatMap(({ key }) => {
@@ -295,7 +161,7 @@ const useReservationCopyForm = ({ applicant }: UseReservationCopyFormProps) => {
     handleDurationHoursStep,
     handlePeopleCountStep,
     handleUploadConsentStatusClick,
-    handleSchedulePickerOpen,
+    handleSchedulePickerOpen: schedulePicker.actions.handleSchedulePickerOpen,
     handleSchedulePickerOpenChange: schedulePicker.actions.handleSchedulePickerOpenChange,
     handleScheduleSelection: schedulePicker.actions.handleScheduleSelection,
     handleRequestContentChange,

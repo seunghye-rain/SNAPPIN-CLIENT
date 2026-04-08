@@ -8,7 +8,7 @@ import {
   SCHEDULE_CHOICES,
   UPLOAD_CONSENT_NOTES,
 } from '../constants';
-import { type ReservationCopyFormModel } from '../hooks/useReservationCopyForm';
+import { type ReservationCopyFormModel } from '../hooks';
 import {
   createDurationLabel,
   createScheduleDateLabel,

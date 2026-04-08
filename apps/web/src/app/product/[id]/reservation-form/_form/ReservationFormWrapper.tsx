@@ -2,7 +2,7 @@
 
 import { type FormEvent } from 'react';
 import { ApplicantInfoSection, ClientFooter, SchedulePickerDrawers } from '../components';
-import useReservationCopyForm from '../hooks/useReservationCopyForm';
+import { useReservationCopyForm } from '../hooks';
 import RESERVATION_FORM_MOCK from '../mock/reservationForm.mock';
 import AdditionalRequestSection from './AdditionalRequestSection';
 import ShootReservationSection from './ShootReservationSection';
