@@ -1,4 +1,4 @@
-import { SCHEDULE_CHOICES } from '../constants';
+import { SCHEDULE_CHOICES, UPLOAD_CONSENT_STATUS_VALUES } from '../constants';
 
 export type ReservationApplicant = {
   name: string;
@@ -8,7 +8,7 @@ export type ReservationApplicant = {
 
 export type ScheduleChoiceKey = (typeof SCHEDULE_CHOICES)[number]['key'];
 
-export type UploadConsentStatus = '' | 'agree' | 'disagree';
+export type UploadConsentStatus = (typeof UPLOAD_CONSENT_STATUS_VALUES)[number];
 
 export type ScheduleSelectionValue = {
   date: string;

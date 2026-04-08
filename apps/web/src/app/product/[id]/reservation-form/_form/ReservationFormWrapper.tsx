@@ -1,11 +1,10 @@
 'use client';
 
 import { type FormEvent } from 'react';
-import { ClientFooter, SchedulePickerDrawers } from '../components';
+import { ApplicantInfoSection, ClientFooter, SchedulePickerDrawers } from '../components';
 import useReservationCopyForm from '../hooks/useReservationCopyForm';
 import RESERVATION_FORM_MOCK from '../mock/reservationForm.mock';
 import AdditionalRequestSection from './AdditionalRequestSection';
-import ApplicantInfoSection from './ApplicantInfoSection';
 import ShootReservationSection from './ShootReservationSection';
 
 type ReservationFormWrapperProps = {

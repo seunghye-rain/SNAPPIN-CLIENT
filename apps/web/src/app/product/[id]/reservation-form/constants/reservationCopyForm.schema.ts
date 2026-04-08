@@ -6,6 +6,7 @@ import {
   RESERVATION_COPY_FORM_ERROR_MESSAGE,
   REQUEST_CONTENT,
   SCHEDULE_CHOICES,
+  UPLOAD_CONSENT_STATUS_VALUES,
 } from './copyForm';
 import { hasCompletedSchedule } from '../utils/reservationCopyForm';
 
@@ -65,7 +66,7 @@ export const reservationCopyFormSchema = z.object({
   peopleCount: z.number().min(PEOPLE_COUNT.MIN).max(PEOPLE_COUNT.MAX),
   schedules: reservationSchedulesSchema,
   uploadConsentStatus: z
-    .enum(['', 'agree', 'disagree'])
+    .enum(UPLOAD_CONSENT_STATUS_VALUES)
     .refine((value) => value !== '', {
       message: RESERVATION_COPY_FORM_ERROR_MESSAGE.UPLOAD_CONSENT_REQUIRED,
     }),

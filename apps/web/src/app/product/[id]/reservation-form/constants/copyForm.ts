@@ -36,6 +36,8 @@ export const UPLOAD_CONSENT_NOTES = [
   { label: '비동의 시', note: '비동의 시 제공 범위가 달라질 수 있습니다.' },
 ] as const;
 
+export const UPLOAD_CONSENT_STATUS_VALUES = ['', 'agree', 'disagree'] as const;
+
 export const UPLOAD_CONSENT_STATUS_LABEL = {
   agree: '동의',
   disagree: '비동의',
