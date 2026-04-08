@@ -31,6 +31,7 @@ export default function PortfolioDetailContent({ id, isLogIn }: PortfolioDetailC
         likeCount={data?.likeCount ?? 0}
         place={data?.place ?? ''}
         moods={data?.moods as MoodCode[]}
+        isLogIn={isLogIn}
       />
       <PhotographerSection
         id={data?.photographerInfo?.id ?? 0}
