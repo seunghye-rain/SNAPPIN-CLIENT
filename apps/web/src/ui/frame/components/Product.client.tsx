@@ -1,49 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { cn } from '@snappin/design-system/lib';
 import { LikeButton } from '@snappin/design-system';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { useWishProductLike } from '@/ui/frame/apis';
-import { useToast } from '@/ui';
+import { type LikeProps, useLikeButton } from '@/ui/frame/hooks/useLike';
 
-type ProductClientProps = {
-  id: number;
-  isLiked: boolean;
-};
-
-export default function ProductClient({ id, isLiked }: ProductClientProps) {
+export default function ProductClient({ id, isLiked }: LikeProps) {
   const { isLogIn } = useAuth();
-  const { error } = useToast();
   const { mutate: wishProduct } = useWishProductLike({ id, isLogin: !!isLogIn });
-  const [liked, setLiked] = useState(isLiked);
-
-  useEffect(() => {
-    setLiked(isLiked);
-  }, [isLiked]);
-
-  const handleLike = (e?: React.MouseEvent<HTMLButtonElement>) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-
-    if (isLogIn === null) {
-      return;
-    }
-
-    if (!isLogIn) {
-      error('로그인이 필요한 기능입니다.', undefined, 'bottom-[8.4rem]');
-      return;
-    }
-
-    const previousLiked = liked;
-
-    setLiked((prev) => !prev);
-    wishProduct(id, {
-      onError: () => {
-        setLiked(previousLiked);
-      },
-    });
-  };
+  const { liked, handleLike } = useLikeButton({ id, isLiked, mutate: wishProduct });
 
   return (
     <LikeButton
