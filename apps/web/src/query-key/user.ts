@@ -1,5 +1,3 @@
-import { DEFAULT_CIPHERS } from 'tls';
-
 export const USER_QUERY_KEY = {
   // AI 큐레이션
   AI_CURATION: ['ai-curation'],
