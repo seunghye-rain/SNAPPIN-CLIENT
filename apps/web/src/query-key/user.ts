@@ -117,6 +117,8 @@ export const PRODUCT_QUERY_KEY = {
 
   LIKES: () => [...PRODUCT_QUERY_KEY.all, 'like'],
   LIKE: (id: number) => [...PRODUCT_QUERY_KEY.LIKES(), id],
+
+  REVIEWS: (id: number) => [...PRODUCT_QUERY_KEY.all, 'reviews', id],
 } as const;
 
 //이거 쓰라고

@@ -5,7 +5,7 @@ import { Tabs } from '@snappin/design-system';
 import { MoodCode } from '@snappin/shared/types';
 import { ROUTES } from '@/constants/routes/routes';
 import { useScrollRestoreOnParent } from '@/hooks/useScrollRestoreOnParent';
-import { PortfolioListSkeleton } from '@/ui';
+import { PortfolioFrameListSkeleton } from '@/ui';
 import {
   PhotographerSection,
   PortfolioListSection,
@@ -51,7 +51,6 @@ export default function ProductDetailContent({ productId, tab, isLogIn }: Produc
         reviewCount={data?.reviewCount ?? 0}
         price={data?.price ?? 0}
         moods={data?.productInfo?.moods as MoodCode[] ?? []}
-        photographerId={data?.photographerInfo?.id ?? 0}
         isLogIn={isLogIn}
       />
       <PhotographerSection photographerInfo={data?.photographerInfo} />
@@ -75,7 +74,7 @@ export default function ProductDetailContent({ productId, tab, isLogIn }: Produc
           )}
           {selectedTab === PRODUCT_TAB.PORTFOLIO && (
             <div className='bg-black-1 mb-[8rem]'>
-              <Suspense fallback={<PortfolioListSkeleton />}>
+              <Suspense fallback={<PortfolioFrameListSkeleton />}>
                 <PortfolioListSection productId={productId} isLogIn={isLogIn} />
               </Suspense>
             </div>

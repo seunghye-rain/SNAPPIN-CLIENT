@@ -1,6 +1,6 @@
 import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
-import { USER_QUERY_KEY } from '@/query-key/user';
+import { PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY, USER_QUERY_KEY } from '@/query-key/user';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetPortfolioListData, GetProductDetailData } from '@/swagger-api';
 
@@ -8,7 +8,7 @@ import { GetPortfolioListData, GetProductDetailData } from '@/swagger-api';
 // TODO: 서버 변경 후 v1 -> v2
 export const productDetailOptions = (id: number, isLogIn: boolean) =>
   queryOptions({
-    queryKey: USER_QUERY_KEY.PRODUCT_DETAIL(id, isLogIn),
+    queryKey: PRODUCT_QUERY_KEY.DETAIL(id, isLogIn),
     queryFn: async () => {
       if (isLogIn) {
         const res = await apiRequest<GetProductDetailData>({
@@ -36,7 +36,7 @@ export const productDetailOptions = (id: number, isLogIn: boolean) =>
 // 포폴 목록 조회 옵션
 export const productPortfoliosOptions = (id: number, isLogIn: boolean) =>
   infiniteQueryOptions({
-    queryKey: USER_QUERY_KEY.PRODUCT_PORTFOLIOS(id, isLogIn),
+    queryKey: PORTFOLIO_QUERY_KEY.LIST(`product-${id}-${isLogIn ? 'login' : 'not-login'}`),
     initialPageParam: undefined as string | undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(`${SERVER_API_BASE_URL}/api/v2/portfolios`);
@@ -71,7 +71,7 @@ export const productPortfoliosOptions = (id: number, isLogIn: boolean) =>
 // 상품 리뷰 목록 조회 옵션
 export const productReviewsOptions = (id: number) =>
   infiniteQueryOptions({
-    queryKey: USER_QUERY_KEY.PRODUCT_REVIEWS(id),
+    queryKey: PRODUCT_QUERY_KEY.REVIEWS(id),
     initialPageParam: undefined as string | undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(`${SERVER_API_BASE_URL}/api/v1/products/${id}/reviews`);

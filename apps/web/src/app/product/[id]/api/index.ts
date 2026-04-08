@@ -121,86 +121,9 @@ export const useReservation = (productId: string) => {
   });
 };
 
-type WishProductContext = {
-  previousData?: GetProductDetailResponse;
-};
-
 // 상품 상세 정보 및 상품 안내 조회 API
 export const useGetProductDetail = (id: number, isLogIn: boolean) => {
   return useSuspenseQuery(productDetailOptions(id, isLogIn));
-};
-
-// 상품 좋아요/취소 (위시) API
-export const useWishProduct = (photographerId: number) => {
-  const queryClient = useQueryClient();
-
-  return useMutation<WishProductResponse, Error, number, WishProductContext>({
-    mutationFn: async (id: number) => {
-      const res = await apiRequest<UpdateWishProductData>({
-        endPoint: '/api/v1/wishes/products',
-        method: 'POST',
-        data: { productId: id },
-      });
-
-      if (!res.data) {
-        throw new Error('/api/v1/wishes/products 응답에 데이터가 존재하지 않습니다.');
-      }
-      return res.data;
-    },
-    // 낙관적 업데이트 수행
-    onMutate: async (id) => {
-      const authKey = USER_QUERY_KEY.PRODUCT_DETAIL(id, true);
-
-      await queryClient.cancelQueries({ queryKey: authKey });
-
-      const previousData = queryClient.getQueryData<GetProductDetailResponse>(authKey);
-
-      queryClient.setQueryData<GetProductDetailResponse>(authKey, (old) => {
-        if (!old) return old;
-
-        const willBeLiked = !old.isLiked;
-
-        return {
-          ...old,
-          isLiked: willBeLiked,
-        };
-      });
-
-      return { previousData };
-    },
-    // 서버 실패 시 이전 상태 복구
-    onError: (_error, id, context) => {
-      if (!context?.previousData) return;
-
-      queryClient.setQueryData(USER_QUERY_KEY.PRODUCT_DETAIL(id, true), context.previousData);
-    },
-    // 작가 상품 목록 캐시 동기화
-    onSuccess: (result) => {
-      const { productId, liked } = result;
-      if (productId === undefined || liked === undefined) {
-        return;
-      }
-
-      const photographerProductsKey = USER_QUERY_KEY.PHOTOGRAPHER_PRODUCTS(photographerId, true);
-
-      queryClient.setQueryData<InfiniteData<GetProductListData>>(photographerProductsKey, (old) => {
-        if (!old) return old;
-
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            data: {
-              ...page.data,
-              products: page.data?.products?.map((product: GetProductCardResponseV2) =>
-                product.id === productId ? { ...product, isLiked: liked } : product,
-              ),
-            },
-          })),
-        };
-      });
-    },
-  });
 };
 
 // 포폴 목록 조회 API
