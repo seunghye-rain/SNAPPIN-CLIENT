@@ -30,7 +30,7 @@ export default function ExploreTabPanels({ currentTab }: ExploreTabPanelsProps) 
           id='explore-product-scroll'
           className='scrollbar-hide min-h-0 flex-1 overflow-y-auto overscroll-contain'
         >
-          <Suspense fallback={<ProductFrameListSkeleton length={6} />}>
+          <Suspense fallback={<ProductFrameListSkeleton />}>
             <ProductListSection />
           </Suspense>
         </div>
