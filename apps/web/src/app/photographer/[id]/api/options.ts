@@ -10,8 +10,7 @@ export const photographerDetailOptions = (id: number) =>
     queryKey: USER_QUERY_KEY.PHOTOGRAPHER_DETAIL(id),
     queryFn: async () => {
       try {
-        // TODO: 서버 변경 후 v1 -> v2
-        const res = await fetch(`${SERVER_API_BASE_URL}/api/v1/photographers/${id}`, {
+        const res = await fetch(`${SERVER_API_BASE_URL}/api/v2/photographers/${id}`, {
           method: 'GET'
         });
 
@@ -22,7 +21,7 @@ export const photographerDetailOptions = (id: number) =>
         const data = await res.json();
 
         if (!data?.data) {
-          throw new Error('/api/v1/photographers 응답에 데이터가 존재하지 않습니다.');
+          throw new Error('/api/v2/photographers 응답에 데이터가 존재하지 않습니다.');
         }
 
         return data.data;
