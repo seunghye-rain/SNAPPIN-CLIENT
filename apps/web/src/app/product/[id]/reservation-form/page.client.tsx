@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/routes/routes';
 import CancelModal from './@modal/(.)cancel-modal/CancelModal';
 import CopyModal from './@modal/(.)copy-modal/CopyModal';
-import { ReservationFormContent } from './_form';
+import { ReservationFormWrapper } from './_form';
 import { ClientHeader } from './components';
 
 type PageClientProps = {
@@ -38,7 +38,7 @@ export default function PageClient({ photographerId }: PageClientProps) {
   return (
     <>
       <ClientHeader handleClickBack={handleBackClick} />
-      <ReservationFormContent handleCopySuccess={handleCopySuccess} />
+      <ReservationFormWrapper handleCopySuccess={handleCopySuccess} />
 
       <CancelModal
         open={isCancelModalOpen}

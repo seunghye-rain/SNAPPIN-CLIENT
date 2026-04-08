@@ -5,16 +5,16 @@ import { ClientFooter, SchedulePickerDrawers } from '../components';
 import useReservationCopyForm from '../hooks/useReservationCopyForm';
 import RESERVATION_FORM_MOCK from '../mock/reservationForm.mock';
 import AdditionalRequestSection from './AdditionalRequestSection';
-import ReservationDetailsSection from './ReservationDetailsSection';
-import ReservationInfoSection from './ReservationInfoSection';
+import ApplicantInfoSection from './ApplicantInfoSection';
+import ShootReservationSection from './ShootReservationSection';
 
-type ReservationFormContentProps = {
+type ReservationFormWrapperProps = {
   handleCopySuccess?: () => void;
 };
 
-export default function ReservationFormContent({
+export default function ReservationFormWrapper({
   handleCopySuccess,
-}: ReservationFormContentProps) {
+}: ReservationFormWrapperProps) {
   const reservationCopyFormModel = useReservationCopyForm({
     applicant: RESERVATION_FORM_MOCK,
   });
@@ -32,8 +32,8 @@ export default function ReservationFormContent({
     <>
       <form onSubmit={handleFormSubmit}>
         <div className='flex flex-col gap-[3rem] p-[2rem]'>
-          <ReservationInfoSection applicant={RESERVATION_FORM_MOCK} />
-          <ReservationDetailsSection reservationCopyFormModel={reservationCopyFormModel} />
+          <ApplicantInfoSection applicant={RESERVATION_FORM_MOCK} />
+          <ShootReservationSection reservationCopyFormModel={reservationCopyFormModel} />
           <AdditionalRequestSection reservationCopyFormModel={reservationCopyFormModel} />
         </div>
       </form>

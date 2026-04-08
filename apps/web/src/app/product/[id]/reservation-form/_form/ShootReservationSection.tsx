@@ -16,7 +16,7 @@ import {
   hasSelectableScheduleChoice,
 } from '../utils';
 
-type ReservationDetailsSectionProps = {
+type ShootReservationSectionProps = {
   reservationCopyFormModel: Pick<ReservationCopyFormModel, 'values' | 'viewState' | 'actions'>;
 };
 
@@ -32,9 +32,9 @@ const RequiredLabel = ({ children }: RequiredLabelProps) => {
   );
 };
 
-export default function ReservationDetailsSection({
+export default function ShootReservationSection({
   reservationCopyFormModel,
-}: ReservationDetailsSectionProps) {
+}: ShootReservationSectionProps) {
   const {
     values: { placeKeyword, durationHours, peopleCount, scheduleSelections, uploadConsentStatus },
     viewState: { placeOptions },

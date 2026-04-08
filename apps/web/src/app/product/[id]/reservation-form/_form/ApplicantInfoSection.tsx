@@ -6,11 +6,11 @@ type ReservationInfoItem = {
   value: string;
 };
 
-type ReservationInfoSectionProps = {
+type ApplicantInfoSectionProps = {
   applicant: ReservationApplicant;
 };
 
-export default function ReservationInfoSection({ applicant }: ReservationInfoSectionProps) {
+export default function ApplicantInfoSection({ applicant }: ApplicantInfoSectionProps) {
   const data = applicant;
 
   const reservationInfoItems: ReservationInfoItem[] = [

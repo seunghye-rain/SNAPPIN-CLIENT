@@ -1,2 +1,1 @@
-export { default as ReservationFormContent } from './ReservationFormContent';
-export { default as ReservationInfoSection } from './ReservationInfoSection';
+export { default as ReservationFormWrapper } from './ReservationFormWrapper';
