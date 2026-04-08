@@ -8,7 +8,7 @@ import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { setAuthUser } from '@/auth/userType';
 import { setAccessToken } from '@/auth/token';
 import { useKakaoLogin } from '@/auth/apis';
-import { parseReturnToState, buildReturnToParams, resolveReturnToPath } from '@/auth/utils/returnTo';
+import { getReturnToParam, readReturnToContext, resolveReturnToPath } from '@/auth/utils/returnTo';
 import { useToast, Loading } from '@/ui';
 import { PHOTOGRAPHERS_ROUTES, ROUTES } from '@/constants/routes/routes';
 
@@ -27,7 +27,7 @@ export default function KakaoCallbackPage() {
   const code = params.get('code');
   const error = params.get('error');
   const state = params.get('state');
-  const returnToContext = parseReturnToState(state);
+  const returnToContext = readReturnToContext(new URLSearchParams(state ?? ''));
 
   const startedRef = useRef(false);
 
@@ -41,7 +41,7 @@ export default function KakaoCallbackPage() {
       router.replace(
         ROUTES.LOGIN({
           error: 'kakao',
-          ...buildReturnToParams(returnToContext),
+          ...getReturnToParam(returnToContext),
         }),
       );
       return;
@@ -69,7 +69,7 @@ export default function KakaoCallbackPage() {
         });
 
         if (!data.data.isOnboardingCompleted) {
-          router.replace(ROUTES.ON_BOARDING(1, buildReturnToParams(returnToContext)));
+          router.replace(ROUTES.ON_BOARDING(1, getReturnToParam(returnToContext)));
         } else if (returnToContext.returnTo) {
           router.replace(resolveReturnToPath(returnToContext, ROUTES.HOME));
         } else if (data.data.role === USER_TYPE.PHOTOGRAPHER) {
@@ -81,7 +81,7 @@ export default function KakaoCallbackPage() {
         router.replace(
           ROUTES.LOGIN({
             error: 'kakao',
-            ...buildReturnToParams(returnToContext),
+            ...getReturnToParam(returnToContext),
           }),
         );
         toast.error(

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BottomCTAButton } from '@snappin/design-system';
-import { buildReturnToParams, readReturnToContext } from '@/auth/utils/returnTo';
+import { getReturnToParam, readReturnToContext } from '@/auth/utils/returnTo';
 import { ROUTES } from '@/constants/routes/routes';
 import { TOTAL_STEP_COUNT } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingSteps';
 import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoardingStep';
@@ -18,7 +18,7 @@ type ClientFooterProps = {
 export default function ClientFooter({ step, triggerFields }: ClientFooterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const returnToParams = buildReturnToParams(readReturnToContext(searchParams));
+  const returnToParams = getReturnToParam(readReturnToContext(searchParams));
   const { compatibleFormData, trigger, handleSubmitForm } = useOnBoardingFormContext();
   const { mutateAsync, isPending } = usePostOnboarding();
 

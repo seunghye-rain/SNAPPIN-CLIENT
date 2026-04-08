@@ -3,7 +3,7 @@
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowBack } from '@snappin/design-system/assets';
 import { Navigation } from '@snappin/design-system';
-import { buildReturnToParams, readReturnToContext } from '@/auth/utils/returnTo';
+import { getReturnToParam, readReturnToContext } from '@/auth/utils/returnTo';
 import { ROUTES } from '@/constants/routes/routes';
 
 export default function ClientNavigation() {
@@ -11,7 +11,7 @@ export default function ClientNavigation() {
   const pathname = usePathname();
   const params = useParams<{ step?: string }>();
   const searchParams = useSearchParams();
-  const returnToParams = buildReturnToParams(readReturnToContext(searchParams));
+  const returnToParams = getReturnToParam(readReturnToContext(searchParams));
 
   const isBackHidden = params.step === '1' || pathname === ROUTES.ON_BOARDING_FINAL();
 
