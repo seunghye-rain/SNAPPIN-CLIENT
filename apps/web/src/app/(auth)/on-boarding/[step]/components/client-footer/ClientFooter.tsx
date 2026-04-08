@@ -9,6 +9,7 @@ import type { OnBoardingStep } from '@/app/(auth)/on-boarding/[step]/types/onBoa
 import { useOnBoardingFormContext } from '@/app/(auth)/on-boarding/hooks/useOnBoardingFormContext';
 import { usePostOnboarding } from '@/app/(auth)/on-boarding/[step]/api';
 import { GenderValue } from '@/app/(auth)/on-boarding/[step]/constants/onBoardingForm.schema';
+import { useToast } from '@/ui';
 
 type ClientFooterProps = {
   step: number;
@@ -20,7 +21,20 @@ export default function ClientFooter({ step, triggerFields }: ClientFooterProps)
   const searchParams = useSearchParams();
   const returnToParams = getReturnToParam(readReturnToContext(searchParams));
   const { compatibleFormData, trigger, handleSubmitForm } = useOnBoardingFormContext();
-  const { mutateAsync, isPending } = usePostOnboarding();
+  const { error } = useToast();
+
+  const { mutateAsync, isPending } = usePostOnboarding({
+    onSuccess: () => {
+      router.push(ROUTES.ON_BOARDING_FINAL(returnToParams));
+    },
+    onError: () => {
+      error('온보딩에 실패했어요. 홈으로 이동합니다.', undefined, 'bottom-[8.4rem]');
+
+      window.setTimeout(() => {
+        router.push(ROUTES.HOME);
+      }, 2000);
+    },
+  });
 
   const isLast = step === TOTAL_STEP_COUNT;
 
@@ -39,8 +53,6 @@ export default function ClientFooter({ step, triggerFields }: ClientFooterProps)
           snapCategories: compatibleFormData.snapCategories,
           phoneNumber: compatibleFormData.phoneNumber,
         });
-
-        router.push(ROUTES.ON_BOARDING_FINAL(returnToParams));
       });
     } else {
       router.push(ROUTES.ON_BOARDING(step + 1, returnToParams));
