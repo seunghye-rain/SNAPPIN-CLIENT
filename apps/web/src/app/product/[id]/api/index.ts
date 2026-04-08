@@ -1,10 +1,8 @@
 import {
-  useMutation,
   useQuery,
-  useQueryClient,
+  useMutation,
   useSuspenseQuery,
   useSuspenseInfiniteQuery,
-  InfiniteData,
 } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
 import { USER_QUERY_KEY } from '@/query-key/user';
@@ -15,12 +13,7 @@ import {
   ApiResponseBodyProductDurationTimeResponseVoid,
   ApiResponseBodyProductPeopleRangeResponseVoid,
   ApiResponseBodyProductReservationResponseVoid,
-  GetProductDetailResponse,
-  GetProductListData,
-  GetProductCardResponseV2,
   ProductReservationRequest,
-  UpdateWishProductData,
-  WishProductResponse,
   GetOnboardingData,
 } from '@/swagger-api';
 import { productDetailOptions, productPortfoliosOptions, productReviewsOptions } from './options';

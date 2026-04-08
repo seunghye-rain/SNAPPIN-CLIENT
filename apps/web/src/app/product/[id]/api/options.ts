@@ -1,6 +1,6 @@
 import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
-import { PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY, USER_QUERY_KEY } from '@/query-key/user';
+import { PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY } from '@/query-key/user';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetPortfolioListData, GetProductDetailData } from '@/swagger-api';
 
