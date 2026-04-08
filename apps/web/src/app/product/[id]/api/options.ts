@@ -5,6 +5,7 @@ import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetProductDetailData } from '@/swagger-api';
 
 // 상품 상세 정보 및 상품 안내 조회 옵션
+// TODO: 서버 변경 후 v1 -> v2
 export const productDetailOptions = (id: number, isLogIn: boolean) =>
   queryOptions({
     queryKey: USER_QUERY_KEY.PRODUCT_DETAIL(id, isLogIn),
@@ -15,7 +16,9 @@ export const productDetailOptions = (id: number, isLogIn: boolean) =>
           method: 'GET',
         });
 
-        if (!res.data) throw new Error('/api/v1/products/{id} 응답에 데이터가 존재하지 않습니다.');
+        if (!res.data) {
+          throw new Error('/api/v1/products/{id} 응답에 데이터가 존재하지 않습니다.');
+        }
         return res.data;
       }
 
@@ -24,6 +27,7 @@ export const productDetailOptions = (id: number, isLogIn: boolean) =>
       if (!res.ok) {
         throw new Error('상품 상세 정보 및 상품 안내 정보를 불러오는 데 실패했습니다.');
       }
+
       const data = await res.json();
       return data.data;
     },

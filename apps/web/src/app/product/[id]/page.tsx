@@ -27,9 +27,9 @@ export default async function Page({ params, searchParams }: PageProps) {
   }
 
   const promises = [];
+  const queryClient = getQueryClient();
   const cookieStore = await cookies();
   const isLogIn = cookieStore.has('AccessToken');
-  const queryClient = getQueryClient();
 
   promises.push(prefetchProductDetail(queryClient, productId, isLogIn));
   if (tab === PRODUCT_TAB.PORTFOLIO) {
@@ -45,7 +45,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       <Header />
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<ProductDetailSkeleton selectedTab={PRODUCT_TAB.PRODUCT_DETAIL} />}>
-          <ProductDetailContent productId={productId} tab={tab} />
+          <ProductDetailContent productId={productId} tab={tab} isLogIn={isLogIn} />
         </Suspense>
       </HydrationBoundary>
     </main>

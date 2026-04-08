@@ -6,7 +6,6 @@ import {
   InfiniteData,
 } from '@tanstack/react-query';
 import { apiRequest } from '@/api/apiRequest';
-import { useAuth } from '@/auth/hooks/useAuth';
 import { USER_QUERY_KEY } from '@/query-key/user';
 import {
   ApiResponseBodyProductAvailableTimesResponseVoid,
@@ -124,10 +123,8 @@ type WishProductContext = {
 };
 
 // 상품 상세 정보 및 상품 안내 조회 API
-export const useGetProductDetail = (id: number) => {
-  const { isLogIn } = useAuth();
-
-  return useSuspenseQuery(productDetailOptions(id, !!isLogIn));
+export const useGetProductDetail = (id: number, isLogIn: boolean) => {
+  return useSuspenseQuery(productDetailOptions(id, isLogIn));
 };
 
 // 상품 좋아요/취소 (위시) API
