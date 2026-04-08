@@ -39,7 +39,7 @@ export default function ProductSection({
           <div className='relative w-[9rem] h-[9rem] shrink-0 rounded-[0.4rem] overflow-hidden'>
             <Image
               fill
-              alt={`${name}`}
+              alt={name}
               src={imageUrl || '/imgs/default-image.png'}
               sizes='9rem'
               className='object-cover'
