@@ -30,6 +30,7 @@ export default function ProductCard({
           src={image.src ?? '/imgs/default-image.png'}
           sizes='9rem'
           className='object-cover'
+          preload={preload}
         />
       </div>
       {/* 우측 상품 정보 */}

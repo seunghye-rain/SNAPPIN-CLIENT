@@ -66,7 +66,7 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
         });
 
         router.replace(ROUTES.PRODUCT(productId));
-      } catch (error) {
+      } catch {
         toast.error('잠시 후 다시 시도해주세요.', undefined, 'bottom-[8rem]');
         router.back();
       } finally {
