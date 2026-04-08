@@ -6,7 +6,6 @@ import { Button, BottomCTAButton, ConfirmModal } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { ROUTES } from '@/constants/routes/routes';
 import { useGetUsersOnboarding } from '@/app/product/[id]/api';
-import { ON_BOARDING_SESSION_KEY } from '@/constants/on-boarding/on-boarding';
 
 type FooterProps = {
   productId: number;
@@ -45,7 +44,6 @@ export default function Footer({ productId, contact, isLogIn }: FooterProps) {
     setIsOpen(true);
   };
   const handleOnboardingConfirm = () => {
-    sessionStorage.setItem(ON_BOARDING_SESSION_KEY.REDIRECT, ROUTES.PRODUCT(productId));
     router.push(ROUTES.ON_BOARDING(1));
   };
 
