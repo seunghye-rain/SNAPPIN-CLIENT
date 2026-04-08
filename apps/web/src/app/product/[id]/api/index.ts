@@ -217,8 +217,6 @@ export const useGetUsersOnboarding = (isLogIn: boolean) => {
   return useQuery({
     queryKey: USER_QUERY_KEY.ON_BOARDING_USER(),
     queryFn: async () => {
-      if (!isLogIn) return null;
-
       try {
         const res = await apiRequest<GetOnboardingData>({
           endPoint: '/api/v1/users/onboarding',
@@ -231,11 +229,16 @@ export const useGetUsersOnboarding = (isLogIn: boolean) => {
         return res.data;
       } catch (error) {
         if (typeof error === 'string') {
-          const parsed = JSON.parse(error);
-          if (parsed.status === 404) return null;
+          try {
+            const parsed = JSON.parse(error);
+            if (parsed.status === 404) return null;
+          } catch {
+            console.error(error);
+          }
         }
         throw error;
       }
-    }
+    },
+    enabled: isLogIn,
   });
 };

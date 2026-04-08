@@ -18,7 +18,7 @@ export default function PortfolioListSection({ productId, isLogIn }: PortfolioLi
     .flatMap((page) => page.data?.portfolios ?? [])
     .map(({ imageUrl, ...rest }) => ({
       ...rest,
-      image: { src: imageUrl, alt: '' },
+      image: { src: imageUrl ?? '', alt: '' },
     })) ?? [];
 
   useEffect(() => {

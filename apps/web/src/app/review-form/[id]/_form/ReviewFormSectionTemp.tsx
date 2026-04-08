@@ -18,11 +18,11 @@ import { useToast } from '@/ui';
 import { ROUTES } from '@/constants/routes/routes';
 import { IMAGE_ACCEPT } from '@snappin/shared/constants';
 
-type ReviewFormSectionProps = {
+type ReviewFormSectionTempProps = {
   productId: number;
 };
 
-export default function ReviewFormSection({ productId }: ReviewFormSectionProps) {
+export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTempProps) {
   const {
     compatibleFormData,
     compatibleErrors,
@@ -65,9 +65,11 @@ export default function ReviewFormSection({ productId }: ReviewFormSectionProps)
         });
 
         router.replace(ROUTES.PRODUCT(productId));
-      } catch {
+      } catch (error) {
         toast.error('잠시 후 다시 시도해주세요.', undefined, 'bottom-[8rem]');
         router.back();
+      } finally {
+        setIsSubmitting(false);
       }
     });
   };

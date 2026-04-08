@@ -65,7 +65,7 @@ export default function ReviewListSection({ productId, averageRate, isLogIn }: R
             size='small'
             color='transparent'
             className='pr-0 border-none'
-            onClick={handleReviewClick}  
+            onClick={handleReviewClick}
           >
             리뷰 작성하기
           </Button>

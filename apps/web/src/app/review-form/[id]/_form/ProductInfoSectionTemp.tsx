@@ -20,7 +20,7 @@ export default function ProductInfoSectionTemp({ productId }: ProductInfoSection
           <Image
             fill
             alt={data.title}
-            src={data.images[0] || '/imgs/default-image.png'}
+            src={data.images?.[0] ?? '/imgs/default-image.png'}
             sizes='9rem'
             className='object-cover'
           />
@@ -35,10 +35,10 @@ export default function ProductInfoSectionTemp({ productId }: ProductInfoSection
           {/* 무드, 작가, 별점, 리뷰 */}
           <div className='flex flex-col gap-[0.8rem]'>
             <div className='flex gap-[0.4rem]'>
-              {data.productInfo.moods.map((mood: MoodCode) => <TagChip key={mood} variant='gray' label={mood} />)}
+              {data.productInfo?.moods?.map((mood: MoodCode) => <TagChip key={mood} variant='gray' label={mood} />)}
             </div>
             <div className='flex gap-[1.2rem] caption-12-rg text-black-7'>
-              <span>{data.photographerInfo.name}</span>
+              <span>{data.photographerInfo?.name}</span>
               <div className='flex gap-[0.6rem]'>
                 <div className='flex gap-[0.2rem]'>
                   <IconStar className='w-[1rem] h-full'/>

@@ -7,7 +7,7 @@ type ReviewFormPageProps = { params: Promise<{ id: string }> };
 export default async function Page({ params }: ReviewFormPageProps) {
   const { id } = await params;
   const productId = Number(id);
-  if (Number.isNaN(productId)) throw new Error('Invalid reservation id');
+  if (Number.isNaN(productId)) throw new Error('Invalid product id');
 
   return (
     <>
