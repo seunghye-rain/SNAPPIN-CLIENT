@@ -57,7 +57,7 @@ export default function Footer({ productId, contact, isLogIn }: FooterProps) {
             label: '확인',
             size: 'medium',
             color: 'black',
-            onClick: () => router.push(ROUTES.ON_BOARDING(1)),
+            onClick: () => router.push(ROUTES.ON_BOARDING(1, { returnTo: ROUTES.PRODUCT(productId) })),
           },
         ]}
       />
@@ -82,11 +82,7 @@ export default function Footer({ productId, contact, isLogIn }: FooterProps) {
             </Button>
           }
           rightButton={
-            <Button
-              color='black'
-              size='medium'
-              onClick={handleReservationClick}
-            >
+            <Button color='black' size='medium' onClick={handleReservationClick}>
               예약 문의 작성
             </Button>
           }
