@@ -11,11 +11,12 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { step } = await params;
-  const aiCurationStep = Number(step) as STEP;
+  const stepNumber = Number(step);
 
-  if (!aiCurationStep || !isAiCurationStep(aiCurationStep)) {
+  if (!stepNumber || !isAiCurationStep(stepNumber)) {
     notFound();
   }
+  const aiCurationStep = stepNumber as STEP;
 
   return (
     <div className='bg-black-10 flex h-dvh flex-col px-[2rem] pt-[3rem] pb-[2rem]'>

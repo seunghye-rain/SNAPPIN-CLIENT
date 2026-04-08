@@ -22,4 +22,4 @@ export const getReturnToParam = (context: ReturnToContext) =>
   context.returnTo ? { returnTo: context.returnTo } : undefined;
 
 export const resolveReturnToPath = (context: ReturnToContext, fallbackPath: string) =>
-  normalizeInternalReturnTo(context.returnTo) ?? fallbackPath;
+  context.returnTo ?? fallbackPath;

@@ -40,8 +40,6 @@ export const useGetAiCurationAllPrefetch = () => {
 };
 
 export const usePostAiCuration = () => {
-  const queryClient = useQueryClient();
-
   return useMutation<CreateMoodCurationResponse, Error, number[]>({
     mutationFn: async (photoIds: number[]) => {
       const res = await apiRequest<ApiResponseBodyCreateMoodCurationResponseVoid>({
@@ -52,9 +50,6 @@ export const usePostAiCuration = () => {
 
       if (!res.data) throw new Error('No data from POST /api/v1/curation');
       return res.data;
-    },
-    onSuccess: (data) => {
-      queryClient.setQueryData(AUTH_QUERY_KEY.AI_CURATION_RESULT(), data);
     },
   });
 };

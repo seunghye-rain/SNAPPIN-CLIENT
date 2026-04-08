@@ -127,10 +127,7 @@ export const useOnBoardingForm = () => {
     snapCategories: errors.snapCategories?.message,
   };
 
-  const handleSubmitForm = async (onSuccess: () => void | Promise<void>) => {
-    const isValid = await trigger();
-    if (!isValid) return;
-
+  const handleSubmitForm = (onSuccess: () => void | Promise<void>) => {
     handleSubmit(async () => {
       await onSuccess();
 
