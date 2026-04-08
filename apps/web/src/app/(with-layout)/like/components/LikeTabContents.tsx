@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { PortfolioFrameListSkeleton, ProductFrameListSkeleton } from '@/ui';
-import PortfolioListSection from '../_section/PortfolioListSection';
-import ProductListSection from '../_section/ProductListSection';
-import { LIKE_TAB, type LikeTab } from '../constants/tab';
+import { LIKE_TAB, LikeTab } from '@/app/(with-layout)/like/constants/tab';
+import PortfolioListSection from '@/app/(with-layout)/like/_section/PortfolioListSection';
+import ProductListSection from '@/app/(with-layout)/like/_section/ProductListSection';
 
 type LikeTabContentsProps = {
   currentTab: LikeTab;
