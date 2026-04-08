@@ -12,23 +12,22 @@ export default function ProductListSection() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, dataUpdatedAt } =
     useGetLikeProducts();
 
-  const productList =
-    data.pages
-      .flatMap((page) => page.data?.products ?? [])
-      .map((product) => ({
-        id: product.id ?? 0,
-        photographer: product.photographer ?? '',
-        moods: product.moods ?? [],
-        rate: product.rate ?? 0,
-        reviewCount: product.reviewCount ?? 0,
-        price: product.price ?? 0,
-        name: product.title ?? '',
-        image: {
-          src: product.imageUrl ?? '',
-          alt: `Product image ${product.id ?? 0}`,
-        },
-        isLiked: true,
-      }));
+  const productList = data.pages
+    .flatMap((page) => page.data?.products ?? [])
+    .map((product) => ({
+      id: product.id ?? 0,
+      photographer: product.photographer ?? '',
+      moods: product.moods ?? [],
+      rate: product.rate ?? 0,
+      reviewCount: product.reviewCount ?? 0,
+      price: product.price ?? 0,
+      name: product.title ?? '',
+      image: {
+        src: product.imageUrl ?? '/imgs/default-image.png',
+        alt: `${product.photographer} 작가 상품 ${product.id ?? 0}`,
+      },
+      isLiked: true,
+    }));
   const { sentinelRef } = useInfiniteScroll({
     enabled: true,
     hasNextPage,
