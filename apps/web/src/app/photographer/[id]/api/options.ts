@@ -94,10 +94,10 @@ export const photographerProductsOptions = (id: number, isLogIn: boolean) =>
         }
 
         if (isLogIn) {
-          const res = await apiRequest<GetProductListData>(
-            { endPoint: `/api/v2/products?${url.searchParams}`,
-            method: 'GET' }
-          );
+          const res = await apiRequest<GetProductListData>({
+            endPoint: `/api/v2/products?${url.searchParams}`,
+            method: 'GET'
+          });
           
           if (!res?.data) {
             throw new Error('/api/v2/products 응답에 데이터가 존재하지 않습니다.');
