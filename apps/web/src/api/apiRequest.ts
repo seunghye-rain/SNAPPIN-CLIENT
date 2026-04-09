@@ -1,6 +1,6 @@
+import { getRefreshToken } from '@/auth/apis';
 import { getAccessToken } from '@/auth/token';
 import { SERVER_API_BASE_URL, type RequestMethod } from './constants/api';
-import { getRefreshToken } from '@/auth/apis';
 
 type ApiRequestProps = {
   endPoint: string;
@@ -39,20 +39,17 @@ const responseInterceptor = async <T>(
       );
 
       if (retryResponse.ok) {
-        const retryData = await retryResponse.json();
-        return retryData;
-      } else {
-        const retryError = await retryResponse.text();
-
-        throw retryError;
+        return await retryResponse.json();
       }
+
+      throw await retryResponse.text();
     }
   } else if (response.status === 403) {
-    //TODO: 서버측 api 연결되면 logout api 호출
     throw new Error('권한 없는 사용자의 접근');
   } else {
     return null;
   }
+
   return null;
 };
 
@@ -63,13 +60,9 @@ export const apiRequest = async <T = unknown>({
   headers,
   params,
 }: ApiRequestProps): Promise<T> => {
-  const accessToken = await getAccessToken();
+  const accessToken = await getAccessToken().catch(() => null);
 
   try {
-    if (!accessToken) {
-      throw new Error('Access token is required');
-    }
-    // 쿼리 파라미터가 있으면 URL에 추가
     let requestUrl = `${SERVER_API_BASE_URL}${endPoint}`;
     if (params && Object.keys(params).length > 0) {
       const searchParams = new URLSearchParams();
@@ -83,17 +76,21 @@ export const apiRequest = async <T = unknown>({
 
     const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
       ...headers,
     };
+    if (accessToken) {
+      defaultHeaders.Authorization = `Bearer ${accessToken}`;
+    }
 
     const fetchOptions: RequestInit = {
       method,
       headers: defaultHeaders,
+      credentials: 'include',
     };
     if (data) {
       fetchOptions.body = JSON.stringify(data);
     }
+
     const response = await fetch(requestUrl, fetchOptions);
     const interceptedResponse = await responseInterceptor<T>(response, {
       endPoint,
@@ -115,14 +112,14 @@ export const apiRequest = async <T = unknown>({
           status: response.status,
           statusText: response.statusText,
           url: requestUrl,
-          error: error,
+          error,
         });
       }
 
       throw error;
     }
-    const responseData = await response.json();
-    return responseData;
+
+    return await response.json();
   } catch (error) {
     if (typeof error === 'string') {
       try {
@@ -131,7 +128,6 @@ export const apiRequest = async <T = unknown>({
           console.error(error);
         }
       } catch {
-        // JSON 파싱 실패 시 기본 에러 로그 출력
         console.error(error);
       }
     } else {
