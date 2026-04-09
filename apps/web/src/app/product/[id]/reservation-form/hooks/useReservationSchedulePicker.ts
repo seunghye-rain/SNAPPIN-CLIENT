@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { type UseFormSetValue } from 'react-hook-form';
+import { type UseFormSetValue, type UseFormTrigger } from 'react-hook-form';
 import type {
   ReservationCopyFormInput,
   ScheduleChoiceKey,
@@ -19,12 +19,14 @@ type ActiveSchedulePicker = {
 type UseReservationSchedulePickerProps = {
   formData: ReservationCopyFormInput;
   setValue: UseFormSetValue<ReservationCopyFormInput>;
+  trigger: UseFormTrigger<ReservationCopyFormInput>;
 };
 
 // 예약 신청 양식의 촬영 일정 선택 훅
 export default function useReservationSchedulePicker({
   formData,
   setValue,
+  trigger,
 }: UseReservationSchedulePickerProps) {
   const [activeSchedulePicker, setActiveSchedulePicker] = useState<ActiveSchedulePicker | null>(
     null,
@@ -48,7 +50,7 @@ export default function useReservationSchedulePicker({
     setActiveSchedulePicker(null);
   };
 
-  const handleScheduleSelection = (
+  const handleScheduleSelection = async (
     scheduleSelectionChangeField: keyof ScheduleSelectionValue,
     scheduleSelectionValue: string,
   ) => {
@@ -64,6 +66,7 @@ export default function useReservationSchedulePicker({
       scheduleSelectionValue,
       { shouldValidate: true },
     );
+    await trigger('schedules');
 
     handleSchedulePickerClose();
   };

@@ -50,6 +50,7 @@ export default function useReservationCopyForm({ applicant }: UseReservationCopy
   const schedulePicker = useReservationSchedulePicker({
     formData,
     setValue,
+    trigger,
   });
 
   const { isCopyPending, handleCopyReservationForm } = useReservationCopyAction({
