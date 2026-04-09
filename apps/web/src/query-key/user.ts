@@ -119,6 +119,13 @@ export const PRODUCT_QUERY_KEY = {
   LIKE: (id: number) => [...PRODUCT_QUERY_KEY.LIKES(), id],
 
   REVIEWS: (id: number) => [...PRODUCT_QUERY_KEY.all, 'reviews', id],
+
+  PHOTOGRAPHER_LIST: (photographerId: number, isLogin: boolean) => [
+    ...PRODUCT_QUERY_KEY.all,
+    'photographer-list',
+    photographerId,
+    isLogin ? 'login' : 'not-login',
+  ]
 } as const;
 
 //이거 쓰라고
@@ -142,6 +149,13 @@ export const PORTFOLIO_QUERY_KEY = {
     ...PORTFOLIO_QUERY_KEY.all,
     'product-list',
     productId,
+    isLogin ? 'login' : 'not-login',
+  ],
+
+  PHOTOGRAPHER_LIST: (photographerId: number, isLogin: boolean) => [
+    ...PORTFOLIO_QUERY_KEY.all,
+    'photographer-list',
+    photographerId,
     isLogin ? 'login' : 'not-login',
   ]
 } as const;
