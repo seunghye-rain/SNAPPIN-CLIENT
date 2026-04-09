@@ -137,4 +137,11 @@ export const PORTFOLIO_QUERY_KEY = {
 
   LIKES: () => [...PORTFOLIO_QUERY_KEY.all, 'like'],
   LIKE: (id: number) => [...PORTFOLIO_QUERY_KEY.LIKES(), id],
+
+  PRODUCT_LIST: (productId: number, isLogin: boolean) => [
+    ...PORTFOLIO_QUERY_KEY.all,
+    'product-list',
+    productId,
+    isLogin ? 'login' : 'not-login',
+  ]
 } as const;

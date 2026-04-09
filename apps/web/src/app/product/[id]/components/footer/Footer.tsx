@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button, BottomCTAButton, ConfirmModal } from '@snappin/design-system';
 import { useToast } from '@/ui';
 import { ROUTES } from '@/constants/routes/routes';
-import { useGetUsersOnboarding } from '@/app/product/[id]/api';
+import { useGetUsersOnboarding } from '@/auth/apis';
 
 type FooterProps = {
   productId: number;

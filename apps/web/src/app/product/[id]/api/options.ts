@@ -35,7 +35,7 @@ export const productDetailOptions = (id: number, isLogIn: boolean) =>
 // 포폴 목록 조회 옵션
 export const productPortfoliosOptions = (id: number, isLogIn: boolean) =>
   infiniteQueryOptions({
-    queryKey: PORTFOLIO_QUERY_KEY.LIST(`product-${id}-${isLogIn ? 'login' : 'not-login'}`),
+    queryKey: PORTFOLIO_QUERY_KEY.PRODUCT_LIST(id, isLogIn),
     initialPageParam: undefined as string | undefined,
     queryFn: async ({ pageParam }) => {
       const url = new URL(`${SERVER_API_BASE_URL}/api/v2/portfolios`);
