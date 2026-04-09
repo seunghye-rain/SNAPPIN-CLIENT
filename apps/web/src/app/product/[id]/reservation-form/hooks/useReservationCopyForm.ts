@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import {
   DURATION_HOURS,
   PEOPLE_COUNT,
-  SCHEDULE_CHOICES,
+  SCHEDULE_CHOICE_KEY,
   reservationCopyFormSchema,
   type ReservationCopyFormInput,
   type ReservationCopyFormOutput,
@@ -123,7 +123,7 @@ export default function useReservationCopyForm({ applicant }: UseReservationCopy
 
   // schedules 에러를 한줄 메시지로
   const scheduleErrorMessage =
-    SCHEDULE_CHOICES.flatMap(({ key }) => {
+    SCHEDULE_CHOICE_KEY.flatMap((key) => {
       const scheduleFieldError = formErrors.schedules?.[key];
 
       return [

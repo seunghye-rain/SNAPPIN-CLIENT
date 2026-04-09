@@ -23,15 +23,15 @@ export const RESERVATION_COPY_FORM_ERROR_MESSAGE = {
   REQUEST_CONTENT_MAX: `최대 ${REQUEST_CONTENT.MAX_LENGTH}자까지 입력할 수 있어요.`,
 } as const;
 
-export const SCHEDULE_CHOICES = [
-  { key: 'firstChoice', label: '1지망' },
-  { key: 'secondChoice', label: '2지망' },
-  { key: 'thirdChoice', label: '3지망' },
-] as const;
+export const SCHEDULE_CHOICE_KEY = ['firstChoice', 'secondChoice', 'thirdChoice'] as const;
+export type ScheduleChoiceKey = (typeof SCHEDULE_CHOICE_KEY)[number];
+export const PRIMARY_SCHEDULE_CHOICE_KEY = SCHEDULE_CHOICE_KEY[0];
 
-export type ScheduleChoiceKey = (typeof SCHEDULE_CHOICES)[number]['key'];
-
-export const PRIMARY_SCHEDULE_CHOICE_KEY = SCHEDULE_CHOICES[0].key;
+export const SCHEDULE_CHOICE: Record<ScheduleChoiceKey, string> = {
+  firstChoice: '1지망',
+  secondChoice: '2지망',
+  thirdChoice: '3지망',
+} as const;
 
 export const UPLOAD_CONSENT_NOTES = [
   { label: '동의 시', note: '보정본 1장 추가 제공' },

@@ -5,7 +5,8 @@ import {
   DURATION_HOURS,
   PEOPLE_COUNT,
   PRIMARY_SCHEDULE_CHOICE_KEY,
-  SCHEDULE_CHOICES,
+  SCHEDULE_CHOICE,
+  SCHEDULE_CHOICE_KEY,
   UPLOAD_CONSENT_NOTES,
   UPLOAD_CONSENT_STATUS,
   UPLOAD_CONSENT_STATUS_KEY,
@@ -102,7 +103,7 @@ export default function ShootReservationSection({
 
       <div className='flex flex-col gap-[1.6rem]'>
         <RequiredLabel>촬영 일정</RequiredLabel>
-        {SCHEDULE_CHOICES.map(({ key, label }) => {
+        {SCHEDULE_CHOICE_KEY.map((key) => {
           const scheduleDate = scheduleSelections[key]?.date ?? '';
           const scheduleTime = scheduleSelections[key]?.time ?? '';
           const isAdditionalScheduleChoice = key !== PRIMARY_SCHEDULE_CHOICE_KEY;
@@ -111,7 +112,7 @@ export default function ShootReservationSection({
 
           return (
             <div key={key} className='flex flex-col gap-[0.8rem]'>
-              <span className='caption-12-md text-black-8'>{label}</span>
+              <span className='caption-12-md text-black-8'>{SCHEDULE_CHOICE[key]}</span>
               <div className='grid grid-cols-2 gap-[0.6rem]'>
                 <DateButton
                   value={createScheduleDateLabel(scheduleDate)}

@@ -5,7 +5,7 @@ import {
   PRIMARY_SCHEDULE_CHOICE_KEY,
   RESERVATION_COPY_FORM_ERROR_MESSAGE,
   REQUEST_CONTENT,
-  SCHEDULE_CHOICES,
+  SCHEDULE_CHOICE_KEY,
   UPLOAD_CONSENT_STATUS_KEY,
 } from '@/app/product/[id]/reservation-form/constants/reservationCopyForm';
 import { hasCompletedSchedule } from '@/app/product/[id]/reservation-form/utils/reservationCopyForm';
@@ -34,16 +34,16 @@ const reservationScheduleSelectionSchema = z
 
 // 1~3지망 각각의 일정 선택
 const reservationSchedulesSchemaShape = Object.fromEntries(
-  SCHEDULE_CHOICES.map(({ key }) => {
+  SCHEDULE_CHOICE_KEY.map((key) => {
     return [key, reservationScheduleSelectionSchema];
   }),
-) as Record<(typeof SCHEDULE_CHOICES)[number]['key'], typeof reservationScheduleSelectionSchema>;
+) as Record<(typeof SCHEDULE_CHOICE_KEY)[number], typeof reservationScheduleSelectionSchema>;
 
 // 1~3지망 중 하나라도 완료된 일정이 있는지 검증
 const reservationSchedulesSchema = z
   .object(reservationSchedulesSchemaShape)
   .superRefine((scheduleSelections, context) => {
-    const hasAnyCompletedSchedule = SCHEDULE_CHOICES.some(({ key }) => {
+    const hasAnyCompletedSchedule = SCHEDULE_CHOICE_KEY.some((key) => {
       return hasCompletedSchedule(scheduleSelections[key]);
     });
 
