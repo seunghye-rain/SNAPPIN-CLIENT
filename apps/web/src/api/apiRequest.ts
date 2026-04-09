@@ -10,6 +10,24 @@ type ApiRequestProps = {
   params?: Record<string, string>;
 };
 
+const buildRequestUrl = (endPoint: string, params?: Record<string, string>) => {
+  let requestUrl = `${SERVER_API_BASE_URL}${endPoint}`;
+
+  if (params && Object.keys(params).length > 0) {
+    const searchParams = new URLSearchParams();
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, value);
+      }
+    });
+
+    requestUrl += `?${searchParams.toString()}`;
+  }
+
+  return requestUrl;
+};
+
 const responseInterceptor = async <T>(
   response: Response,
   originalRequest: ApiRequestProps,
@@ -18,10 +36,15 @@ const responseInterceptor = async <T>(
     const refreshResponse = await getRefreshToken();
 
     if (refreshResponse.ok) {
+      const accessToken = await getAccessToken().catch(() => null);
       const retryHeader: Record<string, string> = {
         'Content-Type': 'application/json',
         ...originalRequest.headers,
       };
+
+      if (accessToken) {
+        retryHeader.Authorization = `Bearer ${accessToken}`;
+      }
 
       const fetchOptions: RequestInit = {
         method: originalRequest.method,
@@ -34,7 +57,7 @@ const responseInterceptor = async <T>(
       }
 
       const retryResponse = await fetch(
-        `${SERVER_API_BASE_URL}/${originalRequest.endPoint}`,
+        buildRequestUrl(originalRequest.endPoint, originalRequest.params),
         fetchOptions,
       );
 
@@ -63,16 +86,7 @@ export const apiRequest = async <T = unknown>({
   const accessToken = await getAccessToken().catch(() => null);
 
   try {
-    let requestUrl = `${SERVER_API_BASE_URL}${endPoint}`;
-    if (params && Object.keys(params).length > 0) {
-      const searchParams = new URLSearchParams();
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          searchParams.append(key, value);
-        }
-      });
-      requestUrl += `?${searchParams.toString()}`;
-    }
+    const requestUrl = buildRequestUrl(endPoint, params);
 
     const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
