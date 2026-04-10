@@ -1,5 +1,5 @@
-import AiCurationProviders from './provider';
+import AiCurationProvider from './provider';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <AiCurationProviders>{children}</AiCurationProviders>;
+  return <AiCurationProvider>{children}</AiCurationProvider>;
 }
