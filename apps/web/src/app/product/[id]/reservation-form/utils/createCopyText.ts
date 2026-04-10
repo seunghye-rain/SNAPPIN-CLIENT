@@ -28,14 +28,15 @@ const createCopyText = ({
   },
 }: CreateCopyTextProps) => {
   // 완료된 일정만 복사 텍스트에 포함
-  const scheduleLines = SCHEDULE_CHOICE_KEY.filter((key) => {
-    return hasCompletedSchedule(schedules[key]);
-  }).map((key) => {
+  const scheduleLines = SCHEDULE_CHOICE_KEY.filter((key) =>
+    hasCompletedSchedule(schedules[key]),
+  ).map((key) => {
     const scheduleSelection = schedules[key];
     const formattedScheduleDate = formatShortDate(scheduleSelection.date).replaceAll('.', '/');
 
     return `• ${SCHEDULE_CHOICE[key]}: ${formattedScheduleDate} ${scheduleSelection.time}`;
   });
+
   const uploadConsentStatusLabel =
     uploadConsentStatus === 'agree' || uploadConsentStatus === 'disagree'
       ? UPLOAD_CONSENT_STATUS[uploadConsentStatus]

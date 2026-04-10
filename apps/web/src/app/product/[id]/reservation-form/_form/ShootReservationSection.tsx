@@ -32,9 +32,9 @@ type RequiredLabelProps = {
 
 const RequiredLabel = ({ children }: RequiredLabelProps) => {
   return (
-    <span className='text-black-10 caption-14-md'>
+    <h1 className='text-black-10 caption-14-md'>
       {children} <span className='text-red-error'>*</span>
-    </span>
+    </h1>
   );
 };
 
@@ -67,9 +67,9 @@ export default function ShootReservationSection({
 
   return (
     <section className='flex flex-col gap-[1.8rem]'>
-      <span className='text-black-10 font-16-sb'>
+      <h1 className='text-black-10 font-16-sb'>
         촬영 예약 정보 <span className='text-red-error'>*</span>
-      </span>
+      </h1>
 
       <div className='flex flex-col gap-[0.8rem]'>
         <RequiredLabel>촬영 장소</RequiredLabel>
@@ -80,11 +80,7 @@ export default function ShootReservationSection({
           onChange={handlePlaceKeywordChange}
           onBlur={handlePlaceBlur}
         />
-        <FieldMessage
-          id='reservation-place-error'
-          message={placeErrorMessage}
-          variant='error'
-        />
+        <FieldMessage id='reservation-place-error' message={placeErrorMessage} variant='error' />
       </div>
 
       <ControlRow

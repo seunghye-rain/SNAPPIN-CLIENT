@@ -28,22 +28,18 @@ export default function AdditionalRequestSection({
         <section>
           <span className='text-black-10 font-16-sb'>기타 요청 사항</span>
           <div className='bg-black-3 mt-[1rem] flex flex-col gap-[1.6rem] rounded-[0.6rem] p-[1.6rem]'>
-            {additionalRequest.map(({ title, content }) => {
-              return (
-                <div key={title}>
-                  <p className='text-black-7 caption-14-rg'>{title}</p>
-                  <div className='mt-[0.8rem] flex flex-col gap-[0.4rem]'>
-                    {content.map((contentValue) => {
-                      return (
-                        <p key={contentValue} className='text-black-10 caption-14-rg'>
-                          • {contentValue}
-                        </p>
-                      );
-                    })}
-                  </div>
+            {additionalRequest.map(({ title, content }) => (
+              <div key={title}>
+                <p className='text-black-7 caption-14-rg'>{title}</p>
+                <div className='mt-[0.8rem] flex flex-col gap-[0.4rem]'>
+                  {content.map((contentValue) => (
+                    <p key={contentValue} className='text-black-10 caption-14-rg'>
+                      • {contentValue}
+                    </p>
+                  ))}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </section>
       ) : null}

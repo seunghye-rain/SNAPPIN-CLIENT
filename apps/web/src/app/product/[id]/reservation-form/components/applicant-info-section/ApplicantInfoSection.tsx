@@ -19,9 +19,9 @@ export default function ApplicantInfoSection({ applicant }: ApplicantInfoSection
 
   return (
     <section>
-      <span className='text-black-10 font-16-sb'>
+      <h1 className='text-black-10 font-16-sb'>
         예약자 정보 <span className='text-red-error'>*</span>
-      </span>
+      </h1>
 
       <dl className='bg-black-3 mt-[1rem] flex flex-col gap-[0.8rem] rounded-[0.6rem] p-[1.6rem]'>
         {applicantInfoItems.map(({ id, label, value }) => (
