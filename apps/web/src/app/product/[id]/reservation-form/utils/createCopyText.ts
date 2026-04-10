@@ -1,5 +1,9 @@
 import { formatShortDate } from '@/utils/formatDate';
-import { SCHEDULE_CHOICES, UPLOAD_CONSENT_STATUS_LABEL } from '@/app/product/[id]/reservation-form/constants';
+import {
+  SCHEDULE_CHOICE,
+  SCHEDULE_CHOICE_KEY,
+  UPLOAD_CONSENT_STATUS,
+} from '@/app/product/[id]/reservation-form/constants';
 import type {
   ReservationApplicant,
   ReservationCopyFormValue,
@@ -24,17 +28,17 @@ const createCopyText = ({
   },
 }: CreateCopyTextProps) => {
   // 완료된 일정만 복사 텍스트에 포함
-  const scheduleLines = SCHEDULE_CHOICES.filter(({ key }) => {
+  const scheduleLines = SCHEDULE_CHOICE_KEY.filter((key) => {
     return hasCompletedSchedule(schedules[key]);
-  }).map(({ key, label }) => {
+  }).map((key) => {
     const scheduleSelection = schedules[key];
     const formattedScheduleDate = formatShortDate(scheduleSelection.date).replaceAll('.', '/');
 
-    return `• ${label}: ${formattedScheduleDate} ${scheduleSelection.time}`;
+    return `• ${SCHEDULE_CHOICE[key]}: ${formattedScheduleDate} ${scheduleSelection.time}`;
   });
   const uploadConsentStatusLabel =
     uploadConsentStatus === 'agree' || uploadConsentStatus === 'disagree'
-      ? UPLOAD_CONSENT_STATUS_LABEL[uploadConsentStatus]
+      ? UPLOAD_CONSENT_STATUS[uploadConsentStatus]
       : '-';
 
   return [

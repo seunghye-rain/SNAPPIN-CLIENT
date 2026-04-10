@@ -1,7 +1,7 @@
 import {
   DURATION_HOURS,
   PEOPLE_COUNT,
-  SCHEDULE_CHOICES,
+  SCHEDULE_CHOICE_KEY,
   type ScheduleChoiceKey,
 } from '@/app/product/[id]/reservation-form/constants/reservationCopyForm';
 import type {
@@ -20,7 +20,7 @@ export const hasSelectableScheduleChoice = (
   scheduleChoiceKey: ScheduleChoiceKey,
   scheduleSelections: ScheduleSelections,
 ) => {
-  const scheduleChoiceIndex = SCHEDULE_CHOICES.findIndex(({ key }) => {
+  const scheduleChoiceIndex = SCHEDULE_CHOICE_KEY.findIndex((key) => {
     return key === scheduleChoiceKey;
   });
 
@@ -28,14 +28,14 @@ export const hasSelectableScheduleChoice = (
     return true;
   }
 
-  return SCHEDULE_CHOICES.slice(0, scheduleChoiceIndex).every(({ key }) => {
+  return SCHEDULE_CHOICE_KEY.slice(0, scheduleChoiceIndex).every((key) => {
     return hasCompletedSchedule(scheduleSelections[key]);
   });
 };
 
 const createInitialScheduleSelections = (): ScheduleSelections => {
   return Object.fromEntries(
-    SCHEDULE_CHOICES.map(({ key }) => {
+    SCHEDULE_CHOICE_KEY.map((key) => {
       return [key, { date: '', time: '' }];
     }),
   ) as ScheduleSelections;
@@ -48,7 +48,7 @@ export const createDefaultReservationCopyFormValue = (): ReservationCopyFormValu
     durationHours: DURATION_HOURS.MIN,
     peopleCount: PEOPLE_COUNT.MIN,
     schedules: createInitialScheduleSelections(),
-    uploadConsentStatus: '',
+    uploadConsentStatus: undefined,
     requestContent: '',
   };
 };

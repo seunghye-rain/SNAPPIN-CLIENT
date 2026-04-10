@@ -1,5 +1,5 @@
 import { BottomDrawer, DatePicker, DrawerDescription, DrawerTitle } from '@snappin/design-system';
-import { PRIMARY_SCHEDULE_CHOICE_KEY, SCHEDULE_CHOICES } from '@/app/product/[id]/reservation-form/constants';
+import { PRIMARY_SCHEDULE_CHOICE_KEY, SCHEDULE_CHOICE_KEY } from '@/app/product/[id]/reservation-form/constants';
 import { type ReservationCopyFormModel } from '@/app/product/[id]/reservation-form/hooks';
 import RESERVATION_TIME_PICKER_MOCK from '@/app/product/[id]/reservation-form/mock/reservationTimePicker.mock';
 import { hasCompletedSchedule } from '@/app/product/[id]/reservation-form/utils';
@@ -26,7 +26,7 @@ export default function SchedulePickerDrawers({
   const isAdditionalScheduleChoiceActive =
     activeScheduleChoiceKey !== null && activeScheduleChoiceKey !== PRIMARY_SCHEDULE_CHOICE_KEY;
   const activeScheduleChoiceIndex = activeScheduleChoiceKey
-    ? SCHEDULE_CHOICES.findIndex(({ key }) => {
+    ? SCHEDULE_CHOICE_KEY.findIndex((key) => {
         return key === activeScheduleChoiceKey;
       })
     : -1;
@@ -34,8 +34,8 @@ export default function SchedulePickerDrawers({
   // 앞선 지망들 중복
   const previousScheduleSelections =
     activeScheduleChoiceIndex > 0
-      ? SCHEDULE_CHOICES.slice(0, activeScheduleChoiceIndex)
-          .map(({ key }) => {
+      ? SCHEDULE_CHOICE_KEY.slice(0, activeScheduleChoiceIndex)
+          .map((key) => {
             return scheduleSelections[key];
           })
           .filter(hasCompletedSchedule)

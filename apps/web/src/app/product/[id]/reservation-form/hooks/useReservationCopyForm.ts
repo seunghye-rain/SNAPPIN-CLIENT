@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import {
   DURATION_HOURS,
   PEOPLE_COUNT,
-  SCHEDULE_CHOICES,
+  SCHEDULE_CHOICE_KEY,
   reservationCopyFormSchema,
   type ReservationCopyFormInput,
   type ReservationCopyFormOutput,
@@ -50,6 +50,7 @@ export default function useReservationCopyForm({ applicant }: UseReservationCopy
   const schedulePicker = useReservationSchedulePicker({
     formData,
     setValue,
+    trigger,
   });
 
   const { isCopyPending, handleCopyReservationForm } = useReservationCopyAction({
@@ -108,10 +109,10 @@ export default function useReservationCopyForm({ applicant }: UseReservationCopy
 
   // 업로드 동의/비동의
   const handleUploadConsentStatusClick = (
-    nextUploadConsentStatus: Exclude<ReservationCopyFormInput['uploadConsentStatus'], ''>,
+    nextUploadConsentStatus: NonNullable<ReservationCopyFormInput['uploadConsentStatus']>,
   ) => {
     const nextUploadConsentValue =
-      formData.uploadConsentStatus === nextUploadConsentStatus ? '' : nextUploadConsentStatus;
+      formData.uploadConsentStatus === nextUploadConsentStatus ? undefined : nextUploadConsentStatus;
 
     setValue('uploadConsentStatus', nextUploadConsentValue, { shouldValidate: true });
   };
@@ -123,7 +124,7 @@ export default function useReservationCopyForm({ applicant }: UseReservationCopy
 
   // schedules 에러를 한줄 메시지로
   const scheduleErrorMessage =
-    SCHEDULE_CHOICES.flatMap(({ key }) => {
+    SCHEDULE_CHOICE_KEY.flatMap((key) => {
       const scheduleFieldError = formErrors.schedules?.[key];
 
       return [
