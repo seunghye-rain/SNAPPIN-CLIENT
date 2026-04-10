@@ -153,6 +153,9 @@ export const ReviewListSectionSkeleton = () => {
               <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
               <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
             </div>
+            <div className='flex flex-col gap-[0.6rem] px-[2rem]'>
+              <div className='bg-black-3 h-[1.7rem] w-[25.1rem] rounded-[0.2rem]' />
+            </div>
           </div>        
         </div>
       ))}
