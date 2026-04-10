@@ -7,11 +7,12 @@ import {
   PRIMARY_SCHEDULE_CHOICE_KEY,
   SCHEDULE_CHOICE,
   SCHEDULE_CHOICE_KEY,
-  UPLOAD_CONSENT_NOTES,
+  UPLOAD_CONSENT_NOTE_LABEL,
   UPLOAD_CONSENT_STATUS,
   UPLOAD_CONSENT_STATUS_KEY,
 } from '@/app/product/[id]/reservation-form/constants';
 import { type ReservationCopyFormModel } from '@/app/product/[id]/reservation-form/hooks';
+import RESERVATION_FORM_INFORMATION_MOCK from '@/app/product/[id]/reservation-form/mock/reservationFormInformation.mock';
 import {
   createDurationLabel,
   createScheduleDateLabel,
@@ -64,6 +65,21 @@ export default function ShootReservationSection({
       handleSchedulePickerOpen,
     },
   } = reservationCopyFormModel;
+  const { uploadConsent } = RESERVATION_FORM_INFORMATION_MOCK;
+  const uploadConsentNotes = UPLOAD_CONSENT_STATUS_KEY.flatMap((key) => {
+    const uploadConsentNote =
+      key === 'agree' ? uploadConsent.agreeNote : uploadConsent.disagreeNote;
+
+    return uploadConsentNote
+      ? [
+          {
+            key,
+            label: UPLOAD_CONSENT_NOTE_LABEL[key],
+            note: uploadConsentNote,
+          },
+        ]
+      : [];
+  });
 
   return (
     <section className='flex flex-col gap-[1.8rem]'>
@@ -148,12 +164,12 @@ export default function ShootReservationSection({
 
       <div className='flex flex-col gap-[1rem]'>
         <RequiredLabel>업로드 동의 여부</RequiredLabel>
-        {UPLOAD_CONSENT_NOTES.length > 0 && (
+        {uploadConsentNotes.length > 0 && (
           <div className='bg-black-3 rounded-[0.6rem] p-[1.6rem]'>
             <div className='flex flex-col gap-[1.2rem]'>
-              {UPLOAD_CONSENT_NOTES.map(({ label, note }) => {
+              {uploadConsentNotes.map(({ key, label, note }) => {
                 return (
-                  <div key={label}>
+                  <div key={key}>
                     <p className='caption-14-rg text-black-7'>{label}</p>
                     <p className='text-black-10 caption-14-rg mt-[0.4rem]'>{note}</p>
                   </div>
