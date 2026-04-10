@@ -134,28 +134,28 @@ export const ReviewListSectionSkeleton = () => {
   return (
     <section>
       <div className='flex justify-start gap-[0.8rem] p-[2rem]'>
-        <div className='bg-black-3 h-[2rem] w-[13.2rem] rounded-[0.2rem]' />
-        <div className='bg-black-3 h-[2rem] w-[3.1rem] rounded-[0.2rem]' />
+        <div className='bg-black-3 h-[2.6rem] w-[13.2rem] rounded-[0.2rem]' />
+        <div className='bg-black-3 h-[2.6rem] w-[3.1rem] rounded-[0.2rem]' />
       </div>
-      <Divider thickness='large' color='bg-black-3' />
-      <div className='flex flex-col gap-[1.2rem] pt-[2rem]'>
-        <div className='flex flex-col gap-[0.6rem] px-[2rem]'>
-          <div className='flex justify-between'>
-            <div className='bg-black-3 h-[1.4rem] w-[9.6rem] rounded-[0.2rem]' />
-            <div className='bg-black-3 h-[1.4rem] w-[4.5rem] rounded-[0.2rem]' />
-          </div>
-          <div className='bg-black-3 h-[1.4rem] w-[3.2rem] rounded-[0.2rem]' />
+      {Array.from({ length: 10 }).map((_, i) => (
+        <div key={i}>
+          <Divider thickness='large' color='bg-black-3' />
+          <div className='flex flex-col gap-[1.2rem] py-[2rem]'>
+            <div className='flex flex-col gap-[0.6rem] px-[2rem]'>
+              <div className='flex justify-between'>
+                <div className='bg-black-3 h-[1.4rem] w-[9.6rem] rounded-[0.2rem]' />
+                <div className='bg-black-3 h-[1.4rem] w-[4.5rem] rounded-[0.2rem]' />
+              </div>
+              <div className='bg-black-3 h-[1.4rem] w-[3.2rem] rounded-[0.2rem]' />
+            </div>
+            <div className='flex gap-[0.4rem] overflow-hidden pl-[2rem]'>
+              <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
+              <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
+              <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
+            </div>
+          </div>        
         </div>
-        <div className='flex gap-[0.4rem] overflow-hidden pl-[2rem]'>
-          <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
-          <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
-          <div className='bg-black-3 h-[14rem] w-[14rem] shrink-0' />
-        </div>
-        <div className='flex flex-col gap-[0.6rem] px-[2rem]'>
-          <div className='bg-black-3 h-[1.7rem] w-[25.1rem] rounded-[0.2rem]' />
-          <div className='bg-black-3 h-[1.7rem] w-[19.4rem] rounded-[0.2rem]' />
-        </div>
-      </div>
+      ))}
     </section>
   );
 };

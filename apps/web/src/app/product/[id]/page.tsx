@@ -32,12 +32,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   const isLogIn = cookieStore.has('AccessToken');
 
   promises.push(prefetchProductDetail(queryClient, productId, isLogIn));
-  if (tab === PRODUCT_TAB.PORTFOLIO) {
-    promises.push(prefetchPortfolioList(queryClient, productId, isLogIn));
-  }
-  if (tab === PRODUCT_TAB.REVIEW) {
-    promises.push(prefetchProductReviewList(queryClient, productId));
-  }
+  promises.push(prefetchPortfolioList(queryClient, productId, isLogIn));
+  promises.push(prefetchProductReviewList(queryClient, productId));
   Promise.all(promises);
 
   return (
