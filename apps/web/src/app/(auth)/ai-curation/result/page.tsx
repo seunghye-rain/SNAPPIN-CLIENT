@@ -30,7 +30,7 @@ export default function Page() {
   return (
     <div className='bg-neon-black h-dvh'>
       <AnimatePresence mode='wait'>
-        {isPending ? <MoodAnimationPending /> : data && <MoodAnimationResult data={data} />}
+        {isPending ? <MoodAnimationPending /> : <MoodAnimationResult data={data} />}
       </AnimatePresence>
     </div>
   );
