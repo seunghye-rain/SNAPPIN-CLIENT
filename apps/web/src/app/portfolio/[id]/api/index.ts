@@ -1,5 +1,5 @@
 import { type QueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { apiRequest } from '@/api/apiRequest';
+import { apiRequest } from '@/api/apiRequest.client';
 import { PORTFOLIO_QUERY_KEY } from '@/query-key/user';
 import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetPortfolioDetailResponse, GetPortfolioDetailData } from '@/swagger-api';
