@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { overlay } from 'overlay-kit';
 import {
+  ConfirmModal,
   FieldMessage,
   ImagePreview,
   ImageUploadButton,
@@ -64,7 +66,32 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
           imageUrls: uploadedUrls,
         });
 
-        router.replace(ROUTES.PRODUCT(productId, { tab: 'REVIEW' }));
+        overlay.open(({ isOpen, close }) => {
+          const handleClose = () => router.replace(ROUTES.PRODUCT(productId, { tab: 'REVIEW' }));
+
+          return (
+            <ConfirmModal
+              open={isOpen}
+              handleOpenChange={close}
+              showCloseButton={false}
+              title='리뷰 작성이 완료되었어요!'
+              buttons={[
+                {
+                  label: '닫기',
+                  size: 'medium',
+                  color: 'disabled',
+                  onClick: handleClose,
+                },
+                {
+                  label: '확인하러 가기',
+                  size: 'medium',
+                  color: 'black',
+                  onClick: handleClose,
+                },
+              ]}
+            />
+          );
+        })
       } catch {
         toast.error('잠시 후 다시 시도해주세요.', undefined, 'bottom-[8rem]');
         router.back();
