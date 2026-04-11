@@ -20,7 +20,7 @@ export default function PortfolioListSection({ id, isLogIn }: PortfolioListSecti
     return (data?.pages.flatMap((page) => page.data?.portfolios ?? []) ?? [])
       .map(({ imageUrl, likeCount, ...rest }) => ({
         ...rest,
-        likesCount: likeCount,
+        likesCount: likeCount ?? 0,
         image: { src: imageUrl, alt: '' }
       }));
   }, [data?.pages]);

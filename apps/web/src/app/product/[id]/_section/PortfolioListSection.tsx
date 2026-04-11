@@ -18,7 +18,7 @@ export default function PortfolioListSection({ productId, isLogIn }: PortfolioLi
     .flatMap((page) => page.data?.portfolios ?? [])
     .map(({ imageUrl, likeCount, ...rest }) => ({
       ...rest,
-      likesCount: likeCount,
+      likesCount: likeCount ?? 0,
       image: { src: imageUrl ?? '', alt: '' },
     })) ?? [];
 
