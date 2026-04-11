@@ -27,6 +27,11 @@ type UseLikeProps = {
   isLogin: boolean;
 };
 
+type LikeMutationVariables = {
+  id: number;
+  currentIsLiked: boolean;
+};
+
 const isInfiniteQueryData = <TData,>(
   value: unknown,
 ): value is InfiniteData<TData, string | undefined> => {
@@ -295,12 +300,12 @@ export const useWishProductLike = ({ id, isLogin }: UseLikeProps) => {
   return useMutation<
     WishProductResponse,
     Error,
-    number,
+    LikeMutationVariables,
     {
       previousData?: GetProductDetailResponse;
     }
   >({
-    mutationFn: async (productId) => {
+    mutationFn: async ({ id: productId }) => {
       const res = await apiRequest<UpdateWishProductData>({
         endPoint: '/api/v1/wishes/products',
         method: 'POST',
@@ -313,11 +318,11 @@ export const useWishProductLike = ({ id, isLogin }: UseLikeProps) => {
 
       return res.data;
     },
-    onMutate: async () => {
+    onMutate: async ({ currentIsLiked }) => {
       await queryClient.cancelQueries({ queryKey: detailQueryKey });
 
       const previousData = queryClient.getQueryData<GetProductDetailResponse>(detailQueryKey);
-      const nextIsLiked = previousData ? !previousData.isLiked : true;
+      const nextIsLiked = !currentIsLiked;
 
       queryClient.setQueryData<GetProductDetailResponse>(detailQueryKey, (old) => {
         if (!old) return old;
@@ -333,7 +338,7 @@ export const useWishProductLike = ({ id, isLogin }: UseLikeProps) => {
 
       return { previousData };
     },
-    onError: (_error, _id, context) => {
+    onError: (_error, _variables, context) => {
       if (context?.previousData === undefined) return;
 
       queryClient.setQueryData(detailQueryKey, context.previousData);
@@ -356,12 +361,12 @@ export const useWishPortfolioLike = ({ id, isLogin }: UseLikeProps) => {
   return useMutation<
     WishPortfolioResponse,
     Error,
-    number,
+    LikeMutationVariables,
     {
       previousData?: GetPortfolioDetailResponse;
     }
   >({
-    mutationFn: async (portfolioId) => {
+    mutationFn: async ({ id: portfolioId }) => {
       const res = await apiRequest<UpdateWishPortfolioData>({
         endPoint: '/api/v1/wishes/portfolios',
         method: 'POST',
@@ -374,11 +379,11 @@ export const useWishPortfolioLike = ({ id, isLogin }: UseLikeProps) => {
 
       return res.data;
     },
-    onMutate: async () => {
+    onMutate: async ({ currentIsLiked }) => {
       await queryClient.cancelQueries({ queryKey: detailQueryKey });
 
       const previousData = queryClient.getQueryData<GetPortfolioDetailResponse>(detailQueryKey);
-      const nextIsLiked = previousData ? !previousData.isLiked : true;
+      const nextIsLiked = !currentIsLiked;
 
       queryClient.setQueryData<GetPortfolioDetailResponse>(detailQueryKey, (old) => {
         if (!old) return old;
@@ -394,7 +399,7 @@ export const useWishPortfolioLike = ({ id, isLogin }: UseLikeProps) => {
 
       return { previousData };
     },
-    onError: (_error, _id, context) => {
+    onError: (_error, _variables, context) => {
       if (context?.previousData === undefined) return;
 
       queryClient.setQueryData(detailQueryKey, context.previousData);
