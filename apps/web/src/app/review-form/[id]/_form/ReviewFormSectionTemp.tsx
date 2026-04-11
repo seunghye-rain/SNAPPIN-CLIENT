@@ -47,6 +47,7 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
   const router = useRouter();
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useAutoScrollReviewImages(images.length);
 
@@ -92,6 +93,7 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
             />
           );
         })
+        setIsSubmitted(true);
       } catch {
         toast.error('잠시 후 다시 시도해주세요.', undefined, 'bottom-[8rem]');
         router.back();
@@ -102,6 +104,11 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
   const contentLength = compatibleFormData.content.length;
   const hasContentError = Boolean(compatibleErrors.content);
   const isContentEmpty = contentLength < 1;
+  const getButtonLabel = () => {
+    if (isSubmitted) return '등록 완료';
+    if (isSubmitting) return '리뷰 등록 중...';
+    return '등록하기';
+  };
 
   return (
     <>
@@ -176,8 +183,8 @@ export default function ReviewFormSectionTemp({ productId }: ReviewFormSectionTe
         </section>
       </form>
       <ClientFooter
-        label={isSubmitting ? '리뷰 등록 중...' : '등록하기'}
-        disabled={!isValid || isContentEmpty || isSubmitting || hasError}
+        label={getButtonLabel()}
+        disabled={!isValid || isContentEmpty || isSubmitting || hasError || isSubmitted}
         handleClick={handleSubmit}
       />
     </>
