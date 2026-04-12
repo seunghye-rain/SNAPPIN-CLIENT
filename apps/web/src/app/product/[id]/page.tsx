@@ -38,7 +38,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   if (tab === PRODUCT_TAB.REVIEW) {
     promises.push(prefetchProductReviewList(queryClient, productId));
   }
-  await Promise.all(promises);
+  Promise.all(promises);
 
   return (
     <main>

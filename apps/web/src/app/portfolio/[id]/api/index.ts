@@ -31,14 +31,6 @@ const getPortfolioDetail = async (
   return data.data;
 };
 
-// 포트폴리오 상세 조회 prefetch
-export const prefetchPortfolioDetail = (queryClient: QueryClient, id: number, isLogIn: boolean) => {
-  return queryClient.prefetchQuery({
-    queryKey: PORTFOLIO_QUERY_KEY.DETAIL(id, isLogIn),
-    queryFn: () => getPortfolioDetail(id, isLogIn),
-  });
-};
-
 // 포트폴리오 상세 조회 API
 export const useGetPortfolioDetail = (id: number, isLogIn: boolean) => {
   return useSuspenseQuery<GetPortfolioDetailResponse>({

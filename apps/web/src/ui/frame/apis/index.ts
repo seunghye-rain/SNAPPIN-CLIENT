@@ -200,6 +200,11 @@ const patchProductListQueries = (
     (old) => patchPagedProductLists(old, productId, nextIsLiked),
   );
 
+  queryClient.setQueriesData<InfiniteData<GetProductListData, string | undefined>>(
+    { queryKey: [...PRODUCT_QUERY_KEY.all, 'photographer-list'] },
+    (old) => patchPagedProductLists(old, productId, nextIsLiked),
+  );
+
   queryClient.setQueriesData<InfiniteData<GetWishedProductsData, string | undefined>>(
     { queryKey: PRODUCT_QUERY_KEY.LIKES() },
     (old) => patchLikedProductLists(old, productId, nextIsLiked),
@@ -284,6 +289,7 @@ export const useWishProductLike = ({ id, isLogin }: UseLikeProps) => {
 
       void Promise.all([
         queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY.LISTS() }),
+        queryClient.invalidateQueries({ queryKey: [...PRODUCT_QUERY_KEY.all, 'photographer-list'] }),
         queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY.LIKES() }),
       ]);
     },

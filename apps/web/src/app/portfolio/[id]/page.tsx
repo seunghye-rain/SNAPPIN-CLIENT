@@ -22,7 +22,7 @@ export default async function Page({ params }: PageProps) {
   const isLogIn = cookieStore.has('AccessToken');
   const queryClient = getQueryClient();
 
-  await prefetchPortfolioDetail(queryClient, portfolioId, isLogIn);
+  prefetchPortfolioDetail(queryClient, portfolioId, isLogIn);
 
   return (
     <main>
