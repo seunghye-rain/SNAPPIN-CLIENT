@@ -40,7 +40,6 @@ export default function ProductMainSection({
   const handleLike = async () => {
     if (isLogIn) {
       await mutateAsync({
-        id,
         currentIsLiked: isLiked,
       });
     } else if (isLogIn === false) {

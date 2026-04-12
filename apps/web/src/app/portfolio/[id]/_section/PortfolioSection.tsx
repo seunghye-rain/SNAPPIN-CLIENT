@@ -27,12 +27,11 @@ export default function PortfolioSection({
   isLogIn
 }: PortfolioSectionProps) {
   const toast = useToast();
-  const { mutate } = useWishPortfolioLike({id, isLogin: isLogIn});
+  const { mutate } = useWishPortfolioLike({ id, isLogin: isLogIn });
 
   const handleLike = () => {
     if (isLogIn) {
       mutate({
-        id,
         currentIsLiked: isLiked,
       });
     } else if (isLogIn === false) {
