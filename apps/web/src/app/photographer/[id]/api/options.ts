@@ -4,7 +4,7 @@ import { SERVER_API_BASE_URL } from '@/api/constants/api';
 import { GetPortfolioListData, GetProductListData } from '@/swagger-api';
 import { USER_QUERY_KEY, PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY } from '@/query-key/user';
 
-type PhotographerListPage = {
+type PhotographerListPageMeta = {
   meta?: {
     hasNext?: boolean;
     nextCursor?: string;
@@ -13,7 +13,9 @@ type PhotographerListPage = {
 
 export const photographerListInitialPageParam = undefined as string | undefined;
 
-export const getPhotographerListNextPageParam = (lastPage: PhotographerListPage) => {
+export const getPhotographerListNextPageParam = <TPage extends PhotographerListPageMeta>(
+  lastPage: TPage,
+) => {
   return lastPage.meta?.hasNext ? lastPage.meta.nextCursor : undefined;
 };
 
@@ -24,7 +26,7 @@ export const photographerDetailOptions = (id: number) =>
     queryFn: async () => {
       try {
         const res = await fetch(`${SERVER_API_BASE_URL}/api/v2/photographers/${id}`, {
-          method: 'GET'
+          method: 'GET',
         });
 
         if (!res.ok) {
@@ -61,7 +63,7 @@ export const photographerPortfoliosOptions = (id: number, isLogIn: boolean) =>
         if (isLogIn) {
           const res = await apiRequest<GetPortfolioListData>({
             endPoint: `/api/v2/portfolios?${url.searchParams}`,
-            method: 'GET'
+            method: 'GET',
           });
 
           if (!res?.data) {
@@ -107,9 +109,9 @@ export const photographerProductsOptions = (id: number, isLogIn: boolean) =>
         if (isLogIn) {
           const res = await apiRequest<GetProductListData>({
             endPoint: `/api/v2/products?${url.searchParams}`,
-            method: 'GET'
+            method: 'GET',
           });
-          
+
           if (!res?.data) {
             throw new Error('/api/v2/products 응답에 데이터가 존재하지 않습니다.');
           }

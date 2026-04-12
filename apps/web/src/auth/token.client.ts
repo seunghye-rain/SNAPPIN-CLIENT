@@ -1,3 +1,5 @@
+'use client';
+
 import { ACCESS_TOKEN_COOKIE_NAME } from '@/auth/constant/cookie';
 
 const getCookieValueFromBrowser = (name: string) => {

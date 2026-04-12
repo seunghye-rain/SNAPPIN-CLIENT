@@ -16,7 +16,7 @@ import { useToast } from '@/ui/toast/hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
 import { isValidUserType } from '@snappin/shared/types';
 
-export { getRefreshToken } from './refresh';
+export { getRefreshToken } from './refresh.client';
 
 // 카카오 로그인 API
 type KakaoCodePayload = { code: string };

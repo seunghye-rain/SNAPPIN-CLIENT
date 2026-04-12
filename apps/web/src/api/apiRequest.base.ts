@@ -9,8 +9,18 @@ export type ApiRequestProps = {
 };
 
 type CreateApiRequestDependencies = {
-  getAccessToken: () => Promise<string | undefined | null>;
-  getRefreshToken: () => Promise<Response>;
+  getAccessToken: () => string | undefined | null | Promise<string | undefined | null>;
+  getRefreshToken: () => Response | Promise<Response>;
+};
+
+const resolveAccessToken = async (
+  getAccessToken: CreateApiRequestDependencies['getAccessToken'],
+) => {
+  try {
+    return getAccessToken();
+  } catch {
+    return null;
+  }
 };
 
 const buildRequestUrl = (endPoint: string, params?: Record<string, string>) => {
@@ -43,7 +53,7 @@ export const createApiRequest = ({
       const refreshResponse = await getRefreshToken();
 
       if (refreshResponse.ok) {
-        const accessToken = await getAccessToken().catch(() => null);
+        const accessToken = await resolveAccessToken(getAccessToken);
         const retryHeader: Record<string, string> = {
           'Content-Type': 'application/json',
           ...originalRequest.headers,
@@ -90,7 +100,7 @@ export const createApiRequest = ({
     headers,
     params,
   }: ApiRequestProps): Promise<T> => {
-    const accessToken = await getAccessToken().catch(() => null);
+    const accessToken = await resolveAccessToken(getAccessToken);
 
     try {
       const requestUrl = buildRequestUrl(endPoint, params);
@@ -146,9 +156,14 @@ export const createApiRequest = ({
     } catch (error) {
       if (typeof error === 'string') {
         try {
-          const parsedError = JSON.parse(error);
+          const parsedError: unknown = JSON.parse(error);
 
-          if (parsedError.status !== 409) {
+          if (
+            typeof parsedError !== 'object' ||
+            parsedError === null ||
+            !('status' in parsedError) ||
+            parsedError.status !== 409
+          ) {
             console.error(error);
           }
         } catch {
