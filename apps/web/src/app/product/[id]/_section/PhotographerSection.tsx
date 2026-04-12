@@ -33,7 +33,7 @@ export default function PhotographerSection({ photographerInfo }: PhotographerSe
               </Profile.Row>
             </Profile.Item>
           </Profile.Content>
-          <Profile.Trailing />
+          <Profile.Trailing iconClassName='w-[2.6rem] h-[2.6rem]' />
         </Profile>
       </Link>
     </section>
