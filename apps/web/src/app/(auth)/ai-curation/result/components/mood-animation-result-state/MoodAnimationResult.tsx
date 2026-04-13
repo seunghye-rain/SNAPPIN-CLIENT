@@ -117,17 +117,11 @@ export default function MoodAnimationResult({ data }: MoodAnimationResultProps) 
             }
           }}
         >
-          <motion.div variants={CHIP_VARIANTS} custom={CHIP_POSES[0]}>
-            <MoodChip mood={data?.moods?.[0]?.name as MoodCode} />
-          </motion.div>
-
-          <motion.div variants={CHIP_VARIANTS} custom={CHIP_POSES[1]}>
-            <MoodChip mood={data?.moods?.[1]?.name as MoodCode} />
-          </motion.div>
-
-          <motion.div variants={CHIP_VARIANTS} custom={CHIP_POSES[2]}>
-            <MoodChip mood={data?.moods?.[2]?.name as MoodCode} />
-          </motion.div>
+          {data?.moods?.map((mood, index) => (
+            <motion.div key={mood.id} variants={CHIP_VARIANTS} custom={CHIP_POSES[index]}>
+              <MoodChip mood={mood.name as MoodCode} />
+            </motion.div>
+          ))}
         </motion.div>
       )}
 

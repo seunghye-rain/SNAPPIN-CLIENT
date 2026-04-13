@@ -5,6 +5,6 @@ import {
   type AiCurationProviderProps,
 } from '@/app/(auth)/ai-curation/hooks/useAiCuration';
 
-export default function Provider({ children }: AiCurationProviderProps) {
+export default function AiCurationProviderBridge({ children }: AiCurationProviderProps) {
   return <AiCurationProvider>{children}</AiCurationProvider>;
 }

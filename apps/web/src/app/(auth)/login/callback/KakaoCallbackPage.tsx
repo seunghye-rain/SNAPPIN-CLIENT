@@ -71,13 +71,17 @@ export default function KakaoCallbackPage() {
           hasPhotographerProfile: data.data.hasPhotographerProfile ?? false,
         });
 
-        const destination = !data.data.isOnboardingCompleted
-          ? ROUTES.ON_BOARDING(1, getReturnToParam(returnToContext))
-          : returnToContext.returnTo
-            ? resolveReturnToPath(returnToContext, ROUTES.HOME)
-            : data.data.role === USER_TYPE.PHOTOGRAPHER
-              ? PHOTOGRAPHERS_ROUTES.RESERVATIONS()
-              : ROUTES.HOME;
+        if (data.data.isOnboardingCompleted) {
+          replaceLocation(ROUTES.ON_BOARDING(1, getReturnToParam(returnToContext)));
+        }
+        if (returnToContext.returnTo) {
+          resolveReturnToPath(returnToContext, ROUTES.HOME);
+        }
+
+        const destination =
+          data.data.role === USER_TYPE.PHOTOGRAPHER
+            ? PHOTOGRAPHERS_ROUTES.RESERVATIONS()
+            : ROUTES.HOME;
 
         replaceLocation(destination);
       } catch {
