@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiRequest } from '@/api/apiRequest';
 import { PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY } from '@/query-key/user';
 import {
   GetPortfolioDetailResponse,
@@ -9,6 +8,7 @@ import {
   WishPortfolioResponse,
   WishProductResponse,
 } from '@/swagger-api';
+import { apiRequest } from '@/api/apiRequest.client';
 
 type UseLikeProps = {
   id: number;
@@ -70,10 +70,7 @@ export const useWishProductLike = ({ id, isLogin }: UseLikeProps) => {
       queryClient.setQueryData(detailQueryKey, context.previousData);
     },
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY.LISTS() }),
-        queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY.LIKES() }),
-      ]);
+      await Promise.all([queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY.LIKES() })]);
     },
   });
 };
@@ -133,10 +130,7 @@ export const useWishPortfolioLike = ({ id, isLogin }: UseLikeProps) => {
       queryClient.setQueryData(detailQueryKey, context.previousData);
     },
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: PORTFOLIO_QUERY_KEY.LISTS() }),
-        queryClient.invalidateQueries({ queryKey: PORTFOLIO_QUERY_KEY.LIKES() }),
-      ]);
+      await Promise.all([queryClient.invalidateQueries({ queryKey: PORTFOLIO_QUERY_KEY.LIKES() })]);
     },
   });
 };
