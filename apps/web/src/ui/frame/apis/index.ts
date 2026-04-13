@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiRequest } from '@/api/apiRequest';
 import { PORTFOLIO_QUERY_KEY, PRODUCT_QUERY_KEY } from '@/query-key/user';
 import {
   GetPortfolioDetailResponse,
@@ -9,6 +8,7 @@ import {
   WishPortfolioResponse,
   WishProductResponse,
 } from '@/swagger-api';
+import { apiRequest } from '@/api/apiRequest.client';
 
 type UseLikeProps = {
   id: number;
