@@ -6,7 +6,7 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { useWishPortfolioLike } from '@/ui/frame/apis';
 import { type LikeProps, useLikeButton } from '@/ui/frame/hooks/useLike';
 
-export function PortfolioClient({ id, isLiked }: LikeProps) {
+export function PortfolioClient({ id, isLiked, iconClassName }: LikeProps) {
   const { isLogIn } = useAuth();
   const { mutate: wishPortfolio } = useWishPortfolioLike({ id, isLogIn: !!isLogIn });
   const { liked, handleLike } = useLikeButton({ id, isLiked, mutate: wishPortfolio });
@@ -16,12 +16,18 @@ export function PortfolioClient({ id, isLiked }: LikeProps) {
       isLiked={liked}
       handleClick={handleLike}
       aria-label={liked ? '좋아요 취소' : '좋아요'}
-      className={cn(liked ? 'text-neon-black' : 'text-black-1')}
+      className={cn(liked ? 'text-neon-black' : 'text-black-1', iconClassName)}
     />
   );
 }
 
-export function PortfolioWithLikeCountClient({ id, isLiked, likeCount }: LikeProps) {
+export function PortfolioWithLikeCountClient({
+  id,
+  isLiked,
+  likeCount,
+  iconClassName,
+  textClassName,
+}: LikeProps) {
   const { isLogIn } = useAuth();
   const { mutate: wishPortfolio } = useWishPortfolioLike({ id, isLogIn: !!isLogIn });
   const { liked, handleLike, currentLikeCount } = useLikeButton({
@@ -37,9 +43,9 @@ export function PortfolioWithLikeCountClient({ id, isLiked, likeCount }: LikePro
         isLiked={liked}
         handleClick={handleLike}
         aria-label={liked ? '좋아요 취소' : '좋아요'}
-        className={cn(liked ? 'text-neon-black' : 'text-black-1')}
+        className={cn(liked ? 'text-neon-black' : 'text-black-1', iconClassName)}
       />
-      <span className='caption-11-md text-black-1'>{currentLikeCount}</span>
+      <span className={cn('caption-11-md', textClassName)}>{currentLikeCount}</span>
     </>
   );
 }

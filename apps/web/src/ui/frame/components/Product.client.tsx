@@ -6,9 +6,9 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { useWishProductLike } from '@/ui/frame/apis';
 import { type LikeProps, useLikeButton } from '@/ui/frame/hooks/useLike';
 
-export default function ProductClient({ id, isLiked }: LikeProps) {
+export default function ProductClient({ id, isLiked, iconClassName }: LikeProps) {
   const { isLogIn } = useAuth();
-  const { mutate: wishProduct } = useWishProductLike({ id, isLogin: !!isLogIn });
+  const { mutate: wishProduct } = useWishProductLike({ id, isLogIn: !!isLogIn });
   const { liked, handleLike } = useLikeButton({ id, isLiked, mutate: wishProduct });
 
   return (
@@ -16,7 +16,7 @@ export default function ProductClient({ id, isLiked }: LikeProps) {
       isLiked={liked}
       handleClick={handleLike}
       aria-label={liked ? '좋아요 취소' : '좋아요'}
-      className={cn(liked ? 'text-neon-black' : 'text-black-1')}
+      className={cn(liked ? 'text-neon-black' : 'text-black-1', iconClassName)}
     />
   );
 }
