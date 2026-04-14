@@ -78,7 +78,7 @@ export default function KakaoCallbackPage() {
         }
 
         if (returnToContext.returnTo) {
-          resolveReturnToPath(returnToContext, ROUTES.HOME);
+          replaceLocation(resolveReturnToPath(returnToContext, ROUTES.HOME));
           return;
         }
 
