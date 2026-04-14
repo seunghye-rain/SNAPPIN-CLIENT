@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { CSSProperties } from 'react';
 import { ImageWithShadow } from '@snappin/design-system';
 import { ROUTES } from '@/constants/routes/routes';
-import { PortfolioClient, PortfolioWithLikeCountClient } from '../components/Portfolio.client';
-import { P } from 'ts-pattern';
+import PortfolioClient from '../components/Portfolio.client';
 
 type CssSize = CSSProperties['width'];
 
@@ -40,8 +39,8 @@ export default function PortfolioFrame({
         imageHeight={height}
         imageWidth={width}
       />
-      <div className='absolute right-0 bottom-0 flex items-center gap-[0.5rem] p-[1.2rem]'>
-        <PortfolioWithLikeCountClient id={id} isLiked={isLiked} likeCount={likesCount} />
+      <div className='absolute right-0 bottom-0 flex items-center p-[1.2rem]'>
+        <PortfolioClient id={id} isLiked={isLiked} likeCount={likesCount} />
       </div>
     </Link>
   );

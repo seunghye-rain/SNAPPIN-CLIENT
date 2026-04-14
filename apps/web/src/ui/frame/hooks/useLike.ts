@@ -8,11 +8,9 @@ export type LikeProps = {
   id: number;
   isLiked: boolean;
   likeCount?: number;
-  iconClassName?: string;
-  textClassName?: string;
 };
 
-type UseLikeButtonProps = Pick<LikeProps, 'id' | 'isLiked' | 'likeCount'> & {
+type UseLikeButtonProps = LikeProps & {
   mutate: (id: number, options: { onError: () => void }) => void;
 };
 
