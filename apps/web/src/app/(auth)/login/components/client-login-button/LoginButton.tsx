@@ -6,18 +6,24 @@ import { BottomCTAButton } from '@snappin/design-system';
 import { IconKakao } from '@snappin/design-system/assets';
 
 type LoginButtonProps = {
+  loginError?: string;
   returnTo?: string;
 };
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL;
 
-export default function LoginButton({ returnTo }: LoginButtonProps) {
-  const { removeToast } = useToast();
+export default function LoginButton({ loginError, returnTo }: LoginButtonProps) {
+  const { error, removeToast } = useToast();
 
   useEffect(() => {
+    if (loginError === 'kakao') {
+      error('카카오 로그인에 실패했습니다. 다시 시도해주세요.', undefined, 'bottom-[8.5rem]');
+      return;
+    }
+
     removeToast();
-  }, [removeToast]);
+  }, [error, loginError, removeToast]);
 
   const handleLogin = () => {
     if (!CLIENT_ID || !REDIRECT_URI) {
