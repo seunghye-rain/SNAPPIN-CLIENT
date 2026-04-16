@@ -9,28 +9,36 @@ type LoginButtonProps = {
   returnTo?: string;
 };
 
+const CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
+const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL;
+
 export default function LoginButton({ returnTo }: LoginButtonProps) {
   const { removeToast } = useToast();
-  const clientId = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID!;
-  const redirectUri = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL!;
-  const state = returnTo ? new URLSearchParams({ returnTo }).toString() : '';
-  const KAKAO_LOGIN_URL =
-    `https://kauth.kakao.com/oauth/authorize` +
-    `?response_type=code` +
-    `&client_id=${clientId}` +
-    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-    (state ? `&state=${encodeURIComponent(state)}` : '');
-
-  const handleLogin = () => {
-    window.location.href = KAKAO_LOGIN_URL;
-  };
 
   useEffect(() => {
     removeToast();
-  }, []);
+  }, [removeToast]);
+
+  const handleLogin = () => {
+    if (!CLIENT_ID || !REDIRECT_URI) {
+      console.error('Kakao login env is missing');
+      return;
+    }
+
+    const state = returnTo ? new URLSearchParams({ returnTo }).toString() : '';
+
+    const kakaoLoginUrl =
+      `https://kauth.kakao.com/oauth/authorize` +
+      `?response_type=code` +
+      `&client_id=${CLIENT_ID}` +
+      `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+      (state ? `&state=${encodeURIComponent(state)}` : '');
+
+    window.location.href = kakaoLoginUrl;
+  };
 
   return (
-    <BottomCTAButton fixed={true} hasPadding={true} className='z-100 px-[2rem]'>
+    <BottomCTAButton fixed hasPadding className='z-50 px-[2rem]'>
       <BottomCTAButton.Single
         color='primary'
         onClick={handleLogin}
